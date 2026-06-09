@@ -1,7 +1,7 @@
 import {
   Column,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSeparator,
   MenuTrigger,
@@ -16,16 +16,16 @@ import {
 } from '@umami/react-zen';
 import { useConfig, useLocale, useLoginQuery, useMessages, useMobile } from '@/components/hooks';
 import {
-  BookText,
-  ExternalLink,
+  BookOpen,
+  ArrowSquareOut,
   Globe,
-  LifeBuoy,
-  LockKeyhole,
-  LogOut,
+  Lifebuoy,
+  Lock,
+  SignOut,
   Moon,
-  Settings,
+  Gear,
   Sun,
-  SunMoon,
+  SunDim,
   UserCircle,
 } from '@/components/icons';
 import { DOCS_URL } from '@/lib/constants';
@@ -58,7 +58,7 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
       id: 'docs',
       label: t(labels.documentation),
       path: DOCS_URL,
-      icon: <BookText />,
+      icon: <BookOpen />,
       target: '_blank',
       external: true,
     },
@@ -66,14 +66,14 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
       id: 'support',
       label: t(labels.support),
       path: getUrl('/settings/support'),
-      icon: <LifeBuoy />,
+      icon: <Lifebuoy />,
     },
     !cloudMode &&
       user.isAdmin && {
         id: 'admin',
         label: t(labels.admin),
         path: '/admin',
-        icon: <LockKeyhole />,
+        icon: <Lock />,
       },
     {
       id: 'separator',
@@ -83,7 +83,7 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
       id: 'logout',
       label: t(labels.logout),
       path: getUrl('/logout'),
-      icon: <LogOut />,
+      icon: <SignOut />,
     },
   ].filter(Boolean);
 
@@ -117,11 +117,11 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
       </TooltipTrigger>
       <Popover placement="top start">
         <Column minWidth="200px">
-          <Menu autoFocus="last" onAction={onClose}>
+          <List autoFocus="last" onAction={onClose}>
             <MenuItem id="settings" href={getUrl('/settings')}>
               <Row alignItems="center" gap>
                 <Icon>
-                  <Settings />
+                  <Gear />
                 </Icon>
                 <Text>{t(labels.settings)}</Text>
               </Row>
@@ -136,7 +136,7 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
                 </Row>
               </MenuItem>
               <Popover placement={isMobile ? 'bottom start' : 'right bottom'} isNonModal>
-                <Menu
+                <List
                   selectionMode="single"
                   selectedKeys={new Set([locale])}
                   onAction={key => saveLocale(key as string)}
@@ -147,20 +147,20 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
                       <Text weight={value === locale ? 'bold' : undefined}>{label}</Text>
                     </MenuItem>
                   ))}
-                </Menu>
+                </List>
               </Popover>
             </SubmenuTrigger>
             <SubmenuTrigger>
               <MenuItem id="theme" showSubMenuIcon>
                 <Row alignItems="center" gap>
                   <Icon>
-                    <SunMoon />
+                    <SunDim />
                   </Icon>
                   <Text>{t(labels.theme)}</Text>
                 </Row>
               </MenuItem>
               <Popover placement={isMobile ? 'bottom start' : 'right bottom'} isNonModal>
-                <Menu
+                <List
                   selectionMode="single"
                   selectedKeys={new Set([theme])}
                   onAction={key => setTheme(key as 'light' | 'dark')}
@@ -181,7 +181,7 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
                       <Text>Dark</Text>
                     </Row>
                   </MenuItem>
-                </Menu>
+                </List>
               </Popover>
             </SubmenuTrigger>
             {items.map(({ id, path, label, icon, separator, target, external }: any) => {
@@ -195,14 +195,14 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
                     <Text>{label}</Text>
                     {external && (
                       <Icon color="muted" size="sm">
-                        <ExternalLink />
+                        <ArrowSquareOut />
                       </Icon>
                     )}
                   </Row>
                 </MenuItem>
               );
             })}
-          </Menu>
+          </List>
         </Column>
       </Popover>
     </MenuTrigger>

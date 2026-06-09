@@ -6,12 +6,11 @@ import { WebsiteChart } from '@/app/(main)/websites/[websiteId]/WebsiteChart';
 import { WebsiteMetricsBar } from '@/app/(main)/websites/[websiteId]/WebsiteMetricsBar';
 import {
   Calendar,
-  ChartColumnBig,
+  ChartBar,
   ChartPie,
   FileText,
   Globe,
-  PanelTop,
-  Sheet,
+  Browser,
 } from '@/components/icons';
 import { EventsChart } from '@/components/metrics/EventsChart';
 import { MetricsTable } from '@/components/metrics/MetricsTable';
@@ -109,7 +108,7 @@ const componentDefinitions: ComponentDefinition[] = [
     name: 'Metrics bar',
     description: 'Key metrics: views, visitors, bounces, time on site',
     category: 'overview',
-    icon: PanelTop,
+    icon: Browser,
     component: WebsiteMetricsBar,
     componentByEntityType: {
       pixel: PixelMetricsBarAdapter,
@@ -121,7 +120,7 @@ const componentDefinitions: ComponentDefinition[] = [
     name: 'Website chart',
     description: 'Page views and visitors over time',
     category: 'overview',
-    icon: ChartColumnBig,
+    icon: ChartBar,
     component: WebsiteChart,
   },
 
@@ -131,7 +130,7 @@ const componentDefinitions: ComponentDefinition[] = [
     name: 'Metrics table',
     description: 'Table of metrics by dimension',
     category: 'tables',
-    icon: Sheet,
+    icon: FileText,
     component: MetricsTable,
     defaultProps: { type: 'path', limit: 10 },
     configFields: [

@@ -1,6 +1,6 @@
 import { Button, type ButtonProps, Icon } from '@umami/react-zen';
 import { useGlobalState } from '@/components/hooks';
-import { PanelLeft } from '@/components/icons';
+import { Sidebar } from '@/components/icons';
 
 export function PanelButton(props: ButtonProps) {
   const [isCollapsed, setIsCollapsed] = useGlobalState('sidenav-collapsed');
@@ -12,7 +12,7 @@ export function PanelButton(props: ButtonProps) {
       style={{ padding: 0 }}
     >
       <Icon strokeColor="muted">
-        <PanelLeft />
+        <Sidebar />
       </Icon>
     </Button>
   );

@@ -2,7 +2,7 @@ import { DataColumn, DataTable, type DataTableProps, Icon } from '@umami/react-z
 import type { ReactNode } from 'react';
 import { LinkButton } from '@/components/common/LinkButton';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { SquarePen } from '@/components/icons';
+import { Pencil } from '@/components/icons';
 
 export interface WebsitesTableProps extends DataTableProps {
   showActions?: boolean;
@@ -29,7 +29,7 @@ export function WebsitesTable({ showActions, renderLink, ...props }: WebsitesTab
             return (
               <LinkButton href={renderUrl(`/websites/${websiteId}/settings`)} variant="quiet">
                 <Icon>
-                  <SquarePen />
+                  <Pencil />
                 </Icon>
               </LinkButton>
             );

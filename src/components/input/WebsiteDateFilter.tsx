@@ -2,7 +2,7 @@ import { Button, Icon, ListItem, Row, Select, Text } from '@umami/react-zen';
 import { isAfter } from 'date-fns';
 import { useMemo } from 'react';
 import { useDateRange, useDateRangeQuery, useMessages, useNavigation } from '@/components/hooks';
-import { ChevronRight } from '@/components/icons';
+import { CaretRight } from '@/components/icons';
 import { getDateRangeValue } from '@/lib/date';
 import { DateFilter } from './DateFilter';
 
@@ -67,12 +67,12 @@ export function WebsiteDateFilter({
         <Row gap="1">
           <Button onPress={() => handleIncrement(-1)} variant="outline">
             <Icon rotate={180}>
-              <ChevronRight />
+              <CaretRight />
             </Icon>
           </Button>
           <Button onPress={() => handleIncrement(1)} variant="outline" isDisabled={disableForward}>
             <Icon>
-              <ChevronRight />
+              <CaretRight />
             </Icon>
           </Button>
         </Row>

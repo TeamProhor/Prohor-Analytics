@@ -4,7 +4,7 @@ import { WebsiteDeleteForm } from '@/app/(main)/websites/[websiteId]/settings/We
 import { DateDistance } from '@/components/common/DateDistance';
 import Link from '@/components/common/Link';
 import { useMessages } from '@/components/hooks';
-import { Edit, Trash, Users } from '@/components/icons';
+import { Pencil, Trash, Users } from '@/components/icons';
 import { MenuButton } from '@/components/input/MenuButton';
 
 export function AdminWebsitesTable({ data = [], ...props }: { data: any[] }) {
@@ -57,7 +57,7 @@ export function AdminWebsitesTable({ data = [], ...props }: { data: any[] }) {
                 <MenuItem href={`/admin/websites/${id}`} data-test="link-button-edit">
                   <Row alignItems="center" gap>
                     <Icon>
-                      <Edit />
+                      <Pencil />
                     </Icon>
                     <Text>{t(labels.edit)}</Text>
                   </Row>

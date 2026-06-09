@@ -4,7 +4,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useMessages, useNavigation, useWebsite } from '@/components/hooks';
-import { Edit } from '@/components/icons';
+import { Pencil } from '@/components/icons';
 import { ActiveUsers } from '@/components/metrics/ActiveUsers';
 
 export function WebsiteHeader({
@@ -35,7 +35,7 @@ export function WebsiteHeader({
 
         {showActions && (
           <LinkButton href={renderUrl(`/websites/${website.id}/settings`, false)}>
-            <IconLabel icon={<Edit />}>{t(labels.edit)}</IconLabel>
+            <IconLabel icon={<Pencil />}>{t(labels.edit)}</IconLabel>
           </LinkButton>
         )}
       </Row>

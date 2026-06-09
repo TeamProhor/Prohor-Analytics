@@ -2,7 +2,7 @@ import {
   AlertDialog,
   Button,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuTrigger,
   Modal,
@@ -13,7 +13,7 @@ import {
 import { type ReactNode, useState } from 'react';
 import { useMessages } from '@/components/hooks';
 import { useDeleteQuery } from '@/components/hooks/queries/useDeleteQuery';
-import { Edit, MoreHorizontal, Trash } from '@/components/icons';
+import { Pencil, DotsThree, Trash } from '@/components/icons';
 import { DialogButton } from './DialogButton';
 
 export function ReportEditButton({
@@ -72,14 +72,14 @@ export function ReportEditButton({
       <MenuTrigger>
         <Button variant="quiet">
           <Icon>
-            <MoreHorizontal />
+            <DotsThree />
           </Icon>
         </Button>
         <Popover placement="bottom">
-          <Menu onAction={handleAction}>
+          <List onAction={handleAction}>
             <MenuItem id="edit">
               <Icon>
-                <Edit />
+                <Pencil />
               </Icon>
               <Text>{t(labels.edit)}</Text>
             </MenuItem>
@@ -89,7 +89,7 @@ export function ReportEditButton({
               </Icon>
               <Text>{t(labels.delete)}</Text>
             </MenuItem>
-          </Menu>
+          </List>
         </Popover>
       </MenuTrigger>
       <DialogButton

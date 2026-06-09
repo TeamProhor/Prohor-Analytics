@@ -1,1 +1,1 @@
-export * from 'lucide-react';
+export * from '@phosphor-icons/react';

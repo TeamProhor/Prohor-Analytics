@@ -1,6 +1,6 @@
 import { Button, Column, Icon, List, MenuTrigger, Popover, SearchField } from '@umami/react-zen';
 import type { ReactNode } from 'react';
-import { ChevronRight } from '@/components/icons';
+import { CaretRight } from '@/components/icons';
 
 interface MultiSelectProps {
   value?: string[];
@@ -48,7 +48,7 @@ export function MultiSelect({
           {displayValue ?? placeholder}
         </span>
         <Icon rotate={90} size="sm" aria-hidden="true">
-          <ChevronRight />
+          <CaretRight />
         </Icon>
       </Button>
       <Popover

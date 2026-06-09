@@ -1,7 +1,7 @@
 import { Checkbox, Row } from '@umami/react-zen';
 import { useState } from 'react';
 import { useFilters, useMessages, useNavigation } from '@/components/hooks';
-import { ListFilter } from '@/components/icons';
+import { Funnel } from '@/components/icons';
 import { DialogButton } from '@/components/input/DialogButton';
 import { FilterEditForm } from '@/components/input/FilterEditForm';
 import { filtersArrayToObject } from '@/lib/params';
@@ -39,7 +39,7 @@ export function WebsiteFilterButton({
   };
 
   return (
-    <DialogButton icon={<ListFilter />} label={t(labels.filter)} variant="outline">
+    <DialogButton icon={<Funnel />} label={t(labels.filter)} variant="outline">
       {({ close }) => {
         return (
           <>

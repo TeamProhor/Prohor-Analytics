@@ -176,7 +176,16 @@ if (trackerScriptName) {
 
 /** @type {import('next').NextConfig} */
 export default withNextIntl({
-  reactStrictMode: false,
+  reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: [
+      '@phosphor-icons/react',
+      '@umami/react-zen',
+      'date-fns',
+      'chart.js',
+      '@dicebear/collection',
+    ],
+  },
   allowedDevOrigins: ['127.0.0.1'],
   env: {
     basePath,

@@ -17,11 +17,11 @@ import Link from '@/components/common/Link';
 import { useGlobalState, useMessages, useNavigation } from '@/components/hooks';
 import {
   Globe,
-  Grid2x2,
-  LayoutDashboard,
-  LinkIcon,
-  PanelLeft,
-  PanelsLeftBottom,
+  SquaresFour,
+  Columns,
+  Link as LinkIcon,
+  Sidebar,
+  SidebarSimple,
 } from '@/components/icons';
 import { UserButton } from '@/components/input/UserButton';
 import { Logo } from '@/components/svg';
@@ -38,7 +38,7 @@ export function SideNav(props: any) {
             id: 'dashboard',
             label: t(labels.dashboard),
             path: '/dashboard',
-            icon: <PanelsLeftBottom />,
+            icon: <SidebarSimple />,
           },
         ]
       : []),
@@ -46,7 +46,7 @@ export function SideNav(props: any) {
       id: 'boards',
       label: t(labels.boards),
       path: '/boards',
-      icon: <LayoutDashboard />,
+      icon: <Columns />,
     },
     {
       id: 'websites',
@@ -64,7 +64,7 @@ export function SideNav(props: any) {
       id: 'pixels',
       label: t(labels.pixels),
       path: '/pixels',
-      icon: <Grid2x2 />,
+      icon: <SquaresFour />,
     },
   ];
 
@@ -154,7 +154,7 @@ const PanelButton = (props: ButtonProps) => {
       style={{ padding: 0 }}
     >
       <Icon strokeColor="muted">
-        <PanelLeft />
+        <Sidebar />
       </Icon>
     </Button>
   );

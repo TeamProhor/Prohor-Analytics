@@ -3,7 +3,7 @@ import { DateRangeSetting } from '@/app/(main)/settings/preferences/DateRangeSet
 import { TimezoneSetting } from '@/app/(main)/settings/preferences/TimezoneSetting';
 import { Panel } from '@/components/common/Panel';
 import { useMessages } from '@/components/hooks';
-import { Settings } from '@/components/icons';
+import { Gear } from '@/components/icons';
 
 export function PreferencesButton() {
   const { t, labels } = useMessages();
@@ -12,7 +12,7 @@ export function PreferencesButton() {
     <DialogTrigger>
       <Button variant="quiet">
         <Icon>
-          <Settings />
+          <Gear />
         </Icon>
       </Button>
       <Popover placement="bottom end">

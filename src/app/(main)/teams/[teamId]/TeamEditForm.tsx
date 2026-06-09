@@ -9,7 +9,7 @@ import {
 } from '@umami/react-zen';
 import { IconLabel } from '@/components/common/IconLabel';
 import { useMessages, useTeam, useUpdateQuery } from '@/components/hooks';
-import { RefreshCw } from '@/components/icons';
+import { ArrowsClockwise } from '@/components/icons';
 import { getRandomChars } from '@/lib/generate';
 
 const generateId = () => `team_${getRandomChars(16)}`;
@@ -65,7 +65,7 @@ export function TeamEditForm({
                       })
                     }
                   >
-                    <IconLabel icon={<RefreshCw />} label={t(labels.regenerate)} />
+                    <IconLabel icon={<ArrowsClockwise />} label={t(labels.regenerate)} />
                   </Button>
                 )}
               </Row>

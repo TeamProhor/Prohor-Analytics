@@ -1,6 +1,6 @@
 import { CohortEditForm } from '@/app/(main)/websites/[websiteId]/cohorts/CohortEditForm';
 import { useMessages } from '@/components/hooks';
-import { Edit } from '@/components/icons';
+import { Pencil } from '@/components/icons';
 import { DialogButton } from '@/components/input/DialogButton';
 import type { Filter } from '@/lib/types';
 
@@ -16,7 +16,7 @@ export function CohortEditButton({
   const { t, labels } = useMessages();
 
   return (
-    <DialogButton icon={<Edit />} variant="quiet" title={t(labels.cohort)} width="800px">
+    <DialogButton icon={<Pencil />} variant="quiet" title={t(labels.cohort)} width="800px">
       {({ close }) => {
         return (
           <CohortEditForm

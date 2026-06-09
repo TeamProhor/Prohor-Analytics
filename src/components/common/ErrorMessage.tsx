@@ -1,6 +1,6 @@
 import { Icon, Row, Text } from '@umami/react-zen';
 import { useMessages } from '@/components/hooks';
-import { AlertTriangle } from '@/components/icons';
+import { Warning } from '@/components/icons';
 
 export function ErrorMessage() {
   const { t, messages } = useMessages();
@@ -8,7 +8,7 @@ export function ErrorMessage() {
   return (
     <Row alignItems="center" justifyContent="center" gap>
       <Icon>
-        <AlertTriangle />
+        <Warning />
       </Icon>
       <Text>{t(messages.error)}</Text>
     </Row>

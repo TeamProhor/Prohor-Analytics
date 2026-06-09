@@ -10,7 +10,7 @@ import {
   Tabs,
   TextField,
 } from '@umami/react-zen';
-import { X } from 'lucide-react';
+import { X } from '@/components/icons';
 import { Avatar } from '@/components/common/Avatar';
 import { LoadingPanel } from '@/components/common/LoadingPanel';
 import { useMessages, useWebsiteSessionQuery } from '@/components/hooks';

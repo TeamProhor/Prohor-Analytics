@@ -9,7 +9,7 @@ import {
 } from 'react-resizable-panels';
 import { v4 as uuid } from 'uuid';
 import { useBoard } from '@/components/hooks';
-import { ChevronDown, GripVertical, Minus, Plus } from '@/components/icons';
+import { CaretDown, DotsSixVertical, Minus, Plus } from '@/components/icons';
 import type { BoardColumn as BoardColumnType, BoardComponentConfig } from '@/lib/types';
 import { BoardEditColumn } from './BoardEditColumn';
 import { MAX_COLUMNS, MIN_COLUMN_WIDTH } from './boardConstants';
@@ -128,7 +128,7 @@ export function BoardEditRow({
                   style={{ cursor: 'col-resize' }}
                 >
                   <Icon size="sm">
-                    <GripVertical />
+                    <DotsSixVertical />
                   </Icon>
                 </Row>
               </Separator>
@@ -156,7 +156,7 @@ export function BoardEditRow({
               style={moveUpDisabled ? { pointerEvents: 'none' } : undefined}
             >
               <Icon rotate={180} color={moveUpDisabled ? 'muted' : undefined}>
-                <ChevronDown />
+                <CaretDown />
               </Icon>
             </Button>
             <Tooltip placement="top">Move row up</Tooltip>
@@ -190,7 +190,7 @@ export function BoardEditRow({
               style={moveDownDisabled ? { pointerEvents: 'none' } : undefined}
             >
               <Icon color={moveDownDisabled ? 'muted' : undefined}>
-                <ChevronDown />
+                <CaretDown />
               </Icon>
             </Button>
             <Tooltip placement="bottom">Move row down</Tooltip>

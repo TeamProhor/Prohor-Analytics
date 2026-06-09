@@ -1,7 +1,7 @@
 import {
   Button,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSection,
   MenuSeparator,
@@ -12,7 +12,7 @@ import {
 } from '@umami/react-zen';
 import { Fragment } from 'react';
 import { useLoginQuery, useMessages, useNavigation } from '@/components/hooks';
-import { LockKeyhole, LogOut, UserCircle } from '@/components/icons';
+import { Lock, SignOut, UserCircle } from '@/components/icons';
 
 export function ProfileButton() {
   const { t, labels } = useMessages();
@@ -31,13 +31,13 @@ export function ProfileButton() {
         id: 'admin',
         label: t(labels.admin),
         path: '/admin',
-        icon: <LockKeyhole />,
+        icon: <Lock />,
       },
     {
       id: 'logout',
       label: t(labels.logout),
       path: '/logout',
-      icon: <LogOut />,
+      icon: <SignOut />,
       separator: true,
     },
   ].filter(n => n);
@@ -50,7 +50,7 @@ export function ProfileButton() {
         </Icon>
       </Button>
       <Popover placement="bottom end">
-        <Menu autoFocus="last">
+        <List autoFocus="last">
           <MenuSection title={user.username}>
             <MenuSeparator />
             {items.map(({ id, path, label, icon, separator }) => {
@@ -67,7 +67,7 @@ export function ProfileButton() {
               );
             })}
           </MenuSection>
-        </Menu>
+        </List>
       </Popover>
     </MenuTrigger>
   );

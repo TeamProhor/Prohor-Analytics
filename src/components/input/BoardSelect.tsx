@@ -2,7 +2,7 @@ import { Icon, ListItem, Row, Select, type SelectProps, Text } from '@umami/reac
 import { useEffect, useState } from 'react';
 import { Empty } from '@/components/common/Empty';
 import { useBoardQuery, useBoardsQuery, useMessages } from '@/components/hooks';
-import { LayoutDashboard } from '@/components/icons';
+import { Columns } from '@/components/icons';
 
 export function BoardSelect({
   boardId,
@@ -45,7 +45,7 @@ export function BoardSelect({
     return (
       <Row alignItems="center" gap>
         <Icon>
-          <LayoutDashboard />
+          <Columns />
         </Icon>
         <Text truncate>{name}</Text>
       </Row>

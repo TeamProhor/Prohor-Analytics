@@ -8,7 +8,7 @@ import Link from '@/components/common/Link';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Panel } from '@/components/common/Panel';
 import { useMessages, useNavigation, usePixel } from '@/components/hooks';
-import { ArrowLeft, Grid2x2 } from '@/components/icons';
+import { ArrowLeft, SquaresFour } from '@/components/icons';
 
 export function PixelEditPage({ pixelId }: { pixelId: string }) {
   return (
@@ -40,7 +40,7 @@ function PixelEditHeader() {
           <IconLabel icon={<ArrowLeft />} label={t(labels.pixel)} />
         </Link>
       </Column>
-      <PageHeader title={pixel.name} icon={<Grid2x2 />} />
+      <PageHeader title={pixel.name} icon={<SquaresFour />} />
     </>
   );
 }

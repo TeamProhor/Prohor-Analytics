@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useConfig, useMessages, usePixelQuery } from '@/components/hooks';
 import { useUpdateQuery } from '@/components/hooks/queries/useUpdateQuery';
-import { RefreshCw } from '@/components/icons';
+import { ArrowsClockwise } from '@/components/icons';
 import { PIXELS_URL } from '@/lib/constants';
 import { getRandomChars } from '@/lib/generate';
 
@@ -105,7 +105,7 @@ export function PixelEditForm({
                 />
                 <Button onPress={() => setValue('slug', handleSlug(), { shouldDirty: true })}>
                   <Icon>
-                    <RefreshCw />
+                    <ArrowsClockwise />
                   </Icon>
                 </Button>
               </Row>

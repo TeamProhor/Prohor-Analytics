@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { DateDistance } from '@/components/common/DateDistance';
 import { TypeIcon } from '@/components/common/TypeIcon';
 import { useFormat, useLocale, useMessages, useRegionNames } from '@/components/hooks';
-import { Calendar, KeyRound, Landmark, MapPin } from '@/components/icons';
+import { Calendar, Key, Bank, MapPin } from '@/components/icons';
 
 export function SessionInfo({ data }) {
   const { locale } = useLocale();
@@ -13,7 +13,7 @@ export function SessionInfo({ data }) {
 
   return (
     <Grid columns="repeat(auto-fit, minmax(200px, 1fr)" gap>
-      <Info label={t(labels.distinctId)} icon={<KeyRound />}>
+      <Info label={t(labels.distinctId)} icon={<Key />}>
         {data?.distinctId}
       </Info>
 
@@ -33,7 +33,7 @@ export function SessionInfo({ data }) {
         {getRegionName(data?.region)}
       </Info>
 
-      <Info label={t(labels.city)} icon={<Landmark />}>
+      <Info label={t(labels.city)} icon={<Bank />}>
         {data?.city}
       </Info>
 

@@ -1,6 +1,6 @@
 import { useToast } from '@umami/react-zen';
 import { useMessages, useModified } from '@/components/hooks';
-import { Edit } from '@/components/icons';
+import { Pencil } from '@/components/icons';
 import { DialogButton } from '@/components/input/DialogButton';
 import { TeamMemberEditForm } from './TeamMemberEditForm';
 
@@ -26,7 +26,7 @@ export function TeamMemberEditButton({
   };
 
   return (
-    <DialogButton icon={<Edit />} title={t(labels.editMember)} variant="quiet" width="400px">
+    <DialogButton icon={<Pencil />} title={t(labels.editMember)} variant="quiet" width="400px">
       {({ close }) => (
         <TeamMemberEditForm
           teamId={teamId}

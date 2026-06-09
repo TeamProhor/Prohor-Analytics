@@ -1,9 +1,9 @@
 import {
-  AlignEndHorizontal,
+  AlignRight,
   ChartPie,
   Clock,
   Eye,
-  Sheet,
+  FileText,
   Tag,
   User,
   UserPlus,
@@ -63,13 +63,13 @@ export function useWebsiteNavItems(websiteId: string) {
         {
           id: 'compare',
           label: t(labels.compare),
-          icon: <AlignEndHorizontal />,
+          icon: <AlignRight />,
           path: renderPath('/compare'),
         },
         {
           id: 'breakdown',
           label: t(labels.breakdown),
-          icon: <Sheet />,
+          icon: <FileText />,
           path: renderPath('/breakdown'),
         },
       ],

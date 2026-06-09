@@ -1,7 +1,7 @@
 import {
   Button,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSection,
   MenuSeparator,
@@ -11,12 +11,12 @@ import {
 import type { Key } from 'react';
 import { useConfig, useLoginQuery, useMessages, useNavigation } from '@/components/hooks';
 import {
-  BookText,
-  ExternalLink,
-  LifeBuoy,
-  LockKeyhole,
-  LogOut,
-  Settings,
+  BookOpen,
+  ArrowSquareOut,
+  Lifebuoy,
+  Lock,
+  SignOut,
+  Gear,
   UserCircle,
 } from '@/components/icons';
 import { DOCS_URL } from '@/lib/constants';
@@ -49,27 +49,27 @@ export function SettingsButton() {
         </Icon>
       </Button>
       <Popover placement="bottom end">
-        <Menu autoFocus="last" onAction={handleAction}>
+        <List autoFocus="last" onAction={handleAction}>
           <MenuSection title={user.username}>
             <MenuSeparator />
-            <MenuItem id="/settings" icon={<Settings />} label={t(labels.settings)} />
+            <MenuItem id="/settings" icon={<Gear />} label={t(labels.settings)} />
             {!cloudMode && user.isAdmin && (
-              <MenuItem id="/admin" icon={<LockKeyhole />} label={t(labels.admin)} />
+              <MenuItem id="/admin" icon={<Lock />} label={t(labels.admin)} />
             )}
             {cloudMode && (
               <>
-                <MenuItem id="/docs" icon={<BookText />} label={t(labels.documentation)}>
+                <MenuItem id="/docs" icon={<BookOpen />} label={t(labels.documentation)}>
                   <Icon color="muted">
-                    <ExternalLink />
+                    <ArrowSquareOut />
                   </Icon>
                 </MenuItem>
-                <MenuItem id="/settings/support" icon={<LifeBuoy />} label={t(labels.support)} />
+                <MenuItem id="/settings/support" icon={<Lifebuoy />} label={t(labels.support)} />
               </>
             )}
             <MenuSeparator />
-            <MenuItem id="/logout" icon={<LogOut />} label={t(labels.logout)} />
+            <MenuItem id="/logout" icon={<SignOut />} label={t(labels.logout)} />
           </MenuSection>
-        </Menu>
+        </List>
       </Popover>
     </MenuTrigger>
   );

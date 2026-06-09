@@ -2,7 +2,7 @@ import {
   Button,
   Column,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSection,
   MenuSeparator,
@@ -11,11 +11,10 @@ import {
   Row,
   Text,
 } from '@umami/react-zen';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CaretRight, User, Users } from '@/components/icons';
 import type { Key } from 'react';
 import { IconLabel } from '@/components/common/IconLabel';
 import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
-import { ChevronRight, User, Users } from '@/components/icons';
 import { LAST_TEAM_CONFIG } from '@/lib/constants';
 import { removeItem } from '@/lib/storage';
 
@@ -60,12 +59,12 @@ export function TeamsButton() {
           <Text truncate>{label}</Text>
         </Row>
         <Icon rotate={90} size="sm">
-          <ChevronRight />
+          <CaretRight />
         </Icon>
       </Button>
       <Popover placement="bottom start">
         <Column minWidth="300px">
-          <Menu selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
+          <List selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
             <MenuSection title={t(labels.myAccount)}>
               <MenuItem id="user">
                 <IconLabel icon={<User />} label={user.username} />
@@ -92,7 +91,7 @@ export function TeamsButton() {
                 </a>
               </MenuItem>
             </MenuSection>
-          </Menu>
+          </List>
         </Column>
       </Popover>
     </MenuTrigger>

@@ -2,7 +2,7 @@ import { Icon, Row, Text } from '@umami/react-zen';
 import { type HTMLAttributes, type ReactNode, useState } from 'react';
 import Link from '@/components/common/Link';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { ExternalLink } from '@/components/icons';
+import { ArrowSquareOut } from '@/components/icons';
 
 export interface FilterLinkProps extends HTMLAttributes<HTMLDivElement> {
   type: string;
@@ -42,7 +42,7 @@ export function FilterLink({ type, value, label, externalUrl, icon }: FilterLink
       {externalUrl && showLink && (
         <a href={externalUrl} target="_blank" rel="noreferrer noopener">
           <Icon color="muted">
-            <ExternalLink />
+            <ArrowSquareOut />
           </Icon>
         </a>
       )}

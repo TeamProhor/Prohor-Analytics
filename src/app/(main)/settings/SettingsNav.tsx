@@ -2,7 +2,7 @@ import { Column, Focusable, Row, Text, Tooltip, TooltipTrigger } from '@umami/re
 import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { ArrowLeft, Settings2, UserCircle, Users } from '@/components/icons';
+import { ArrowLeft, GearSix, UserCircle, Users } from '@/components/icons';
 
 export function SettingsNav({
   isCollapsed,
@@ -22,7 +22,7 @@ export function SettingsNav({
           id: 'preferences',
           label: t(labels.preferences),
           path: renderUrl('/settings/preferences'),
-          icon: <Settings2 />,
+          icon: <GearSix />,
         },
       ],
     },

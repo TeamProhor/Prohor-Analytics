@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DateDistance } from '@/components/common/DateDistance';
 import Link from '@/components/common/Link';
 import { useMessages } from '@/components/hooks';
-import { Edit, Trash } from '@/components/icons';
+import { Pencil, Trash } from '@/components/icons';
 import { MenuButton } from '@/components/input/MenuButton';
 import { TeamDeleteForm } from '../../teams/[teamId]/TeamDeleteForm';
 
@@ -54,7 +54,7 @@ export function AdminTeamsTable({
                   <MenuItem href={`/admin/teams/${id}`} data-test="link-button-edit">
                     <Row alignItems="center" gap>
                       <Icon>
-                        <Edit />
+                        <Pencil />
                       </Icon>
                       <Text>{t(labels.edit)}</Text>
                     </Row>

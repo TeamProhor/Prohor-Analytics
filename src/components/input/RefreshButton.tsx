@@ -1,6 +1,6 @@
 import { Icon, LoadingButton, Tooltip, TooltipTrigger } from '@umami/react-zen';
 import { useDateRange, useMessages } from '@/components/hooks';
-import { RefreshCw } from '@/components/icons';
+import { ArrowsClockwise } from '@/components/icons';
 import { setWebsiteDateRange } from '@/store/websites';
 
 export function RefreshButton({
@@ -23,7 +23,7 @@ export function RefreshButton({
     <TooltipTrigger>
       <LoadingButton isLoading={isLoading} onPress={handleClick}>
         <Icon>
-          <RefreshCw />
+          <ArrowsClockwise />
         </Icon>
       </LoadingButton>
       <Tooltip>{t(labels.refresh)}</Tooltip>

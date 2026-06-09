@@ -3,7 +3,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useLink, useMessages, useNavigation, useSlug } from '@/components/hooks';
-import { Edit, ExternalLink, Link } from '@/components/icons';
+import { Pencil, ArrowSquareOut, Link } from '@/components/icons';
 
 export function LinkHeader({ showActions = true }: { showActions?: boolean }) {
   const link = useLink();
@@ -23,10 +23,10 @@ function LinkHeaderActions({ linkId, slug }: { linkId: string; slug: string }) {
   return (
     <Row alignItems="center" gap="3">
       <LinkButton href={renderUrl(`/links/${linkId}/edit`, false)}>
-        <IconLabel icon={<Edit />} label={t(labels.edit)} />
+        <IconLabel icon={<Pencil />} label={t(labels.edit)} />
       </LinkButton>
       <LinkButton href={getSlugUrl(slug)} target="_blank" prefetch={false} asAnchor>
-        <IconLabel icon={<ExternalLink />} label={t(labels.view)} />
+        <IconLabel icon={<ArrowSquareOut />} label={t(labels.view)} />
       </LinkButton>
     </Row>
   );

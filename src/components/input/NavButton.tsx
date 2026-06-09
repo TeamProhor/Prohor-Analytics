@@ -1,7 +1,7 @@
 import {
   Column,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSection,
   MenuSeparator,
@@ -12,11 +12,10 @@ import {
   SubmenuTrigger,
   Text,
 } from '@umami/react-zen';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CaretRight, User, Users } from '@/components/icons';
 import type { Key } from 'react';
 import { IconLabel } from '@/components/common/IconLabel';
 import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
-import { ChevronRight, User, Users } from '@/components/icons';
 import { Switch } from '@/components/svg';
 import { LAST_TEAM_CONFIG } from '@/lib/constants';
 import { removeItem } from '@/lib/storage';
@@ -77,21 +76,21 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
           </Row>
           {showText && (
             <Icon rotate={90} size="sm">
-              <ChevronRight />
+              <CaretRight />
             </Icon>
           )}
         </Row>
       </Pressable>
       <Popover placement="bottom start">
         <Column minWidth="300px">
-          <Menu autoFocus="last">
+          <List autoFocus="last">
             <SubmenuTrigger>
               <MenuItem id="teams" showChecked={false} showSubMenuIcon>
                 <IconLabel icon={<Switch />} label={t(labels.switchAccount)} />
               </MenuItem>
               <Popover placement={isMobile ? 'bottom start' : 'right top'}>
                 <Column minWidth="300px">
-                  <Menu selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
+                  <List selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
                     <MenuSection title={t(labels.myAccount)}>
                       <MenuItem id="user">
                         <IconLabel icon={<User />} label={user.username} />
@@ -119,11 +118,11 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
                         </MenuItem>
                       )}
                     </MenuSection>
-                  </Menu>
+                  </List>
                 </Column>
               </Popover>
             </SubmenuTrigger>
-          </Menu>
+          </List>
         </Column>
       </Popover>
     </MenuTrigger>

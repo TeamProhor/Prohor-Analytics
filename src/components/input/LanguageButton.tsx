@@ -1,5 +1,5 @@
 import { Button, Dialog, Grid, Icon, MenuTrigger, Popover, Text } from '@umami/react-zen';
-import { Globe } from 'lucide-react';
+import { Globe } from '@/components/icons';
 import { useLocale } from '@/components/hooks';
 import { languages } from '@/lib/lang';
 

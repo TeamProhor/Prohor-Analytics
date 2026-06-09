@@ -4,7 +4,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { LoadingPanel } from '@/components/common/LoadingPanel';
 import { useMessages, useNavigation, useWebsiteMetricsQuery } from '@/components/hooks';
-import { Maximize } from '@/components/icons';
+import { CornersOut } from '@/components/icons';
 import { MetricLabel } from '@/components/metrics/MetricLabel';
 import { percentFilter } from '@/lib/filters';
 import { ListTable, type ListTableProps } from './ListTable';
@@ -88,7 +88,7 @@ export function MetricsTable({
         {showMore && limit && (
           <Row justifyContent="center" alignItems="flex-end" paddingTop="4">
             <LinkButton href={updateParams({ view: type })} variant="quiet">
-              <IconLabel icon={<Maximize />}>{t(labels.more)}</IconLabel>
+              <IconLabel icon={<CornersOut />}>{t(labels.more)}</IconLabel>
             </LinkButton>
           </Row>
         )}

@@ -8,7 +8,7 @@ import { PageBody } from '@/components/common/PageBody';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Panel } from '@/components/common/Panel';
 import { useBoardQuery, useMessages, useNavigation } from '@/components/hooks';
-import { ArrowLeft, LayoutDashboard } from '@/components/icons';
+import { ArrowLeft, Columns } from '@/components/icons';
 
 export function BoardEditPage({ boardId }: { boardId: string }) {
   const { data: board } = useBoardQuery(boardId);
@@ -26,7 +26,7 @@ export function BoardEditPage({ boardId }: { boardId: string }) {
         <PageHeader
           title={board?.name || t(labels.untitled)}
           description={board?.description}
-          icon={<LayoutDashboard />}
+          icon={<Columns />}
         />
         <Column gap="6">
           <Panel>

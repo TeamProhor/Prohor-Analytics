@@ -1,7 +1,7 @@
 'use client';
 import { Icon, Row } from '@umami/react-zen';
 import { useNavigation } from '@/components/hooks';
-import { Slash } from '@/components/icons';
+import { Password } from '@/components/icons';
 import { BoardSelect } from '@/components/input/BoardSelect';
 import { LinkSelect } from '@/components/input/LinkSelect';
 import { PixelSelect } from '@/components/input/PixelSelect';
@@ -45,7 +45,7 @@ export function TopNav() {
         {(websiteId || linkId || pixelId || boardId) && (
           <>
             <Icon size="sm" color="muted" style={{ opacity: 0.7, margin: '0 6px' }}>
-              <Slash />
+              <Password />
             </Icon>
             {websiteId && (
               <WebsiteSelect

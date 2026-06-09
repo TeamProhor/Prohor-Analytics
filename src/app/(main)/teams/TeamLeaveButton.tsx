@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogTrigger, Icon, Modal, Text } from '@umami/react-zen';
 import { useRouter } from 'next/navigation';
 import { useLoginQuery, useMessages, useModified } from '@/components/hooks';
-import { LogOut } from '@/components/icons';
+import { SignOut } from '@/components/icons';
 import { TeamLeaveForm } from './TeamLeaveForm';
 
 export function TeamLeaveButton({ teamId, teamName }: { teamId: string; teamName: string }) {
@@ -19,7 +19,7 @@ export function TeamLeaveButton({ teamId, teamName }: { teamId: string; teamName
     <DialogTrigger>
       <Button>
         <Icon>
-          <LogOut />
+          <SignOut />
         </Icon>
         <Text>{t(labels.leave)}</Text>
       </Button>

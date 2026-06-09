@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogTrigger, Icon, Modal, Text, useToast } from '@umami/react-zen';
 import { useMessages } from '@/components/hooks';
-import { LockKeyhole } from '@/components/icons';
+import { Lock } from '@/components/icons';
 import { PasswordEditForm } from './PasswordEditForm';
 
 export function PasswordChangeButton() {
@@ -15,7 +15,7 @@ export function PasswordChangeButton() {
     <DialogTrigger>
       <Button>
         <Icon>
-          <LockKeyhole />
+          <Lock />
         </Icon>
         <Text>{t(labels.changePassword)}</Text>
       </Button>

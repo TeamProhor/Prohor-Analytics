@@ -1,7 +1,7 @@
 import {
   Button,
   Icon,
-  Menu,
+  List,
   MenuItem,
   MenuSeparator,
   MenuTrigger,
@@ -10,15 +10,15 @@ import {
 } from '@umami/react-zen';
 import { Fragment } from 'react';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { Edit, MoreHorizontal, Share } from '@/components/icons';
+import { Pencil, DotsThree, ShareNetwork } from '@/components/icons';
 
 export function WebsiteMenu({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();
   const { router, updateParams, renderUrl } = useNavigation();
 
   const menuItems = [
-    { id: 'share', label: t(labels.share), icon: <Share /> },
-    { id: 'edit', label: t(labels.edit), icon: <Edit />, seperator: true },
+    { id: 'share', label: t(labels.share), icon: <ShareNetwork /> },
+    { id: 'edit', label: t(labels.edit), icon: <Pencil />, seperator: true },
   ];
 
   const handleAction = (id: any) => {
@@ -33,11 +33,11 @@ export function WebsiteMenu({ websiteId }: { websiteId: string }) {
     <MenuTrigger>
       <Button variant="quiet">
         <Icon>
-          <MoreHorizontal />
+          <DotsThree />
         </Icon>
       </Button>
       <Popover placement="bottom">
-        <Menu onAction={handleAction}>
+        <List onAction={handleAction}>
           {menuItems.map(({ id, label, icon, seperator }, index) => {
             return (
               <Fragment key={index}>
@@ -49,7 +49,7 @@ export function WebsiteMenu({ websiteId }: { websiteId: string }) {
               </Fragment>
             );
           })}
-        </Menu>
+        </List>
       </Popover>
     </MenuTrigger>
   );

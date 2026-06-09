@@ -11,7 +11,7 @@ import {
 } from '@umami/react-zen';
 import { type ReactNode, useState } from 'react';
 import { useMessages } from '@/components/hooks';
-import { Maximize, X } from '@/components/icons';
+import { CornersOut, X } from '@/components/icons';
 
 export interface PanelProps extends ColumnProps {
   title?: string;
@@ -71,7 +71,7 @@ export function Panel({
           {allowFullscreen && (
             <TooltipTrigger delay={0} isDisabled={isFullscreen}>
               <Button size="sm" variant="quiet" onPress={handleFullscreen}>
-                <Icon>{isFullscreen ? <X /> : <Maximize />}</Icon>
+                <Icon>{isFullscreen ? <X /> : <CornersOut />}</Icon>
               </Button>
               <Tooltip>{t(labels.maximize)}</Tooltip>
             </TooltipTrigger>

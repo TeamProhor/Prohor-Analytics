@@ -1,7 +1,7 @@
 import { Icon, Row, Text } from '@umami/react-zen';
 import type { ReactNode } from 'react';
 import Link, { type LinkProps } from '@/components/common/Link';
-import { ExternalLink as LinkIcon } from '@/components/icons';
+import { ArrowSquareOut as LinkIcon } from '@/components/icons';
 
 export function ExternalLink({
   href,

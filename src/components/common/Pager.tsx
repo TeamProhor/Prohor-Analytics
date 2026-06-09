@@ -1,6 +1,6 @@
 import { Button, Icon, Row, Text } from '@umami/react-zen';
 import { useMessages } from '@/components/hooks';
-import { ChevronRight } from '@/components/icons';
+import { CaretRight } from '@/components/icons';
 
 export interface PagerProps {
   page: string | number;
@@ -45,12 +45,12 @@ export function Pager({ page, pageSize, count, onPageChange }: PagerProps) {
         <Row gap="1">
           <Button variant="outline" onPress={() => handlePageChange(-1)} isDisabled={firstPage}>
             <Icon size="sm" rotate={180}>
-              <ChevronRight />
+              <CaretRight />
             </Icon>
           </Button>
           <Button variant="outline" onPress={() => handlePageChange(1)} isDisabled={lastPage}>
             <Icon size="sm">
-              <ChevronRight />
+              <CaretRight />
             </Icon>
           </Button>
         </Row>

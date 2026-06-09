@@ -3,13 +3,13 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useMessages, useNavigation, usePixel, useSlug } from '@/components/hooks';
-import { Edit, ExternalLink, Grid2x2 } from '@/components/icons';
+import { Pencil, ArrowSquareOut, SquaresFour } from '@/components/icons';
 
 export function PixelHeader({ showActions = true }: { showActions?: boolean }) {
   const pixel = usePixel();
 
   return (
-    <PageHeader title={pixel.name} icon={<Grid2x2 />}>
+    <PageHeader title={pixel.name} icon={<SquaresFour />}>
       {showActions && pixel.id && <PixelHeaderActions pixelId={pixel.id} slug={pixel.slug} />}
     </PageHeader>
   );
@@ -23,10 +23,10 @@ function PixelHeaderActions({ pixelId, slug }: { pixelId: string; slug: string }
   return (
     <Row alignItems="center" gap="3">
       <LinkButton href={renderUrl(`/pixels/${pixelId}/edit`, false)}>
-        <IconLabel icon={<Edit />} label={t(labels.edit)} />
+        <IconLabel icon={<Pencil />} label={t(labels.edit)} />
       </LinkButton>
       <LinkButton href={getSlugUrl(slug)} target="_blank" prefetch={false} asAnchor>
-        <IconLabel icon={<ExternalLink />} label={t(labels.view)} />
+        <IconLabel icon={<ArrowSquareOut />} label={t(labels.view)} />
       </LinkButton>
     </Row>
   );

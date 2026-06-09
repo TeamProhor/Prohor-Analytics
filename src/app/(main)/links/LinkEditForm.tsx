@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 import { useConfig, useLinkQuery, useMessages } from '@/components/hooks';
 import { useUpdateQuery } from '@/components/hooks/queries/useUpdateQuery';
-import { RefreshCw } from '@/components/icons';
+import { ArrowsClockwise } from '@/components/icons';
 import { LINKS_URL } from '@/lib/constants';
 import { getRandomChars } from '@/lib/generate';
 import { isValidUrl } from '@/lib/url';
@@ -119,7 +119,7 @@ export function LinkEditForm({
                   onPress={() => setValue('slug', generateId(), { shouldDirty: true })}
                 >
                   <Icon>
-                    <RefreshCw />
+                    <ArrowsClockwise />
                   </Icon>
                 </Button>
               </Grid>

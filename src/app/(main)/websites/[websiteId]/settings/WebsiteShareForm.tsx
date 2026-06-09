@@ -1,5 +1,5 @@
 import { Column, Heading, Row, Text } from '@umami/react-zen';
-import { Plus } from 'lucide-react';
+import { Plus } from '@/components/icons';
 import { LoadingPanel } from '@/components/common/LoadingPanel';
 import { useMessages, useWebsiteSharesQuery } from '@/components/hooks';
 import { DialogButton } from '@/components/input/DialogButton';

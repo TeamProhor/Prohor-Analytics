@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Hind_Siliguri } from 'next/font/google';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import { getBaseUrl } from '@/lib/get-base-url';
@@ -13,6 +13,13 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+const hindSiliguri = Hind_Siliguri({
+  subsets: ['bengali', 'latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-hind-siliguri',
+});
+
 export default function ({ children }) {
   if (process.env.DISABLE_UI) {
     return (
@@ -23,7 +30,10 @@ export default function ({ children }) {
   }
 
   return (
-    <html lang="en" className={`${inter.className} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${hindSiliguri.variable} ${inter.className}`}
+    >
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

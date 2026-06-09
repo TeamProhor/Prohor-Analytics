@@ -5,7 +5,7 @@ import { FieldSelectForm } from '@/app/(main)/websites/[websiteId]/(reports)/bre
 import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
 import { Panel } from '@/components/common/Panel';
 import { useDateRange, useMessages, useResultQuery } from '@/components/hooks';
-import { ListCheck } from '@/components/icons';
+import { ListChecks } from '@/components/icons';
 import { DialogButton } from '@/components/input/DialogButton';
 import { DownloadButton } from '@/components/input/DownloadButton';
 import { Breakdown } from './Breakdown';
@@ -48,7 +48,7 @@ const FieldsButton = ({ value, onChange }) => {
 
   return (
     <DialogButton
-      icon={<ListCheck />}
+      icon={<ListChecks />}
       label={t(labels.fields)}
       width="400px"
       minHeight="300px"

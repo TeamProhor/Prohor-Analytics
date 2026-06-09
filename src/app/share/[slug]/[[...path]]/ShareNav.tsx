@@ -12,7 +12,7 @@ import {
 import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { useMessages, useNavigation, useShare } from '@/components/hooks';
-import { AlignEndHorizontal, Clock, Eye, PanelLeft, Sheet, Tag, User } from '@/components/icons';
+import { AlignRight, Clock, Eye, Sidebar, FileText, Tag, User } from '@/components/icons';
 import { LanguageButton } from '@/components/input/LanguageButton';
 import { PreferencesButton } from '@/components/input/PreferencesButton';
 import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
@@ -81,13 +81,13 @@ export function ShareNav({
         {
           id: 'compare',
           label: t(labels.compare),
-          icon: <AlignEndHorizontal />,
+          icon: <AlignRight />,
           path: renderPath('/compare'),
         },
         {
           id: 'breakdown',
           label: t(labels.breakdown),
-          icon: <Sheet />,
+          icon: <FileText />,
           path: renderPath('/breakdown'),
         },
       ],
@@ -182,7 +182,7 @@ export function ShareNav({
         {!onItemClick && (
           <Button variant="quiet" onPress={() => onCollapse?.(!collapsed)}>
             <Icon color="muted">
-              <PanelLeft />
+              <Sidebar />
             </Icon>
           </Button>
         )}

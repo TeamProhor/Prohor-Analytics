@@ -1,6 +1,6 @@
 'use client';
 import { Button, Column, Dialog, DialogTrigger, Icon, Popover, Row, Text } from '@umami/react-zen';
-import { Bookmark, X } from 'lucide-react';
+import { Bookmark, X } from '@/components/icons';
 import { useState } from 'react';
 import { SessionInfo } from '@/app/(main)/websites/[websiteId]/sessions/SessionInfo';
 import { Avatar } from '@/components/common/Avatar';

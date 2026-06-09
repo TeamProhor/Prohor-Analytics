@@ -1,7 +1,7 @@
 import { Icon } from '@umami/react-zen';
 import { LinkButton } from '@/components/common/LinkButton';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { Edit } from '@/components/icons';
+import { Pencil } from '@/components/icons';
 
 export function PixelEditButton({ pixelId }: { pixelId: string }) {
   const { t, labels } = useMessages();
@@ -15,7 +15,7 @@ export function PixelEditButton({ pixelId }: { pixelId: string }) {
       variant="quiet"
     >
       <Icon>
-        <Edit />
+        <Pencil />
       </Icon>
     </LinkButton>
   );

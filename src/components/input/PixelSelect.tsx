@@ -2,7 +2,7 @@ import { Icon, ListItem, Row, Select, type SelectProps, Text } from '@umami/reac
 import { useEffect, useState } from 'react';
 import { Empty } from '@/components/common/Empty';
 import { useMessages, usePixelQuery, usePixelsQuery } from '@/components/hooks';
-import { Grid2x2 } from '@/components/icons';
+import { SquaresFour } from '@/components/icons';
 
 export function PixelSelect({
   pixelId,
@@ -47,7 +47,7 @@ export function PixelSelect({
     return (
       <Row alignItems="center" gap>
         <Icon>
-          <Grid2x2 />
+          <SquaresFour />
         </Icon>
         <Text truncate color={name ? undefined : 'muted'}>
           {value}
