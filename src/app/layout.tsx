@@ -35,6 +35,11 @@ export default function ({ children }) {
         <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#2f2f2f" media="(prefers-color-scheme: dark)" />
         <meta name="robots" content="noindex,nofollow" />
+        <script
+          defer
+          src="http://127.0.0.1:3000/pixel"
+          data-website-id="ec5ac57a-430e-4c18-a5c0-02b25574e55c"
+        ></script>
       </head>
       <body>
         <Suspense>

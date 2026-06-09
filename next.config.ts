@@ -177,6 +177,7 @@ if (trackerScriptName) {
 /** @type {import('next').NextConfig} */
 export default withNextIntl({
   reactStrictMode: false,
+  allowedDevOrigins: ['127.0.0.1'],
   env: {
     basePath,
     currentVersion: pkg.version,
