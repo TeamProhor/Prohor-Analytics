@@ -1,52 +1,33 @@
-"use client";
-import { Loading, useToast } from "@umami/react-zen";
-import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { v4 as uuid } from "uuid";
-import {
-  BoardContext,
-  type LayoutGetter,
-} from "@/app/(main)/boards/BoardProvider";
-import { getComponentDefinition } from "@/app/(main)/boards/boardComponentRegistry";
-import {
-  useApi,
-  useDashboardQuery,
-  useMessages,
-  useModified,
-} from "@/components/hooks";
-import { BOARD_TYPES } from "@/lib/boards";
-import type { Board, BoardParameters } from "@/lib/types";
+'use client';
+import { Loading, useToast } from '@umami/react-zen';
+import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import { BoardContext, type LayoutGetter } from '@/app/(main)/boards/BoardProvider';
+import { getComponentDefinition } from '@/app/(main)/boards/boardComponentRegistry';
+import { useApi, useDashboardQuery, useMessages, useModified } from '@/components/hooks';
+import { BOARD_TYPES } from '@/lib/boards';
+import type { Board, BoardParameters } from '@/lib/types';
 
 const createDefaultBoard = (): Partial<Board> => ({
   type: BOARD_TYPES.dashboard,
-  name: "",
-  description: "",
+  name: '',
+  description: '',
   parameters: {
     rows: [{ id: uuid(), columns: [{ id: uuid(), component: null }] }],
   },
 });
 
-function sanitizeBoardParameters(
-  parameters?: BoardParameters,
-): BoardParameters | undefined {
+function sanitizeBoardParameters(parameters?: BoardParameters): BoardParameters | undefined {
   if (!parameters?.rows) {
     return parameters;
   }
 
   return {
     ...parameters,
-    rows: parameters.rows.map((row) => ({
+    rows: parameters.rows.map(row => ({
       ...row,
-      columns: row.columns.map((column) => {
-        if (
-          column.component &&
-          !getComponentDefinition(column.component.type)
-        ) {
+      columns: row.columns.map(column => {
+        if (column.component && !getComponentDefinition(column.component.type)) {
           return {
             ...column,
             component: null,
@@ -71,9 +52,7 @@ export function DashboardProvider({
   const { touch } = useModified();
   const { toast } = useToast();
   const { t, labels, messages } = useMessages();
-  const [board, setBoard] = useState<Partial<Board>>(
-    data ?? createDefaultBoard(),
-  );
+  const [board, setBoard] = useState<Partial<Board>>(data ?? createDefaultBoard());
   const layoutGetterRef = useRef<LayoutGetter | null>(null);
 
   const registerLayoutGetter = useCallback((getter: LayoutGetter) => {
@@ -91,12 +70,12 @@ export function DashboardProvider({
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (boardData: Partial<Board>) => {
-      return post("/dashboard", boardData);
+      return post('/dashboard', boardData);
     },
   });
 
   const updateBoard = useCallback((data: Partial<Board>) => {
-    setBoard((current) => ({ ...current, ...data }));
+    setBoard(current => ({ ...current, ...data }));
   }, []);
 
   const saveBoard = useCallback(async () => {
@@ -109,13 +88,13 @@ export function DashboardProvider({
     const result = await mutateAsync({
       ...board,
       name: dashboardName,
-      description: "",
+      description: '',
       parameters,
     });
 
     toast(t(messages.saved));
-    touch("dashboard");
-    touch("boards");
+    touch('dashboard');
+    touch('boards');
 
     return result;
   }, [board, labels.dashboard, messages.saved, mutateAsync, t, toast, touch]);

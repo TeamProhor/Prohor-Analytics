@@ -1,7 +1,7 @@
-import type { EventData } from "@/generated/prisma/client";
-import prisma from "@/lib/prisma";
+import type { EventData } from '@/generated/prisma/client';
+import prisma from '@/lib/prisma';
 
-const FUNCTION_NAME = "getEventDataById";
+const FUNCTION_NAME = 'getEventDataById';
 
 export async function getEventDataById(
   ...args: [websiteId: string, eventId: string]

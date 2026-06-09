@@ -5,9 +5,9 @@ import {
   FormField,
   FormSubmitButton,
   TextField,
-} from "@umami/react-zen";
-import { useMessages, useUpdateQuery } from "@/components/hooks";
-import { UserSelect } from "@/components/input/UserSelect";
+} from '@umami/react-zen';
+import { useMessages, useUpdateQuery } from '@/components/hooks';
+import { UserSelect } from '@/components/input/UserSelect';
 
 export function TeamAddForm({
   onSave,
@@ -19,7 +19,7 @@ export function TeamAddForm({
   isAdmin: boolean;
 }) {
   const { t, labels, getErrorMessage } = useMessages();
-  const { mutateAsync, error, isPending } = useUpdateQuery("/teams");
+  const { mutateAsync, error, isPending } = useUpdateQuery('/teams');
 
   const handleSubmit = async (data: any) => {
     await mutateAsync(data, {
@@ -37,7 +37,7 @@ export function TeamAddForm({
       </FormField>
       {isAdmin && (
         <FormField name="ownerId" label={t(labels.teamOwner)}>
-          <UserSelect buttonProps={{ style: { outline: "none" } }} />
+          <UserSelect buttonProps={{ style: { outline: 'none' } }} />
         </FormField>
       )}
       <FormButtons>

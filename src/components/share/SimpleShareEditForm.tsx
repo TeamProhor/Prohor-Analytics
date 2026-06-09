@@ -8,14 +8,9 @@ import {
   Loading,
   Row,
   TextField,
-} from "@umami/react-zen";
-import { useEffect, useState } from "react";
-import {
-  useApi,
-  useConfig,
-  useMessages,
-  useModified,
-} from "@/components/hooks";
+} from '@umami/react-zen';
+import { useEffect, useState } from 'react';
+import { useApi, useConfig, useMessages, useModified } from '@/components/hooks';
 
 export function SimpleShareEditForm({
   shareId,
@@ -30,14 +25,14 @@ export function SimpleShareEditForm({
   const config = useConfig();
   const { get, post } = useApi();
   const { touch } = useModified();
-  const { modified } = useModified("shares");
+  const { modified } = useModified('shares');
   const [share, setShare] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<any>(null);
 
   const getUrl = (slug: string) => {
-    return `${config?.cloudMode ? process.env.cloudUrl : window?.location.origin}${process.env.basePath || ""}/share/${slug}`;
+    return `${config?.cloudMode ? process.env.cloudUrl : window?.location.origin}${process.env.basePath || ''}/share/${slug}`;
   };
 
   useEffect(() => {
@@ -65,7 +60,7 @@ export function SimpleShareEditForm({
         parameters: share.parameters || {},
       });
 
-      touch("shares");
+      touch('shares');
       onSave?.();
       onClose?.();
     } catch (e) {
@@ -83,18 +78,14 @@ export function SimpleShareEditForm({
     <Form
       onSubmit={handleSubmit}
       error={getErrorMessage(error)}
-      defaultValues={{ name: share?.name || "" }}
+      defaultValues={{ name: share?.name || '' }}
     >
       <Column gap="6">
         <Column>
           <Label>{t(labels.shareUrl)}</Label>
-          <TextField value={getUrl(share?.slug || "")} isReadOnly allowCopy />
+          <TextField value={getUrl(share?.slug || '')} isReadOnly allowCopy />
         </Column>
-        <FormField
-          label={t(labels.name)}
-          name="name"
-          rules={{ required: t(labels.required) }}
-        >
+        <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
           <TextField autoComplete="off" autoFocus />
         </FormField>
         <Row justifyContent="flex-end" paddingTop="3" gap="3">

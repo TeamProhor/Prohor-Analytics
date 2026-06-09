@@ -1,15 +1,9 @@
-import { IconLabel } from "@/components/common/IconLabel";
-import { NavMenu } from "@/components/common/NavMenu";
-import { useMessages, useNavigation } from "@/components/hooks";
-import { ArrowLeft, Globe, User, Users } from "@/components/icons";
-import {
-  Column,
-  Focusable,
-  Row,
-  Tooltip,
-  TooltipTrigger,
-} from "@umami/react-zen";
-import Link from "@/components/common/Link";
+import { Column, Focusable, Row, Tooltip, TooltipTrigger } from '@umami/react-zen';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
+import { NavMenu } from '@/components/common/NavMenu';
+import { useMessages, useNavigation } from '@/components/hooks';
+import { ArrowLeft, Globe, User, Users } from '@/components/icons';
 
 export function AdminNav({ onItemClick }: { onItemClick?: () => void }) {
   const { t, labels } = useMessages();
@@ -20,21 +14,21 @@ export function AdminNav({ onItemClick }: { onItemClick?: () => void }) {
       label: t(labels.manage),
       items: [
         {
-          id: "users",
+          id: 'users',
           label: t(labels.users),
-          path: "/admin/users",
+          path: '/admin/users',
           icon: <User />,
         },
         {
-          id: "websites",
+          id: 'websites',
           label: t(labels.websites),
-          path: "/admin/websites",
+          path: '/admin/websites',
           icon: <Globe />,
         },
         {
-          id: "teams",
+          id: 'teams',
           label: t(labels.teams),
-          path: "/admin/teams",
+          path: '/admin/teams',
           icon: <Users />,
         },
       ],
@@ -42,21 +36,17 @@ export function AdminNav({ onItemClick }: { onItemClick?: () => void }) {
   ];
 
   const selectedKey = items
-    .flatMap((e) => e.items)
+    .flatMap(e => e.items)
     ?.find(({ path }) => path && pathname.startsWith(path))?.id;
 
   return (
     <Column gap="2">
-      <Link
-        href={renderUrl("/websites", false)}
-        role="button"
-        onClick={onItemClick}
-      >
+      <Link href={renderUrl('/websites', false)} role="button" onClick={onItemClick}>
         <TooltipTrigger delay={0}>
           <Focusable>
             <Row
               alignItems="center"
-              hover={{ backgroundColor: "surface-sunken" }}
+              hover={{ backgroundColor: 'surface-sunken' }}
               borderRadius
               minHeight="40px"
             >

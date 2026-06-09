@@ -1,9 +1,9 @@
-import { BROWSERS, OS_NAMES } from "@/lib/constants";
-import regions from "../../../public/iso-3166-2.json";
-import { useCountryNames } from "./useCountryNames";
-import { useLanguageNames } from "./useLanguageNames";
-import { useLocale } from "./useLocale";
-import { useMessages } from "./useMessages";
+import { BROWSERS, OS_NAMES } from '@/lib/constants';
+import regions from '../../../public/iso-3166-2.json';
+import { useCountryNames } from './useCountryNames';
+import { useLanguageNames } from './useLanguageNames';
+import { useLocale } from './useLocale';
+import { useMessages } from './useMessages';
 
 export function useFormat() {
   const { t, labels } = useMessages();
@@ -28,10 +28,8 @@ export function useFormat() {
   };
 
   const formatRegion = (value?: string): string => {
-    const [country] = value?.split("-") || [];
-    return regions[value]
-      ? `${regions[value]}, ${countryNames[country]}`
-      : value;
+    const [country] = value?.split('-') || [];
+    return regions[value] ? `${regions[value]}, ${countryNames[country]}` : value;
   };
 
   const formatCity = (value: string, country?: string): string => {
@@ -39,31 +37,27 @@ export function useFormat() {
   };
 
   const formatLanguage = (value: string): string => {
-    return languageNames[value?.split("-")[0]] || value;
+    return languageNames[value?.split('-')[0]] || value;
   };
 
-  const formatValue = (
-    value: string,
-    type: string,
-    data?: Record<string, any>,
-  ): string => {
+  const formatValue = (value: string, type: string, data?: Record<string, any>): string => {
     switch (type) {
-      case "os":
+      case 'os':
         return formatOS(value);
-      case "browser":
+      case 'browser':
         return formatBrowser(value);
-      case "device":
+      case 'device':
         return formatDevice(value);
-      case "country":
+      case 'country':
         return formatCountry(value);
-      case "region":
+      case 'region':
         return formatRegion(value);
-      case "city":
+      case 'city':
         return formatCity(value, data?.country);
-      case "language":
+      case 'language':
         return formatLanguage(value);
       default:
-        return typeof value === "string" ? value : undefined;
+        return typeof value === 'string' ? value : undefined;
     }
   };
 

@@ -1,24 +1,19 @@
-"use client";
-import { Column } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { LinkEditForm } from "@/app/(main)/links/LinkEditForm";
-import { LinkProvider } from "@/app/(main)/links/LinkProvider";
-import { LinkShareForm } from "@/app/(main)/links/[linkId]/LinkShareForm";
-import { Panel } from "@/components/common/Panel";
-import { IconLabel } from "@/components/common/IconLabel";
-import { PageHeader } from "@/components/common/PageHeader";
-import { useLink, useMessages, useNavigation } from "@/components/hooks";
-import { ArrowLeft, Link as LinkIcon } from "@/components/icons";
+'use client';
+import { Column } from '@umami/react-zen';
+import { LinkShareForm } from '@/app/(main)/links/[linkId]/LinkShareForm';
+import { LinkEditForm } from '@/app/(main)/links/LinkEditForm';
+import { LinkProvider } from '@/app/(main)/links/LinkProvider';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
+import { PageHeader } from '@/components/common/PageHeader';
+import { Panel } from '@/components/common/Panel';
+import { useLink, useMessages, useNavigation } from '@/components/hooks';
+import { ArrowLeft, Link as LinkIcon } from '@/components/icons';
 
 export function LinkEditPage({ linkId }: { linkId: string }) {
   return (
     <LinkProvider linkId={linkId}>
-      <Column
-        margin="2"
-        width="100%"
-        maxWidth="800px"
-        style={{ marginInline: "auto" }}
-      >
+      <Column margin="2" width="100%" maxWidth="800px" style={{ marginInline: 'auto' }}>
         <LinkEditHeader />
         <Column gap="6">
           <Panel>
@@ -45,11 +40,7 @@ function LinkEditHeader() {
           <IconLabel icon={<ArrowLeft />} label={t(labels.link)} />
         </Link>
       </Column>
-      <PageHeader
-        title={link.name}
-        description={link.url}
-        icon={<LinkIcon />}
-      />
+      <PageHeader title={link.name} description={link.url} icon={<LinkIcon />} />
     </>
   );
 }

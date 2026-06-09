@@ -1,6 +1,6 @@
-import { uuid } from "@/lib/crypto";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { uuid } from '@/lib/crypto';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface CreateReplayChunkArgs {
   websiteId: string;
@@ -20,7 +20,7 @@ export async function getReplayChunks(websiteId: string, visitId: string) {
       visitId,
     },
     orderBy: {
-      chunkIndex: "asc",
+      chunkIndex: 'asc',
     },
     select: {
       events: true,
@@ -64,10 +64,7 @@ export async function deleteReplaysByWebsite(websiteId: string) {
   });
 }
 
-export async function getReplaySaved(
-  websiteId: string,
-  visitId: string,
-): Promise<boolean> {
+export async function getReplaySaved(websiteId: string, visitId: string): Promise<boolean> {
   const record = await prisma.client.sessionReplaySaved.findUnique({
     where: { websiteId_visitId: { websiteId, visitId } },
     select: { id: true },
@@ -75,21 +72,13 @@ export async function getReplaySaved(
   return record !== null;
 }
 
-export async function createReplaySaved(
-  websiteId: string,
-  visitId: string,
-  name: string,
-) {
+export async function createReplaySaved(websiteId: string, visitId: string, name: string) {
   return prisma.client.sessionReplaySaved.create({
     data: { id: uuid(), websiteId, visitId, name },
   });
 }
 
-export async function updateReplaySaved(
-  websiteId: string,
-  visitId: string,
-  name: string,
-) {
+export async function updateReplaySaved(websiteId: string, visitId: string, name: string) {
   return prisma.client.sessionReplaySaved.updateMany({
     where: { websiteId, visitId },
     data: { name },
@@ -102,23 +91,20 @@ export async function deleteReplaySaved(websiteId: string, visitId: string) {
   });
 }
 
-export async function getSavedReplays(
-  websiteId: string,
-  filters: QueryFilters,
-) {
+export async function getSavedReplays(websiteId: string, filters: QueryFilters) {
   const { search } = filters;
   const { getSearchParameters, pagedQuery } = prisma;
 
   const where = {
     websiteId,
-    ...getSearchParameters(search, [{ name: "contains" }]),
+    ...getSearchParameters(search, [{ name: 'contains' }]),
   };
 
   return pagedQuery(
-    "sessionReplaySaved",
+    'sessionReplaySaved',
     {
       where,
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     },
     filters,
   );

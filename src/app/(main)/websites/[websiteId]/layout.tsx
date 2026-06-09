@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { WebsiteLayout } from "@/app/(main)/websites/[websiteId]/WebsiteLayout";
-import { getWebsite } from "@/queries/prisma";
+import type { Metadata } from 'next';
+import { WebsiteLayout } from '@/app/(main)/websites/[websiteId]/WebsiteLayout';
+import { getWebsite } from '@/queries/prisma';
 
 export default async function ({
   children,
@@ -28,7 +28,7 @@ export default async function ({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Umami",
-    default: "Websites | Umami",
+    template: '%s | Prohor Analytics',
+    default: 'Websites | Prohor Analytics',
   },
 };

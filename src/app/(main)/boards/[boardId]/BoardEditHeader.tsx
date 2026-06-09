@@ -1,6 +1,6 @@
-import { Button, LoadingButton, Row } from "@umami/react-zen";
-import { PageHeader } from "@/components/common/PageHeader";
-import { useBoard, useMessages, useNavigation } from "@/components/hooks";
+import { Button, LoadingButton, Row } from '@umami/react-zen';
+import { PageHeader } from '@/components/common/PageHeader';
+import { useBoard, useMessages, useNavigation } from '@/components/hooks';
 
 export function BoardDesignHeader() {
   const { board, saveBoard, isPending } = useBoard();
@@ -19,7 +19,7 @@ export function BoardDesignHeader() {
     if (board.id) {
       router.push(renderUrl(`/boards/${board.id}`));
     } else {
-      router.push(renderUrl("/boards"));
+      router.push(renderUrl('/boards'));
     }
   };
 
@@ -29,11 +29,7 @@ export function BoardDesignHeader() {
         <Button variant="quiet" onPress={handleCancel}>
           {t(labels.cancel)}
         </Button>
-        <LoadingButton
-          variant="primary"
-          onPress={handleSave}
-          isLoading={isPending}
-        >
+        <LoadingButton variant="primary" onPress={handleSave} isLoading={isPending}>
           {t(labels.save)}
         </LoadingButton>
       </Row>

@@ -1,6 +1,6 @@
-import { EVENT_TYPE } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { EVENT_TYPE } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface GoalParameters {
   startDate: Date;
@@ -22,31 +22,29 @@ async function relationalQuery(
 ) {
   const { startDate, endDate, type, value } = parameters;
   const { rawQuery, parseFilters } = prisma;
-  const eventType =
-    type === "path" ? EVENT_TYPE.pageView : EVENT_TYPE.customEvent;
-  const column = type === "path" ? "url_path" : "event_name";
+  const eventType = type === 'path' ? EVENT_TYPE.pageView : EVENT_TYPE.customEvent;
+  const column = type === 'path' ? 'url_path' : 'event_name';
 
-  let operator = "=";
+  let operator = '=';
   let paramValue = value;
-  if (value.startsWith("*") || value.endsWith("*")) {
-    operator = "like";
-    paramValue = value.replace(/^\*|\*$/g, "%");
+  if (value.startsWith('*') || value.endsWith('*')) {
+    operator = 'like';
+    paramValue = value.replace(/^\*|\*$/g, '%');
   }
 
-  const { filterQuery, dateQuery, joinSessionQuery, cohortQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      websiteId,
-      value: paramValue,
-      startDate,
-      endDate,
-      eventType,
-    });
+  const { filterQuery, dateQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+    value: paramValue,
+    startDate,
+    endDate,
+    eventType,
+  });
 
   const excludeEventTypeFilterQuery = filterQuery
-    .split("\n")
-    .filter((filter) => !filter.includes("event_type"))
-    .join("\n")
+    .split('\n')
+    .filter(filter => !filter.includes('event_type'))
+    .join('\n')
     .trim();
 
   return rawQuery(
@@ -70,5 +68,5 @@ async function relationalQuery(
       ${filterQuery}
     `,
     queryParams,
-  ).then((results) => results?.[0]);
+  ).then(results => results?.[0]);
 }

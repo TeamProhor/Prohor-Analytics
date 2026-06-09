@@ -1,11 +1,11 @@
-import { Button, Column, Heading, Row, Text } from "@umami/react-zen";
-import { useState } from "react";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { IconLabel } from "@/components/common/IconLabel";
-import { useMessages, usePixelSharesQuery } from "@/components/hooks";
-import { Plus } from "@/components/icons";
-import { SimpleShareCreateForm } from "@/components/share/SimpleShareCreateForm";
-import { SimpleSharesTable } from "@/components/share/SimpleSharesTable";
+import { Button, Column, Heading, Row, Text } from '@umami/react-zen';
+import { useState } from 'react';
+import { IconLabel } from '@/components/common/IconLabel';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useMessages, usePixelSharesQuery } from '@/components/hooks';
+import { Plus } from '@/components/icons';
+import { SimpleShareCreateForm } from '@/components/share/SimpleShareCreateForm';
+import { SimpleSharesTable } from '@/components/share/SimpleSharesTable';
 
 export function PixelShareForm({ pixelId }: { pixelId: string }) {
   const { data, error, isLoading } = usePixelSharesQuery({ pixelId });
@@ -14,11 +14,7 @@ export function PixelShareForm({ pixelId }: { pixelId: string }) {
 
   return (
     <LoadingPanel data={data} isLoading={isLoading} error={error}>
-      <PixelShareFormContent
-        pixelId={pixelId}
-        hasShares={hasShares}
-        shares={shares}
-      />
+      <PixelShareFormContent pixelId={pixelId} hasShares={hasShares} shares={shares} />
     </LoadingPanel>
   );
 }

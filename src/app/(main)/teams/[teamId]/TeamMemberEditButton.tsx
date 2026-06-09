@@ -1,8 +1,8 @@
-import { useToast } from "@umami/react-zen";
-import { useMessages, useModified } from "@/components/hooks";
-import { Edit } from "@/components/icons";
-import { DialogButton } from "@/components/input/DialogButton";
-import { TeamMemberEditForm } from "./TeamMemberEditForm";
+import { useToast } from '@umami/react-zen';
+import { useMessages, useModified } from '@/components/hooks';
+import { Edit } from '@/components/icons';
+import { DialogButton } from '@/components/input/DialogButton';
+import { TeamMemberEditForm } from './TeamMemberEditForm';
 
 export function TeamMemberEditButton({
   teamId,
@@ -20,18 +20,13 @@ export function TeamMemberEditButton({
   const { touch } = useModified();
 
   const handleSave = () => {
-    touch("teams:members");
+    touch('teams:members');
     toast(t(messages.saved));
     onSave?.();
   };
 
   return (
-    <DialogButton
-      icon={<Edit />}
-      title={t(labels.editMember)}
-      variant="quiet"
-      width="400px"
-    >
+    <DialogButton icon={<Edit />} title={t(labels.editMember)} variant="quiet" width="400px">
       {({ close }) => (
         <TeamMemberEditForm
           teamId={teamId}

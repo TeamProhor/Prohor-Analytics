@@ -1,39 +1,15 @@
-import {
-  Box,
-  Button,
-  Icon,
-  Row,
-  Tooltip,
-  TooltipTrigger,
-} from "@umami/react-zen";
-import { produce } from "immer";
-import { Fragment, useEffect, useRef } from "react";
-import {
-  Group,
-  type GroupImperativeHandle,
-  Panel,
-  Separator,
-} from "react-resizable-panels";
-import { v4 as uuid } from "uuid";
-import { useBoard } from "@/components/hooks";
-import { GripHorizontal, Plus } from "@/components/icons";
-import {
-  getBoardEntity,
-  getBoardType,
-  requiresBoardEntity,
-} from "@/lib/boards";
-import { BoardEditRow } from "./BoardEditRow";
-import {
-  BUTTON_ROW_HEIGHT,
-  MAX_ROW_HEIGHT,
-  MIN_ROW_HEIGHT,
-} from "./boardConstants";
+import { Box, Button, Icon, Row, Tooltip, TooltipTrigger } from '@umami/react-zen';
+import { produce } from 'immer';
+import { Fragment, useEffect, useRef } from 'react';
+import { Group, type GroupImperativeHandle, Panel, Separator } from 'react-resizable-panels';
+import { v4 as uuid } from 'uuid';
+import { useBoard } from '@/components/hooks';
+import { GripHorizontal, Plus } from '@/components/icons';
+import { getBoardEntity, getBoardType, requiresBoardEntity } from '@/lib/boards';
+import { BoardEditRow } from './BoardEditRow';
+import { BUTTON_ROW_HEIGHT, MAX_ROW_HEIGHT, MIN_ROW_HEIGHT } from './boardConstants';
 
-export function BoardEditBody({
-  requiresBoardWebsite = true,
-}: {
-  requiresBoardWebsite?: boolean;
-}) {
+export function BoardEditBody({ requiresBoardWebsite = true }: { requiresBoardWebsite?: boolean }) {
   const { board, updateBoard, registerLayoutGetter } = useBoard();
   const rowGroupRef = useRef<GroupImperativeHandle>(null);
   const columnGroupRefs = useRef<Map<string, GroupImperativeHandle>>(new Map());
@@ -46,11 +22,11 @@ export function BoardEditBody({
 
       const rowLayout = rowGroupRef.current?.getLayout();
 
-      const updatedRows = rows.map((row) => {
+      const updatedRows = rows.map(row => {
         const columnGroupRef = columnGroupRefs.current.get(row.id);
         const columnLayout = columnGroupRef?.getLayout();
 
-        const updatedColumns = row.columns.map((col) => ({
+        const updatedColumns = row.columns.map(col => ({
           ...col,
           size: columnLayout?.[col.id],
         }));
@@ -66,10 +42,7 @@ export function BoardEditBody({
     });
   }, [registerLayoutGetter, board?.parameters?.rows]);
 
-  const registerColumnGroupRef = (
-    rowId: string,
-    ref: GroupImperativeHandle | null,
-  ) => {
+  const registerColumnGroupRef = (rowId: string, ref: GroupImperativeHandle | null) => {
     if (ref) {
       columnGroupRefs.current.set(rowId, ref);
     } else {
@@ -79,7 +52,7 @@ export function BoardEditBody({
 
   const handle = () => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
+      parameters: produce(board.parameters, draft => {
         if (!draft.rows) {
           draft.rows = [];
         }
@@ -93,22 +66,22 @@ export function BoardEditBody({
 
   const handleRemoveRow = (id: string) => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
+      parameters: produce(board.parameters, draft => {
         if (!draft.rows) {
           return;
         }
 
-        draft.rows = draft.rows.filter((row) => row?.id !== id);
+        draft.rows = draft.rows.filter(row => row?.id !== id);
       }),
     });
   };
 
   const handleMoveRowUp = (id: string) => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
+      parameters: produce(board.parameters, draft => {
         if (!draft.rows) return;
 
-        const index = draft.rows.findIndex((row) => row.id === id);
+        const index = draft.rows.findIndex(row => row.id === id);
         if (index > 0) {
           const temp = draft.rows[index - 1];
           draft.rows[index - 1] = draft.rows[index];
@@ -120,10 +93,10 @@ export function BoardEditBody({
 
   const handleMoveRowDown = (id: string) => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
+      parameters: produce(board.parameters, draft => {
         if (!draft.rows) return;
 
-        const index = draft.rows.findIndex((row) => row.id === id);
+        const index = draft.rows.findIndex(row => row.id === id);
         if (index < draft.rows.length - 1) {
           const temp = draft.rows[index + 1];
           draft.rows[index + 1] = draft.rows[index];
@@ -135,9 +108,7 @@ export function BoardEditBody({
 
   const boardType = getBoardType(board);
   const { entityId } = getBoardEntity(board);
-  const canEdit = requiresBoardWebsite
-    ? !requiresBoardEntity(boardType) || !!entityId
-    : true;
+  const canEdit = requiresBoardWebsite ? !requiresBoardEntity(boardType) || !!entityId : true;
   const rows = board?.parameters?.rows ?? [];
   const minHeight = (rows.length || 1) * MAX_ROW_HEIGHT + BUTTON_ROW_HEIGHT;
 
@@ -145,7 +116,7 @@ export function BoardEditBody({
     <Box minHeight={`${minHeight}px`}>
       <Group groupRef={rowGroupRef} orientation="vertical">
         {rows.map((row, index) => (
-          <Fragment key={`${row.id}:${row.size ?? "auto"}`}>
+          <Fragment key={`${row.id}:${row.size ?? 'auto'}`}>
             <Panel
               id={row.id}
               minSize={MIN_ROW_HEIGHT}
@@ -167,14 +138,14 @@ export function BoardEditBody({
             {(index < rows.length - 1 || canEdit) && (
               <Separator
                 style={{
-                  height: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "none",
-                  outline: "none",
-                  boxShadow: "none",
-                  background: "transparent",
+                  height: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: 'none',
+                  outline: 'none',
+                  boxShadow: 'none',
+                  background: 'transparent',
                 }}
               >
                 <Row
@@ -182,7 +153,7 @@ export function BoardEditBody({
                   height="100%"
                   alignItems="center"
                   justifyContent="center"
-                  style={{ cursor: "row-resize" }}
+                  style={{ cursor: 'row-resize' }}
                 >
                   <Icon size="sm">
                     <GripHorizontal />

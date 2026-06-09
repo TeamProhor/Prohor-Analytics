@@ -1,7 +1,7 @@
-import { Button, type ButtonProps } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import type { ReactNode } from "react";
-import { useLocale } from "@/components/hooks";
+import { Button, type ButtonProps } from '@umami/react-zen';
+import type { ReactNode } from 'react';
+import Link from '@/components/common/Link';
+import { useLocale } from '@/components/hooks';
 
 export interface LinkButtonProps extends ButtonProps {
   href: string;
@@ -30,13 +30,7 @@ export function LinkButton({
       {children}
     </a>
   ) : (
-    <Link
-      href={href}
-      dir={dir}
-      scroll={scroll}
-      target={target}
-      prefetch={prefetch}
-    >
+    <Link href={href} dir={dir} scroll={scroll} target={target} prefetch={prefetch}>
       {children}
     </Link>
   );

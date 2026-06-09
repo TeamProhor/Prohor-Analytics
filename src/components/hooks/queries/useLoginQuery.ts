@@ -1,5 +1,5 @@
-import { setUser, useApp } from "@/store/app";
-import { useApi } from "../useApi";
+import { setUser, useApp } from '@/store/app';
+import { useApi } from '../useApi';
 
 const selector = (state: { user: any }) => state.user;
 
@@ -8,9 +8,9 @@ export function useLoginQuery() {
   const user = useApp(selector);
 
   const query = useQuery({
-    queryKey: ["login"],
+    queryKey: ['login'],
     queryFn: async () => {
-      const data = await post("/auth/verify");
+      const data = await post('/auth/verify');
 
       setUser(data);
 

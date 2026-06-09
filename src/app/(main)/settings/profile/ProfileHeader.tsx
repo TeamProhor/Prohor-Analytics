@@ -1,5 +1,5 @@
-import { SectionHeader } from "@/components/common/SectionHeader";
-import { useMessages } from "@/components/hooks";
+import { SectionHeader } from '@/components/common/SectionHeader';
+import { useMessages } from '@/components/hooks';
 
 export function ProfileHeader() {
   const { t, labels } = useMessages();

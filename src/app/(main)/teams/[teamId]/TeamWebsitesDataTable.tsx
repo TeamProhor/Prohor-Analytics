@@ -1,6 +1,6 @@
-import { DataGrid } from "@/components/common/DataGrid";
-import { useTeamWebsitesQuery } from "@/components/hooks";
-import { TeamWebsitesTable } from "./TeamWebsitesTable";
+import { DataGrid } from '@/components/common/DataGrid';
+import { useTeamWebsitesQuery } from '@/components/hooks';
+import { TeamWebsitesTable } from './TeamWebsitesTable';
 
 export function TeamWebsitesDataTable({
   teamId,
@@ -13,9 +13,7 @@ export function TeamWebsitesDataTable({
 
   return (
     <DataGrid query={queryResult} allowSearch>
-      {({ data }) => (
-        <TeamWebsitesTable data={data} teamId={teamId} allowEdit={allowEdit} />
-      )}
+      {({ data }) => <TeamWebsitesTable data={data} teamId={teamId} allowEdit={allowEdit} />}
     </DataGrid>
   );
 }

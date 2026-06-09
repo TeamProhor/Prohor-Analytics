@@ -1,7 +1,7 @@
-import { TypeConfirmationForm } from "@/components/common/TypeConfirmationForm";
-import { useDeleteQuery, useMessages } from "@/components/hooks";
+import { TypeConfirmationForm } from '@/components/common/TypeConfirmationForm';
+import { useDeleteQuery, useMessages } from '@/components/hooks';
 
-const CONFIRM_VALUE = "DELETE";
+const CONFIRM_VALUE = 'DELETE';
 
 export function TeamDeleteForm({
   teamId,
@@ -13,14 +13,12 @@ export function TeamDeleteForm({
   onClose?: () => void;
 }) {
   const { labels, t, getErrorMessage } = useMessages();
-  const { mutateAsync, error, isPending, touch } = useDeleteQuery(
-    `/teams/${teamId}`,
-  );
+  const { mutateAsync, error, isPending, touch } = useDeleteQuery(`/teams/${teamId}`);
 
   const handleConfirm = async () => {
     await mutateAsync(null, {
       onSuccess: async () => {
-        touch("teams");
+        touch('teams');
         touch(`teams:${teamId}`);
         onSave?.();
         onClose?.();

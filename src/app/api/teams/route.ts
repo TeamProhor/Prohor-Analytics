@@ -1,13 +1,13 @@
-import { z } from "zod";
-import { uuid } from "@/lib/crypto";
-import { getRandomChars } from "@/lib/generate";
-import { fetchAccount } from "@/lib/load";
-import redis from "@/lib/redis";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { pagingParams } from "@/lib/schema";
-import { canCreateTeam } from "@/permissions";
-import { createTeam, getUserTeams } from "@/queries/prisma";
+import { z } from 'zod';
+import { uuid } from '@/lib/crypto';
+import { getRandomChars } from '@/lib/generate';
+import { fetchAccount } from '@/lib/load';
+import redis from '@/lib/redis';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { pagingParams } from '@/lib/schema';
+import { canCreateTeam } from '@/permissions';
+import { createTeam, getUserTeams } from '@/queries/prisma';
 
 export async function GET(request: Request) {
   const schema = z.object({

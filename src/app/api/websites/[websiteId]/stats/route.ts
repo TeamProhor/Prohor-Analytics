@@ -1,9 +1,9 @@
-import { getCompareDate } from "@/lib/date";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { filterParams, withDateRange } from "@/lib/schema";
-import { canViewWebsite } from "@/permissions";
-import { getWebsiteStats } from "@/queries/sql";
+import { getCompareDate } from '@/lib/date';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { filterParams, withDateRange } from '@/lib/schema';
+import { canViewWebsite } from '@/permissions';
+import { getWebsiteStats } from '@/queries/sql';
 
 export async function GET(
   request: Request,
@@ -30,7 +30,7 @@ export async function GET(
   const data = await getWebsiteStats(websiteId, filters);
 
   const { startDate, endDate } = getCompareDate(
-    filters.compare ?? "prev",
+    filters.compare ?? 'prev',
     filters.startDate,
     filters.endDate,
   );

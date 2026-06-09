@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { FILTER_COLUMNS } from "@/lib/constants";
-import { useNavigation } from "./useNavigation";
+import { useMemo } from 'react';
+import { FILTER_COLUMNS } from '@/lib/constants';
+import { useNavigation } from './useNavigation';
 
 export function useFilterParameters() {
   const { query } = useNavigation();
@@ -9,7 +9,7 @@ export function useFilterParameters() {
     const filterParams: Record<string, any> = {};
 
     for (const key of Object.keys(query)) {
-      const baseName = key.replace(/\d+$/, "");
+      const baseName = key.replace(/\d+$/, '');
       if (FILTER_COLUMNS[baseName]) {
         filterParams[key] = query[key];
       }

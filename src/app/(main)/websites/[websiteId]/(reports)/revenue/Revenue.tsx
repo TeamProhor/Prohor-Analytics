@@ -1,35 +1,27 @@
-import {
-  Column,
-  Grid,
-  Heading,
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-} from "@umami/react-zen";
-import { useMemo, useState } from "react";
-import { DataGrid } from "@/components/common/DataGrid";
-import { GridRow } from "@/components/common/GridRow";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { Panel } from "@/components/common/Panel";
+import { Column, Grid, Heading, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
+import { useMemo, useState } from 'react';
+import { DataGrid } from '@/components/common/DataGrid';
+import { GridRow } from '@/components/common/GridRow';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { Panel } from '@/components/common/Panel';
 import {
   useDateRange,
   useMessages,
   useNavigation,
   useResultQuery,
   useRevenueSessionsQuery,
-} from "@/components/hooks";
-import { CurrencySelect } from "@/components/input/CurrencySelect";
-import { ListTable } from "@/components/metrics/ListTable";
-import { MetricCard } from "@/components/metrics/MetricCard";
-import { MetricLabel } from "@/components/metrics/MetricLabel";
-import { MetricsBar } from "@/components/metrics/MetricsBar";
-import { RevenueChart } from "@/components/metrics/RevenueChart";
-import { CURRENCY_CONFIG, DEFAULT_CURRENCY } from "@/lib/constants";
-import { formatLongCurrency, formatLongNumber } from "@/lib/format";
-import { getItem, setItem } from "@/lib/storage";
-import { SessionModal } from "../../sessions/SessionModal";
-import { SessionsTable } from "../../sessions/SessionsTable";
+} from '@/components/hooks';
+import { CurrencySelect } from '@/components/input/CurrencySelect';
+import { ListTable } from '@/components/metrics/ListTable';
+import { MetricCard } from '@/components/metrics/MetricCard';
+import { MetricLabel } from '@/components/metrics/MetricLabel';
+import { MetricsBar } from '@/components/metrics/MetricsBar';
+import { RevenueChart } from '@/components/metrics/RevenueChart';
+import { CURRENCY_CONFIG, DEFAULT_CURRENCY } from '@/lib/constants';
+import { formatLongCurrency, formatLongNumber } from '@/lib/format';
+import { getItem, setItem } from '@/lib/storage';
+import { SessionModal } from '../../sessions/SessionModal';
+import { SessionsTable } from '../../sessions/SessionsTable';
 
 function RevenueSessionsDataTable({
   websiteId,
@@ -47,7 +39,7 @@ function RevenueSessionsDataTable({
         <SessionsTable
           data={data}
           websiteId={websiteId}
-          getSessionHref={(row) => updateParams({ session: row.id })}
+          getSessionHref={row => updateParams({ session: row.id })}
         />
       )}
     </DataGrid>
@@ -73,7 +65,7 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
 
   const { t, labels } = useMessages();
   const { compare, isAllTime } = useDateRange();
-  const { data, error, isLoading } = useResultQuery<any>("revenue", {
+  const { data, error, isLoading } = useResultQuery<any>('revenue', {
     websiteId,
     startDate,
     endDate,
@@ -132,9 +124,7 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
     ] as any;
   }, [data]);
 
-  const renderLabel = (type: string) => (data: any) => (
-    <MetricLabel type={type} data={data} />
-  );
+  const renderLabel = (type: string) => (data: any) => <MetricLabel type={type} data={data} />;
 
   return (
     <Column gap>
@@ -145,21 +135,19 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
         {data && (
           <Column gap>
             <MetricsBar>
-              {metrics?.map(
-                ({ label, value, change, formatValue, tooltip }) => {
-                  return (
-                    <MetricCard
-                      key={label}
-                      value={value}
-                      label={label}
-                      tooltip={tooltip}
-                      change={change}
-                      formatValue={formatValue}
-                      showChange={!isAllTime}
-                    />
-                  );
-                },
-              )}
+              {metrics?.map(({ label, value, change, formatValue, tooltip }) => {
+                return (
+                  <MetricCard
+                    key={label}
+                    value={value}
+                    label={label}
+                    tooltip={tooltip}
+                    change={change}
+                    formatValue={formatValue}
+                    showChange={!isAllTime}
+                  />
+                );
+              })}
             </MetricsBar>
             <Panel>
               <RevenueChart
@@ -184,22 +172,14 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
                         title={t(labels.referrer)}
                         metric={t(labels.revenue)}
                         data={data?.referrer.map(
-                          ({
-                            name,
-                            value,
-                          }: {
-                            name: string;
-                            value: number;
-                          }) => ({
+                          ({ name, value }: { name: string; value: number }) => ({
                             label: name,
                             count: Number(value),
                             percent: (value / data?.total.sum) * 100,
                           }),
                         )}
-                        formatCount={(n: number) =>
-                          formatLongCurrency(n, currency)
-                        }
-                        renderLabel={renderLabel("referrer")}
+                        formatCount={(n: number) => formatLongCurrency(n, currency)}
+                        renderLabel={renderLabel('referrer')}
                       />
                     </TabPanel>
                     <TabPanel id="channel">
@@ -207,22 +187,14 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
                         title={t(labels.channel)}
                         metric={t(labels.revenue)}
                         data={data?.channel.map(
-                          ({
-                            name,
-                            value,
-                          }: {
-                            name: string;
-                            value: number;
-                          }) => ({
+                          ({ name, value }: { name: string; value: number }) => ({
                             label: name,
                             count: Number(value),
                             percent: (value / data?.total.sum) * 100,
                           }),
                         )}
-                        formatCount={(n: number) =>
-                          formatLongCurrency(n, currency)
-                        }
-                        renderLabel={renderLabel("channel")}
+                        formatCount={(n: number) => formatLongCurrency(n, currency)}
+                        renderLabel={renderLabel('channel')}
                       />
                     </TabPanel>
                   </Tabs>
@@ -239,22 +211,14 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
                         title={t(labels.country)}
                         metric={t(labels.revenue)}
                         data={data?.country.map(
-                          ({
-                            name,
-                            value,
-                          }: {
-                            name: string;
-                            value: number;
-                          }) => ({
+                          ({ name, value }: { name: string; value: number }) => ({
                             label: name,
                             count: Number(value),
                             percent: (value / data?.total.sum) * 100,
                           }),
                         )}
-                        formatCount={(n: number) =>
-                          formatLongCurrency(n, currency)
-                        }
-                        renderLabel={renderLabel("country")}
+                        formatCount={(n: number) => formatLongCurrency(n, currency)}
+                        renderLabel={renderLabel('country')}
                       />
                     </TabPanel>
                     <TabPanel id="region">
@@ -277,10 +241,8 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
                             percent: (value / data?.total.sum) * 100,
                           }),
                         )}
-                        formatCount={(n: number) =>
-                          formatLongCurrency(n, currency)
-                        }
-                        renderLabel={renderLabel("region")}
+                        formatCount={(n: number) => formatLongCurrency(n, currency)}
+                        renderLabel={renderLabel('region')}
                       />
                     </TabPanel>
                   </Tabs>
@@ -289,10 +251,7 @@ export function Revenue({ websiteId, startDate, endDate, unit }: RevenueProps) {
             </Grid>
             <Panel>
               <Heading size="2xl">{t(labels.customers)}</Heading>
-              <RevenueSessionsDataTable
-                websiteId={websiteId}
-                currency={currency}
-              />
+              <RevenueSessionsDataTable websiteId={websiteId} currency={currency} />
             </Panel>
           </Column>
         )}

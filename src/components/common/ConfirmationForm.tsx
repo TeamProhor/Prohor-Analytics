@@ -1,17 +1,11 @@
-import {
-  Box,
-  Button,
-  Form,
-  FormButtons,
-  FormSubmitButton,
-} from "@umami/react-zen";
-import type { ReactNode } from "react";
-import { useMessages } from "@/components/hooks";
+import { Box, Button, Form, FormButtons, FormSubmitButton } from '@umami/react-zen';
+import type { ReactNode } from 'react';
+import { useMessages } from '@/components/hooks';
 
 export interface ConfirmationFormProps {
   message: ReactNode;
   buttonLabel?: ReactNode;
-  buttonVariant?: "primary" | "quiet" | "danger";
+  buttonVariant?: 'primary' | 'quiet' | 'danger';
   isLoading?: boolean;
   error?: string | Error;
   onConfirm?: () => void;

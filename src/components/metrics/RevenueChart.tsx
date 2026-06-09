@@ -1,10 +1,10 @@
-import { colord } from "colord";
-import { useCallback, useMemo } from "react";
-import { BarChart } from "@/components/charts/BarChart";
-import { useLocale } from "@/components/hooks";
-import { renderDateLabels } from "@/lib/charts";
-import { CHART_COLORS } from "@/lib/constants";
-import { generateTimeSeries } from "@/lib/date";
+import { colord } from 'colord';
+import { useCallback, useMemo } from 'react';
+import { BarChart } from '@/components/charts/BarChart';
+import { useLocale } from '@/components/hooks';
+import { renderDateLabels } from '@/lib/charts';
+import { CHART_COLORS } from '@/lib/constants';
+import { generateTimeSeries } from '@/lib/date';
 
 export interface RevenueChartProps {
   data: { x: string; t: string; y: number; count: number }[];
@@ -14,13 +14,7 @@ export interface RevenueChartProps {
   currency: string;
 }
 
-export function RevenueChart({
-  data,
-  unit,
-  minDate,
-  maxDate,
-  currency,
-}: RevenueChartProps) {
+export function RevenueChart({ data, unit, minDate, maxDate, currency }: RevenueChartProps) {
   const { locale, dateLocale } = useLocale();
 
   const chartData: any = useMemo(() => {
@@ -40,13 +34,7 @@ export function RevenueChart({
         const color = colord(CHART_COLORS[index % CHART_COLORS.length]);
         return {
           label: key,
-          data: generateTimeSeries(
-            map[key],
-            minDate,
-            maxDate,
-            unit,
-            dateLocale,
-          ),
+          data: generateTimeSeries(map[key], minDate, maxDate, unit, dateLocale),
           backgroundColor: color.alpha(0.6).toRgbString(),
           borderColor: color.alpha(0.7).toRgbString(),
           borderWidth: 1,
@@ -55,10 +43,7 @@ export function RevenueChart({
     };
   }, [data, minDate, maxDate, unit, dateLocale]);
 
-  const renderXLabel = useCallback(renderDateLabels(unit, locale), [
-    unit,
-    locale,
-  ]);
+  const renderXLabel = useCallback(renderDateLabels(unit, locale), [unit, locale]);
 
   return (
     <BarChart

@@ -1,12 +1,12 @@
-import { z } from "zod";
-import { parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { canUpdateWebsite, canViewWebsite } from "@/permissions";
+import { z } from 'zod';
+import { parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { canUpdateWebsite, canViewWebsite } from '@/permissions';
 import {
   createReplaySaved,
   deleteReplaySaved,
   getReplaySaved,
-} from "@/queries/prisma/sessionReplay";
+} from '@/queries/prisma/sessionReplay';
 
 export async function GET(
   request: Request,
@@ -51,7 +51,7 @@ export async function POST(
   }
 
   if (body.isSaved) {
-    await createReplaySaved(websiteId, replayId, body.name ?? "");
+    await createReplaySaved(websiteId, replayId, body.name ?? '');
   } else {
     await deleteReplaySaved(websiteId, replayId);
   }

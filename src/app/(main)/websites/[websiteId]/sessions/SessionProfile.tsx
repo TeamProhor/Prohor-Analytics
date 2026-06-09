@@ -1,7 +1,4 @@
-"use client";
-import { Avatar } from "@/components/common/Avatar";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { useMessages, useWebsiteSessionQuery } from "@/components/hooks";
+'use client';
 import {
   Button,
   Column,
@@ -12,13 +9,16 @@ import {
   TabPanel,
   Tabs,
   TextField,
-} from "@umami/react-zen";
-import { X } from "lucide-react";
-import { SessionActivity } from "./SessionActivity";
-import { SessionData } from "./SessionData";
-import { SessionInfo } from "./SessionInfo";
-import { SessionReplaysDataTable } from "./SessionReplaysDataTable";
-import { SessionStats } from "./SessionStats";
+} from '@umami/react-zen';
+import { X } from 'lucide-react';
+import { Avatar } from '@/components/common/Avatar';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useMessages, useWebsiteSessionQuery } from '@/components/hooks';
+import { SessionActivity } from './SessionActivity';
+import { SessionData } from './SessionData';
+import { SessionInfo } from './SessionInfo';
+import { SessionReplaysDataTable } from './SessionReplaysDataTable';
+import { SessionStats } from './SessionStats';
 
 export function SessionProfile({
   websiteId,
@@ -31,10 +31,7 @@ export function SessionProfile({
   showReplays?: boolean;
   onClose?: () => void;
 }) {
-  const { data, isLoading, error } = useWebsiteSessionQuery(
-    websiteId,
-    sessionId,
-  );
+  const { data, isLoading, error } = useWebsiteSessionQuery(websiteId, sessionId);
   const { t, labels } = useMessages();
 
   return (
@@ -85,10 +82,7 @@ export function SessionProfile({
               </TabPanel>
               {showReplays && (
                 <TabPanel id="replays">
-                  <SessionReplaysDataTable
-                    websiteId={websiteId}
-                    sessionId={sessionId}
-                  />
+                  <SessionReplaysDataTable websiteId={websiteId} sessionId={sessionId} />
                 </TabPanel>
               )}
             </Tabs>

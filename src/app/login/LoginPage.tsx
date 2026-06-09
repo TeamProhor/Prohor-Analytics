@@ -1,9 +1,9 @@
-"use client";
-import { Column, Loading } from "@umami/react-zen";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useLoginQuery } from "@/components/hooks";
-import { LoginForm } from "./LoginForm";
+'use client';
+import { Column, Loading } from '@umami/react-zen';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useLoginQuery } from '@/components/hooks';
+import { LoginForm } from './LoginForm';
 
 export function LoginPage() {
   const { user, isLoading } = useLoginQuery();
@@ -11,7 +11,7 @@ export function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [user, router]);
 
@@ -25,7 +25,7 @@ export function LoginPage() {
       justifyContent="flex-start"
       height="100vh"
       backgroundColor="surface-raised"
-      style={{ paddingTop: "15vh" }}
+      style={{ paddingTop: '15vh' }}
     >
       <LoginForm />
     </Column>

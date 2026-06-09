@@ -1,5 +1,5 @@
-import { colord } from "colord";
-import { THEME_COLORS } from "@/lib/constants";
+import { colord } from 'colord';
+import { THEME_COLORS } from '@/lib/constants';
 
 export function hex6(str: string) {
   let h = 0x811c9dc5; // FNV-1a 32-bit offset
@@ -8,7 +8,7 @@ export function hex6(str: string) {
     h = (h >>> 0) * 0x01000193; // FNV prime
   }
   // use lower 24 bits; pad to 6 hex chars
-  return ((h >>> 0) & 0xffffff).toString(16).padStart(6, "0");
+  return ((h >>> 0) & 0xffffff).toString(16).padStart(6, '0');
 }
 
 export const pick = (num: number, arr: any[]) => {
@@ -20,7 +20,7 @@ export function clamp(num: number, min: number, max: number) {
 }
 
 export function hex2RGB(color: string, min: number = 0, max: number = 255) {
-  const c = color.replace(/^#/, "");
+  const c = color.replace(/^#/, '');
   const diff = max - min;
 
   const normalize = (num: number) => {
@@ -34,11 +34,11 @@ export function hex2RGB(color: string, min: number = 0, max: number = 255) {
   return { r, g, b };
 }
 
-export function rgb2Hex(r: number, g: number, b: number, prefix = "") {
+export function rgb2Hex(r: number, g: number, b: number, prefix = '') {
   return `${prefix}${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
 }
 
-export function getPastel(color: string, factor: number = 0.5, prefix = "") {
+export function getPastel(color: string, factor: number = 0.5, prefix = '') {
   let { r, g, b } = hex2RGB(color);
 
   r = Math.floor((r + 255 * factor) / (1 + factor));

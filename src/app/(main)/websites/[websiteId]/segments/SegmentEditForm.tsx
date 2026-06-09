@@ -7,14 +7,10 @@ import {
   Label,
   Loading,
   TextField,
-} from "@umami/react-zen";
-import { useEffect, useState } from "react";
-import {
-  useMessages,
-  useUpdateQuery,
-  useWebsiteSegmentQuery,
-} from "@/components/hooks";
-import { FieldFilters } from "@/components/input/FieldFilters";
+} from '@umami/react-zen';
+import { useEffect, useState } from 'react';
+import { useMessages, useUpdateQuery, useWebsiteSegmentQuery } from '@/components/hooks';
+import { FieldFilters } from '@/components/input/FieldFilters';
 
 export function SegmentEditForm({
   segmentId,
@@ -33,16 +29,16 @@ export function SegmentEditForm({
 }) {
   const { data } = useWebsiteSegmentQuery(websiteId, segmentId);
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const [currentMatch, setCurrentMatch] = useState<string>("all");
+  const [currentMatch, setCurrentMatch] = useState<string>('all');
 
   useEffect(() => {
-    setCurrentMatch((data?.parameters as any)?.match || "all");
+    setCurrentMatch((data?.parameters as any)?.match || 'all');
   }, [data]);
 
   const { mutateAsync, error, isPending, touch, toast } = useUpdateQuery(
-    `/websites/${websiteId}/segments${segmentId ? `/${segmentId}` : ""}`,
+    `/websites/${websiteId}/segments${segmentId ? `/${segmentId}` : ''}`,
     {
-      type: "segment",
+      type: 'segment',
     },
   );
 
@@ -52,13 +48,13 @@ export function SegmentEditForm({
         ...formData,
         parameters: {
           ...formData.parameters,
-          match: currentMatch !== "all" ? currentMatch : undefined,
+          match: currentMatch !== 'all' ? currentMatch : undefined,
         },
       },
       {
         onSuccess: async () => {
           toast(t(messages.saved));
-          touch("segments");
+          touch('segments');
           onSave?.();
           onClose?.();
         },
@@ -76,20 +72,13 @@ export function SegmentEditForm({
       defaultValues={data || { parameters: { filters } }}
       error={getErrorMessage(error)}
     >
-      <FormField
-        name="name"
-        label={t(labels.name)}
-        rules={{ required: t(labels.required) }}
-      >
+      <FormField name="name" label={t(labels.name)} rules={{ required: t(labels.required) }}>
         <TextField autoFocus={!segmentId} />
       </FormField>
       {showFilters && (
         <>
           <Label>{t(labels.filters)}</Label>
-          <FormField
-            name="parameters.filters"
-            rules={{ required: t(labels.required) }}
-          >
+          <FormField name="parameters.filters" rules={{ required: t(labels.required) }}>
             <FieldFilters
               websiteId={websiteId}
               match={currentMatch}
@@ -102,11 +91,7 @@ export function SegmentEditForm({
         <Button isDisabled={isPending} onPress={onClose}>
           {t(labels.cancel)}
         </Button>
-        <FormSubmitButton
-          variant="primary"
-          data-test="button-submit"
-          isDisabled={isPending}
-        >
+        <FormSubmitButton variant="primary" data-test="button-submit" isDisabled={isPending}>
           {t(labels.save)}
         </FormSubmitButton>
       </FormButtons>

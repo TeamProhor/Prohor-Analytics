@@ -1,12 +1,12 @@
-import { Column, Heading, Row, SearchField, Text } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { useMemo, useState } from "react";
-import { FixedSizeList } from "react-window";
-import { SessionModal } from "@/app/(main)/websites/[websiteId]/sessions/SessionModal";
-import { useFormat } from "@/components//hooks/useFormat";
-import { Avatar } from "@/components/common/Avatar";
-import { Empty } from "@/components/common/Empty";
-import { IconLabel } from "@/components/common/IconLabel";
+import { Column, Heading, Row, SearchField, Text } from '@umami/react-zen';
+import { useMemo, useState } from 'react';
+import { FixedSizeList } from 'react-window';
+import { SessionModal } from '@/app/(main)/websites/[websiteId]/sessions/SessionModal';
+import { useFormat } from '@/components//hooks/useFormat';
+import { Avatar } from '@/components/common/Avatar';
+import { Empty } from '@/components/common/Empty';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
 import {
   useCountryNames,
   useLocale,
@@ -15,16 +15,16 @@ import {
   useNavigation,
   useTimezone,
   useWebsite,
-} from "@/components/hooks";
-import { Eye, User } from "@/components/icons";
-import { FilterButtons } from "@/components/input/FilterButtons";
-import { Lightning } from "@/components/svg";
-import { BROWSERS, OS_NAMES } from "@/lib/constants";
+} from '@/components/hooks';
+import { Eye, User } from '@/components/icons';
+import { FilterButtons } from '@/components/input/FilterButtons';
+import { Lightning } from '@/components/svg';
+import { BROWSERS, OS_NAMES } from '@/lib/constants';
 
-const TYPE_ALL = "all";
-const TYPE_PAGEVIEW = "pageview";
-const TYPE_SESSION = "session";
-const TYPE_EVENT = "event";
+const TYPE_ALL = 'all';
+const TYPE_PAGEVIEW = 'pageview';
+const TYPE_SESSION = 'session';
+const TYPE_EVENT = 'event';
 
 const icons = {
   [TYPE_PAGEVIEW]: <Eye />,
@@ -34,7 +34,7 @@ const icons = {
 
 export function RealtimeLog({ data }: { data: any }) {
   const website = useWebsite();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { t, labels, messages } = useMessages();
   const { formatValue } = useFormat();
   const { locale } = useLocale();
@@ -63,8 +63,7 @@ export function RealtimeLog({ data }: { data: any }) {
     },
   ];
 
-  const getTime = ({ createdAt, firstAt }) =>
-    formatTimezoneDate(firstAt || createdAt, "pp");
+  const getTime = ({ createdAt, firstAt }) => formatTimezoneDate(firstAt || createdAt, 'pp');
 
   const getIcon = ({ __type }) => icons[__type];
 
@@ -78,26 +77,17 @@ export function RealtimeLog({ data }: { data: any }) {
     device: string;
     hostname: string;
   }) => {
-    const {
-      __type,
-      eventName,
-      urlPath,
-      browser,
-      os,
-      country,
-      device,
-      hostname,
-    } = log;
+    const { __type, eventName, urlPath, browser, os, country, device, hostname } = log;
 
     if (__type === TYPE_EVENT) {
       return t.rich(messages.eventLog, {
         event: eventName || t(labels.unknown),
         url: urlPath,
-        b: (chunks) => <b>{chunks}</b>,
-        a: (chunks) => (
+        b: chunks => <b>{chunks}</b>,
+        a: chunks => (
           <a
             href={`//${hostname}${urlPath}`}
-            style={{ fontWeight: "bold" }}
+            style={{ fontWeight: 'bold' }}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -111,7 +101,7 @@ export function RealtimeLog({ data }: { data: any }) {
       return (
         <a
           href={`//${hostname}${urlPath}`}
-          style={{ fontWeight: "bold" }}
+          style={{ fontWeight: 'bold' }}
           target="_blank"
           rel="noreferrer noopener"
         >
@@ -126,7 +116,7 @@ export function RealtimeLog({ data }: { data: any }) {
         browser: BROWSERS[browser],
         os: OS_NAMES[os] || os,
         device: t(labels[device] || labels.unknown),
-        b: (chunks) => <b>{chunks}</b>,
+        b: chunks => <b>{chunks}</b>,
       });
     }
   };
@@ -144,7 +134,7 @@ export function RealtimeLog({ data }: { data: any }) {
           <Text wrap="nowrap">{getTime(row)}</Text>
         </Row>
         <IconLabel icon={getIcon(row)}>
-          <Text style={{ maxWidth: isPhone ? "400px" : null }} truncate>
+          <Text style={{ maxWidth: isPhone ? '400px' : null }} truncate>
             {getDetail(row)}
           </Text>
         </IconLabel>
@@ -160,22 +150,20 @@ export function RealtimeLog({ data }: { data: any }) {
     let logs = data.events;
 
     if (search) {
-      logs = logs.filter(
-        ({ eventName, urlPath, browser, os, country, device }) => {
-          return [
-            eventName,
-            urlPath,
-            os,
-            formatValue(browser, "browser"),
-            formatValue(country, "country"),
-            formatValue(device, "device"),
-          ]
-            .filter((n) => n)
-            .map((n) => n.toLowerCase())
-            .join("")
-            .includes(search.toLowerCase());
-        },
-      );
+      logs = logs.filter(({ eventName, urlPath, browser, os, country, device }) => {
+        return [
+          eventName,
+          urlPath,
+          os,
+          formatValue(browser, 'browser'),
+          formatValue(country, 'country'),
+          formatValue(device, 'device'),
+        ]
+          .filter(n => n)
+          .map(n => n.toLowerCase())
+          .join('')
+          .includes(search.toLowerCase());
+      });
     }
 
     if (filter !== TYPE_ALL) {
@@ -194,11 +182,7 @@ export function RealtimeLog({ data }: { data: any }) {
             <SearchField value={search} onSearch={setSearch} />
           </Row>
           <Row>
-            <FilterButtons
-              items={buttons}
-              value={filter}
-              onChange={setFilter}
-            />
+            <FilterButtons items={buttons} value={filter} onChange={setFilter} />
           </Row>
         </>
       ) : (
@@ -211,12 +195,7 @@ export function RealtimeLog({ data }: { data: any }) {
       <Column>
         {logs?.length === 0 && <Empty />}
         {logs?.length > 0 && (
-          <FixedSizeList
-            width="100%"
-            height={500}
-            itemCount={logs.length}
-            itemSize={50}
-          >
+          <FixedSizeList width="100%" height={500} itemCount={logs.length} itemSize={50}>
             {TableRow}
           </FixedSizeList>
         )}

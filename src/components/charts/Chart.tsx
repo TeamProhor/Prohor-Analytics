@@ -1,26 +1,18 @@
-import { Box, type BoxProps, Column } from "@umami/react-zen";
+import { Box, type BoxProps, Column } from '@umami/react-zen';
 import ChartJS, {
   type ChartData,
   type ChartOptions,
   type LegendItem,
   type UpdateMode,
-} from "chart.js/auto";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Legend } from "@/components/metrics/Legend";
-import { DEFAULT_ANIMATION_DURATION } from "@/lib/constants";
+} from 'chart.js/auto';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Legend } from '@/components/metrics/Legend';
+import { DEFAULT_ANIMATION_DURATION } from '@/lib/constants';
 
-ChartJS.defaults.font.family = "Inter";
+ChartJS.defaults.font.family = 'Inter';
 
 export interface ChartProps extends BoxProps {
-  type?:
-    | "bar"
-    | "bubble"
-    | "doughnut"
-    | "pie"
-    | "line"
-    | "polarArea"
-    | "radar"
-    | "scatter";
+  type?: 'bar' | 'bubble' | 'doughnut' | 'pie' | 'line' | 'polarArea' | 'radar' | 'scatter';
   chartData?: ChartData & { focusLabel?: string };
   chartOptions?: ChartOptions;
   updateMode?: UpdateMode;
@@ -69,14 +61,12 @@ export function Chart({
   }, [chartOptions]);
 
   const handleLegendClick = (item: LegendItem) => {
-    if (type === "bar") {
+    if (type === 'bar') {
       const { datasetIndex } = item;
       const meta = chart.current.getDatasetMeta(datasetIndex);
 
       meta.hidden =
-        meta.hidden === null
-          ? !chart.current.data.datasets[datasetIndex]?.hidden
-          : null;
+        meta.hidden === null ? !chart.current.data.datasets[datasetIndex]?.hidden : null;
     } else {
       const { index } = item;
       const meta = chart.current.getDatasetMeta(0);
@@ -116,13 +106,9 @@ export function Chart({
       chart.current.data.datasets = chartData.datasets;
 
       if (chartData.focusLabel !== null) {
-        chart.current.data.datasets.forEach(
-          (ds: { hidden: boolean; label: any }) => {
-            ds.hidden = chartData.focusLabel
-              ? ds.label !== chartData.focusLabel
-              : false;
-          },
-        );
+        chart.current.data.datasets.forEach((ds: { hidden: boolean; label: any }) => {
+          ds.hidden = chartData.focusLabel ? ds.label !== chartData.focusLabel : false;
+        });
       }
 
       chart.current.options = options;
@@ -149,16 +135,13 @@ export function Chart({
         */}
         <div
           style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            overflow: "hidden",
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
           }}
         >
-          <canvas
-            ref={canvas}
-            style={{ position: "absolute", top: 0, left: 0 }}
-          />
+          <canvas ref={canvas} style={{ position: 'absolute', top: 0, left: 0 }} />
         </div>
       </Box>
       <Legend items={legendItems} onClick={handleLegendClick} />

@@ -1,6 +1,6 @@
-import { Icon, Row, type RowProps, Text } from "@umami/react-zen";
-import type { ReactNode } from "react";
-import { ArrowRight } from "@/components/icons";
+import { Icon, Row, type RowProps, Text } from '@umami/react-zen';
+import type { ReactNode } from 'react';
+import { ArrowRight } from '@/components/icons';
 
 const STYLES = {
   positive: {
@@ -25,7 +25,7 @@ export function ChangeLabel({
   ...props
 }: {
   value: number;
-  size?: "xs" | "sm" | "md" | "lg";
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   title?: string;
   reverseColors?: boolean;
   showPercentage?: boolean;
@@ -37,9 +37,7 @@ export function ChangeLabel({
   const good = reverseColors ? negative : positive;
 
   const style =
-    STYLES[good && "positive"] ||
-    STYLES[!good && "negative"] ||
-    STYLES[neutral && "neutral"];
+    STYLES[good && 'positive'] || STYLES[!good && 'negative'] || STYLES[neutral && 'neutral'];
 
   return (
     <Row

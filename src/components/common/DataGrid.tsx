@@ -1,5 +1,5 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { Column, Row, SearchField } from "@umami/react-zen";
+import type { UseQueryResult } from '@tanstack/react-query';
+import { Column, Row, SearchField } from '@umami/react-zen';
 import {
   cloneElement,
   isValidElement,
@@ -7,12 +7,12 @@ import {
   type ReactNode,
   useCallback,
   useState,
-} from "react";
-import { Empty } from "@/components/common/Empty";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { Pager } from "@/components/common/Pager";
-import { useMessages, useMobile, useNavigation } from "@/components/hooks";
-import type { PageResult } from "@/lib/types";
+} from 'react';
+import { Empty } from '@/components/common/Empty';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { Pager } from '@/components/common/Pager';
+import { useMessages, useMobile, useNavigation } from '@/components/hooks';
+import type { PageResult } from '@/lib/types';
 
 const DEFAULT_SEARCH_DELAY = 600;
 
@@ -40,12 +40,10 @@ export function DataGrid({
   const { t, labels } = useMessages();
   const { data, error, isLoading, isFetching } = query;
   const { router, updateParams, query: queryParams } = useNavigation();
-  const [search, setSearch] = useState(
-    queryParams?.search || data?.search || "",
-  );
+  const [search, setSearch] = useState(queryParams?.search || data?.search || '');
   const showPager = allowPaging && data && data.count > data.pageSize;
   const { isMobile } = useMobile();
-  const displayMode = isMobile ? "cards" : undefined;
+  const displayMode = isMobile ? 'cards' : undefined;
 
   const handleSearch = (value: string) => {
     if (value !== search) {
@@ -61,11 +59,7 @@ export function DataGrid({
     [search, updateParams],
   );
 
-  const child = data
-    ? typeof children === "function"
-      ? children(data)
-      : children
-    : null;
+  const child = data ? (typeof children === 'function' ? children(data) : children) : null;
 
   return (
     <Column gap="4" minHeight="300px">

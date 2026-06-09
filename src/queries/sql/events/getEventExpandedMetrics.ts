@@ -1,8 +1,8 @@
-import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getEventExpandedMetrics";
+const FUNCTION_NAME = 'getEventExpandedMetrics';
 
 export interface EventExpandedMetricParameters {
   type: string;
@@ -20,11 +20,7 @@ export interface EventExpandedMetricData {
 }
 
 export async function getEventExpandedMetrics(
-  ...args: [
-    websiteId: string,
-    parameters: EventExpandedMetricParameters,
-    filters: QueryFilters,
-  ]
+  ...args: [websiteId: string, parameters: EventExpandedMetricParameters, filters: QueryFilters]
 ): Promise<EventExpandedMetricData[]> {
   return relationalQuery(...args);
 }
@@ -37,15 +33,14 @@ async function relationalQuery(
   const { type, limit = 500, offset = 0 } = parameters;
   const column = FILTER_COLUMNS[type] || type;
   const { rawQuery, parseFilters, getTimestampDiffSQL } = prisma;
-  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } =
-    parseFilters(
-      {
-        ...filters,
-        websiteId,
-        eventType: EVENT_TYPE.customEvent,
-      },
-      { joinSession: SESSION_COLUMNS.includes(type) },
-    );
+  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } = parseFilters(
+    {
+      ...filters,
+      websiteId,
+      eventType: EVENT_TYPE.customEvent,
+    },
+    { joinSession: SESSION_COLUMNS.includes(type) },
+  );
 
   return rawQuery(
     `
@@ -55,7 +50,7 @@ async function relationalQuery(
       count(distinct t.session_id) as "visitors",
       count(distinct t.visit_id) as "visits",
       sum(case when t.c = 1 then 1 else 0 end) as "bounces",
-      sum(${getTimestampDiffSQL("t.min_time", "t.max_time")}) as "totaltime"
+      sum(${getTimestampDiffSQL('t.min_time', 't.max_time')}) as "totaltime"
     from (
       select
         ${column} as "name",

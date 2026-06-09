@@ -1,7 +1,7 @@
-import { Icon, Row, Tab, TabList, Tabs, Text } from "@umami/react-zen";
-import { useMessages, useNavigation, useWebsite } from "@/components/hooks";
-import { ChartPie, Clock, Eye, User } from "@/components/icons";
-import { Lightning } from "@/components/svg";
+import { Icon, Row, Tab, TabList, Tabs, Text } from '@umami/react-zen';
+import { useMessages, useNavigation, useWebsite } from '@/components/hooks';
+import { ChartPie, Clock, Eye, User } from '@/components/icons';
+import { Lightning } from '@/components/svg';
 
 export function WebsiteTabs() {
   const website = useWebsite();
@@ -10,39 +10,38 @@ export function WebsiteTabs() {
 
   const links = [
     {
-      id: "overview",
+      id: 'overview',
       label: t(labels.overview),
       icon: <Eye />,
-      path: "",
+      path: '',
     },
     {
-      id: "events",
+      id: 'events',
       label: t(labels.events),
       icon: <Lightning />,
-      path: "/events",
+      path: '/events',
     },
     {
-      id: "sessions",
+      id: 'sessions',
       label: t(labels.sessions),
       icon: <User />,
-      path: "/sessions",
+      path: '/sessions',
     },
     {
-      id: "realtime",
+      id: 'realtime',
       label: t(labels.realtime),
       icon: <Clock />,
-      path: "/realtime",
+      path: '/realtime',
     },
     {
-      id: "reports",
+      id: 'reports',
       label: t(labels.reports),
       icon: <ChartPie />,
-      path: "/reports",
+      path: '/reports',
     },
   ];
 
-  const selectedKey =
-    links.find(({ path }) => path && pathname.includes(path))?.id || "overview";
+  const selectedKey = links.find(({ path }) => path && pathname.includes(path))?.id || 'overview';
 
   return (
     <Row marginBottom="6">
@@ -50,11 +49,7 @@ export function WebsiteTabs() {
         <TabList>
           {links.map(({ id, label, icon, path }) => {
             return (
-              <Tab
-                key={id}
-                id={id}
-                href={renderUrl(`/websites/${website.id}${path}`)}
-              >
+              <Tab key={id} id={id} href={renderUrl(`/websites/${website.id}${path}`)}>
                 <Row alignItems="center" gap>
                   <Icon>{icon}</Icon>
                   <Text>{label}</Text>

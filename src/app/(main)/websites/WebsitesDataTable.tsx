@@ -1,13 +1,9 @@
-import { Icon, Row } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { DataGrid } from "@/components/common/DataGrid";
-import {
-  useLoginQuery,
-  useNavigation,
-  useUserWebsitesQuery,
-} from "@/components/hooks";
-import { Favicon } from "@/components/common/Favicon";
-import { WebsitesTable } from "./WebsitesTable";
+import { Icon, Row } from '@umami/react-zen';
+import { DataGrid } from '@/components/common/DataGrid';
+import { Favicon } from '@/components/common/Favicon';
+import Link from '@/components/common/Link';
+import { useLoginQuery, useNavigation, useUserWebsitesQuery } from '@/components/hooks';
+import { WebsitesTable } from './WebsitesTable';
 
 export function WebsitesDataTable({
   userId,

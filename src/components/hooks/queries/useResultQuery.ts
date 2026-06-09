@@ -1,7 +1,7 @@
-import { useDateParameters } from "@/components/hooks/useDateParameters";
-import type { ReactQueryOptions } from "@/lib/types";
-import { useApi } from "../useApi";
-import { useFilterParameters } from "../useFilterParameters";
+import { useDateParameters } from '@/components/hooks/useDateParameters';
+import type { ReactQueryOptions } from '@/lib/types';
+import { useApi } from '../useApi';
+import { useFilterParameters } from '../useFilterParameters';
 
 export function useResultQuery<T = any>(
   type: string,
@@ -15,7 +15,7 @@ export function useResultQuery<T = any>(
 
   return useQuery<T>({
     queryKey: [
-      "reports",
+      'reports',
       {
         type,
         websiteId,

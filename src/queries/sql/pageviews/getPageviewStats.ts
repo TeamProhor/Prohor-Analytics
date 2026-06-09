@@ -1,33 +1,25 @@
-import { EVENT_COLUMNS } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getPageviewStats";
+const FUNCTION_NAME = 'getPageviewStats';
 
-export async function getPageviewStats(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export async function getPageviewStats(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 
 async function relationalQuery(websiteId: string, filters: QueryFilters) {
-  const { timezone = "utc", unit = "day" } = filters;
+  const { timezone = 'utc', unit = 'day' } = filters;
   const { getDateSQL, parseFilters, rawQuery } = prisma;
-  const {
-    filterQuery,
-    cohortQuery,
-    excludeBounceQuery,
-    joinSessionQuery,
-    queryParams,
-  } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { filterQuery, cohortQuery, excludeBounceQuery, joinSessionQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   return rawQuery(
     `
     select
-      ${getDateSQL("website_event.created_at", unit, timezone)} x,
+      ${getDateSQL('website_event.created_at', unit, timezone)} x,
       count(*) y
     from website_event
     ${cohortQuery}

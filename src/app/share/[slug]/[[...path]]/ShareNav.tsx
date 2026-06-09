@@ -1,27 +1,3 @@
-import { IconLabel } from "@/components/common/IconLabel";
-import { useMessages, useNavigation, useShare } from "@/components/hooks";
-import {
-  AlignEndHorizontal,
-  Clock,
-  Eye,
-  PanelLeft,
-  Sheet,
-  Tag,
-  User,
-} from "@/components/icons";
-import { LanguageButton } from "@/components/input/LanguageButton";
-import { PreferencesButton } from "@/components/input/PreferencesButton";
-import {
-  Funnel,
-  Gauge,
-  Lightning,
-  Magnet,
-  Money,
-  Network,
-  Path,
-  Target,
-} from "@/components/svg";
-import { buildPath } from "@/lib/url";
 import {
   Button,
   Column,
@@ -32,9 +8,16 @@ import {
   ThemeButton,
   Tooltip,
   TooltipTrigger,
-} from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { ShareBranding } from "./ShareBranding";
+} from '@umami/react-zen';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
+import { useMessages, useNavigation, useShare } from '@/components/hooks';
+import { AlignEndHorizontal, Clock, Eye, PanelLeft, Sheet, Tag, User } from '@/components/icons';
+import { LanguageButton } from '@/components/input/LanguageButton';
+import { PreferencesButton } from '@/components/input/PreferencesButton';
+import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
+import { buildPath } from '@/lib/url';
+import { ShareBranding } from './ShareBranding';
 
 export function ShareNav({
   collapsed,
@@ -62,104 +45,104 @@ export function ShareNav({
 
   const allItems = [
     {
-      section: "traffic",
+      section: 'traffic',
       label: t(labels.traffic),
       items: [
         {
-          id: "overview",
+          id: 'overview',
           label: t(labels.overview),
           icon: <Eye />,
-          path: renderPath(""),
+          path: renderPath(''),
         },
         {
-          id: "events",
+          id: 'events',
           label: t(labels.events),
           icon: <Lightning />,
-          path: renderPath("/events"),
+          path: renderPath('/events'),
         },
         {
-          id: "sessions",
+          id: 'sessions',
           label: t(labels.sessions),
           icon: <User />,
-          path: renderPath("/sessions"),
+          path: renderPath('/sessions'),
         },
         {
-          id: "realtime",
+          id: 'realtime',
           label: t(labels.realtime),
           icon: <Clock />,
-          path: renderPath("/realtime"),
+          path: renderPath('/realtime'),
         },
         {
-          id: "performance",
+          id: 'performance',
           label: t(labels.performance),
           icon: <Gauge />,
-          path: renderPath("/performance"),
+          path: renderPath('/performance'),
         },
         {
-          id: "compare",
+          id: 'compare',
           label: t(labels.compare),
           icon: <AlignEndHorizontal />,
-          path: renderPath("/compare"),
+          path: renderPath('/compare'),
         },
         {
-          id: "breakdown",
+          id: 'breakdown',
           label: t(labels.breakdown),
           icon: <Sheet />,
-          path: renderPath("/breakdown"),
+          path: renderPath('/breakdown'),
         },
       ],
     },
     {
-      section: "behavior",
+      section: 'behavior',
       label: t(labels.behavior),
       items: [
         {
-          id: "goals",
+          id: 'goals',
           label: t(labels.goals),
           icon: <Target />,
-          path: renderPath("/goals"),
+          path: renderPath('/goals'),
         },
         {
-          id: "funnels",
+          id: 'funnels',
           label: t(labels.funnels),
           icon: <Funnel />,
-          path: renderPath("/funnels"),
+          path: renderPath('/funnels'),
         },
         {
-          id: "journeys",
+          id: 'journeys',
           label: t(labels.journeys),
           icon: <Path />,
-          path: renderPath("/journeys"),
+          path: renderPath('/journeys'),
         },
         {
-          id: "retention",
+          id: 'retention',
           label: t(labels.retention),
           icon: <Magnet />,
-          path: renderPath("/retention"),
+          path: renderPath('/retention'),
         },
       ],
     },
     {
-      section: "growth",
+      section: 'growth',
       label: t(labels.growth),
       items: [
         {
-          id: "utm",
+          id: 'utm',
           label: t(labels.utm),
           icon: <Tag />,
-          path: renderPath("/utm"),
+          path: renderPath('/utm'),
         },
         {
-          id: "revenue",
+          id: 'revenue',
           label: t(labels.revenue),
           icon: <Money />,
-          path: renderPath("/revenue"),
+          path: renderPath('/revenue'),
         },
         {
-          id: "attribution",
+          id: 'attribution',
           label: t(labels.attribution),
           icon: <Network />,
-          path: renderPath("/attribution"),
+          path: renderPath('/attribution'),
         },
       ],
     },
@@ -167,33 +150,33 @@ export function ShareNav({
 
   // Filter items based on parameters
   const items = allItems
-    .map((section) => ({
+    .map(section => ({
       label: section.label,
-      items: section.items.filter((item) => parameters[item.id] === true),
+      items: section.items.filter(item => parameters[item.id] === true),
     }))
-    .filter((section) => section.items.length > 0);
+    .filter(section => section.items.length > 0);
 
   const selectedKey = items
-    .flatMap((e) => e.items)
-    .find(({ path }) => path && pathname.endsWith(path.split("?")[0]))?.id;
+    .flatMap(e => e.items)
+    .find(({ path }) => path && pathname.endsWith(path.split('?')[0]))?.id;
 
   const isMobile = !!onItemClick;
 
   return (
     <Column
-      position={isMobile ? undefined : "fixed"}
-      paddingX={collapsed ? "1" : "3"}
+      position={isMobile ? undefined : 'fixed'}
+      paddingX={collapsed ? '1' : '3'}
       paddingY="3"
-      width={isMobile ? "100%" : collapsed ? "60px" : "240px"}
+      width={isMobile ? '100%' : collapsed ? '60px' : '240px'}
       maxHeight="100dvh"
       height="100dvh"
-      border={isMobile ? undefined : "right"}
+      border={isMobile ? undefined : 'right'}
     >
       <Row
         as="header"
         gap
         alignItems="center"
-        justifyContent={collapsed ? "center" : "space-between"}
+        justifyContent={collapsed ? 'center' : 'space-between'}
       >
         {!collapsed && <ShareBranding size="md" />}
         {!onItemClick && (
@@ -220,18 +203,16 @@ export function ShareNav({
                     <Focusable>
                       <Row
                         alignItems="center"
-                        justifyContent={collapsed ? "center" : undefined}
-                        hover={{ backgroundColor: "surface-sunken" }}
-                        backgroundColor={
-                          isSelected ? "surface-sunken" : undefined
-                        }
+                        justifyContent={collapsed ? 'center' : undefined}
+                        hover={{ backgroundColor: 'surface-sunken' }}
+                        backgroundColor={isSelected ? 'surface-sunken' : undefined}
                         borderRadius
                         minHeight="40px"
                       >
                         <IconLabel
                           icon={icon}
-                          label={collapsed ? "" : label}
-                          weight={isSelected ? "bold" : undefined}
+                          label={collapsed ? '' : label}
+                          weight={isSelected ? 'bold' : undefined}
                           {...(!collapsed && { padding: true })}
                         />
                       </Row>
@@ -247,7 +228,7 @@ export function ShareNav({
       <Column
         flexGrow={collapsed ? 1 : undefined}
         justifyContent="flex-end"
-        alignItems={collapsed ? "center" : undefined}
+        alignItems={collapsed ? 'center' : undefined}
       >
         {collapsed ? (
           <Column gap="2" alignItems="center">

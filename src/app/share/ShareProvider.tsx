@@ -1,10 +1,10 @@
-"use client";
-import { useShareTokenQuery } from "@/components/hooks";
-import { ENTITY_TYPE } from "@/lib/constants";
-import type { WhiteLabel } from "@/lib/types";
-import { Loading } from "@umami/react-zen";
-import { usePathname, useRouter } from "next/navigation";
-import { createContext, type ReactNode, useEffect } from "react";
+'use client';
+import { Loading } from '@umami/react-zen';
+import { usePathname, useRouter } from 'next/navigation';
+import { createContext, type ReactNode, useEffect } from 'react';
+import { useShareTokenQuery } from '@/components/hooks';
+import { ENTITY_TYPE } from '@/lib/constants';
+import type { WhiteLabel } from '@/lib/types';
 
 export interface ShareData {
   shareId: string;
@@ -23,41 +23,35 @@ export interface ShareData {
 export const ShareContext = createContext<ShareData>(null);
 
 const ALL_SECTION_IDS = [
-  "overview",
-  "events",
-  "sessions",
-  "realtime",
-  "performance",
-  "compare",
-  "breakdown",
-  "goals",
-  "funnels",
-  "journeys",
-  "retention",
-  "utm",
-  "revenue",
-  "attribution",
+  'overview',
+  'events',
+  'sessions',
+  'realtime',
+  'performance',
+  'compare',
+  'breakdown',
+  'goals',
+  'funnels',
+  'journeys',
+  'retention',
+  'utm',
+  'revenue',
+  'attribution',
 ];
 
 function getSharePath(pathname: string) {
-  const segments = pathname.split("/");
+  const segments = pathname.split('/');
   const firstSegment = segments[3];
 
   // If first segment looks like a domain name, skip it
-  if (firstSegment?.includes(".")) {
+  if (firstSegment?.includes('.')) {
     return segments[4];
   }
 
   return firstSegment;
 }
 
-export function ShareProvider({
-  slug,
-  children,
-}: {
-  slug: string;
-  children: ReactNode;
-}) {
+export function ShareProvider({ slug, children }: { slug: string; children: ReactNode }) {
   const { share, isLoading, isFetching } = useShareTokenQuery(slug);
   const router = useRouter();
   const pathname = usePathname();
@@ -66,14 +60,14 @@ export function ShareProvider({
 
   const allowedSections =
     isWebsiteShare && share?.parameters
-      ? ALL_SECTION_IDS.filter((id) => share.parameters[id] === true)
+      ? ALL_SECTION_IDS.filter(id => share.parameters[id] === true)
       : [];
 
   const shouldRedirect =
     isWebsiteShare &&
     allowedSections.length === 1 &&
-    allowedSections[0] !== "overview" &&
-    (path === undefined || path === "" || path === "overview");
+    allowedSections[0] !== 'overview' &&
+    (path === undefined || path === '' || path === 'overview');
 
   useEffect(() => {
     if (shouldRedirect) {
@@ -89,9 +83,5 @@ export function ShareProvider({
     return null;
   }
 
-  return (
-    <ShareContext.Provider value={{ ...share, slug }}>
-      {children}
-    </ShareContext.Provider>
-  );
+  return <ShareContext.Provider value={{ ...share, slug }}>{children}</ShareContext.Provider>;
 }

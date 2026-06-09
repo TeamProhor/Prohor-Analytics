@@ -1,5 +1,5 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface FunnelStepFilter {
   property: string;
@@ -29,11 +29,7 @@ export interface FunnelResult extends FunnelStep {
 }
 
 export async function getFunnel(
-  ...args: [
-    websiteId: string,
-    parameters: FunnelParameters,
-    filters: QueryFilters,
-  ]
+  ...args: [websiteId: string, parameters: FunnelParameters, filters: QueryFilters]
 ) {
   return relationalQuery(...args);
 }
@@ -45,17 +41,13 @@ async function relationalQuery(
 ): Promise<Array<FunnelResult>> {
   const { startDate, endDate, window, steps } = parameters;
   const { rawQuery, getAddIntervalQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      websiteId,
-      startDate,
-      endDate,
-    });
-  const { levelOneQuery, levelQuery, sumQuery, params } = getFunnelQuery(
-    steps,
-    window,
-  );
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+    startDate,
+    endDate,
+  });
+  const { levelOneQuery, levelQuery, sumQuery, params } = getFunnelQuery(steps, window);
 
   function buildExistsFilters(
     stepIndex: number,
@@ -63,7 +55,7 @@ async function relationalQuery(
     eventAlias: string,
     extraParams: Record<string, string>,
   ): string {
-    if (!stepFilters?.length) return "";
+    if (!stepFilters?.length) return '';
 
     return stepFilters
       .map((f, fi) => {
@@ -71,14 +63,14 @@ async function relationalQuery(
         const valParam = `f_${stepIndex}_${fi}_v`;
         extraParams[keyParam] = f.property;
 
-        let op = "=";
+        let op = '=';
         let val = f.value;
-        if (f.operator === "neq") op = "!=";
-        else if (f.operator === "c") {
-          op = "ilike";
+        if (f.operator === 'neq') op = '!=';
+        else if (f.operator === 'c') {
+          op = 'ilike';
           val = `%${val}%`;
-        } else if (f.operator === "dnc") {
-          op = "not ilike";
+        } else if (f.operator === 'dnc') {
+          op = 'not ilike';
           val = `%${val}%`;
         }
         extraParams[valParam] = val;
@@ -92,7 +84,7 @@ async function relationalQuery(
             and case when _ed${stepIndex}_${fi}.data_type = 2 then replace(_ed${stepIndex}_${fi}.string_value, '.0000', '') else _ed${stepIndex}_${fi}.string_value end ${op} {{${valParam}}}
         )`;
       })
-      .join("\n");
+      .join('\n');
   }
 
   function getFunnelQuery(
@@ -109,16 +101,16 @@ async function relationalQuery(
     const result = steps.reduce(
       (pv, cv, i) => {
         const levelNumber = i + 1;
-        const startSum = i > 0 ? "union " : "";
-        const isURL = cv.type === "path";
-        const column = isURL ? "url_path" : "event_name";
+        const startSum = i > 0 ? 'union ' : '';
+        const isURL = cv.type === 'path';
+        const column = isURL ? 'url_path' : 'event_name';
 
-        let operator = "=";
+        let operator = '=';
         let paramValue = cv.value;
 
-        if (cv.value.startsWith("*") || cv.value.endsWith("*")) {
-          operator = "like";
-          paramValue = cv.value.replace(/^\*|\*$/g, "%");
+        if (cv.value.startsWith('*') || cv.value.endsWith('*')) {
+          operator = 'like';
+          paramValue = cv.value.replace(/^\*|\*$/g, '%');
         }
 
         const existsClause =
@@ -126,10 +118,10 @@ async function relationalQuery(
             ? buildExistsFilters(
                 i,
                 cv.filters,
-                levelNumber === 1 ? "website_event" : "we",
+                levelNumber === 1 ? 'website_event' : 'we',
                 extraParams,
               )
-            : "";
+            : '';
 
         if (levelNumber === 1) {
           pv.levelOneQuery = `
@@ -168,9 +160,9 @@ async function relationalQuery(
         return pv;
       },
       {
-        levelOneQuery: "",
-        levelQuery: "",
-        sumQuery: "",
+        levelOneQuery: '',
+        levelQuery: '',
+        sumQuery: '',
         params: {} as Record<string, string>,
       },
     );

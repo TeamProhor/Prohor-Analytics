@@ -1,7 +1,7 @@
-import { TypeConfirmationForm } from "@/components/common/TypeConfirmationForm";
-import { useDeleteQuery, useMessages } from "@/components/hooks";
+import { TypeConfirmationForm } from '@/components/common/TypeConfirmationForm';
+import { useDeleteQuery, useMessages } from '@/components/hooks';
 
-const CONFIRM_VALUE = "DELETE";
+const CONFIRM_VALUE = 'DELETE';
 
 export function WebsiteDeleteForm({
   websiteId,
@@ -13,14 +13,12 @@ export function WebsiteDeleteForm({
   onClose?: () => void;
 }) {
   const { t, labels } = useMessages();
-  const { mutateAsync, isPending, error, touch } = useDeleteQuery(
-    `/websites/${websiteId}`,
-  );
+  const { mutateAsync, isPending, error, touch } = useDeleteQuery(`/websites/${websiteId}`);
 
   const handleConfirm = async () => {
     await mutateAsync(null, {
       onSuccess: async () => {
-        touch("websites");
+        touch('websites');
         touch(`websites:${websiteId}`);
         onSave?.();
         onClose?.();

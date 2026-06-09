@@ -1,11 +1,9 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getWebsiteEvents";
+const FUNCTION_NAME = 'getWebsiteEvents';
 
-export function getWebsiteEvents(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export function getWebsiteEvents(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 
@@ -20,7 +18,7 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
   const searchQuery = search
     ? `and ((event_name ilike {{search}} and event_type = 2)
            or (url_path ilike {{search}} and event_type = 1))`
-    : "";
+    : '';
 
   return pagedRawQuery(
     `

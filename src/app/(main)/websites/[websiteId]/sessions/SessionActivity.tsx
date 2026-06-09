@@ -9,18 +9,13 @@ import {
   Row,
   StatusLight,
   Text,
-} from "@umami/react-zen";
-import { isSameDay } from "date-fns";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import {
-  useMessages,
-  useMobile,
-  useSessionActivityQuery,
-  useTimezone,
-} from "@/components/hooks";
-import { Eye, FileText } from "@/components/icons";
-import { EventData } from "@/components/metrics/EventData";
-import { Lightning } from "@/components/svg";
+} from '@umami/react-zen';
+import { isSameDay } from 'date-fns';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useMessages, useMobile, useSessionActivityQuery, useTimezone } from '@/components/hooks';
+import { Eye, FileText } from '@/components/icons';
+import { EventData } from '@/components/metrics/EventData';
+import { Lightning } from '@/components/svg';
 
 export function SessionActivity({
   websiteId,
@@ -48,7 +43,7 @@ export function SessionActivity({
     return (
       <a
         href={`//${hostname}${label}`}
-        style={{ fontWeight: "bold" }}
+        style={{ fontWeight: 'bold' }}
         target="_blank"
         rel="noreferrer noopener"
       >
@@ -60,65 +55,37 @@ export function SessionActivity({
   return (
     <LoadingPanel data={data} isLoading={isLoading} error={error}>
       <Column gap>
-        {data?.map(
-          ({
-            eventId,
-            createdAt,
-            urlPath,
-            eventName,
-            visitId,
-            hostname,
-            hasData,
-          }) => {
-            const showHeader =
-              !lastDay || !isSameDay(new Date(lastDay), new Date(createdAt));
-            lastDay = createdAt;
+        {data?.map(({ eventId, createdAt, urlPath, eventName, visitId, hostname, hasData }) => {
+          const showHeader = !lastDay || !isSameDay(new Date(lastDay), new Date(createdAt));
+          lastDay = createdAt;
 
-            return (
-              <Column key={eventId} gap>
-                {showHeader && (
-                  <Heading size="lg">
-                    {formatTimezoneDate(createdAt, "PPPP")}
-                  </Heading>
-                )}
-                <Row alignItems="center" gap="6" height="40px">
-                  <StatusLight color={`#${visitId?.substring(0, 6)}`}>
-                    <Text wrap="nowrap">
-                      {formatTimezoneDate(createdAt, "pp")}
-                    </Text>
-                  </StatusLight>
-                  <Row alignItems="center" gap="2">
-                    <Icon>{eventName ? <Lightning /> : <Eye />}</Icon>
-                    <Text wrap="nowrap">
-                      {eventName
-                        ? t(labels.triggeredEvent)
-                        : t(labels.viewedPage)}
-                    </Text>
-                    <Text
-                      weight="bold"
-                      style={{ maxWidth: isMobile ? "400px" : null }}
-                      truncate
-                    >
-                      {eventName || renderLink(urlPath, hostname)}
-                    </Text>
-                    {hasData > 0 && (
-                      <PropertiesButton
-                        websiteId={websiteId}
-                        eventId={eventId}
-                      />
-                    )}
-                  </Row>
+          return (
+            <Column key={eventId} gap>
+              {showHeader && <Heading size="lg">{formatTimezoneDate(createdAt, 'PPPP')}</Heading>}
+              <Row alignItems="center" gap="6" height="40px">
+                <StatusLight color={`#${visitId?.substring(0, 6)}`}>
+                  <Text wrap="nowrap">{formatTimezoneDate(createdAt, 'pp')}</Text>
+                </StatusLight>
+                <Row alignItems="center" gap="2">
+                  <Icon>{eventName ? <Lightning /> : <Eye />}</Icon>
+                  <Text wrap="nowrap">
+                    {eventName ? t(labels.triggeredEvent) : t(labels.viewedPage)}
+                  </Text>
+                  <Text weight="bold" style={{ maxWidth: isMobile ? '400px' : null }} truncate>
+                    {eventName || renderLink(urlPath, hostname)}
+                  </Text>
+                  {hasData > 0 && <PropertiesButton websiteId={websiteId} eventId={eventId} />}
                 </Row>
-              </Column>
-            );
-          },
-        )}
+              </Row>
+            </Column>
+          );
+        })}
       </Column>
     </LoadingPanel>
   );
 }
 
-const PropertiesButton = (props) => {
+const PropertiesButton = props => {
   return (
     <DialogTrigger>
       <Button variant="quiet">

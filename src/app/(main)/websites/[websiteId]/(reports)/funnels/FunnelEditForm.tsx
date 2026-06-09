@@ -13,22 +13,13 @@ import {
   Row,
   Text,
   TextField,
-} from "@umami/react-zen";
-import { Fragment, useState } from "react";
-import {
-  useApi,
-  useMessages,
-  useMobile,
-  useReportQuery,
-  useUpdateQuery,
-} from "@/components/hooks";
-import { Plus, X } from "@/components/icons";
-import { ActionSelect } from "@/components/input/ActionSelect";
-import { LookupField } from "@/components/input/LookupField";
-import {
-  EventDataFilterRow,
-  getEventDataDateRange,
-} from "./EventDataFilterRow";
+} from '@umami/react-zen';
+import { Fragment, useState } from 'react';
+import { useApi, useMessages, useMobile, useReportQuery, useUpdateQuery } from '@/components/hooks';
+import { Plus, X } from '@/components/icons';
+import { ActionSelect } from '@/components/input/ActionSelect';
+import { LookupField } from '@/components/input/LookupField';
+import { EventDataFilterRow, getEventDataDateRange } from './EventDataFilterRow';
 
 const FUNNEL_STEPS_MAX = 8;
 
@@ -46,14 +37,11 @@ function StepRow({
   const { t, labels } = useMessages();
   const { isMobile } = useMobile();
   const { get, useQuery } = useApi();
-  const [eventName, setEventName] = useState(initialEventName ?? "");
+  const [eventName, setEventName] = useState(initialEventName ?? '');
   const { startAt, endAt } = getEventDataDateRange();
 
   const { data: eventProperties } = useQuery<Array<{ propertyName: string }>>({
-    queryKey: [
-      "event-data:properties",
-      { websiteId, eventName, searchValue: "", startAt, endAt },
-    ],
+    queryKey: ['event-data:properties', { websiteId, eventName, searchValue: '', startAt, endAt }],
     queryFn: () =>
       get(`/websites/${websiteId}/event-data/properties`, {
         startAt,
@@ -66,10 +54,7 @@ function StepRow({
   const hasEventData = (eventProperties?.length ?? 0) > 0;
 
   const valueField = (
-    <FormField
-      name={`steps.${index}.value`}
-      rules={{ required: t(labels.required) }}
-    >
+    <FormField name={`steps.${index}.value`} rules={{ required: t(labels.required) }}>
       {({ field, context }) => {
         const type = context.watch(`steps.${index}.type`);
         return (
@@ -91,10 +76,7 @@ function StepRow({
       {isMobile ? (
         <Grid columns="1fr auto" gap alignItems="start">
           <Column gap>
-            <FormField
-              name={`steps.${index}.type`}
-              rules={{ required: t(labels.required) }}
-            >
+            <FormField name={`steps.${index}.type`} rules={{ required: t(labels.required) }}>
               <ActionSelect />
             </FormField>
             {valueField}
@@ -108,10 +90,7 @@ function StepRow({
       ) : (
         <Grid columns="260px 1fr auto" gap>
           <Column>
-            <FormField
-              name={`steps.${index}.type`}
-              rules={{ required: t(labels.required) }}
-            >
+            <FormField name={`steps.${index}.type`} rules={{ required: t(labels.required) }}>
               <ActionSelect />
             </FormField>
           </Column>
@@ -124,24 +103,16 @@ function StepRow({
         </Grid>
       )}
       <FormFieldArray name={`steps.${index}.filters`}>
-        {({
-          fields: filterFields,
-          append: appendFilter,
-          remove: removeFilter,
-          watch,
-        }) => {
+        {({ fields: filterFields, append: appendFilter, remove: removeFilter, watch }) => {
           const stepType = watch(`steps.${index}.type`);
 
-          if (stepType !== "event") return null;
+          if (stepType !== 'event') return null;
 
           return (
             <Grid gap>
               {filterFields.map(
                 (
-                  {
-                    id: filterId,
-                    property: initialProperty,
-                  }: { id: string; property?: string },
+                  { id: filterId, property: initialProperty }: { id: string; property?: string },
                   filterIndex: number,
                 ) => (
                   <EventDataFilterRow
@@ -159,9 +130,7 @@ function StepRow({
                 <Row>
                   <Button
                     variant="quiet"
-                    onPress={() =>
-                      appendFilter({ property: "", operator: "eq", value: "" })
-                    }
+                    onPress={() => appendFilter({ property: '', operator: 'eq', value: '' })}
                   >
                     <Icon size="sm">
                       <Plus />
@@ -191,9 +160,7 @@ export function FunnelEditForm({
 }) {
   const { t, labels } = useMessages();
   const { data, isLoading } = useReportQuery(id);
-  const { mutateAsync, error, isPending, touch } = useUpdateQuery(
-    `/reports${id ? `/${id}` : ""}`,
-  );
+  const { mutateAsync, error, isPending, touch } = useUpdateQuery(`/reports${id ? `/${id}` : ''}`);
 
   const handleSubmit = async ({
     name,
@@ -203,10 +170,10 @@ export function FunnelEditForm({
     [key: string]: unknown;
   }) => {
     await mutateAsync(
-      { ...data, id, name, type: "funnel", websiteId, parameters },
+      { ...data, id, name, type: 'funnel', websiteId, parameters },
       {
         onSuccess: async () => {
-          touch("reports:funnel");
+          touch('reports:funnel');
           touch(`report:${id}`);
           onSave?.();
           onClose?.();
@@ -220,55 +187,34 @@ export function FunnelEditForm({
   }
 
   const defaultValues = {
-    name: data?.name || "",
+    name: data?.name || '',
     window: data?.parameters?.window || 60,
-    steps: (data?.parameters?.steps || [{ type: "path", value: "" }]).map(
-      (step) => ({
-        ...step,
-        filters: step.filters || [],
-      }),
-    ),
+    steps: (data?.parameters?.steps || [{ type: 'path', value: '' }]).map(step => ({
+      ...step,
+      filters: step.filters || [],
+    })),
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      error={error?.message}
-      defaultValues={defaultValues}
-    >
-      <FormField
-        name="name"
-        label={t(labels.name)}
-        rules={{ required: t(labels.required) }}
-      >
+    <Form onSubmit={handleSubmit} error={error?.message} defaultValues={defaultValues}>
+      <FormField name="name" label={t(labels.name)} rules={{ required: t(labels.required) }}>
         <TextField autoFocus />
       </FormField>
-      <FormField
-        name="window"
-        label={t(labels.window)}
-        rules={{ required: t(labels.required) }}
-      >
+      <FormField name="window" label={t(labels.window)} rules={{ required: t(labels.required) }}>
         <TextField />
       </FormField>
       <FormFieldArray
         name="steps"
         label={t(labels.steps)}
         rules={{
-          validate: (value) =>
-            value.length > 1 || "At least two steps are required",
+          validate: value => value.length > 1 || 'At least two steps are required',
         }}
       >
         {({ fields, append, remove }) => {
           return (
             <Grid gap>
               {fields.map(
-                (
-                  {
-                    id,
-                    value: initialEventName,
-                  }: { id: string; value: string },
-                  index: number,
-                ) => (
+                ({ id, value: initialEventName }: { id: string; value: string }, index: number) => (
                   <Fragment key={id}>
                     {index > 0 && <ListSeparator />}
                     <StepRow
@@ -283,9 +229,7 @@ export function FunnelEditForm({
               <ListSeparator />
               <Row>
                 <Button
-                  onPress={() =>
-                    append({ type: "path", value: "", filters: [] })
-                  }
+                  onPress={() => append({ type: 'path', value: '', filters: [] })}
                   isDisabled={fields.length >= FUNNEL_STEPS_MAX}
                 >
                   <Icon>
@@ -298,7 +242,7 @@ export function FunnelEditForm({
           );
         }}
       </FormFieldArray>
-      <FormButtons style={{ paddingBottom: "16px" }}>
+      <FormButtons style={{ paddingBottom: '16px' }}>
         <Button onPress={onClose} isDisabled={isPending}>
           {t(labels.cancel)}
         </Button>

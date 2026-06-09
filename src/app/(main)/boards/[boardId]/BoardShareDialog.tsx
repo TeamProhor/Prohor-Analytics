@@ -1,11 +1,11 @@
-import { Button, Column, Heading, Row, Text } from "@umami/react-zen";
-import { useState } from "react";
-import { Plus } from "@/components/icons";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { IconLabel } from "@/components/common/IconLabel";
-import { useBoardSharesQuery, useMessages } from "@/components/hooks";
-import { BoardShareCreateForm } from "./BoardShareCreateForm";
-import { BoardSharesTable } from "./BoardSharesTable";
+import { Button, Column, Heading, Row, Text } from '@umami/react-zen';
+import { useState } from 'react';
+import { IconLabel } from '@/components/common/IconLabel';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useBoardSharesQuery, useMessages } from '@/components/hooks';
+import { Plus } from '@/components/icons';
+import { BoardShareCreateForm } from './BoardShareCreateForm';
+import { BoardSharesTable } from './BoardSharesTable';
 
 export function BoardShareDialog({ boardId }: { boardId: string }) {
   const { data, error, isLoading } = useBoardSharesQuery({ boardId });
@@ -14,11 +14,7 @@ export function BoardShareDialog({ boardId }: { boardId: string }) {
 
   return (
     <LoadingPanel data={data} isLoading={isLoading} error={error}>
-      <BoardShareDialogContent
-        boardId={boardId}
-        hasShares={hasShares}
-        shares={shares}
-      />
+      <BoardShareDialogContent boardId={boardId} hasShares={hasShares} shares={shares} />
     </LoadingPanel>
   );
 }

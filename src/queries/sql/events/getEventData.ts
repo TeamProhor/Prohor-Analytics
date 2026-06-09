@@ -1,12 +1,10 @@
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getEventData";
+const FUNCTION_NAME = 'getEventData';
 
-export async function getEventData(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export async function getEventData(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 
@@ -16,11 +14,10 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
   const size = +pageSize || DEFAULT_PAGE_SIZE;
   const offset = +size * (+page - 1);
 
-  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      websiteId,
-    });
+  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+  });
 
   // Selects distinct event IDs matching all filters — reused for count and paged data
   const eventQuery = `
@@ -37,10 +34,9 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
     group by website_event.event_id
   `;
 
-  const count = await rawQuery(
-    `select count(*) as num from (${eventQuery}) t`,
-    queryParams,
-  ).then((res: any) => res[0].num);
+  const count = await rawQuery(`select count(*) as num from (${eventQuery}) t`, queryParams).then(
+    (res: any) => res[0].num,
+  );
 
   const data = await rawQuery(
     `

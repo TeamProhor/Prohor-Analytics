@@ -1,8 +1,8 @@
-import { Icon, Row, Text } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { type HTMLAttributes, type ReactNode, useState } from "react";
-import { useMessages, useNavigation } from "@/components/hooks";
-import { ExternalLink } from "@/components/icons";
+import { Icon, Row, Text } from '@umami/react-zen';
+import { type HTMLAttributes, type ReactNode, useState } from 'react';
+import Link from '@/components/common/Link';
+import { useMessages, useNavigation } from '@/components/hooks';
+import { ExternalLink } from '@/components/icons';
 
 export interface FilterLinkProps extends HTMLAttributes<HTMLDivElement> {
   type: string;
@@ -12,13 +12,7 @@ export interface FilterLinkProps extends HTMLAttributes<HTMLDivElement> {
   externalUrl?: string;
 }
 
-export function FilterLink({
-  type,
-  value,
-  label,
-  externalUrl,
-  icon,
-}: FilterLinkProps) {
+export function FilterLink({ type, value, label, externalUrl, icon }: FilterLinkProps) {
   const [showLink, setShowLink] = useState(false);
   const { t, labels } = useMessages();
   const { updateParams, query } = useNavigation();
@@ -29,8 +23,8 @@ export function FilterLink({
     <Row
       alignItems="center"
       gap
-      fontWeight={active && selected ? "bold" : undefined}
-      color={active && !selected ? "muted" : undefined}
+      fontWeight={active && selected ? 'bold' : undefined}
+      color={active && !selected ? 'muted' : undefined}
       onMouseOver={() => setShowLink(true)}
       onMouseOut={() => setShowLink(false)}
     >

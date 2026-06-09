@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export function useSticky({ enabled = true, threshold = 1 }) {
   const [isSticky, setIsSticky] = useState(false);

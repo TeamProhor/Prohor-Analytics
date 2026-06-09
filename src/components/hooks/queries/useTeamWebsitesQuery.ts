@@ -1,13 +1,13 @@
-import { useApi } from "../useApi";
-import { useModified } from "../useModified";
-import { usePagedQuery } from "../usePagedQuery";
+import { useApi } from '../useApi';
+import { useModified } from '../useModified';
+import { usePagedQuery } from '../usePagedQuery';
 
 export function useTeamWebsitesQuery(teamId: string) {
   const { get } = useApi();
   const { modified } = useModified(`websites`);
 
   return usePagedQuery({
-    queryKey: ["teams:websites", { teamId, modified }],
+    queryKey: ['teams:websites', { teamId, modified }],
     queryFn: (params: any) => {
       return get(`/teams/${teamId}/websites`, params);
     },

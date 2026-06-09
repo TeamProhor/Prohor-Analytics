@@ -1,11 +1,11 @@
-import { ListItem, Select } from "@umami/react-zen";
-import { useState } from "react";
-import { useMessages } from "@/components/hooks";
-import { CURRENCIES } from "@/lib/constants";
+import { ListItem, Select } from '@umami/react-zen';
+import { useState } from 'react';
+import { useMessages } from '@/components/hooks';
+import { CURRENCIES } from '@/lib/constants';
 
 export function CurrencySelect({ value, onChange }) {
   const { t, labels } = useMessages();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   return (
     <Select
@@ -27,7 +27,7 @@ export function CurrencySelect({ value, onChange }) {
             {id} &mdash; {name}
           </ListItem>
         );
-      }).filter((n) => n)}
+      }).filter(n => n)}
     </Select>
   );
 }

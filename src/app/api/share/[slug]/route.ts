@@ -1,23 +1,14 @@
-import { getBoardEntityIds } from "@/lib/boards";
-import { ENTITY_TYPE, ROLES } from "@/lib/constants";
-import { secret } from "@/lib/crypto";
-import { createToken } from "@/lib/jwt";
-import prisma from "@/lib/prisma";
-import redis from "@/lib/redis";
-import { json, notFound } from "@/lib/response";
-import type { BoardParameters, WhiteLabel } from "@/lib/types";
-import {
-  getBoard,
-  getLink,
-  getPixel,
-  getShareByCode,
-  getWebsite,
-} from "@/queries/prisma";
+import { getBoardEntityIds } from '@/lib/boards';
+import { ENTITY_TYPE, ROLES } from '@/lib/constants';
+import { secret } from '@/lib/crypto';
+import { createToken } from '@/lib/jwt';
+import prisma from '@/lib/prisma';
+import redis from '@/lib/redis';
+import { json, notFound } from '@/lib/response';
+import type { BoardParameters, WhiteLabel } from '@/lib/types';
+import { getBoard, getLink, getPixel, getShareByCode, getWebsite } from '@/queries/prisma';
 
-async function getAccountId(entity: {
-  userId?: string;
-  teamId?: string;
-}): Promise<string | null> {
+async function getAccountId(entity: { userId?: string; teamId?: string }): Promise<string | null> {
   if (entity.userId) {
     return entity.userId;
   }
@@ -53,10 +44,7 @@ async function getWhiteLabel(accountId: string): Promise<WhiteLabel | null> {
   return null;
 }
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ slug: string }> },
-) {
+export async function GET(_request: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   const share = await getShareByCode(slug);

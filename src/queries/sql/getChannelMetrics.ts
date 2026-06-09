@@ -5,31 +5,23 @@ import {
   SHOPPING_DOMAINS,
   SOCIAL_DOMAINS,
   VIDEO_DOMAINS,
-} from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+} from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getChannelMetrics";
+const FUNCTION_NAME = 'getChannelMetrics';
 
-export async function getChannelMetrics(
-  ...args: [websiteId: string, filters?: QueryFilters]
-) {
+export async function getChannelMetrics(...args: [websiteId: string, filters?: QueryFilters]) {
   return relationalQuery(...args);
 }
 
 async function relationalQuery(websiteId: string, filters: QueryFilters) {
   const { rawQuery, parseFilters } = prisma;
-  const {
-    queryParams,
-    filterQuery,
-    joinSessionQuery,
-    cohortQuery,
-    excludeBounceQuery,
-    dateQuery,
-  } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { queryParams, filterQuery, joinSessionQuery, cohortQuery, excludeBounceQuery, dateQuery } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   return rawQuery(
     `
@@ -56,15 +48,15 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
     channels as (
       select case
           when referrer_domain = '' and url_query = '' then 'direct'
-          when ${toPostgresLikeClause("url_query", PAID_AD_PARAMS)} then 'paidAds'
-          when ${toPostgresLikeClause("utm_medium", ["referral", "app", "link"])} then 'referral'
+          when ${toPostgresLikeClause('url_query', PAID_AD_PARAMS)} then 'paidAds'
+          when ${toPostgresLikeClause('utm_medium', ['referral', 'app', 'link'])} then 'referral'
           when utm_medium ilike '%affiliate%' then 'affiliate'
           when utm_medium ilike '%sms%' or utm_source ilike '%sms%' then 'sms'
-          when ${toPostgresLikeClause("referrer_domain", SEARCH_DOMAINS)} or utm_medium ilike '%organic%' then concat(prefix, 'Search')
-          when ${toPostgresLikeClause("referrer_domain", SOCIAL_DOMAINS)} then concat(prefix, 'Social')
-          when ${toPostgresLikeClause("referrer_domain", EMAIL_DOMAINS)} or utm_medium ilike '%mail%' then 'email'
-          when ${toPostgresLikeClause("referrer_domain", SHOPPING_DOMAINS)} or utm_medium ilike '%shop%' then concat(prefix, 'Shopping')
-          when ${toPostgresLikeClause("referrer_domain", VIDEO_DOMAINS)} or utm_medium ilike '%video%' then concat(prefix, 'Video')
+          when ${toPostgresLikeClause('referrer_domain', SEARCH_DOMAINS)} or utm_medium ilike '%organic%' then concat(prefix, 'Search')
+          when ${toPostgresLikeClause('referrer_domain', SOCIAL_DOMAINS)} then concat(prefix, 'Social')
+          when ${toPostgresLikeClause('referrer_domain', EMAIL_DOMAINS)} or utm_medium ilike '%mail%' then 'email'
+          when ${toPostgresLikeClause('referrer_domain', SHOPPING_DOMAINS)} or utm_medium ilike '%shop%' then concat(prefix, 'Shopping')
+          when ${toPostgresLikeClause('referrer_domain', VIDEO_DOMAINS)} or utm_medium ilike '%video%' then concat(prefix, 'Video')
           when referrer_domain != regexp_replace(hostname, '^www.', '') and referrer_domain != '' then 'referral'
           else '' end AS x,
         count(distinct session_id) y
@@ -80,5 +72,5 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
     `,
     queryParams,
     FUNCTION_NAME,
-  ).then((results) => results.map((item) => ({ ...item, y: Number(item.y) })));
+  ).then(results => results.map(item => ({ ...item, y: Number(item.y) })));
 }

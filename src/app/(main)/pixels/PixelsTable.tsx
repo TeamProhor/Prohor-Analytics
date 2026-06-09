@@ -1,15 +1,10 @@
-import {
-  DataColumn,
-  DataTable,
-  type DataTableProps,
-  Row,
-} from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { DateDistance } from "@/components/common/DateDistance";
-import { ExternalLink } from "@/components/common/ExternalLink";
-import { useMessages, useNavigation, useSlug } from "@/components/hooks";
-import { PixelDeleteButton } from "./PixelDeleteButton";
-import { PixelEditButton } from "./PixelEditButton";
+import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
+import { DateDistance } from '@/components/common/DateDistance';
+import { ExternalLink } from '@/components/common/ExternalLink';
+import Link from '@/components/common/Link';
+import { useMessages, useNavigation, useSlug } from '@/components/hooks';
+import { PixelDeleteButton } from './PixelDeleteButton';
+import { PixelEditButton } from './PixelEditButton';
 
 export interface PixelsTableProps extends DataTableProps {
   showActions?: boolean;
@@ -18,7 +13,7 @@ export interface PixelsTableProps extends DataTableProps {
 export function PixelsTable({ showActions, ...props }: PixelsTableProps) {
   const { t, labels } = useMessages();
   const { renderUrl } = useNavigation();
-  const { getSlugUrl } = useSlug("pixel");
+  const { getSlugUrl } = useSlug('pixel');
 
   return (
     <DataTable {...props}>

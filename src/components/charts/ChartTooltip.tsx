@@ -1,11 +1,5 @@
-import {
-  Column,
-  FloatingTooltip,
-  Row,
-  StatusLight,
-  Text,
-} from "@umami/react-zen";
-import type { ReactNode } from "react";
+import { Column, FloatingTooltip, Row, StatusLight, Text } from '@umami/react-zen';
+import type { ReactNode } from 'react';
 
 export function ChartTooltip({
   title,
@@ -22,7 +16,7 @@ export function ChartTooltip({
         gap="3"
         padding="4"
         borderRadius="md"
-        style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "white" }}
+        style={{ backgroundColor: 'rgba(0,0,0,0.8)', color: 'white' }}
       >
         {title && <Text size="sm">{title}</Text>}
         <Row alignItems="center">

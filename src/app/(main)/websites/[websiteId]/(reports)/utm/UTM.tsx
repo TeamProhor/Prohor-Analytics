@@ -1,10 +1,10 @@
-import { Column, Grid, Heading, Text } from "@umami/react-zen";
-import { PieChart } from "@/components/charts/PieChart";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { Panel } from "@/components/common/Panel";
-import { useMessages, useResultQuery } from "@/components/hooks";
-import { ListTable } from "@/components/metrics/ListTable";
-import { CHART_COLORS, UTM_PARAMS } from "@/lib/constants";
+import { Column, Grid, Heading, Text } from '@umami/react-zen';
+import { PieChart } from '@/components/charts/PieChart';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { Panel } from '@/components/common/Panel';
+import { useMessages, useResultQuery } from '@/components/hooks';
+import { ListTable } from '@/components/metrics/ListTable';
+import { CHART_COLORS, UTM_PARAMS } from '@/lib/constants';
 
 export interface UTMProps {
   websiteId: string;
@@ -14,22 +14,17 @@ export interface UTMProps {
 
 export function UTM({ websiteId, startDate, endDate }: UTMProps) {
   const { t, labels } = useMessages();
-  const { data, error, isLoading } = useResultQuery<any>("utm", {
+  const { data, error, isLoading } = useResultQuery<any>('utm', {
     websiteId,
     startDate,
     endDate,
   });
 
   return (
-    <LoadingPanel
-      data={data}
-      isLoading={isLoading}
-      error={error}
-      minHeight="300px"
-    >
+    <LoadingPanel data={data} isLoading={isLoading} error={error} minHeight="300px">
       {data && (
         <Column gap>
-          {UTM_PARAMS.map((param) => {
+          {UTM_PARAMS.map(param => {
             const items = data?.[param];
 
             const chartData = {
@@ -48,12 +43,10 @@ export function UTM({ websiteId, startDate, endDate }: UTMProps) {
 
             return (
               <Panel key={param}>
-                <Grid columns={{ base: "1fr", md: "1fr 1fr" }} gap="6">
+                <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="6">
                   <Column>
                     <Heading>
-                      <Text transform="capitalize">
-                        {param.replace(/^utm_/, "")}
-                      </Text>
+                      <Text transform="capitalize">{param.replace(/^utm_/, '')}</Text>
                     </Heading>
                     <ListTable
                       metric={t(labels.views)}

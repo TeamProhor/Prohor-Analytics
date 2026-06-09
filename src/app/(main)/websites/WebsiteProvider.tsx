@@ -1,8 +1,8 @@
-"use client";
-import { Loading } from "@umami/react-zen";
-import { createContext, type ReactNode } from "react";
-import { useWebsiteQuery } from "@/components/hooks/queries/useWebsiteQuery";
-import type { Website } from "@/generated/prisma/client";
+'use client';
+import { Loading } from '@umami/react-zen';
+import { createContext, type ReactNode } from 'react';
+import { useWebsiteQuery } from '@/components/hooks/queries/useWebsiteQuery';
+import type { Website } from '@/generated/prisma/client';
 
 export const WebsiteContext = createContext<Website>(null);
 
@@ -23,9 +23,5 @@ export function WebsiteProvider({
     return null;
   }
 
-  return (
-    <WebsiteContext.Provider value={website}>
-      {children}
-    </WebsiteContext.Provider>
-  );
+  return <WebsiteContext.Provider value={website}>{children}</WebsiteContext.Provider>;
 }

@@ -10,19 +10,14 @@ import {
   Popover,
   Row,
   Text,
-} from "@umami/react-zen";
-import { ArrowRight } from "lucide-react";
-import type { Key } from "react";
-import { IconLabel } from "@/components/common/IconLabel";
-import {
-  useLoginQuery,
-  useMessages,
-  useMobile,
-  useNavigation,
-} from "@/components/hooks";
-import { ChevronRight, User, Users } from "@/components/icons";
-import { LAST_TEAM_CONFIG } from "@/lib/constants";
-import { removeItem } from "@/lib/storage";
+} from '@umami/react-zen';
+import { ArrowRight } from 'lucide-react';
+import type { Key } from 'react';
+import { IconLabel } from '@/components/common/IconLabel';
+import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
+import { ChevronRight, User, Users } from '@/components/icons';
+import { LAST_TEAM_CONFIG } from '@/lib/constants';
+import { removeItem } from '@/lib/storage';
 
 export function TeamsButton() {
   const { user } = useLoginQuery();
@@ -30,7 +25,7 @@ export function TeamsButton() {
   const { teamId, router } = useNavigation();
   const { isPhone } = useMobile();
   const team = user?.teams?.find(({ id }) => id === teamId);
-  const selectedKeys = new Set([teamId || "user"]);
+  const selectedKeys = new Set([teamId || 'user']);
   const label = teamId ? team?.name : user.username;
 
   const cloudMode = !!process.env.cloudMode;
@@ -40,12 +35,12 @@ export function TeamsButton() {
   };
 
   const handleAction = async (key: Key) => {
-    if (key === "user") {
+    if (key === 'user') {
       removeItem(LAST_TEAM_CONFIG);
       if (cloudMode) {
-        window.location.href = "/";
+        window.location.href = '/';
       } else {
-        router.push("/");
+        router.push('/');
       }
     }
   };
@@ -58,7 +53,7 @@ export function TeamsButton() {
           position="relative"
           gap
           maxHeight="40px"
-          minWidth={isPhone ? "100px" : "200px"}
+          minWidth={isPhone ? '100px' : '200px'}
           maxWidth="200px"
         >
           <Icon>{teamId ? <Users /> : <User />}</Icon>
@@ -70,11 +65,7 @@ export function TeamsButton() {
       </Button>
       <Popover placement="bottom start">
         <Column minWidth="300px">
-          <Menu
-            selectionMode="single"
-            selectedKeys={selectedKeys}
-            onAction={handleAction}
-          >
+          <Menu selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
             <MenuSection title={t(labels.myAccount)}>
               <MenuItem id="user">
                 <IconLabel icon={<User />} label={user.username} />
@@ -91,7 +82,7 @@ export function TeamsButton() {
               ))}
               <MenuSeparator />
               <MenuItem id="manage-teams">
-                <a href="/settings/teams" style={{ width: "100%" }}>
+                <a href="/settings/teams" style={{ width: '100%' }}>
                   <Row alignItems="center" justifyContent="space-between" gap>
                     <Text align="center">Manage teams</Text>
                     <Icon>

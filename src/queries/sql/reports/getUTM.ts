@@ -1,6 +1,6 @@
-import { EVENT_TYPE } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { EVENT_TYPE } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface UTMParameters {
   column: string;
@@ -22,14 +22,13 @@ async function relationalQuery(
   const { column, startDate, endDate } = parameters;
   const { parseFilters, rawQuery } = prisma;
 
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      websiteId,
-      startDate,
-      endDate,
-      eventType: EVENT_TYPE.pageView,
-    });
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+    startDate,
+    endDate,
+    eventType: EVENT_TYPE.pageView,
+  });
 
   return rawQuery(
     `

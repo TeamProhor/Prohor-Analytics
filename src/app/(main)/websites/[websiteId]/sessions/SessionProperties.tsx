@@ -1,22 +1,21 @@
-import { Column, Grid, ListItem, Select } from "@umami/react-zen";
-import { useMemo, useState } from "react";
-import { PieChart } from "@/components/charts/PieChart";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { Column, Grid, ListItem, Select } from '@umami/react-zen';
+import { useMemo, useState } from 'react';
+import { PieChart } from '@/components/charts/PieChart';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
 import {
   useMessages,
   useSessionDataPropertiesQuery,
   useSessionDataValuesQuery,
-} from "@/components/hooks";
-import { ListTable } from "@/components/metrics/ListTable";
-import { CHART_COLORS } from "@/lib/constants";
+} from '@/components/hooks';
+import { ListTable } from '@/components/metrics/ListTable';
+import { CHART_COLORS } from '@/lib/constants';
 
 export function SessionProperties({ websiteId }: { websiteId: string }) {
-  const [propertyName, setPropertyName] = useState("");
+  const [propertyName, setPropertyName] = useState('');
   const { t, labels } = useMessages();
-  const { data, isLoading, isFetching, error } =
-    useSessionDataPropertiesQuery(websiteId);
+  const { data, isLoading, isFetching, error } = useSessionDataPropertiesQuery(websiteId);
 
-  const properties: string[] = data?.map((e) => e.propertyName);
+  const properties: string[] = data?.map(e => e.propertyName);
 
   return (
     <LoadingPanel
@@ -35,7 +34,7 @@ export function SessionProperties({ websiteId }: { websiteId: string }) {
               onChange={setPropertyName}
               placeholder=""
             >
-              {properties?.map((p) => (
+              {properties?.map(p => (
                 <ListItem key={p} id={p}>
                   {p}
                 </ListItem>
@@ -43,19 +42,14 @@ export function SessionProperties({ websiteId }: { websiteId: string }) {
             </Select>
           </Grid>
         )}
-        {propertyName && (
-          <SessionValues websiteId={websiteId} propertyName={propertyName} />
-        )}
+        {propertyName && <SessionValues websiteId={websiteId} propertyName={propertyName} />}
       </Column>
     </LoadingPanel>
   );
 }
 
 const SessionValues = ({ websiteId, propertyName }) => {
-  const { data, isLoading, isFetching, error } = useSessionDataValuesQuery(
-    websiteId,
-    propertyName,
-  );
+  const { data, isLoading, isFetching, error } = useSessionDataValuesQuery(websiteId, propertyName);
 
   const propertySum = useMemo(() => {
     return data?.reduce((sum, { total }) => sum + total, 0) ?? 0;

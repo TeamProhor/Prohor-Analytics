@@ -1,7 +1,7 @@
-import { Column, type ColumnProps, Loading } from "@umami/react-zen";
-import type { ReactNode } from "react";
-import { Empty } from "@/components/common/Empty";
-import { ErrorMessage } from "@/components/common/ErrorMessage";
+import { Column, type ColumnProps, Loading } from '@umami/react-zen';
+import type { ReactNode } from 'react';
+import { Empty } from '@/components/common/Empty';
+import { ErrorMessage } from '@/components/common/ErrorMessage';
 
 export interface LoadingPanelProps extends ColumnProps {
   data?: any;
@@ -9,8 +9,8 @@ export interface LoadingPanelProps extends ColumnProps {
   isEmpty?: boolean;
   isLoading?: boolean;
   isFetching?: boolean;
-  loadingIcon?: "dots" | "spinner";
-  loadingPlacement?: "center" | "absolute" | "inline";
+  loadingIcon?: 'dots' | 'spinner';
+  loadingPlacement?: 'center' | 'absolute' | 'inline';
   renderEmpty?: () => ReactNode;
   children: ReactNode;
 }
@@ -21,8 +21,8 @@ export function LoadingPanel({
   isEmpty,
   isLoading,
   isFetching,
-  loadingIcon = "dots",
-  loadingPlacement = "absolute",
+  loadingIcon = 'dots',
+  loadingPlacement = 'absolute',
   renderEmpty = () => <Empty />,
   children,
   ...props
@@ -63,7 +63,7 @@ function checkEmpty(data: any) {
     return data.length <= 0;
   }
 
-  if (typeof data === "object") {
+  if (typeof data === 'object') {
     return Object.keys(data).length <= 0;
   }
 

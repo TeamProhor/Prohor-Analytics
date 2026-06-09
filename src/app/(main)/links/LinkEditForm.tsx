@@ -10,14 +10,14 @@ import {
   Loading,
   Row,
   TextField,
-} from "@umami/react-zen";
-import { useState } from "react";
-import { useConfig, useLinkQuery, useMessages } from "@/components/hooks";
-import { useUpdateQuery } from "@/components/hooks/queries/useUpdateQuery";
-import { RefreshCw } from "@/components/icons";
-import { LINKS_URL } from "@/lib/constants";
-import { getRandomChars } from "@/lib/generate";
-import { isValidUrl } from "@/lib/url";
+} from '@umami/react-zen';
+import { useState } from 'react';
+import { useConfig, useLinkQuery, useMessages } from '@/components/hooks';
+import { useUpdateQuery } from '@/components/hooks/queries/useUpdateQuery';
+import { RefreshCw } from '@/components/icons';
+import { LINKS_URL } from '@/lib/constants';
+import { getRandomChars } from '@/lib/generate';
+import { isValidUrl } from '@/lib/url';
 
 const generateId = () => getRandomChars(9);
 
@@ -34,7 +34,7 @@ export function LinkEditForm({
 }) {
   const { t, labels, messages, getErrorMessage } = useMessages();
   const { mutateAsync, error, isPending, touch, toast } = useUpdateQuery(
-    linkId ? `/links/${linkId}` : "/links",
+    linkId ? `/links/${linkId}` : '/links',
     {
       id: linkId,
       teamId,
@@ -51,7 +51,7 @@ export function LinkEditForm({
     await mutateAsync(data, {
       onSuccess: async () => {
         toast(t(messages.saved));
-        touch("links");
+        touch('links');
         touch(`link:${linkId}`);
         onSave?.();
         onClose?.();
@@ -77,15 +77,11 @@ export function LinkEditForm({
       defaultValues={{ slug: defaultSlug, ...data }}
     >
       {({ setValue, watch }) => {
-        const slug = watch("slug");
+        const slug = watch('slug');
 
         return (
           <>
-            <FormField
-              label={t(labels.name)}
-              name="name"
-              rules={{ required: t(labels.required) }}
-            >
+            <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
               <TextField autoComplete="off" autoFocus />
             </FormField>
 
@@ -103,7 +99,7 @@ export function LinkEditForm({
                 rules={{
                   required: t(labels.required),
                 }}
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
               >
                 <input type="hidden" />
               </FormField>
@@ -120,9 +116,7 @@ export function LinkEditForm({
                 </FormField>
                 <Button
                   variant="quiet"
-                  onPress={() =>
-                    setValue("slug", generateId(), { shouldDirty: true })
-                  }
+                  onPress={() => setValue('slug', generateId(), { shouldDirty: true })}
                 >
                   <Icon>
                     <RefreshCw />
@@ -139,7 +133,7 @@ export function LinkEditForm({
                   autoComplete="off"
                   isReadOnly
                   allowCopy
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                 />
               </Row>
             </Column>

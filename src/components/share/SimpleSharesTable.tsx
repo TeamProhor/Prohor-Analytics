@@ -1,14 +1,9 @@
-import { ShareDeleteButton } from "@/app/(main)/websites/[websiteId]/settings/ShareDeleteButton";
-import { CopyButton } from "@/components/common/CopyButton";
-import { ExternalLink } from "@/components/common/ExternalLink";
-import { useConfig, useMessages, useMobile } from "@/components/hooks";
-import {
-  DataColumn,
-  DataTable,
-  type DataTableProps,
-  Row,
-} from "@umami/react-zen";
-import { SimpleShareEditButton } from "./SimpleShareEditButton";
+import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
+import { ShareDeleteButton } from '@/app/(main)/websites/[websiteId]/settings/ShareDeleteButton';
+import { CopyButton } from '@/components/common/CopyButton';
+import { ExternalLink } from '@/components/common/ExternalLink';
+import { useConfig, useMessages, useMobile } from '@/components/hooks';
+import { SimpleShareEditButton } from './SimpleShareEditButton';
 
 export function SimpleSharesTable(props: DataTableProps) {
   const { t, labels } = useMessages();
@@ -21,11 +16,11 @@ export function SimpleSharesTable(props: DataTableProps) {
       return `${process.env.cloudUrl}/share/${slug}`;
     }
 
-    return `${window?.location.origin}${process.env.basePath || ""}/share/${slug}`;
+    return `${window?.location.origin}${process.env.basePath || ''}/share/${slug}`;
   };
 
   return (
-    <DataTable {...props} displayMode={isMobile ? "cards" : "table"}>
+    <DataTable {...props} displayMode={isMobile ? 'cards' : 'table'}>
       <DataColumn id="name" label={t(labels.name)}>
         {({ name }: any) => name}
       </DataColumn>

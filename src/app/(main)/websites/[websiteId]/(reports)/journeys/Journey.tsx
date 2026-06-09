@@ -1,22 +1,14 @@
-import {
-  Column,
-  Focusable,
-  Icon,
-  Row,
-  Text,
-  Tooltip,
-  TooltipTrigger,
-} from "@umami/react-zen";
-import classNames from "classnames";
-import { useMemo, useState } from "react";
-import { firstBy } from "thenby";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { useEscapeKey, useMessages, useResultQuery } from "@/components/hooks";
-import { File } from "@/components/icons";
-import { Lightning } from "@/components/svg";
-import { objectToArray } from "@/lib/data";
-import { formatLongNumber } from "@/lib/format";
-import styles from "./Journey.module.css";
+import { Column, Focusable, Icon, Row, Text, Tooltip, TooltipTrigger } from '@umami/react-zen';
+import classNames from 'classnames';
+import { useMemo, useState } from 'react';
+import { firstBy } from 'thenby';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useEscapeKey, useMessages, useResultQuery } from '@/components/hooks';
+import { File } from '@/components/icons';
+import { Lightning } from '@/components/svg';
+import { objectToArray } from '@/lib/data';
+import { formatLongNumber } from '@/lib/format';
+import styles from './Journey.module.css';
 
 const NODE_HEIGHT = 60;
 const NODE_GAP = 10;
@@ -37,17 +29,11 @@ const EVENT_TYPES = {
   events: 2,
 };
 
-export function Journey({
-  websiteId,
-  steps,
-  startStep,
-  endStep,
-  view,
-}: JourneyProps) {
+export function Journey({ websiteId, steps, startStep, endStep, view }: JourneyProps) {
   const [selectedNode, setSelectedNode] = useState(null);
   const [activeNode, setActiveNode] = useState(null);
   const { t, labels } = useMessages();
-  const { data, error, isLoading } = useResultQuery<any>("journey", {
+  const { data, error, isLoading } = useResultQuery<any>('journey', {
     websiteId,
     steps,
     startStep,
@@ -74,17 +60,11 @@ export function Journey({
         const name = items[columnIndex];
 
         if (name) {
-          const selected = !!selectedPaths.find(
-            ({ items }) => items[columnIndex] === name,
-          );
-          const active =
-            selected &&
-            !!activePaths.find(({ items }) => items[columnIndex] === name);
+          const selected = !!selectedPaths.find(({ items }) => items[columnIndex] === name);
+          const active = selected && !!activePaths.find(({ items }) => items[columnIndex] === name);
 
           if (!nodes[name]) {
-            const paths = data.filter(
-              ({ items }) => items[columnIndex] === name,
-            );
+            const paths = data.filter(({ items }) => items[columnIndex] === name);
 
             nodes[name] = {
               name,
@@ -96,7 +76,7 @@ export function Journey({
               active,
               paths,
               pathMap: paths.map(({ items, count }) => ({
-                [`${columnIndex}:${items.join(":")}`]: count,
+                [`${columnIndex}:${items.join(':')}`]: count,
               })),
             };
           } else {
@@ -106,7 +86,7 @@ export function Journey({
       });
 
       columns.push({
-        nodes: objectToArray(nodes).sort(firstBy("total", -1)),
+        nodes: objectToArray(nodes).sort(firstBy('total', -1)),
       });
     }
 
@@ -121,45 +101,35 @@ export function Journey({
           let activeCount = selectedCount;
 
           const lines =
-            previousNodes?.reduce(
-              (arr: any[][], previousNode: any, previousNodeIndex: number) => {
-                const fromCount = selectedNode?.paths.reduce((sum, path) => {
-                  if (
-                    previousNode.name === path.items[columnIndex - 1] &&
-                    currentNode.name === path.items[columnIndex]
-                  ) {
-                    sum += path.count;
-                  }
-                  return sum;
-                }, 0);
-
+            previousNodes?.reduce((arr: any[][], previousNode: any, previousNodeIndex: number) => {
+              const fromCount = selectedNode?.paths.reduce((sum, path) => {
                 if (
-                  currentNode.selected &&
-                  previousNode.selected &&
-                  fromCount
+                  previousNode.name === path.items[columnIndex - 1] &&
+                  currentNode.name === path.items[columnIndex]
                 ) {
-                  arr.push([previousNodeIndex, currentNodeIndex]);
-                  selectedCount += fromCount;
-
-                  if (previousNode.active) {
-                    activeCount += fromCount;
-                  }
+                  sum += path.count;
                 }
+                return sum;
+              }, 0);
 
-                return arr;
-              },
-              [],
-            ) || [];
+              if (currentNode.selected && previousNode.selected && fromCount) {
+                arr.push([previousNodeIndex, currentNodeIndex]);
+                selectedCount += fromCount;
+
+                if (previousNode.active) {
+                  activeCount += fromCount;
+                }
+              }
+
+              return arr;
+            }, []) || [];
 
           return { ...currentNode, selectedCount, activeCount, lines };
         },
       );
 
       const visitorCount = nodes.reduce(
-        (
-          sum: number,
-          { selected, selectedCount, active, activeCount, totalCount },
-        ) => {
+        (sum: number, { selected, selectedCount, active, activeCount, totalCount }) => {
           if (!selectedNode) {
             sum += totalCount;
           } else if (!activeNode && selectedNode && selected) {
@@ -174,9 +144,7 @@ export function Journey({
 
       const previousTotal = columns[columnIndex - 1]?.visitorCount ?? 0;
       const dropOff =
-        previousTotal > 0
-          ? ((visitorCount - previousTotal) / previousTotal) * 100
-          : 0;
+        previousTotal > 0 ? ((visitorCount - previousTotal) / previousTotal) * 100 : 0;
 
       Object.assign(column, { nodes, visitorCount, dropOff });
     });
@@ -185,10 +153,7 @@ export function Journey({
   }, [data, selectedNode, activeNode]);
 
   const handleClick = (name: string, columnIndex: number, paths: any[]) => {
-    if (
-      name !== selectedNode?.name ||
-      columnIndex !== selectedNode?.columnIndex
-    ) {
+    if (name !== selectedNode?.name || columnIndex !== selectedNode?.columnIndex) {
       setSelectedNode({ name, columnIndex, paths });
     } else {
       setSelectedNode(null);
@@ -237,11 +202,7 @@ export function Journey({
 
                       const remaining =
                         columnIndex > 0
-                          ? Math.round(
-                              (nodeCount /
-                                columns[columnIndex - 1]?.visitorCount) *
-                                100,
-                            )
+                          ? Math.round((nodeCount / columns[columnIndex - 1]?.visitorCount) * 100)
                           : 0;
 
                       const dropped = 100 - remaining;
@@ -251,8 +212,7 @@ export function Journey({
                           key={name}
                           className={styles.wrapper}
                           onMouseEnter={() =>
-                            selected &&
-                            setActiveNode({ name, columnIndex, paths })
+                            selected && setActiveNode({ name, columnIndex, paths })
                           }
                           onMouseLeave={() => selected && setActiveNode(null)}
                         >
@@ -261,32 +221,16 @@ export function Journey({
                               [styles.selected]: selected,
                               [styles.active]: active,
                             })}
-                            onClick={() =>
-                              handleClick(name, columnIndex, paths)
-                            }
+                            onClick={() => handleClick(name, columnIndex, paths)}
                           >
-                            <Row
-                              alignItems="center"
-                              className={styles.name}
-                              title={name}
-                              gap
-                            >
-                              <Icon>
-                                {name.startsWith("/") ? (
-                                  <File />
-                                ) : (
-                                  <Lightning />
-                                )}
-                              </Icon>
+                            <Row alignItems="center" className={styles.name} title={name} gap>
+                              <Icon>{name.startsWith('/') ? <File /> : <Lightning />}</Icon>
                               <Text truncate>{name}</Text>
                             </Row>
                             <div className={styles.count} title={nodeCount}>
                               <TooltipTrigger
                                 delay={0}
-                                isDisabled={
-                                  columnIndex === 0 ||
-                                  (selectedNode && !selected)
-                                }
+                                isDisabled={columnIndex === 0 || (selectedNode && !selected)}
                               >
                                 <Focusable>
                                   <div>{formatLongNumber(nodeCount)}</div>
@@ -306,17 +250,13 @@ export function Journey({
                             {columnIndex < columns.length &&
                               lines.map(([fromIndex, nodeIndex], i) => {
                                 const height =
-                                  (Math.abs(nodeIndex - fromIndex) + 1) *
-                                    (NODE_HEIGHT + NODE_GAP) -
+                                  (Math.abs(nodeIndex - fromIndex) + 1) * (NODE_HEIGHT + NODE_GAP) -
                                   NODE_GAP;
                                 const midHeight =
-                                  (Math.abs(nodeIndex - fromIndex) - 1) *
-                                    (NODE_HEIGHT + NODE_GAP) +
+                                  (Math.abs(nodeIndex - fromIndex) - 1) * (NODE_HEIGHT + NODE_GAP) +
                                   NODE_GAP +
                                   LINE_WIDTH;
-                                const nodeName =
-                                  columns[columnIndex - 1]?.nodes[fromIndex]
-                                    .name;
+                                const nodeName = columns[columnIndex - 1]?.nodes[fromIndex].name;
 
                                 return (
                                   <div
@@ -327,8 +267,7 @@ export function Journey({
                                         activeNode?.paths.find(
                                           (path: { items: any[] }) =>
                                             path.items[columnIndex] === name &&
-                                            path.items[columnIndex - 1] ===
-                                              nodeName,
+                                            path.items[columnIndex - 1] === nodeName,
                                         ),
                                       [styles.up]: fromIndex < nodeIndex,
                                       [styles.down]: fromIndex > nodeIndex,
@@ -336,27 +275,14 @@ export function Journey({
                                     })}
                                     style={{ height }}
                                   >
+                                    <div className={classNames(styles.segment, styles.start)} />
                                     <div
-                                      className={classNames(
-                                        styles.segment,
-                                        styles.start,
-                                      )}
-                                    />
-                                    <div
-                                      className={classNames(
-                                        styles.segment,
-                                        styles.mid,
-                                      )}
+                                      className={classNames(styles.segment, styles.mid)}
                                       style={{
                                         height: midHeight,
                                       }}
                                     />
-                                    <div
-                                      className={classNames(
-                                        styles.segment,
-                                        styles.end,
-                                      )}
-                                    />
+                                    <div className={classNames(styles.segment, styles.end)} />
                                   </div>
                                 );
                               })}

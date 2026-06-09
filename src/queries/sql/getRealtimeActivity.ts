@@ -1,11 +1,9 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getRealtimeActivity";
+const FUNCTION_NAME = 'getRealtimeActivity';
 
-export async function getRealtimeActivity(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export async function getRealtimeActivity(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 

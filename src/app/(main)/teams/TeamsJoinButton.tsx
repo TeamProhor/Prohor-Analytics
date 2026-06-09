@@ -1,15 +1,7 @@
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Icon,
-  Modal,
-  Text,
-  useToast,
-} from "@umami/react-zen";
-import { useMessages, useModified } from "@/components/hooks";
-import { UserPlus } from "@/components/icons";
-import { TeamJoinForm } from "./TeamJoinForm";
+import { Button, Dialog, DialogTrigger, Icon, Modal, Text, useToast } from '@umami/react-zen';
+import { useMessages, useModified } from '@/components/hooks';
+import { UserPlus } from '@/components/icons';
+import { TeamJoinForm } from './TeamJoinForm';
 
 export function TeamsJoinButton() {
   const { t, labels, messages } = useMessages();
@@ -18,7 +10,7 @@ export function TeamsJoinButton() {
 
   const handleJoin = () => {
     toast(t(messages.saved));
-    touch("teams");
+    touch('teams');
   };
 
   return (

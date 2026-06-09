@@ -1,5 +1,5 @@
-import { DEFAULT_RESET_DATE } from "@/lib/constants";
-import prisma from "@/lib/prisma";
+import { DEFAULT_RESET_DATE } from '@/lib/constants';
+import prisma from '@/lib/prisma';
 
 export async function getWebsiteDateRange(...args: [websiteId: string]) {
   return relationalQuery(...args);

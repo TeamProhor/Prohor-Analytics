@@ -1,15 +1,15 @@
-import { Row } from "@umami/react-zen";
-import { Favicon } from "@/components/common/Favicon";
-import { FilterLink } from "@/components/common/FilterLink";
-import { TypeIcon } from "@/components/common/TypeIcon";
+import { Row } from '@umami/react-zen';
+import { Favicon } from '@/components/common/Favicon';
+import { FilterLink } from '@/components/common/FilterLink';
+import { TypeIcon } from '@/components/common/TypeIcon';
 import {
   useCountryNames,
   useFormat,
   useLocale,
   useMessages,
   useRegionNames,
-} from "@/components/hooks";
-import { GROUPED_DOMAINS } from "@/lib/constants";
+} from '@/components/hooks';
+import { GROUPED_DOMAINS } from '@/lib/constants';
 
 export interface MetricLabelProps {
   type: string;
@@ -27,8 +27,8 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
   const { label, country, domain } = data;
 
   switch (type) {
-    case "browser":
-    case "os":
+    case 'browser':
+    case 'os':
       return (
         <FilterLink
           type={type}
@@ -38,10 +38,10 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
         />
       );
 
-    case "channel":
+    case 'channel':
       return t(labels[label]);
 
-    case "city":
+    case 'city':
       return (
         <FilterLink
           type="city"
@@ -50,8 +50,8 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
           icon={
             country && (
               <img
-                src={`${process.env.basePath || ""}/images/country/${
-                  country?.toLowerCase() || "xx"
+                src={`${process.env.basePath || ''}/images/country/${
+                  country?.toLowerCase() || 'xx'
                 }.png`}
                 alt={country}
               />
@@ -60,7 +60,7 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
         />
       );
 
-    case "region":
+    case 'region':
       return (
         <FilterLink
           type="region"
@@ -70,43 +70,41 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
         />
       );
 
-    case "country":
+    case 'country':
       return (
         <FilterLink
           type="country"
           value={(countryNames[label] && label) || label}
-          label={formatValue(label, "country")}
+          label={formatValue(label, 'country')}
           icon={<TypeIcon type="country" value={label} />}
         />
       );
 
-    case "path":
-    case "entry":
-    case "exit":
+    case 'path':
+    case 'entry':
+    case 'exit':
       return (
         <FilterLink
-          type={type === "entry" || type === "exit" ? "path" : type}
+          type={type === 'entry' || type === 'exit' ? 'path' : type}
           value={label}
           label={!label && t(labels.none)}
           externalUrl={
-            domain
-              ? `${domain?.startsWith("http") ? domain : `https://${domain}`}${label}`
-              : null
+            domain ? `${domain?.startsWith('http') ? domain : `https://${domain}`}${label}` : null
           }
         />
       );
 
-    case "device":
+    case 'device':
       return (
         <FilterLink
           type="device"
           value={labels[label] && label}
-          label={formatValue(label, "device")}
+          label={formatValue(label, 'device')}
           icon={<TypeIcon type="device" value={label} />}
         />
       );
 
-    case "referrer":
+    case 'referrer':
       return (
         <FilterLink
           type="referrer"
@@ -117,13 +115,11 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
         />
       );
 
-    case "domain":
-      if (label === "Other") {
+    case 'domain':
+      if (label === 'Other') {
         return `(${t(labels.other)})`;
       } else {
-        const name = GROUPED_DOMAINS.find(
-          ({ domain }) => domain === label,
-        )?.name;
+        const name = GROUPED_DOMAINS.find(({ domain }) => domain === label)?.name;
 
         if (!name) {
           return null;
@@ -137,8 +133,8 @@ export function MetricLabel({ type, data }: MetricLabelProps) {
         );
       }
 
-    case "language":
-      return formatValue(label, "language");
+    case 'language':
+      return formatValue(label, 'language');
 
     default:
       return <FilterLink type={type} value={label} />;

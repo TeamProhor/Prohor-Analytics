@@ -1,5 +1,5 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface PerformanceStatsResult {
   lcp: number;
@@ -10,9 +10,7 @@ export interface PerformanceStatsResult {
   count: number;
 }
 
-export async function getPerformanceStats(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export async function getPerformanceStats(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 
@@ -21,11 +19,10 @@ async function relationalQuery(
   filters: QueryFilters,
 ): Promise<PerformanceStatsResult> {
   const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      websiteId,
-    });
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+  });
 
   const result = await rawQuery(
     `

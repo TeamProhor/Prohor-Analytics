@@ -1,32 +1,18 @@
-import {
-  Form,
-  FormButtons,
-  FormField,
-  FormSubmitButton,
-  TextField,
-} from "@umami/react-zen";
-import { useMessages, useUpdateQuery, useWebsite } from "@/components/hooks";
-import { DOMAIN_REGEX } from "@/lib/constants";
+import { Form, FormButtons, FormField, FormSubmitButton, TextField } from '@umami/react-zen';
+import { useMessages, useUpdateQuery, useWebsite } from '@/components/hooks';
+import { DOMAIN_REGEX } from '@/lib/constants';
 
-export function WebsiteEditForm({
-  websiteId,
-  onSave,
-}: {
-  websiteId: string;
-  onSave?: () => void;
-}) {
+export function WebsiteEditForm({ websiteId, onSave }: { websiteId: string; onSave?: () => void }) {
   const website = useWebsite();
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const { mutateAsync, error, touch, toast } = useUpdateQuery(
-    `/websites/${websiteId}`,
-  );
+  const { mutateAsync, error, touch, toast } = useUpdateQuery(`/websites/${websiteId}`);
 
   const handleSubmit = async (data: any) => {
     const { shareId, ...updateData } = data;
     await mutateAsync(updateData, {
       onSuccess: async () => {
         toast(t(messages.saved));
-        touch("websites");
+        touch('websites');
         touch(`website:${website.id}`);
         onSave?.();
       },
@@ -34,18 +20,9 @@ export function WebsiteEditForm({
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      error={getErrorMessage(error)}
-      values={website}
-    >
+    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} values={website}>
       <FormField name="id" label={t(labels.websiteId)}>
-        <TextField
-          data-test="text-field-websiteId"
-          value={website?.id}
-          isReadOnly
-          allowCopy
-        />
+        <TextField data-test="text-field-websiteId" value={website?.id} isReadOnly allowCopy />
       </FormField>
       <FormField
         label={t(labels.name)}

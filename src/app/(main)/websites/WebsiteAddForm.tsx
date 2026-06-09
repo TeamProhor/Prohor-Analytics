@@ -1,13 +1,6 @@
-import {
-  Button,
-  Form,
-  FormField,
-  FormSubmitButton,
-  Row,
-  TextField,
-} from "@umami/react-zen";
-import { useMessages, useUpdateQuery } from "@/components/hooks";
-import { DOMAIN_REGEX } from "@/lib/constants";
+import { Button, Form, FormField, FormSubmitButton, Row, TextField } from '@umami/react-zen';
+import { useMessages, useUpdateQuery } from '@/components/hooks';
+import { DOMAIN_REGEX } from '@/lib/constants';
 
 export function WebsiteAddForm({
   teamId,
@@ -19,7 +12,7 @@ export function WebsiteAddForm({
   onClose?: () => void;
 }) {
   const { t, labels, messages } = useMessages();
-  const { mutateAsync, error, isPending } = useUpdateQuery("/websites", {
+  const { mutateAsync, error, isPending } = useUpdateQuery('/websites', {
     teamId,
   });
 

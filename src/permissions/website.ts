@@ -1,13 +1,10 @@
-import { hasPermission } from "@/lib/auth";
-import { PERMISSIONS } from "@/lib/constants";
-import { getEntity } from "@/lib/entity";
-import type { Auth } from "@/lib/types";
-import { getTeamUser, getWebsite } from "@/queries/prisma";
+import { hasPermission } from '@/lib/auth';
+import { PERMISSIONS } from '@/lib/constants';
+import { getEntity } from '@/lib/entity';
+import type { Auth } from '@/lib/types';
+import { getTeamUser, getWebsite } from '@/queries/prisma';
 
-export async function canViewWebsite(
-  { user, shareToken }: Auth,
-  websiteId: string,
-) {
+export async function canViewWebsite({ user, shareToken }: Auth, websiteId: string) {
   if (user?.isAdmin) {
     return true;
   }
@@ -114,11 +111,7 @@ export async function canDeleteWebsite({ user }: Auth, websiteId: string) {
   return false;
 }
 
-export async function canTransferWebsiteToUser(
-  { user }: Auth,
-  websiteId: string,
-  userId: string,
-) {
+export async function canTransferWebsiteToUser({ user }: Auth, websiteId: string, userId: string) {
   if (!user) {
     return false;
   }
@@ -132,20 +125,13 @@ export async function canTransferWebsiteToUser(
   if (website.teamId && user.id === userId) {
     const teamUser = await getTeamUser(website.teamId, userId);
 
-    return (
-      teamUser &&
-      hasPermission(teamUser.role, PERMISSIONS.websiteTransferToUser)
-    );
+    return teamUser && hasPermission(teamUser.role, PERMISSIONS.websiteTransferToUser);
   }
 
   return false;
 }
 
-export async function canTransferWebsiteToTeam(
-  { user }: Auth,
-  websiteId: string,
-  teamId: string,
-) {
+export async function canTransferWebsiteToTeam({ user }: Auth, websiteId: string, teamId: string) {
   if (!user) {
     return false;
   }
@@ -159,10 +145,7 @@ export async function canTransferWebsiteToTeam(
   if (website.userId && website.userId === user.id) {
     const teamUser = await getTeamUser(teamId, user.id);
 
-    return (
-      teamUser &&
-      hasPermission(teamUser.role, PERMISSIONS.websiteTransferToTeam)
-    );
+    return teamUser && hasPermission(teamUser.role, PERMISSIONS.websiteTransferToTeam);
   }
 
   return false;

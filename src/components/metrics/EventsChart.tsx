@@ -1,16 +1,16 @@
-import { colord } from "colord";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { BarChart, type BarChartProps } from "@/components/charts/BarChart";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { colord } from 'colord';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { BarChart, type BarChartProps } from '@/components/charts/BarChart';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
 import {
   useDateRange,
   useLocale,
   useTimezone,
   useWebsiteEventsSeriesQuery,
-} from "@/components/hooks";
-import { renderDateLabels } from "@/lib/charts";
-import { CHART_COLORS } from "@/lib/constants";
-import { generateTimeSeries } from "@/lib/date";
+} from '@/components/hooks';
+import { renderDateLabels } from '@/lib/charts';
+import { CHART_COLORS } from '@/lib/constants';
+import { generateTimeSeries } from '@/lib/date';
 
 export interface EventsChartProps extends BarChartProps {
   websiteId: string;
@@ -18,11 +18,7 @@ export interface EventsChartProps extends BarChartProps {
   limit?: number;
 }
 
-export function EventsChart({
-  websiteId,
-  focusLabel,
-  limit,
-}: EventsChartProps) {
+export function EventsChart({ websiteId, focusLabel, limit }: EventsChartProps) {
   const { timezone } = useTimezone();
   const {
     dateRange: { startDate, endDate, unit },
@@ -62,13 +58,7 @@ export function EventsChart({
           const color = colord(CHART_COLORS[index % CHART_COLORS.length]);
           return {
             label: key,
-            data: generateTimeSeries(
-              map[key],
-              startDate,
-              endDate,
-              unit,
-              dateLocale,
-            ),
+            data: generateTimeSeries(map[key], startDate, endDate, unit, dateLocale),
             lineTension: 0,
             backgroundColor: color.alpha(0.6).toRgbString(),
             borderColor: color.alpha(0.7).toRgbString(),
@@ -86,10 +76,7 @@ export function EventsChart({
     }
   }, [focusLabel]);
 
-  const renderXLabel = useCallback(renderDateLabels(unit, locale), [
-    unit,
-    locale,
-  ]);
+  const renderXLabel = useCallback(renderDateLabels(unit, locale), [unit, locale]);
 
   return (
     <LoadingPanel isLoading={isLoading} error={error} minHeight="400px">

@@ -1,29 +1,20 @@
-"use client";
-import {
-  Button,
-  Column,
-  Dialog,
-  DialogTrigger,
-  Icon,
-  Popover,
-  Row,
-  Text,
-} from "@umami/react-zen";
-import { Bookmark, X } from "lucide-react";
-import { useState } from "react";
-import { SessionInfo } from "@/app/(main)/websites/[websiteId]/sessions/SessionInfo";
-import { Avatar } from "@/components/common/Avatar";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
+'use client';
+import { Button, Column, Dialog, DialogTrigger, Icon, Popover, Row, Text } from '@umami/react-zen';
+import { Bookmark, X } from 'lucide-react';
+import { useState } from 'react';
+import { SessionInfo } from '@/app/(main)/websites/[websiteId]/sessions/SessionInfo';
+import { Avatar } from '@/components/common/Avatar';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
 import {
   useMessages,
   useReplayQuery,
   useReplaySavedQuery,
   useUpdateQuery,
   useWebsiteSessionQuery,
-} from "@/components/hooks";
-import { touch } from "@/components/hooks/useModified";
-import { ReplayPlayer } from "./ReplayPlayer";
-import { ReplaySaveForm } from "./ReplaySaveForm";
+} from '@/components/hooks';
+import { touch } from '@/components/hooks/useModified';
+import { ReplayPlayer } from './ReplayPlayer';
+import { ReplaySaveForm } from './ReplaySaveForm';
 
 export function ReplayPlayback({
   websiteId,
@@ -36,27 +27,18 @@ export function ReplayPlayback({
   showSessionInfo?: boolean;
   onClose?: () => void;
 }) {
-  const {
-    data: replay,
-    isLoading,
-    error,
-  } = useReplayQuery(websiteId, replayId);
+  const { data: replay, isLoading, error } = useReplayQuery(websiteId, replayId);
   const { data: replaySaved } = useReplaySavedQuery(websiteId, replayId);
-  const { data: session } = useWebsiteSessionQuery(
-    websiteId,
-    replay?.sessionId,
-  );
+  const { data: session } = useWebsiteSessionQuery(websiteId, replay?.sessionId);
   const { t, labels } = useMessages();
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
-  const { mutate } = useUpdateQuery(
-    `/websites/${websiteId}/replays/saved/${replayId}`,
-  );
+  const { mutate } = useUpdateQuery(`/websites/${websiteId}/replays/saved/${replayId}`);
 
   const saved = isSaved ?? replaySaved?.isSaved ?? false;
 
   const handleUnsave = () => {
     setIsSaved(false);
-    mutate({ isSaved: false }, { onSuccess: () => touch("replays") });
+    mutate({ isSaved: false }, { onSuccess: () => touch('replays') });
   };
 
   return (
@@ -65,7 +47,7 @@ export function ReplayPlayback({
       isLoading={isLoading}
       error={error}
       loadingIcon="spinner"
-      style={{ minHeight: "400px" }}
+      style={{ minHeight: '400px' }}
     >
       {replay && (
         <Column gap="6">
@@ -95,17 +77,14 @@ export function ReplayPlayback({
                       </Icon>
                     </Button>
                     <Popover placement="bottom end">
-                      <Dialog
-                        title={t(labels.saveReplay)}
-                        style={{ width: "300px" }}
-                      >
+                      <Dialog title={t(labels.saveReplay)} style={{ width: '300px' }}>
                         {({ close }) => (
                           <ReplaySaveForm
                             websiteId={websiteId}
                             replayId={replayId}
                             onSave={() => {
                               setIsSaved(true);
-                              touch("replays");
+                              touch('replays');
                             }}
                             onClose={close}
                           />

@@ -1,9 +1,9 @@
-import { List, ListItem } from "@umami/react-zen";
-import { Empty } from "@/components/common/Empty";
-import { IconLabel } from "@/components/common/IconLabel";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { useWebsiteSegmentsQuery } from "@/components/hooks";
-import { ChartPie, UserPlus } from "@/components/icons";
+import { List, ListItem } from '@umami/react-zen';
+import { Empty } from '@/components/common/Empty';
+import { IconLabel } from '@/components/common/IconLabel';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useWebsiteSegmentsQuery } from '@/components/hooks';
+import { ChartPie, UserPlus } from '@/components/icons';
 
 export interface SegmentFiltersProps {
   websiteId?: string;
@@ -15,7 +15,7 @@ export interface SegmentFiltersProps {
 export function SegmentFilters({
   websiteId,
   segmentId,
-  type = "segment",
+  type = 'segment',
   onChange,
 }: SegmentFiltersProps) {
   const { data, isLoading, isFetching } = useWebsiteSegmentsQuery(websiteId, {
@@ -27,24 +27,13 @@ export function SegmentFilters({
   };
 
   return (
-    <LoadingPanel
-      data={data}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      overflowY="auto"
-    >
+    <LoadingPanel data={data} isLoading={isLoading} isFetching={isFetching} overflowY="auto">
       {data?.data?.length === 0 && <Empty />}
-      <List
-        selectionMode="single"
-        value={[segmentId]}
-        onChange={(id) => handleChange(id[0])}
-      >
-        {data?.data?.map((item) => {
+      <List selectionMode="single" value={[segmentId]} onChange={id => handleChange(id[0])}>
+        {data?.data?.map(item => {
           return (
             <ListItem key={item.id} id={item.id}>
-              <IconLabel
-                icon={type === "segment" ? <ChartPie /> : <UserPlus />}
-              >
+              <IconLabel icon={type === 'segment' ? <ChartPie /> : <UserPlus />}>
                 {item.name}
               </IconLabel>
             </ListItem>

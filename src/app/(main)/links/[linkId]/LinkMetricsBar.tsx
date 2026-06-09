@@ -1,9 +1,9 @@
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import { useDateRange, useMessages } from "@/components/hooks";
-import { useWebsiteStatsQuery } from "@/components/hooks/queries/useWebsiteStatsQuery";
-import { MetricCard } from "@/components/metrics/MetricCard";
-import { MetricsBar } from "@/components/metrics/MetricsBar";
-import { formatLongNumber } from "@/lib/format";
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useDateRange, useMessages } from '@/components/hooks';
+import { useWebsiteStatsQuery } from '@/components/hooks/queries/useWebsiteStatsQuery';
+import { MetricCard } from '@/components/metrics/MetricCard';
+import { MetricsBar } from '@/components/metrics/MetricsBar';
+import { formatLongNumber } from '@/lib/format';
 
 export function LinkMetricsBar({
   linkId,
@@ -52,22 +52,20 @@ export function LinkMetricsBar({
       minHeight="136px"
     >
       <MetricsBar>
-        {metrics?.map(
-          ({ label, value, prev, change, formatValue, reverseColors }: any) => {
-            return (
-              <MetricCard
-                key={label}
-                value={value}
-                previousValue={prev}
-                label={label}
-                change={change}
-                formatValue={formatValue}
-                reverseColors={reverseColors}
-                showChange={!isAllTime}
-              />
-            );
-          },
-        )}
+        {metrics?.map(({ label, value, prev, change, formatValue, reverseColors }: any) => {
+          return (
+            <MetricCard
+              key={label}
+              value={value}
+              previousValue={prev}
+              label={label}
+              change={change}
+              formatValue={formatValue}
+              reverseColors={reverseColors}
+              showChange={!isAllTime}
+            />
+          );
+        })}
       </MetricsBar>
     </LoadingPanel>
   );

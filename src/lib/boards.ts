@@ -1,23 +1,22 @@
-import type { Board, BoardComponentConfig, BoardParameters } from "./types";
-import { isBoardComponentSupportedByEntityType } from "./boardComponentCompatibility";
+import { isBoardComponentSupportedByEntityType } from './boardComponentCompatibility';
+import type { Board, BoardComponentConfig, BoardParameters } from './types';
 
 export const BOARD_TYPES = {
-  dashboard: "dashboard",
-  mixed: "mixed",
-  website: "website",
-  pixel: "pixel",
-  link: "link",
+  dashboard: 'dashboard',
+  mixed: 'mixed',
+  website: 'website',
+  pixel: 'pixel',
+  link: 'link',
 } as const;
 
 export const BOARD_ENTITY_TYPES = {
-  website: "website",
-  pixel: "pixel",
-  link: "link",
+  website: 'website',
+  pixel: 'pixel',
+  link: 'link',
 } as const;
 
 export type BoardType = (typeof BOARD_TYPES)[keyof typeof BOARD_TYPES];
-export type BoardEntityType =
-  (typeof BOARD_ENTITY_TYPES)[keyof typeof BOARD_ENTITY_TYPES];
+export type BoardEntityType = (typeof BOARD_ENTITY_TYPES)[keyof typeof BOARD_ENTITY_TYPES];
 
 const boardTypes = new Set<string>(Object.values(BOARD_TYPES));
 
@@ -38,7 +37,7 @@ export function getLegacyBoardType(parameters?: BoardParameters): BoardType {
 }
 
 export function normalizeBoardType(type?: string): BoardType | undefined {
-  if (type === "open") {
+  if (type === 'open') {
     return BOARD_TYPES.mixed;
   }
 
@@ -50,7 +49,7 @@ export function normalizeBoardType(type?: string): BoardType | undefined {
 }
 
 export function getBoardType(
-  board?: Pick<Board, "type" | "parameters"> | Partial<Board>,
+  board?: Pick<Board, 'type' | 'parameters'> | Partial<Board>,
   { coerceDashboard = false }: { coerceDashboard?: boolean } = {},
 ): BoardType {
   const type = board?.type;
@@ -69,24 +68,14 @@ export function getBoardType(
 }
 
 export function isOpenBoardType(type?: string) {
-  return (
-    type === BOARD_TYPES.mixed ||
-    type === BOARD_TYPES.dashboard ||
-    type === "open"
-  );
+  return type === BOARD_TYPES.mixed || type === BOARD_TYPES.dashboard || type === 'open';
 }
 
 export function requiresBoardEntity(type?: string) {
-  return (
-    type === BOARD_TYPES.website ||
-    type === BOARD_TYPES.pixel ||
-    type === BOARD_TYPES.link
-  );
+  return type === BOARD_TYPES.website || type === BOARD_TYPES.pixel || type === BOARD_TYPES.link;
 }
 
-export function getBoardEntity(
-  board?: Pick<Board, "type" | "parameters"> | Partial<Board>,
-): {
+export function getBoardEntity(board?: Pick<Board, 'type' | 'parameters'> | Partial<Board>): {
   entityType?: BoardEntityType;
   entityId?: string;
 } {
@@ -138,7 +127,7 @@ export function getComponentEntity(config?: BoardComponentConfig): {
 }
 
 export function getResolvedComponentEntity(
-  board?: Pick<Board, "type" | "parameters"> | Partial<Board>,
+  board?: Pick<Board, 'type' | 'parameters'> | Partial<Board>,
   config?: BoardComponentConfig,
 ) {
   const boardEntity = getBoardEntity(board);
@@ -150,15 +139,12 @@ export function getResolvedComponentEntity(
   return getComponentEntity(config);
 }
 
-export function isBoardComponentSupported(
-  componentType: string,
-  entityType?: BoardEntityType,
-) {
+export function isBoardComponentSupported(componentType: string, entityType?: BoardEntityType) {
   return isBoardComponentSupportedByEntityType(componentType, entityType);
 }
 
 export function getFirstBoardComponentEntity(
-  board?: Pick<Board, "type" | "parameters"> | Partial<Board>,
+  board?: Pick<Board, 'type' | 'parameters'> | Partial<Board>,
 ) {
   for (const row of board?.parameters?.rows ?? []) {
     for (const column of row.columns ?? []) {
@@ -173,9 +159,7 @@ export function getFirstBoardComponentEntity(
   return {};
 }
 
-export function getBoardEntityIds(
-  board?: Pick<Board, "type" | "parameters"> | Partial<Board>,
-): {
+export function getBoardEntityIds(board?: Pick<Board, 'type' | 'parameters'> | Partial<Board>): {
   websiteIds: string[];
   pixelIds: string[];
   linkIds: string[];
@@ -185,20 +169,11 @@ export function getBoardEntityIds(
   const linkIds = new Set<string>();
   const boardEntity = getBoardEntity(board);
 
-  if (
-    boardEntity.entityType === BOARD_ENTITY_TYPES.website &&
-    boardEntity.entityId
-  ) {
+  if (boardEntity.entityType === BOARD_ENTITY_TYPES.website && boardEntity.entityId) {
     websiteIds.add(boardEntity.entityId);
-  } else if (
-    boardEntity.entityType === BOARD_ENTITY_TYPES.pixel &&
-    boardEntity.entityId
-  ) {
+  } else if (boardEntity.entityType === BOARD_ENTITY_TYPES.pixel && boardEntity.entityId) {
     pixelIds.add(boardEntity.entityId);
-  } else if (
-    boardEntity.entityType === BOARD_ENTITY_TYPES.link &&
-    boardEntity.entityId
-  ) {
+  } else if (boardEntity.entityType === BOARD_ENTITY_TYPES.link && boardEntity.entityId) {
     linkIds.add(boardEntity.entityId);
   }
 
@@ -220,15 +195,9 @@ export function getBoardEntityIds(
 
       if (entity.entityType === BOARD_ENTITY_TYPES.website && entity.entityId) {
         websiteIds.add(entity.entityId);
-      } else if (
-        entity.entityType === BOARD_ENTITY_TYPES.pixel &&
-        entity.entityId
-      ) {
+      } else if (entity.entityType === BOARD_ENTITY_TYPES.pixel && entity.entityId) {
         pixelIds.add(entity.entityId);
-      } else if (
-        entity.entityType === BOARD_ENTITY_TYPES.link &&
-        entity.entityId
-      ) {
+      } else if (entity.entityType === BOARD_ENTITY_TYPES.link && entity.entityId) {
         linkIds.add(entity.entityId);
       }
     }
@@ -241,9 +210,7 @@ export function getBoardEntityIds(
   };
 }
 
-export function clearBoardEntity(
-  parameters: BoardParameters = {},
-): BoardParameters {
+export function clearBoardEntity(parameters: BoardParameters = {}): BoardParameters {
   const { websiteId, pixelId, linkId, ...rest } = parameters;
 
   return rest;

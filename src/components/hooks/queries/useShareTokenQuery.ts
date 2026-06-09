@@ -1,10 +1,10 @@
-import { setShareData } from "@/store/app";
-import { useApi } from "../useApi";
+import { setShareData } from '@/store/app';
+import { useApi } from '../useApi';
 
 export function useShareTokenQuery(slug: string) {
   const { get, useQuery } = useApi();
   const query = useQuery({
-    queryKey: ["share", slug],
+    queryKey: ['share', slug],
     queryFn: async () => {
       const data = await get(`/share/${slug}`);
 

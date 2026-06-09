@@ -1,19 +1,13 @@
-import {
-  Button,
-  DataColumn,
-  DataTable,
-  type DataTableProps,
-  Icon,
-} from "@umami/react-zen";
-import { Play } from "lucide-react";
-import { DateDistance } from "@/components/common/DateDistance";
-import { useMessages } from "@/components/hooks";
+import { Button, DataColumn, DataTable, type DataTableProps, Icon } from '@umami/react-zen';
+import { Play } from 'lucide-react';
+import { DateDistance } from '@/components/common/DateDistance';
+import { useMessages } from '@/components/hooks';
 
 function formatDuration(ms: number) {
   const seconds = Math.floor(ms / 1000);
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  return `${minutes}:${secs.toString().padStart(2, "0")}`;
+  return `${minutes}:${secs.toString().padStart(2, '0')}`;
 }
 
 export function SessionReplaysTable({
@@ -28,7 +22,7 @@ export function SessionReplaysTable({
       <DataColumn id="play" label="" width="80px">
         {(row: any) => (
           <Button
-            variant={row.id === selectedId ? "primary" : "quiet"}
+            variant={row.id === selectedId ? 'primary' : 'quiet'}
             onClick={() => onPlay(row.id)}
           >
             <Icon>

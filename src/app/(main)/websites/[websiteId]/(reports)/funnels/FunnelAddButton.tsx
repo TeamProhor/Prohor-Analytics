@@ -1,7 +1,7 @@
-import { useMessages } from "@/components/hooks";
-import { Plus } from "@/components/icons";
-import { DialogButton } from "@/components/input/DialogButton";
-import { FunnelEditForm } from "./FunnelEditForm";
+import { useMessages } from '@/components/hooks';
+import { Plus } from '@/components/icons';
+import { DialogButton } from '@/components/input/DialogButton';
+import { FunnelEditForm } from './FunnelEditForm';
 
 export function FunnelAddButton({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();

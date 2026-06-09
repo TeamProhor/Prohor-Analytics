@@ -1,7 +1,7 @@
-import type { Prisma } from "@/generated/prisma/client";
-import prisma from "@/lib/prisma";
+import type { Prisma } from '@/generated/prisma/client';
+import prisma from '@/lib/prisma';
 
-const FUNCTION_NAME = "createSession";
+const FUNCTION_NAME = 'createSession';
 
 export async function createSession(data: Prisma.SessionCreateInput) {
   const { rawQuery } = prisma;

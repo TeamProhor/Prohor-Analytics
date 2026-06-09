@@ -1,6 +1,6 @@
-import { ListItem, Row, Select } from "@umami/react-zen";
-import { useLocale } from "@/components/hooks";
-import { formatDate } from "@/lib/date";
+import { ListItem, Row, Select } from '@umami/react-zen';
+import { useLocale } from '@/components/hooks';
+import { formatDate } from '@/lib/date';
 
 export function MonthSelect({ date = new Date(), onChange }) {
   const { locale } = useLocale();
@@ -25,16 +25,16 @@ export function MonthSelect({ date = new Date(), onChange }) {
   return (
     <Row gap>
       <Select value={month} onChange={handleMonthChange}>
-        {months.map((m) => {
+        {months.map(m => {
           return (
             <ListItem id={m} key={m}>
-              {formatDate(new Date(year, m, 1), "MMMM", locale)}
+              {formatDate(new Date(year, m, 1), 'MMMM', locale)}
             </ListItem>
           );
         })}
       </Select>
       <Select value={year} onChange={handleYearChange}>
-        {years.map((y) => {
+        {years.map(y => {
           return (
             <ListItem id={y} key={y}>
               {y}

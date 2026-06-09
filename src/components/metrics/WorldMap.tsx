@@ -1,29 +1,17 @@
-import {
-  Box,
-  Column,
-  type ColumnProps,
-  FloatingTooltip,
-  Text,
-  useTheme,
-} from "@umami/react-zen";
-import { colord } from "colord";
-import { useMemo, useState } from "react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
+import { Box, Column, type ColumnProps, FloatingTooltip, useTheme } from '@umami/react-zen';
+import { colord } from 'colord';
+import { useMemo, useState } from 'react';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import {
   useCountryNames,
   useLocale,
   useMessages,
   useWebsiteMetricsQuery,
-} from "@/components/hooks";
-import { getThemeColors } from "@/lib/colors";
-import { ISO_COUNTRIES, MAP_FILE } from "@/lib/constants";
-import { percentFilter } from "@/lib/filters";
-import { formatLongNumber } from "@/lib/format";
+} from '@/components/hooks';
+import { getThemeColors } from '@/lib/colors';
+import { ISO_COUNTRIES, MAP_FILE } from '@/lib/constants';
+import { percentFilter } from '@/lib/filters';
+import { formatLongNumber } from '@/lib/format';
 
 export interface WorldMapProps extends ColumnProps {
   websiteId?: string;
@@ -41,7 +29,7 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
   const unknownLabel = t(labels.unknown);
 
   const { data: mapData } = useWebsiteMetricsQuery(websiteId, {
-    type: "country",
+    type: 'country',
   });
 
   const metrics = useMemo(
@@ -50,7 +38,7 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
   );
 
   const getFillColor = (code: string) => {
-    if (code === "AQ") return;
+    if (code === 'AQ') return;
     const country = metrics?.find(({ x }) => x === code);
 
     if (!country) {
@@ -58,16 +46,16 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
     }
 
     return colord(colors.map.baseColor)
-      [theme === "light" ? "lighten" : "darken"](0.4 * (1.0 - country.z / 100))
+      [theme === 'light' ? 'lighten' : 'darken'](0.4 * (1.0 - country.z / 100))
       .toHex();
   };
 
   const getOpacity = (code: string) => {
-    return code === "AQ" ? 0 : 1;
+    return code === 'AQ' ? 0 : 1;
   };
 
   const handleHover = (code: string) => {
-    if (code === "AQ") return;
+    if (code === 'AQ') return;
     const country = metrics?.find(({ x }) => x === code);
     setTooltipPopup(
       `${countryNames[code] || unknownLabel}: ${formatLongNumber(
@@ -81,13 +69,13 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
       {...props}
       data-tip=""
       data-for="world-map-tooltip"
-      style={{ margin: "auto 0", overflow: "hidden" }}
+      style={{ margin: 'auto 0', overflow: 'hidden' }}
     >
       <ComposableMap projection="geoMercator">
         <ZoomableGroup zoom={0.8} minZoom={0.7} center={[0, 40]}>
-          <Geographies geography={`${process.env.basePath || ""}${MAP_FILE}`}>
+          <Geographies geography={`${process.env.basePath || ''}${MAP_FILE}`}>
             {({ geographies }) => {
-              return geographies.map((geo) => {
+              return geographies.map(geo => {
                 const code = ISO_COUNTRIES[geo.id];
 
                 return (
@@ -98,9 +86,9 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
                     stroke={colors.map.strokeColor}
                     opacity={getOpacity(code)}
                     style={{
-                      default: { outline: "none" },
-                      hover: { outline: "none", fill: colors.map.hoverColor },
-                      pressed: { outline: "none" },
+                      default: { outline: 'none' },
+                      hover: { outline: 'none', fill: colors.map.hoverColor },
+                      pressed: { outline: 'none' },
                     }}
                     onMouseOver={() => handleHover(code)}
                     onMouseOut={() => setTooltipPopup(null)}
@@ -114,7 +102,7 @@ export function WorldMap({ websiteId, data, ...props }: WorldMapProps) {
       {tooltip && (
         <FloatingTooltip>
           <Box
-            style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "white" }}
+            style={{ backgroundColor: 'rgba(0,0,0,0.8)', color: 'white' }}
             padding
             borderRadius="md"
           >

@@ -1,16 +1,15 @@
-"use client";
-import { Icon, Row } from "@umami/react-zen";
-import { useNavigation } from "@/components/hooks";
-import { Slash } from "@/components/icons";
-import { BoardSelect } from "@/components/input/BoardSelect";
-import { LinkSelect } from "@/components/input/LinkSelect";
-import { PixelSelect } from "@/components/input/PixelSelect";
-import { TeamsButton } from "@/components/input/TeamsButton";
-import { WebsiteSelect } from "@/components/input/WebsiteSelect";
+'use client';
+import { Icon, Row } from '@umami/react-zen';
+import { useNavigation } from '@/components/hooks';
+import { Slash } from '@/components/icons';
+import { BoardSelect } from '@/components/input/BoardSelect';
+import { LinkSelect } from '@/components/input/LinkSelect';
+import { PixelSelect } from '@/components/input/PixelSelect';
+import { TeamsButton } from '@/components/input/TeamsButton';
+import { WebsiteSelect } from '@/components/input/WebsiteSelect';
 
 export function TopNav() {
-  const { websiteId, linkId, pixelId, boardId, teamId, router, renderUrl } =
-    useNavigation();
+  const { websiteId, linkId, pixelId, boardId, teamId, router, renderUrl } = useNavigation();
 
   const handleWebsiteChange = (value: string) => {
     router.push(renderUrl(`/websites/${value}`, false));
@@ -45,11 +44,7 @@ export function TopNav() {
         <TeamsButton />
         {(websiteId || linkId || pixelId || boardId) && (
           <>
-            <Icon
-              size="sm"
-              color="muted"
-              style={{ opacity: 0.7, margin: "0 6px" }}
-            >
+            <Icon size="sm" color="muted" style={{ opacity: 0.7, margin: '0 6px' }}>
               <Slash />
             </Icon>
             {websiteId && (
@@ -58,7 +53,7 @@ export function TopNav() {
                 teamId={teamId}
                 onChange={handleWebsiteChange}
                 buttonProps={{
-                  variant: "quiet",
+                  variant: 'quiet',
                   style: { minHeight: 40, minWidth: 200, maxWidth: 200 },
                 }}
               />
@@ -69,7 +64,7 @@ export function TopNav() {
                 teamId={teamId}
                 onChange={handleLinkChange}
                 buttonProps={{
-                  variant: "quiet",
+                  variant: 'quiet',
                   style: { minHeight: 40, minWidth: 200, maxWidth: 200 },
                 }}
               />
@@ -80,7 +75,7 @@ export function TopNav() {
                 teamId={teamId}
                 onChange={handlePixelChange}
                 buttonProps={{
-                  variant: "quiet",
+                  variant: 'quiet',
                   style: { minHeight: 40, minWidth: 200, maxWidth: 200 },
                 }}
               />
@@ -91,7 +86,7 @@ export function TopNav() {
                 teamId={teamId}
                 onChange={handleBoardChange}
                 buttonProps={{
-                  variant: "quiet",
+                  variant: 'quiet',
                   style: { minHeight: 40, minWidth: 200, maxWidth: 200 },
                 }}
               />
@@ -101,14 +96,13 @@ export function TopNav() {
       </Row>
       <div
         style={{
-          position: "absolute",
+          position: 'absolute',
           bottom: -16,
           left: 0,
           right: 0,
           height: 16,
-          background:
-            "linear-gradient(to bottom, var(--surface-raised), transparent)",
-          pointerEvents: "none",
+          background: 'linear-gradient(to bottom, var(--surface-raised), transparent)',
+          pointerEvents: 'none',
         }}
       />
     </Row>

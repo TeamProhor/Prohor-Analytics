@@ -1,20 +1,12 @@
-import { z } from "zod";
-import { hashPassword } from "@/lib/password";
-import { parseRequest } from "@/lib/request";
-import { badRequest, json, notFound, ok, unauthorized } from "@/lib/response";
-import { userRoleParam } from "@/lib/schema";
-import { canDeleteUser, canUpdateUser, canViewUser } from "@/permissions";
-import {
-  deleteUser,
-  getUser,
-  getUserByUsername,
-  updateUser,
-} from "@/queries/prisma";
+import { z } from 'zod';
+import { hashPassword } from '@/lib/password';
+import { parseRequest } from '@/lib/request';
+import { badRequest, json, notFound, ok, unauthorized } from '@/lib/response';
+import { userRoleParam } from '@/lib/schema';
+import { canDeleteUser, canUpdateUser, canViewUser } from '@/permissions';
+import { deleteUser, getUser, getUserByUsername, updateUser } from '@/queries/prisma';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ userId: string }> },
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ userId: string }> }) {
   const { auth, error } = await parseRequest(request);
 
   if (error) {
@@ -32,10 +24,7 @@ export async function GET(
   return json(user);
 }
 
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ userId: string }> },
-) {
+export async function POST(request: Request, { params }: { params: Promise<{ userId: string }> }) {
   const schema = z.object({
     username: z.string().max(255).optional(),
     password: z.string().min(8).max(255).optional(),
@@ -82,7 +71,7 @@ export async function POST(
     const user = await getUserByUsername(username);
 
     if (user) {
-      return badRequest({ message: "User already exists" });
+      return badRequest({ message: 'User already exists' });
     }
   }
 
@@ -108,7 +97,7 @@ export async function DELETE(
   }
 
   if (userId === auth.user.id) {
-    return badRequest({ message: "You cannot delete yourself." });
+    return badRequest({ message: 'You cannot delete yourself.' });
   }
 
   await deleteUser(userId);

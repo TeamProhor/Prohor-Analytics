@@ -1,15 +1,10 @@
-import { Button, Icon, ListItem, Row, Select, Text } from "@umami/react-zen";
-import { isAfter } from "date-fns";
-import { useMemo } from "react";
-import {
-  useDateRange,
-  useDateRangeQuery,
-  useMessages,
-  useNavigation,
-} from "@/components/hooks";
-import { ChevronRight } from "@/components/icons";
-import { getDateRangeValue } from "@/lib/date";
-import { DateFilter } from "./DateFilter";
+import { Button, Icon, ListItem, Row, Select, Text } from '@umami/react-zen';
+import { isAfter } from 'date-fns';
+import { useMemo } from 'react';
+import { useDateRange, useDateRangeQuery, useMessages, useNavigation } from '@/components/hooks';
+import { ChevronRight } from '@/components/icons';
+import { getDateRangeValue } from '@/lib/date';
+import { DateFilter } from './DateFilter';
 
 export interface WebsiteDateFilterProps {
   websiteId?: string;
@@ -30,7 +25,7 @@ export function WebsiteDateFilter({
   const {
     router,
     updateParams,
-    query: { compare = "prev", offset = 0 },
+    query: { compare = 'prev', offset = 0 },
   } = useNavigation();
   const disableForward = isAllTime || isAfter(dateRange.endDate, new Date());
   const showCompare = allowCompare && !isAllTime;
@@ -40,7 +35,7 @@ export function WebsiteDateFilter({
   const hasData = startDate && endDate;
 
   const handleChange = (date: string) => {
-    if (date === "all" && hasData) {
+    if (date === 'all' && hasData) {
       router.push(
         updateParams({
           date: `${getDateRangeValue(websiteDateRange.startDate, websiteDateRange.endDate)}:all`,
@@ -49,13 +44,11 @@ export function WebsiteDateFilter({
         }),
       );
     } else {
-      router.push(
-        updateParams({ date, offset: undefined, unit: undefined, page: 1 }),
-      );
+      router.push(updateParams({ date, offset: undefined, unit: undefined, page: 1 }));
     }
   };
 
-  const handleIncrement = (increment) => {
+  const handleIncrement = increment => {
     router.push(updateParams({ offset: Number(offset) + increment }));
   };
   const handleSelect = (compare: any) => {
@@ -77,11 +70,7 @@ export function WebsiteDateFilter({
               <ChevronRight />
             </Icon>
           </Button>
-          <Button
-            onPress={() => handleIncrement(1)}
-            variant="outline"
-            isDisabled={disableForward}
-          >
+          <Button onPress={() => handleIncrement(1)} variant="outline" isDisabled={disableForward}>
             <Icon>
               <ChevronRight />
             </Icon>

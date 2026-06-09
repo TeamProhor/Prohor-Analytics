@@ -1,13 +1,13 @@
-import { z } from "zod";
-import { saveAuth } from "@/lib/auth";
-import { ROLES } from "@/lib/constants";
-import { secret } from "@/lib/crypto";
-import { createSecureToken } from "@/lib/jwt";
-import { checkPassword } from "@/lib/password";
-import redis from "@/lib/redis";
-import { parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { getAllUserTeams, getUserByUsername } from "@/queries/prisma";
+import { z } from 'zod';
+import { saveAuth } from '@/lib/auth';
+import { ROLES } from '@/lib/constants';
+import { secret } from '@/lib/crypto';
+import { createSecureToken } from '@/lib/jwt';
+import { checkPassword } from '@/lib/password';
+import redis from '@/lib/redis';
+import { parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { getAllUserTeams, getUserByUsername } from '@/queries/prisma';
 
 export async function POST(request: Request) {
   const schema = z.object({
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   const user = await getUserByUsername(username, { includePassword: true });
 
   if (!user || !checkPassword(password, user.password)) {
-    return unauthorized({ code: "incorrect-username-password" });
+    return unauthorized({ code: 'incorrect-username-password' });
   }
 
   const { id, role, createdAt } = user;

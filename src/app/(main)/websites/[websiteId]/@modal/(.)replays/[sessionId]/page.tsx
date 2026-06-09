@@ -1,4 +1,4 @@
-import { ReplayModal } from "@/app/(main)/websites/[websiteId]/replays/ReplayModal";
+import { ReplayModal } from '@/app/(main)/websites/[websiteId]/replays/ReplayModal';
 
 export default async function ({
   params,

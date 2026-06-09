@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useNavigation } from "./useNavigation";
+import { useMemo } from 'react';
+import { useNavigation } from './useNavigation';
 
 export function usePageParameters() {
   const {

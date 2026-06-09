@@ -1,14 +1,11 @@
-import { z } from "zod";
-import { BOARD_TYPES, normalizeBoardType } from "@/lib/boards";
-import { parseRequest } from "@/lib/request";
-import { json, ok, serverError, unauthorized } from "@/lib/response";
-import { canDeleteBoard, canUpdateBoard, canViewBoard } from "@/permissions";
-import { deleteBoard, getBoard, updateBoard } from "@/queries/prisma";
+import { z } from 'zod';
+import { BOARD_TYPES, normalizeBoardType } from '@/lib/boards';
+import { parseRequest } from '@/lib/request';
+import { json, ok, serverError, unauthorized } from '@/lib/response';
+import { canDeleteBoard, canUpdateBoard, canViewBoard } from '@/permissions';
+import { deleteBoard, getBoard, updateBoard } from '@/queries/prisma';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ boardId: string }> },
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ boardId: string }> }) {
   const { auth, error } = await parseRequest(request);
 
   if (error) {
@@ -26,10 +23,7 @@ export async function GET(
   return json(board);
 }
 
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ boardId: string }> },
-) {
+export async function POST(request: Request, { params }: { params: Promise<{ boardId: string }> }) {
   const schema = z.object({
     type: z
       .enum([
@@ -39,7 +33,7 @@ export async function POST(
         BOARD_TYPES.pixel,
         BOARD_TYPES.link,
       ])
-      .or(z.literal("open"))
+      .or(z.literal('open'))
       .optional(),
     name: z.string().optional(),
     description: z.string().optional(),

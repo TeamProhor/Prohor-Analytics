@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { LoginPage } from "./LoginPage";
+import type { Metadata } from 'next';
+import { LoginPage } from './LoginPage';
 
 export default async function () {
   if (process.env.DISABLE_LOGIN || process.env.CLOUD_MODE) {
@@ -10,5 +10,5 @@ export default async function () {
 }
 
 export const metadata: Metadata = {
-  title: "Login",
+  title: 'Login',
 };

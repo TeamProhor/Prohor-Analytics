@@ -1,8 +1,8 @@
-"use client";
-import { Column, Dialog, Modal } from "@umami/react-zen";
-import { useRouter, useSearchParams } from "next/navigation";
-import { buildPath } from "@/lib/url";
-import { SessionProfile } from "./SessionProfile";
+'use client';
+import { Column, Dialog, Modal } from '@umami/react-zen';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { buildPath } from '@/lib/url';
+import { SessionProfile } from './SessionProfile';
 
 export function SessionProfileModal({
   websiteId,
@@ -28,21 +28,11 @@ export function SessionProfileModal({
   };
 
   return (
-    <Modal
-      placement="bottom"
-      offset="80px"
-      isOpen
-      onOpenChange={handleOpenChange}
-      isDismissable
-    >
-      <Column height="100%" maxWidth="1320px" style={{ margin: "0 auto" }}>
+    <Modal placement="bottom" offset="80px" isOpen onOpenChange={handleOpenChange} isDismissable>
+      <Column height="100%" maxWidth="1320px" style={{ margin: '0 auto' }}>
         <Dialog variant="sheet" className="rounded-lg">
           <Column padding="10">
-            <SessionProfile
-              websiteId={websiteId}
-              sessionId={sessionId}
-              onClose={closeModal}
-            />
+            <SessionProfile websiteId={websiteId} sessionId={sessionId} onClose={closeModal} />
           </Column>
         </Dialog>
       </Column>

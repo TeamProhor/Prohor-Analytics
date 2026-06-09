@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { filterParams, pagingParams } from "@/lib/schema";
-import { canViewWebsite } from "@/permissions";
-import { getEventData } from "@/queries/sql/events/getEventData";
+import { z } from 'zod';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { filterParams, pagingParams } from '@/lib/schema';
+import { canViewWebsite } from '@/permissions';
+import { getEventData } from '@/queries/sql/events/getEventData';
 
 export async function GET(
   request: Request,
@@ -30,12 +30,7 @@ export async function GET(
 
   const filters = await getQueryFilters(query, websiteId);
 
-  const {
-    data: rows,
-    count,
-    page,
-    pageSize,
-  } = await getEventData(websiteId, filters);
+  const { data: rows, count, page, pageSize } = await getEventData(websiteId, filters);
 
   const eventMap = new Map<
     string,

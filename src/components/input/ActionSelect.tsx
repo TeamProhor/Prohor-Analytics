@@ -1,12 +1,12 @@
-import { ListItem, Select } from "@umami/react-zen";
-import { useMessages } from "@/components/hooks";
+import { ListItem, Select } from '@umami/react-zen';
+import { useMessages } from '@/components/hooks';
 
 export interface ActionSelectProps {
   value?: string;
   onChange?: (value: string) => void;
 }
 
-export function ActionSelect({ value = "path", onChange }: ActionSelectProps) {
+export function ActionSelect({ value = 'path', onChange }: ActionSelectProps) {
   const { t, labels } = useMessages();
 
   return (

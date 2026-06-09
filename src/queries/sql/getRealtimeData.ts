@@ -1,7 +1,7 @@
-import type { QueryFilters } from "@/lib/types";
-import { getRealtimeActivity } from "@/queries/sql/getRealtimeActivity";
-import { getPageviewStats } from "@/queries/sql/pageviews/getPageviewStats";
-import { getSessionStats } from "@/queries/sql/sessions/getSessionStats";
+import type { QueryFilters } from '@/lib/types';
+import { getRealtimeActivity } from '@/queries/sql/getRealtimeActivity';
+import { getPageviewStats } from '@/queries/sql/pageviews/getPageviewStats';
+import { getSessionStats } from '@/queries/sql/sessions/getSessionStats';
 
 function increment(data: object, key: string) {
   if (key) {
@@ -13,10 +13,7 @@ function increment(data: object, key: string) {
   }
 }
 
-export async function getRealtimeData(
-  websiteId: string,
-  filters: QueryFilters,
-) {
+export async function getRealtimeData(websiteId: string, filters: QueryFilters) {
   const [activity, pageviews, sessions] = await Promise.all([
     getRealtimeActivity(websiteId, filters),
     getPageviewStats(websiteId, filters),
@@ -43,13 +40,13 @@ export async function getRealtimeData(
         uniques.add(sessionId);
         increment(countries, country);
 
-        events.push({ __type: "session", ...event });
+        events.push({ __type: 'session', ...event });
       }
 
       increment(urls, urlPath);
       increment(referrers, referrerDomain);
 
-      events.push({ __type: eventName ? "event" : "pageview", ...event });
+      events.push({ __type: eventName ? 'event' : 'pageview', ...event });
 
       return obj;
     },
@@ -71,15 +68,9 @@ export async function getRealtimeData(
       visitors: sessions,
     },
     totals: {
-      views: pageviews.reduce(
-        (sum: number, { y }: { y: number }) => Number(sum) + Number(y),
-        0,
-      ),
-      visitors: sessions.reduce(
-        (sum: number, { y }: { y: number }) => Number(sum) + Number(y),
-        0,
-      ),
-      events: activity.filter((e) => e.eventName).length,
+      views: pageviews.reduce((sum: number, { y }: { y: number }) => Number(sum) + Number(y), 0),
+      visitors: sessions.reduce((sum: number, { y }: { y: number }) => Number(sum) + Number(y), 0),
+      events: activity.filter(e => e.eventName).length,
       countries: Object.keys(countries).length,
     },
     timestamp: Date.now(),

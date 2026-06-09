@@ -1,13 +1,10 @@
-import { z } from "zod";
-import { parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { pagingParams } from "@/lib/schema";
-import { getUserTeams } from "@/queries/prisma";
+import { z } from 'zod';
+import { parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { pagingParams } from '@/lib/schema';
+import { getUserTeams } from '@/queries/prisma';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ userId: string }> },
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ userId: string }> }) {
   const schema = z.object({
     ...pagingParams,
   });

@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { getPixel } from "@/queries/prisma";
-import { PixelPage } from "./PixelPage";
+import type { Metadata } from 'next';
+import { getPixel } from '@/queries/prisma';
+import { PixelPage } from './PixelPage';
 
 export default async function ({ params }: { params: { pixelId: string } }) {
   const { pixelId } = await params;
@@ -14,5 +14,5 @@ export default async function ({ params }: { params: { pixelId: string } }) {
 }
 
 export const metadata: Metadata = {
-  title: "Pixel",
+  title: 'Pixel',
 };

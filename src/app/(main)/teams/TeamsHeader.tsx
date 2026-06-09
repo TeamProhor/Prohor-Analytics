@@ -1,9 +1,9 @@
-import { Row } from "@umami/react-zen";
-import { PageHeader } from "@/components/common/PageHeader";
-import { useLoginQuery, useMessages } from "@/components/hooks";
-import { ROLES } from "@/lib/constants";
-import { TeamsAddButton } from "./TeamsAddButton";
-import { TeamsJoinButton } from "./TeamsJoinButton";
+import { Row } from '@umami/react-zen';
+import { PageHeader } from '@/components/common/PageHeader';
+import { useLoginQuery, useMessages } from '@/components/hooks';
+import { ROLES } from '@/lib/constants';
+import { TeamsAddButton } from './TeamsAddButton';
+import { TeamsJoinButton } from './TeamsJoinButton';
 
 export function TeamsHeader({
   allowCreate = true,

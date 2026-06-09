@@ -1,38 +1,35 @@
-"use client";
-import { BoardViewPage } from "@/app/(main)/boards/[boardId]/BoardViewPage";
-import { LinkPage } from "@/app/(main)/links/[linkId]/LinkPage";
-import { PixelPage } from "@/app/(main)/pixels/[pixelId]/PixelPage";
-import { AttributionPage } from "@/app/(main)/websites/[websiteId]/(reports)/attribution/AttributionPage";
-import { BreakdownPage } from "@/app/(main)/websites/[websiteId]/(reports)/breakdown/BreakdownPage";
-import { FunnelsPage } from "@/app/(main)/websites/[websiteId]/(reports)/funnels/FunnelsPage";
-import { GoalsPage } from "@/app/(main)/websites/[websiteId]/(reports)/goals/GoalsPage";
-import { JourneysPage } from "@/app/(main)/websites/[websiteId]/(reports)/journeys/JourneysPage";
-import { RetentionPage } from "@/app/(main)/websites/[websiteId]/(reports)/retention/RetentionPage";
-import { RevenuePage } from "@/app/(main)/websites/[websiteId]/(reports)/revenue/RevenuePage";
-import { UTMPage } from "@/app/(main)/websites/[websiteId]/(reports)/utm/UTMPage";
-import { PerformancePage } from "@/app/(main)/websites/[websiteId]/(reports)/performance/PerformancePage";
-import { ComparePage } from "@/app/(main)/websites/[websiteId]/compare/ComparePage";
-import { EventsPage } from "@/app/(main)/websites/[websiteId]/events/EventsPage";
-import { RealtimePage } from "@/app/(main)/websites/[websiteId]/realtime/RealtimePage";
-import { SessionsPage } from "@/app/(main)/websites/[websiteId]/sessions/SessionsPage";
-import { WebsiteHeader } from "@/app/(main)/websites/[websiteId]/WebsiteHeader";
-import { WebsitePage } from "@/app/(main)/websites/[websiteId]/WebsitePage";
-import { WebsiteProvider } from "@/app/(main)/websites/WebsiteProvider";
-import { PageBody } from "@/components/common/PageBody";
-import { useShare } from "@/components/hooks";
-import { MobileMenuButton } from "@/components/input/MobileMenuButton";
-import { ENTITY_TYPE } from "@/lib/constants";
-import { Column, Grid, Row, useTheme } from "@umami/react-zen";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ShareFooter } from "./ShareFooter";
-import { ShareNav } from "./ShareNav";
+'use client';
+import { Column, Grid, Row, useTheme } from '@umami/react-zen';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { BoardViewPage } from '@/app/(main)/boards/[boardId]/BoardViewPage';
+import { LinkPage } from '@/app/(main)/links/[linkId]/LinkPage';
+import { PixelPage } from '@/app/(main)/pixels/[pixelId]/PixelPage';
+import { AttributionPage } from '@/app/(main)/websites/[websiteId]/(reports)/attribution/AttributionPage';
+import { BreakdownPage } from '@/app/(main)/websites/[websiteId]/(reports)/breakdown/BreakdownPage';
+import { FunnelsPage } from '@/app/(main)/websites/[websiteId]/(reports)/funnels/FunnelsPage';
+import { GoalsPage } from '@/app/(main)/websites/[websiteId]/(reports)/goals/GoalsPage';
+import { JourneysPage } from '@/app/(main)/websites/[websiteId]/(reports)/journeys/JourneysPage';
+import { PerformancePage } from '@/app/(main)/websites/[websiteId]/(reports)/performance/PerformancePage';
+import { RetentionPage } from '@/app/(main)/websites/[websiteId]/(reports)/retention/RetentionPage';
+import { RevenuePage } from '@/app/(main)/websites/[websiteId]/(reports)/revenue/RevenuePage';
+import { UTMPage } from '@/app/(main)/websites/[websiteId]/(reports)/utm/UTMPage';
+import { ComparePage } from '@/app/(main)/websites/[websiteId]/compare/ComparePage';
+import { EventsPage } from '@/app/(main)/websites/[websiteId]/events/EventsPage';
+import { RealtimePage } from '@/app/(main)/websites/[websiteId]/realtime/RealtimePage';
+import { SessionsPage } from '@/app/(main)/websites/[websiteId]/sessions/SessionsPage';
+import { WebsiteHeader } from '@/app/(main)/websites/[websiteId]/WebsiteHeader';
+import { WebsitePage } from '@/app/(main)/websites/[websiteId]/WebsitePage';
+import { WebsiteProvider } from '@/app/(main)/websites/WebsiteProvider';
+import { PageBody } from '@/components/common/PageBody';
+import { useShare } from '@/components/hooks';
+import { MobileMenuButton } from '@/components/input/MobileMenuButton';
+import { ENTITY_TYPE } from '@/lib/constants';
+import { ShareFooter } from './ShareFooter';
+import { ShareNav } from './ShareNav';
 
-const PAGE_COMPONENTS: Record<
-  string,
-  React.ComponentType<{ websiteId: string }>
-> = {
-  "": WebsitePage,
+const PAGE_COMPONENTS: Record<string, React.ComponentType<{ websiteId: string }>> = {
+  '': WebsitePage,
   overview: WebsitePage,
   events: EventsPage,
   sessions: SessionsPage,
@@ -50,11 +47,11 @@ const PAGE_COMPONENTS: Record<
 };
 
 function getSharePath(pathname: string) {
-  const segments = pathname.split("/");
+  const segments = pathname.split('/');
   const firstSegment = segments[3];
 
   // If first segment looks like a domain name, skip it
-  if (firstSegment?.includes(".")) {
+  if (firstSegment?.includes('.')) {
     return segments[4];
   }
 
@@ -63,13 +60,11 @@ function getSharePath(pathname: string) {
 
 export function SharePage() {
   const [navCollapsed, setNavCollapsed] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      localStorage.getItem("share:navCollapsed") === "true",
+    () => typeof window !== 'undefined' && localStorage.getItem('share:navCollapsed') === 'true',
   );
 
   const handleCollapse = (value: boolean) => {
-    localStorage.setItem("share:navCollapsed", String(value));
+    localStorage.setItem('share:navCollapsed', String(value));
     setNavCollapsed(value);
   };
   const share = useShare();
@@ -77,28 +72,20 @@ export function SharePage() {
   const router = useRouter();
   const pathname = usePathname();
   const path = getSharePath(pathname);
-  const {
-    slug,
-    websiteId,
-    boardId,
-    pixelId,
-    linkId,
-    parameters = {},
-    shareType,
-  } = share;
+  const { slug, websiteId, boardId, pixelId, linkId, parameters = {}, shareType } = share;
 
   useEffect(() => {
     const url = new URL(window?.location?.href);
-    const theme = url.searchParams.get("theme");
+    const theme = url.searchParams.get('theme');
 
-    if (theme === "light" || theme === "dark") {
+    if (theme === 'light' || theme === 'dark') {
       setTheme(theme);
     }
   }, [setTheme]);
 
   // Check if the requested path is allowed
-  const pageKey = path || "";
-  const isAllowed = pageKey === "" || parameters[pageKey] === true;
+  const pageKey = path || '';
+  const isAllowed = pageKey === '' || parameters[pageKey] === true;
 
   const entityPage =
     shareType === ENTITY_TYPE.board && boardId ? (
@@ -131,23 +118,15 @@ export function SharePage() {
   const PageComponent = PAGE_COMPONENTS[pageKey] || WebsitePage;
 
   return (
-    <Grid
-      columns={{ base: "1fr", lg: `${navCollapsed ? "60px" : "240px"} 1fr` }}
-      width="100%"
-    >
-      <Row
-        display={{ base: "flex", lg: "none" }}
-        alignItems="center"
-        gap
-        padding="3"
-      >
+    <Grid columns={{ base: '1fr', lg: `${navCollapsed ? '60px' : '240px'} 1fr` }} width="100%">
+      <Row display={{ base: 'flex', lg: 'none' }} alignItems="center" gap padding="3">
         <MobileMenuButton>
           {({ close }) => {
             return <ShareNav onItemClick={close} />;
           }}
         </MobileMenuButton>
       </Row>
-      <Column display={{ base: "none", lg: "flex" }} marginRight="2">
+      <Column display={{ base: 'none', lg: 'flex' }} marginRight="2">
         <ShareNav collapsed={navCollapsed} onCollapse={handleCollapse} />
       </Column>
       <PageBody gap>

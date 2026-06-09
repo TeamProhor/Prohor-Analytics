@@ -1,4 +1,4 @@
-import { ShareProvider } from "@/app/share/ShareProvider";
+import { ShareProvider } from '@/app/share/ShareProvider';
 
 export default async function ({
   params,

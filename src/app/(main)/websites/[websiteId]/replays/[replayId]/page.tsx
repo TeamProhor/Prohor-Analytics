@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { ReplayPlayback } from "./ReplayPlayback";
+import type { Metadata } from 'next';
+import { ReplayPlayback } from './ReplayPlayback';
 
 export default async function ({
   params,
@@ -12,5 +12,5 @@ export default async function ({
 }
 
 export const metadata: Metadata = {
-  title: "Session Replay",
+  title: 'Session Replay',
 };

@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 
-import https from "node:https";
-import path from "node:path";
-import chalk from "chalk";
-import fs from "node:fs";
+import fs from 'node:fs';
+import https from 'node:https';
+import path from 'node:path';
+import chalk from 'chalk';
 
-const src = path.resolve(process.cwd(), "public/intl/messages");
-const dest = path.resolve(process.cwd(), "public/intl/language");
+const src = path.resolve(process.cwd(), 'public/intl/messages');
+const dest = path.resolve(process.cwd(), 'public/intl/language');
 const files = fs.readdirSync(src);
 
-const getUrl = (locale) =>
+const getUrl = locale =>
   `https://raw.githubusercontent.com/umpirsky/language-list/master/data/${locale}/language.json`;
 
 const asyncForEach = async (array, callback) => {
@@ -19,15 +19,15 @@ const asyncForEach = async (array, callback) => {
 };
 
 const downloadFile = (url, filepath) =>
-  new Promise((resolve) => {
+  new Promise(resolve => {
     https
-      .get(url, (res) => {
+      .get(url, res => {
         if (res.statusCode === 200) {
           const fileStream = fs.createWriteStream(filepath);
           res.pipe(fileStream);
-          fileStream.on("finish", () => {
+          fileStream.on('finish', () => {
             fileStream.close();
-            console.log("Downloaded", chalk.greenBright("->"), filepath);
+            console.log('Downloaded', chalk.greenBright('->'), filepath);
             resolve();
           });
         } else {
@@ -36,17 +36,17 @@ const downloadFile = (url, filepath) =>
           resolve();
         }
       })
-      .on("error", (err) => {
+      .on('error', err => {
         console.error(`Error downloading ${url}:`, err.message);
         resolve();
       });
   });
 
-const download = async (files) => {
+const download = async files => {
   fs.mkdirSync(dest, { recursive: true });
 
-  await asyncForEach(files, async (file) => {
-    const locale = file.replace("-", "_").replace(".json", "");
+  await asyncForEach(files, async file => {
+    const locale = file.replace('-', '_').replace('.json', '');
 
     const filename = path.join(dest, file);
     if (!fs.existsSync(filename)) {

@@ -1,14 +1,11 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
-import type { Board as PrismaBoard } from "@/generated/prisma/client";
-import type { DATA_TYPE, OPERATORS, ROLES } from "./constants";
-import type { TIME_UNIT } from "./date";
+import type { UseQueryOptions } from '@tanstack/react-query';
+import type { Board as PrismaBoard } from '@/generated/prisma/client';
+import type { DATA_TYPE, OPERATORS, ROLES } from './constants';
+import type { TIME_UNIT } from './date';
 
 export type ObjectValues<T> = T[keyof T];
 
-export type ReactQueryOptions<T = any> = Omit<
-  UseQueryOptions<T, Error, T>,
-  "queryKey" | "queryFn"
->;
+export type ReactQueryOptions<T = any> = Omit<UseQueryOptions<T, Error, T>, 'queryKey' | 'queryFn'>;
 
 export type TimeUnit = ObjectValues<typeof TIME_UNIT>;
 export type Role = ObjectValues<typeof ROLES>;
@@ -67,7 +64,11 @@ export interface QueryOptions {
 }
 
 export interface QueryFilters
-  extends DateParams, FilterParams, SortParams, PageParams, SegmentParams {
+  extends DateParams,
+    FilterParams,
+    SortParams,
+    PageParams,
+    SegmentParams {
   cohortFilters?: QueryFilters;
 }
 
@@ -100,7 +101,7 @@ export interface FilterParams {
   cohort?: string;
   compare?: string;
   excludeBounce?: boolean;
-  match?: "all" | "any";
+  match?: 'all' | 'any';
 }
 
 export interface SortParams {
@@ -155,7 +156,7 @@ export interface ApiError extends Error {
 
 export interface BoardComponentConfig {
   type: string;
-  entityType?: "website" | "pixel" | "link";
+  entityType?: 'website' | 'pixel' | 'link';
   entityId?: string;
   websiteId?: string;
   title?: string;
@@ -182,7 +183,7 @@ export interface BoardParameters {
   rows?: BoardRow[];
 }
 
-export interface Board extends Omit<PrismaBoard, "parameters"> {
+export interface Board extends Omit<PrismaBoard, 'parameters'> {
   parameters: BoardParameters;
 }
 

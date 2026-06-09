@@ -5,12 +5,12 @@ import {
   type DialogProps,
   DialogTrigger,
   Modal,
-} from "@umami/react-zen";
-import type { CSSProperties, ReactNode } from "react";
-import { IconLabel } from "@/components/common/IconLabel";
-import { useMobile } from "@/components/hooks";
+} from '@umami/react-zen';
+import type { CSSProperties, ReactNode } from 'react';
+import { IconLabel } from '@/components/common/IconLabel';
+import { useMobile } from '@/components/hooks';
 
-export interface DialogButtonProps extends Omit<ButtonProps, "children"> {
+export interface DialogButtonProps extends Omit<ButtonProps, 'children'> {
   icon?: ReactNode;
   label?: ReactNode;
   title?: ReactNode;
@@ -20,7 +20,7 @@ export interface DialogButtonProps extends Omit<ButtonProps, "children"> {
   minHeight?: string;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
-  children?: DialogProps["children"];
+  children?: DialogProps['children'];
 }
 
 export function DialogButton({
@@ -42,23 +42,23 @@ export function DialogButton({
     height,
     minWidth,
     minHeight,
-    maxHeight: "calc(100dvh - 40px)",
-    overflowY: "auto",
-    padding: "32px",
+    maxHeight: 'calc(100dvh - 40px)',
+    overflowY: 'auto',
+    padding: '32px',
   };
 
   if (isMobile) {
-    style.width = "100%";
-    style.height = "100%";
+    style.width = '100%';
+    style.height = '100%';
     style.minWidth = undefined;
     style.minHeight = undefined;
-    style.maxHeight = "100%";
-    style.overflowY = "auto";
+    style.maxHeight = '100%';
+    style.overflowY = 'auto';
   }
 
   const dialog = (
     <Dialog
-      variant={isMobile ? "sheet" : undefined}
+      variant={isMobile ? 'sheet' : undefined}
       title={title === undefined ? label : title}
       style={style}
     >
@@ -72,7 +72,7 @@ export function DialogButton({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isDismissable
-        placement={isMobile ? "fullscreen" : "center"}
+        placement={isMobile ? 'fullscreen' : 'center'}
       >
         {dialog}
       </Modal>
@@ -84,7 +84,7 @@ export function DialogButton({
       <Button {...props}>
         <IconLabel icon={icon} label={label} />
       </Button>
-      <Modal placement={isMobile ? "fullscreen" : "center"}>{dialog}</Modal>
+      <Modal placement={isMobile ? 'fullscreen' : 'center'}>{dialog}</Modal>
     </DialogTrigger>
   );
 }

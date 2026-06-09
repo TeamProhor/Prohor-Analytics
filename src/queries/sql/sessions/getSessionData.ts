@@ -1,10 +1,8 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
-const FUNCTION_NAME = "getSessionData";
+const FUNCTION_NAME = 'getSessionData';
 
-export async function getSessionData(
-  ...args: [websiteId: string, sessionId: string]
-) {
+export async function getSessionData(...args: [websiteId: string, sessionId: string]) {
   return relationalQuery(...args);
 }
 

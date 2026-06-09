@@ -1,6 +1,6 @@
-import { Button, DialogTrigger, Icon, Menu, Popover } from "@umami/react-zen";
-import type { Key, ReactNode } from "react";
-import { Ellipsis } from "@/components/icons";
+import { Button, DialogTrigger, Icon, Menu, Popover } from '@umami/react-zen';
+import type { Key, ReactNode } from 'react';
+import { Ellipsis } from '@/components/icons';
 
 export function MenuButton({
   children,
@@ -23,11 +23,7 @@ export function MenuButton({
         </Icon>
       </Button>
       <Popover placement="bottom start">
-        <Menu
-          aria-label="menu"
-          onAction={handleAction}
-          style={{ minWidth: "140px" }}
-        >
+        <Menu aria-label="menu" onAction={handleAction} style={{ minWidth: '140px' }}>
           {children}
         </Menu>
       </Popover>

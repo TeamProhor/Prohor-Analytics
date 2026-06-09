@@ -1,11 +1,9 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
-const FUNCTION_NAME = "getWebsiteSessions";
+const FUNCTION_NAME = 'getWebsiteSessions';
 
-export async function getWebsiteSessions(
-  ...args: [websiteId: string, filters: QueryFilters]
-) {
+export async function getWebsiteSessions(...args: [websiteId: string, filters: QueryFilters]) {
   return relationalQuery(...args);
 }
 
@@ -24,7 +22,7 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
            or browser ilike {{search}}
            or os ilike {{search}}
            or device ilike {{search}})`
-    : "";
+    : '';
 
   return pagedRawQuery(
     `

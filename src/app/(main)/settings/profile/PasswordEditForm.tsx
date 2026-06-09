@@ -5,12 +5,12 @@ import {
   FormField,
   FormSubmitButton,
   PasswordField,
-} from "@umami/react-zen";
-import { useMessages, useUpdateQuery } from "@/components/hooks";
+} from '@umami/react-zen';
+import { useMessages, useUpdateQuery } from '@/components/hooks';
 
 export function PasswordEditForm({ onSave, onClose }) {
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const { mutateAsync, error, isPending } = useUpdateQuery("/me/password");
+  const { mutateAsync, error, isPending } = useUpdateQuery('/me/password');
 
   const handleSubmit = async (data: any) => {
     await mutateAsync(data, {
@@ -33,7 +33,7 @@ export function PasswordEditForm({ onSave, onClose }) {
       <FormField
         label={t(labels.currentPassword)}
         name="currentPassword"
-        rules={{ required: "Required" }}
+        rules={{ required: 'Required' }}
       >
         <PasswordField autoComplete="current-password" />
       </FormField>
@@ -41,10 +41,10 @@ export function PasswordEditForm({ onSave, onClose }) {
         name="newPassword"
         label={t(labels.newPassword)}
         rules={{
-          required: "Required",
+          required: 'Required',
           minLength: {
             value: 8,
-            message: t(messages.minPasswordLength, { n: "8" }),
+            message: t(messages.minPasswordLength, { n: '8' }),
           },
         }}
       >
@@ -57,7 +57,7 @@ export function PasswordEditForm({ onSave, onClose }) {
           required: t(labels.required),
           minLength: {
             value: 8,
-            message: t(messages.minPasswordLength, { n: "8" }),
+            message: t(messages.minPasswordLength, { n: '8' }),
           },
           validate: samePassword,
         }}
@@ -66,9 +66,7 @@ export function PasswordEditForm({ onSave, onClose }) {
       </FormField>
       <FormButtons>
         <Button onPress={onClose}>{t(labels.cancel)}</Button>
-        <FormSubmitButton isDisabled={isPending}>
-          {t(labels.save)}
-        </FormSubmitButton>
+        <FormSubmitButton isDisabled={isPending}>{t(labels.save)}</FormSubmitButton>
       </FormButtons>
     </Form>
   );

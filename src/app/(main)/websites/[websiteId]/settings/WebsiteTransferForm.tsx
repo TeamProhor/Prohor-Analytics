@@ -8,16 +8,16 @@ import {
   Loading,
   Select,
   Text,
-} from "@umami/react-zen";
-import { type Key, useState } from "react";
+} from '@umami/react-zen';
+import { type Key, useState } from 'react';
 import {
   useLoginQuery,
   useMessages,
   useUpdateQuery,
   useUserTeamsQuery,
   useWebsite,
-} from "@/components/hooks";
-import { ROLES } from "@/lib/constants";
+} from '@/components/hooks';
+import { ROLES } from '@/lib/constants';
 
 export function WebsiteTransferForm({
   websiteId,
@@ -32,9 +32,7 @@ export function WebsiteTransferForm({
   const website = useWebsite();
   const [teamId, setTeamId] = useState<string>(null);
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const { mutateAsync, error, isPending } = useUpdateQuery(
-    `/websites/${websiteId}/transfer`,
-  );
+  const { mutateAsync, error, isPending } = useUpdateQuery(`/websites/${websiteId}/transfer`);
   const { data: teams, isLoading } = useUserTeamsQuery(user.id);
   const isTeamWebsite = !!website?.teamId;
 
@@ -42,8 +40,7 @@ export function WebsiteTransferForm({
     teams?.data?.filter(({ members }) =>
       members.some(
         ({ role, userId }) =>
-          [ROLES.teamOwner, ROLES.teamManager].includes(role) &&
-          userId === user.id,
+          [ROLES.teamOwner, ROLES.teamManager].includes(role) && userId === user.id,
       ),
     ) || [];
 
@@ -71,17 +68,9 @@ export function WebsiteTransferForm({
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      error={getErrorMessage(error)}
-      values={{ teamId }}
-    >
+    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} values={{ teamId }}>
       <Text>
-        {t(
-          isTeamWebsite
-            ? messages.transferTeamWebsiteToUser
-            : messages.transferUserWebsiteToTeam,
-        )}
+        {t(isTeamWebsite ? messages.transferTeamWebsiteToUser : messages.transferUserWebsiteToTeam)}
       </Text>
       <FormField name="teamId">
         {!isTeamWebsite && (

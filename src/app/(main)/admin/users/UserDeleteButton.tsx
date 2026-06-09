@@ -1,14 +1,7 @@
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Icon,
-  Modal,
-  Text,
-} from "@umami/react-zen";
-import { useLoginQuery, useMessages } from "@/components/hooks";
-import { Trash } from "@/components/icons";
-import { UserDeleteForm } from "./UserDeleteForm";
+import { Button, Dialog, DialogTrigger, Icon, Modal, Text } from '@umami/react-zen';
+import { useLoginQuery, useMessages } from '@/components/hooks';
+import { Trash } from '@/components/icons';
+import { UserDeleteForm } from './UserDeleteForm';
 
 export function UserDeleteButton({
   userId,
@@ -33,12 +26,7 @@ export function UserDeleteButton({
       <Modal>
         <Dialog title={t(labels.deleteUser)} style={{ width: 400 }}>
           {({ close }) => (
-            <UserDeleteForm
-              userId={userId}
-              username={username}
-              onSave={onDelete}
-              onClose={close}
-            />
+            <UserDeleteForm userId={userId} username={username} onSave={onDelete} onClose={close} />
           )}
         </Dialog>
       </Modal>

@@ -1,29 +1,18 @@
-import {
-  Box,
-  Button,
-  Column,
-  Icon,
-  Row,
-  Tooltip,
-  TooltipTrigger,
-} from "@umami/react-zen";
-import { produce } from "immer";
-import { Fragment, useState } from "react";
+import { Box, Button, Column, Icon, Row, Tooltip, TooltipTrigger } from '@umami/react-zen';
+import { produce } from 'immer';
+import { Fragment, useState } from 'react';
 import {
   Group,
   type GroupImperativeHandle,
   Panel as ResizablePanel,
   Separator,
-} from "react-resizable-panels";
-import { v4 as uuid } from "uuid";
-import { useBoard } from "@/components/hooks";
-import { ChevronDown, GripVertical, Minus, Plus } from "@/components/icons";
-import type {
-  BoardColumn as BoardColumnType,
-  BoardComponentConfig,
-} from "@/lib/types";
-import { BoardEditColumn } from "./BoardEditColumn";
-import { MAX_COLUMNS, MIN_COLUMN_WIDTH } from "./boardConstants";
+} from 'react-resizable-panels';
+import { v4 as uuid } from 'uuid';
+import { useBoard } from '@/components/hooks';
+import { ChevronDown, GripVertical, Minus, Plus } from '@/components/icons';
+import type { BoardColumn as BoardColumnType, BoardComponentConfig } from '@/lib/types';
+import { BoardEditColumn } from './BoardEditColumn';
+import { MAX_COLUMNS, MIN_COLUMN_WIDTH } from './boardConstants';
 
 export function BoardEditRow({
   rowId,
@@ -58,8 +47,8 @@ export function BoardEditRow({
 
   const handleAddColumn = () => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
-        const rowIndex = draft.rows.findIndex((row) => row.id === rowId);
+      parameters: produce(board.parameters, draft => {
+        const rowIndex = draft.rows.findIndex(row => row.id === rowId);
         const row = draft.rows[rowIndex];
 
         if (!row) {
@@ -72,24 +61,21 @@ export function BoardEditRow({
 
   const handleRemoveColumn = (columnId: string) => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
-        const row = draft.rows.find((row) => row.id === rowId);
+      parameters: produce(board.parameters, draft => {
+        const row = draft.rows.find(row => row.id === rowId);
         if (row) {
-          row.columns = row.columns.filter((col) => col.id !== columnId);
+          row.columns = row.columns.filter(col => col.id !== columnId);
         }
       }),
     });
   };
 
-  const handleSetComponent = (
-    columnId: string,
-    config: BoardComponentConfig | null,
-  ) => {
+  const handleSetComponent = (columnId: string, config: BoardComponentConfig | null) => {
     updateBoard({
-      parameters: produce(board.parameters, (draft) => {
-        const row = draft.rows.find((row) => row.id === rowId);
+      parameters: produce(board.parameters, draft => {
+        const row = draft.rows.find(row => row.id === rowId);
         if (row) {
-          const col = row.columns.find((col) => col.id === columnId);
+          const col = row.columns.find(col => col.id === columnId);
           if (col) {
             col.component = config;
           }
@@ -107,7 +93,7 @@ export function BoardEditRow({
     >
       <Group groupRef={handleGroupRef}>
         {columns?.map((column, index) => (
-          <Fragment key={`${column.id}:${column.size ?? "auto"}`}>
+          <Fragment key={`${column.id}:${column.size ?? 'auto'}`}>
             <ResizablePanel
               id={column.id}
               minSize={MIN_COLUMN_WIDTH}
@@ -124,14 +110,14 @@ export function BoardEditRow({
             {index < columns.length - 1 && (
               <Separator
                 style={{
-                  width: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "none",
-                  outline: "none",
-                  boxShadow: "none",
-                  background: "transparent",
+                  width: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: 'none',
+                  outline: 'none',
+                  boxShadow: 'none',
+                  background: 'transparent',
                 }}
               >
                 <Row
@@ -139,7 +125,7 @@ export function BoardEditRow({
                   height="100%"
                   alignItems="center"
                   justifyContent="center"
-                  style={{ cursor: "col-resize" }}
+                  style={{ cursor: 'col-resize' }}
                 >
                   <Icon size="sm">
                     <GripVertical />
@@ -160,16 +146,16 @@ export function BoardEditRow({
           zIndex={20}
           backgroundColor="surface-sunken"
           borderRadius
-          style={{ transform: "translateY(-50%)" }}
+          style={{ transform: 'translateY(-50%)' }}
         >
           <TooltipTrigger delay={0}>
             <Button
               variant="outline"
               onPress={() => onMoveUp(rowId)}
               isDisabled={moveUpDisabled}
-              style={moveUpDisabled ? { pointerEvents: "none" } : undefined}
+              style={moveUpDisabled ? { pointerEvents: 'none' } : undefined}
             >
-              <Icon rotate={180} color={moveUpDisabled ? "muted" : undefined}>
+              <Icon rotate={180} color={moveUpDisabled ? 'muted' : undefined}>
                 <ChevronDown />
               </Icon>
             </Button>
@@ -180,9 +166,9 @@ export function BoardEditRow({
               variant="outline"
               onPress={handleAddColumn}
               isDisabled={addColumnDisabled}
-              style={addColumnDisabled ? { pointerEvents: "none" } : undefined}
+              style={addColumnDisabled ? { pointerEvents: 'none' } : undefined}
             >
-              <Icon color={addColumnDisabled ? "muted" : undefined}>
+              <Icon color={addColumnDisabled ? 'muted' : undefined}>
                 <Plus />
               </Icon>
             </Button>
@@ -201,9 +187,9 @@ export function BoardEditRow({
               variant="outline"
               onPress={() => onMoveDown(rowId)}
               isDisabled={moveDownDisabled}
-              style={moveDownDisabled ? { pointerEvents: "none" } : undefined}
+              style={moveDownDisabled ? { pointerEvents: 'none' } : undefined}
             >
-              <Icon color={moveDownDisabled ? "muted" : undefined}>
+              <Icon color={moveDownDisabled ? 'muted' : undefined}>
                 <ChevronDown />
               </Icon>
             </Button>

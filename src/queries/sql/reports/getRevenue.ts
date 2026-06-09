@@ -1,5 +1,5 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface RevenuParameters {
   startDate: Date;
@@ -11,11 +11,7 @@ export interface RevenuParameters {
 }
 
 export async function getRevenue(
-  ...args: [
-    websiteId: string,
-    parameters: RevenuParameters,
-    filters: QueryFilters,
-  ]
+  ...args: [websiteId: string, parameters: RevenuParameters, filters: QueryFilters]
 ) {
   return relationalQuery(...args);
 }
@@ -25,22 +21,15 @@ async function relationalQuery(
   parameters: RevenuParameters,
   filters: QueryFilters,
 ) {
-  const {
+  const { startDate, endDate, unit = 'day', timezone = 'utc', currency } = parameters;
+  const { getDateSQL, rawQuery, parseFilters } = prisma;
+  const { queryParams, filterQuery, cohortQuery, joinSessionQuery } = parseFilters({
+    ...filters,
+    websiteId,
     startDate,
     endDate,
-    unit = "day",
-    timezone = "utc",
     currency,
-  } = parameters;
-  const { getDateSQL, rawQuery, parseFilters } = prisma;
-  const { queryParams, filterQuery, cohortQuery, joinSessionQuery } =
-    parseFilters({
-      ...filters,
-      websiteId,
-      startDate,
-      endDate,
-      currency,
-    });
+  });
 
   const joinQuery =
     filterQuery || cohortQuery
@@ -52,13 +41,13 @@ async function relationalQuery(
         on website_event.website_id = revenue.website_id
           and website_event.session_id = revenue.session_id
           and website_event.event_id = revenue.event_id`
-      : "";
+      : '';
 
   const chart = await rawQuery(
     `
     select
       revenue.event_name x,
-      ${getDateSQL("revenue.created_at", unit, timezone)} t,
+      ${getDateSQL('revenue.created_at', unit, timezone)} t,
       sum(revenue.revenue) y,
       count(revenue.event_id) count
     from revenue

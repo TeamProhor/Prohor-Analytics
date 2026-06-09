@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { LOCALE_CONFIG } from "@/lib/constants";
-import { httpGet } from "@/lib/fetch";
-import { getDateLocale, getTextDirection } from "@/lib/lang";
-import { setItem } from "@/lib/storage";
-import { setLocale, useApp } from "@/store/app";
-import enUS from "../../../public/intl/messages/en-US.json";
-import { useForceUpdate } from "./useForceUpdate";
+import { useEffect } from 'react';
+import { LOCALE_CONFIG } from '@/lib/constants';
+import { httpGet } from '@/lib/fetch';
+import { getDateLocale, getTextDirection } from '@/lib/lang';
+import { setItem } from '@/lib/storage';
+import { setLocale, useApp } from '@/store/app';
+import enUS from '../../../public/intl/messages/en-US.json';
+import { useForceUpdate } from './useForceUpdate';
 
 const messages = {
-  "en-US": enUS,
+  'en-US': enUS,
 };
 
 const selector = (state: { locale: string }) => state.locale;
@@ -20,9 +20,7 @@ export function useLocale() {
   const dateLocale = getDateLocale(locale);
 
   async function loadMessages(locale: string) {
-    const { data } = await httpGet(
-      `${process.env.basePath || ""}/intl/messages/${locale}.json`,
-    );
+    const { data } = await httpGet(`${process.env.basePath || ''}/intl/messages/${locale}.json`);
 
     messages[locale] = data;
   }
@@ -34,9 +32,7 @@ export function useLocale() {
 
     setItem(LOCALE_CONFIG, value);
 
-    document
-      .getElementById("__next")
-      ?.setAttribute("dir", getTextDirection(value));
+    document.getElementById('__next')?.setAttribute('dir', getTextDirection(value));
 
     if (locale !== value) {
       setLocale(value);
@@ -53,7 +49,7 @@ export function useLocale() {
 
   useEffect(() => {
     const url = new URL(window?.location?.href);
-    const locale = url.searchParams.get("locale");
+    const locale = url.searchParams.get('locale');
 
     if (locale) {
       saveLocale(locale);

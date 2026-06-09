@@ -1,6 +1,6 @@
-import type { Report } from "@/generated/prisma/client";
-import type { Auth } from "@/lib/types";
-import { canDeleteWebsite, canUpdateWebsite, canViewWebsite } from "./website";
+import type { Report } from '@/generated/prisma/client';
+import type { Auth } from '@/lib/types';
+import { canDeleteWebsite, canUpdateWebsite, canViewWebsite } from './website';
 
 export async function canViewReport(auth: Auth, report: Report) {
   if (auth.user?.isAdmin) {

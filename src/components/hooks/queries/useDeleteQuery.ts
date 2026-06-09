@@ -1,5 +1,5 @@
-import { useApi } from "../useApi";
-import { useModified } from "../useModified";
+import { useApi } from '../useApi';
+import { useModified } from '../useModified';
 
 export function useDeleteQuery(path: string, params?: Record<string, any>) {
   const { del, useMutation } = useApi();

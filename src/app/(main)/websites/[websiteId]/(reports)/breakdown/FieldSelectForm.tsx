@@ -1,13 +1,6 @@
-import {
-  Button,
-  Column,
-  Grid,
-  List,
-  ListItem,
-  ListSection,
-} from "@umami/react-zen";
-import { useState } from "react";
-import { type FieldGroup, useFields, useMessages } from "@/components/hooks";
+import { Button, Column, Grid, List, ListItem, ListSection } from '@umami/react-zen';
+import { useState } from 'react';
+import { type FieldGroup, useFields, useMessages } from '@/components/hooks';
 
 export function FieldSelectForm({
   selectedFields = [],
@@ -32,7 +25,7 @@ export function FieldSelectForm({
   };
 
   const groupedFields = fields
-    .filter((field) => field.name !== "event")
+    .filter(field => field.name !== 'event')
     .reduce(
       (acc, field) => {
         const group = field.group;
@@ -53,7 +46,7 @@ export function FieldSelectForm({
             const groupFields = groupedFields[groupKey];
             return (
               <ListSection key={groupKey} title={label}>
-                {groupFields.map((field) => (
+                {groupFields.map(field => (
                   <ListItem key={field.name} id={field.name}>
                     {field.filterLabel}
                   </ListItem>

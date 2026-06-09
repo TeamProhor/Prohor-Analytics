@@ -387,7 +387,7 @@
     "incorrect-username-password": "Credenciais incorrectas.",
     "invalid-domain": "Dominio non válido",
     "min-password-length": "Lonxitude mínima de {n} caracteres",
-    "new-version-available": "Unha nova versión de Umami {version} está dispoñible!",
+    "new-version-available": "Unha nova versión de Prohor Analytics {version} está dispoñible!",
     "no-data-available": "Sen datos dispoñibles.",
     "no-event-data": "Sen datos de eventos dispoñibles.",
     "no-match-password": "Non concordan os contrasinais",

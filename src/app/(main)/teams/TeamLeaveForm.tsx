@@ -1,5 +1,5 @@
-import { ConfirmationForm } from "@/components/common/ConfirmationForm";
-import { useDeleteQuery, useMessages, useModified } from "@/components/hooks";
+import { ConfirmationForm } from '@/components/common/ConfirmationForm';
+import { useDeleteQuery, useMessages, useModified } from '@/components/hooks';
 
 export function TeamLeaveForm({
   teamId,
@@ -15,15 +15,13 @@ export function TeamLeaveForm({
   onClose: () => void;
 }) {
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const { mutateAsync, error, isPending } = useDeleteQuery(
-    `/teams/${teamId}/users/${userId}`,
-  );
+  const { mutateAsync, error, isPending } = useDeleteQuery(`/teams/${teamId}/users/${userId}`);
   const { touch } = useModified();
 
   const handleConfirm = async () => {
     await mutateAsync(null, {
       onSuccess: async () => {
-        touch("teams:members");
+        touch('teams:members');
         onSave();
         onClose();
       },
@@ -35,7 +33,7 @@ export function TeamLeaveForm({
       buttonLabel={t(labels.leave)}
       message={t.rich(messages.confirmLeave, {
         target: teamName,
-        b: (chunks) => <b>{chunks}</b>,
+        b: chunks => <b>{chunks}</b>,
       })}
       onConfirm={handleConfirm}
       onClose={onClose}

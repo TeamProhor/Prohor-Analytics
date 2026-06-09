@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { LogoutPage } from "./LogoutPage";
+import type { Metadata } from 'next';
+import { LogoutPage } from './LogoutPage';
 
 export default function () {
   if (process.env.DISABLE_LOGIN || process.env.CLOUD_MODE) {
@@ -10,5 +10,5 @@ export default function () {
 }
 
 export const metadata: Metadata = {
-  title: "Logout",
+  title: 'Logout',
 };

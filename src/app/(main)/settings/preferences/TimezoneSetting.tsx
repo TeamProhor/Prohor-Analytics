@@ -1,23 +1,23 @@
-import { Button, ListItem, Row, Select } from "@umami/react-zen";
-import { useState } from "react";
-import { useMessages, useTimezone } from "@/components/hooks";
-import { getTimezone } from "@/lib/date";
+import { Button, ListItem, Row, Select } from '@umami/react-zen';
+import { useState } from 'react';
+import { useMessages, useTimezone } from '@/components/hooks';
+import { getTimezone } from '@/lib/date';
 
-const timezones = Intl.supportedValuesOf("timeZone");
+const timezones = Intl.supportedValuesOf('timeZone');
 
 export function TimezoneSetting() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { t, labels } = useMessages();
   const { timezone, saveTimezone } = useTimezone();
   const items = search
-    ? timezones.filter((n) => n.toLowerCase().includes(search.toLowerCase()))
+    ? timezones.filter(n => n.toLowerCase().includes(search.toLowerCase()))
     : timezones;
 
   const handleReset = () => saveTimezone(getTimezone());
 
-  const handleOpen = (isOpen) => {
+  const handleOpen = isOpen => {
     if (isOpen) {
-      setSearch("");
+      setSearch('');
     }
   };
 
@@ -30,7 +30,7 @@ export function TimezoneSetting() {
         onSearch={setSearch}
         onOpenChange={handleOpen}
         listProps={{ style: { maxHeight: 300 } }}
-        style={{ minWidth: "250px" }}
+        style={{ minWidth: '250px' }}
       >
         {items.map((item: any) => (
           <ListItem key={item} id={item}>

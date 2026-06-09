@@ -9,12 +9,12 @@ import {
   Popover,
   Row,
   Text,
-} from "@umami/react-zen";
-import { type ReactNode, useState } from "react";
-import { useMessages } from "@/components/hooks";
-import { useDeleteQuery } from "@/components/hooks/queries/useDeleteQuery";
-import { Edit, MoreHorizontal, Trash } from "@/components/icons";
-import { DialogButton } from "./DialogButton";
+} from '@umami/react-zen';
+import { type ReactNode, useState } from 'react';
+import { useMessages } from '@/components/hooks';
+import { useDeleteQuery } from '@/components/hooks/queries/useDeleteQuery';
+import { Edit, MoreHorizontal, Trash } from '@/components/icons';
+import { DialogButton } from './DialogButton';
 
 export function ReportEditButton({
   id,
@@ -45,9 +45,9 @@ export function ReportEditButton({
   const { mutateAsync, touch } = useDeleteQuery(`/reports/${id}`);
 
   const handleAction = (id: any) => {
-    if (id === "edit") {
+    if (id === 'edit') {
       setShowEdit(true);
-    } else if (id === "delete") {
+    } else if (id === 'delete') {
       setShowDelete(true);
     }
   };
@@ -94,7 +94,7 @@ export function ReportEditButton({
       </MenuTrigger>
       <DialogButton
         isOpen={showEdit}
-        onOpenChange={(open) => !open && handleClose()}
+        onOpenChange={open => !open && handleClose()}
         title={title}
         width={width}
         height={height}
@@ -103,11 +103,7 @@ export function ReportEditButton({
       >
         {children}
       </DialogButton>
-      <Modal
-        isOpen={showDelete}
-        isDismissable={true}
-        onOpenChange={(open) => !open && handleClose()}
-      >
+      <Modal isOpen={showDelete} isDismissable={true} onOpenChange={open => !open && handleClose()}>
         <AlertDialog
           title={t(labels.delete)}
           onConfirm={handleDelete}

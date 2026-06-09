@@ -1,8 +1,8 @@
-import { DATA_TYPE } from "@/lib/constants";
-import { uuid } from "@/lib/crypto";
-import { flattenJSON, getStringValue } from "@/lib/data";
-import prisma from "@/lib/prisma";
-import type { DynamicData } from "@/lib/types";
+import { DATA_TYPE } from '@/lib/constants';
+import { uuid } from '@/lib/crypto';
+import { flattenJSON, getStringValue } from '@/lib/data';
+import prisma from '@/lib/prisma';
+import type { DynamicData } from '@/lib/types';
 
 export interface SaveEventDataArgs {
   websiteId: string;
@@ -24,7 +24,7 @@ async function relationalQuery(data: SaveEventDataArgs) {
   const jsonKeys = flattenJSON(eventData);
 
   // id, websiteEventId, eventStringValue
-  const flattenedData = jsonKeys.map((a) => ({
+  const flattenedData = jsonKeys.map(a => ({
     id: uuid(),
     websiteEventId: eventId,
     websiteId,

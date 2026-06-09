@@ -1,26 +1,13 @@
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import {
-  useMessages,
-  useNavigation,
-  useOperatorLabels,
-  useResultQuery,
-} from "@/components/hooks";
-import { File, User } from "@/components/icons";
-import { ReportEditButton } from "@/components/input/ReportEditButton";
-import { ChangeLabel } from "@/components/metrics/ChangeLabel";
-import { Lightning } from "@/components/svg";
-import { formatLongNumber } from "@/lib/format";
-import type { FunnelResult } from "@/queries/sql/reports/getFunnel";
-import {
-  Box,
-  Column,
-  Grid,
-  Icon,
-  ProgressBar,
-  Row,
-  Text,
-} from "@umami/react-zen";
-import { FunnelEditForm } from "./FunnelEditForm";
+import { Box, Column, Grid, Icon, ProgressBar, Row, Text } from '@umami/react-zen';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useMessages, useNavigation, useOperatorLabels, useResultQuery } from '@/components/hooks';
+import { File, User } from '@/components/icons';
+import { ReportEditButton } from '@/components/input/ReportEditButton';
+import { ChangeLabel } from '@/components/metrics/ChangeLabel';
+import { Lightning } from '@/components/svg';
+import { formatLongNumber } from '@/lib/format';
+import type { FunnelResult } from '@/queries/sql/reports/getFunnel';
+import { FunnelEditForm } from './FunnelEditForm';
 
 interface FunnelProps {
   id: string;
@@ -33,7 +20,7 @@ interface FunnelProps {
 export function Funnel({ id, name, type, parameters, websiteId }: FunnelProps) {
   const { t, labels } = useMessages();
   const { pathname } = useNavigation();
-  const isSharePage = pathname.includes("/share/");
+  const isSharePage = pathname.includes('/share/');
   const { data, error, isLoading } = useResultQuery<Array<FunnelResult>>(type, {
     websiteId,
     ...parameters,
@@ -62,32 +49,17 @@ export function Funnel({ id, name, type, parameters, websiteId }: FunnelProps) {
                 width="700px"
                 height="600px"
               >
-                {({ close }) => (
-                  <FunnelEditForm
-                    id={id}
-                    websiteId={websiteId}
-                    onClose={close}
-                  />
-                )}
+                {({ close }) => <FunnelEditForm id={id} websiteId={websiteId} onClose={close} />}
               </ReportEditButton>
             </Column>
           )}
         </Grid>
         {data?.map(
           (
-            {
-              type,
-              value,
-              filters,
-              visitors,
-              previous,
-              dropped,
-              dropoff,
-              remaining,
-            }: FunnelResult,
+            { type, value, filters, visitors, previous, dropped, dropoff, remaining }: FunnelResult,
             index: number,
           ) => {
-            const isPage = type === "path";
+            const isPage = type === 'path';
             return (
               <Grid key={index} columns="auto 1fr" gap="6">
                 <Column alignItems="center" position="relative">
@@ -124,9 +96,7 @@ export function Funnel({ id, name, type, parameters, websiteId }: FunnelProps) {
                   <Row alignItems="center" justifyContent="space-between" gap>
                     <Column gap="1">
                       <Row alignItems="center" gap>
-                        <Icon>
-                          {type === "path" ? <File /> : <Lightning />}
-                        </Icon>
+                        <Icon>{type === 'path' ? <File /> : <Lightning />}</Icon>
                         <Text>{value}</Text>
                       </Row>
                       {filters?.map((f, i) => (
@@ -141,10 +111,7 @@ export function Funnel({ id, name, type, parameters, websiteId }: FunnelProps) {
                     </Column>
                     <Row alignItems="center" gap>
                       {index > 0 && (
-                        <ChangeLabel
-                          value={-dropped}
-                          title={`${-Math.round(dropoff * 100)}%`}
-                        >
+                        <ChangeLabel value={-dropped} title={`${-Math.round(dropoff * 100)}%`}>
                           {formatLongNumber(dropped)}
                         </ChangeLabel>
                       )}
@@ -161,7 +128,7 @@ export function Funnel({ id, name, type, parameters, websiteId }: FunnelProps) {
                       value={visitors || 0}
                       minValue={0}
                       maxValue={previous || 1}
-                      style={{ width: "100%" }}
+                      style={{ width: '100%' }}
                     />
                     <Row minWidth="90px" justifyContent="end">
                       <Text weight="bold" size="4xl">

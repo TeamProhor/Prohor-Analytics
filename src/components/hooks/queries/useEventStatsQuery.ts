@@ -1,7 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
-import { useDateParameters } from "@/components/hooks/useDateParameters";
-import { useApi } from "../useApi";
-import { useFilterParameters } from "../useFilterParameters";
+import type { UseQueryOptions } from '@tanstack/react-query';
+import { useDateParameters } from '@/components/hooks/useDateParameters';
+import { useApi } from '../useApi';
+import { useFilterParameters } from '../useFilterParameters';
 
 export interface EventStatsData {
   events: number;
@@ -29,17 +29,14 @@ export function useEventStatsQuery(
   const filters = useFilterParameters();
 
   return useQuery<EventStatsApiResponse, Error, EventStatsData>({
-    queryKey: [
-      "websites:events:stats",
-      { websiteId, startAt, endAt, ...filters },
-    ],
+    queryKey: ['websites:events:stats', { websiteId, startAt, endAt, ...filters }],
     queryFn: () =>
       get(`/websites/${websiteId}/events/stats`, {
         startAt,
         endAt,
         ...filters,
       }),
-    select: (response) => response.data,
+    select: response => response.data,
     enabled: !!websiteId,
     ...options,
   });

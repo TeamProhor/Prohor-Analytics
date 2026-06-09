@@ -1,8 +1,8 @@
-import { DataColumn, DataTable, Row } from "@umami/react-zen";
-import { useMessages } from "@/components/hooks";
-import { ROLES } from "@/lib/constants";
-import { TeamMemberEditButton } from "./TeamMemberEditButton";
-import { TeamMemberRemoveButton } from "./TeamMemberRemoveButton";
+import { DataColumn, DataTable, Row } from '@umami/react-zen';
+import { useMessages } from '@/components/hooks';
+import { ROLES } from '@/lib/constants';
+import { TeamMemberEditButton } from './TeamMemberEditButton';
+import { TeamMemberRemoveButton } from './TeamMemberRemoveButton';
 
 export function TeamMembersTable({
   data = [],
@@ -39,11 +39,7 @@ export function TeamMembersTable({
 
             return (
               <Row alignItems="center" maxHeight="20px">
-                <TeamMemberEditButton
-                  teamId={teamId}
-                  userId={row?.user?.id}
-                  role={row?.role}
-                />
+                <TeamMemberEditButton teamId={teamId} userId={row?.user?.id} role={row?.role} />
                 <TeamMemberRemoveButton
                   teamId={teamId}
                   userId={row?.user?.id}

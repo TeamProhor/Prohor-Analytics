@@ -1,11 +1,11 @@
-import { Column, Grid, Heading, ListItem, Row, Select } from "@umami/react-zen";
-import { useState } from "react";
-import { DateDisplay } from "@/components/common/DateDisplay";
-import { Panel } from "@/components/common/Panel";
-import { useDateRange, useMessages, useNavigation } from "@/components/hooks";
-import { ChangeLabel } from "@/components/metrics/ChangeLabel";
-import { MetricsTable } from "@/components/metrics/MetricsTable";
-import { formatNumber } from "@/lib/format";
+import { Column, Grid, Heading, ListItem, Row, Select } from '@umami/react-zen';
+import { useState } from 'react';
+import { DateDisplay } from '@/components/common/DateDisplay';
+import { Panel } from '@/components/common/Panel';
+import { useDateRange, useMessages, useNavigation } from '@/components/hooks';
+import { ChangeLabel } from '@/components/metrics/ChangeLabel';
+import { MetricsTable } from '@/components/metrics/MetricsTable';
+import { formatNumber } from '@/lib/format';
 
 export function CompareTables({ websiteId }: { websiteId: string }) {
   const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ export function CompareTables({ websiteId }: { websiteId: string }) {
   const {
     router,
     updateParams,
-    query: { view = "path" },
+    query: { view = 'path' },
   } = useNavigation();
   const { startDate, endDate } = dateCompare;
 
@@ -29,109 +29,109 @@ export function CompareTables({ websiteId }: { websiteId: string }) {
 
   const items = [
     {
-      id: "path",
+      id: 'path',
       label: t(labels.path),
-      path: renderPath("path"),
+      path: renderPath('path'),
     },
     {
-      id: "channel",
+      id: 'channel',
       label: t(labels.channels),
-      path: renderPath("channel"),
+      path: renderPath('channel'),
     },
     {
-      id: "referrer",
+      id: 'referrer',
       label: t(labels.referrers),
-      path: renderPath("referrer"),
+      path: renderPath('referrer'),
     },
     {
-      id: "browser",
+      id: 'browser',
       label: t(labels.browsers),
-      path: renderPath("browser"),
+      path: renderPath('browser'),
     },
     {
-      id: "os",
+      id: 'os',
       label: t(labels.os),
-      path: renderPath("os"),
+      path: renderPath('os'),
     },
     {
-      id: "device",
+      id: 'device',
       label: t(labels.devices),
-      path: renderPath("device"),
+      path: renderPath('device'),
     },
     {
-      id: "country",
+      id: 'country',
       label: t(labels.countries),
-      path: renderPath("country"),
+      path: renderPath('country'),
     },
     {
-      id: "region",
+      id: 'region',
       label: t(labels.regions),
-      path: renderPath("region"),
+      path: renderPath('region'),
     },
     {
-      id: "city",
+      id: 'city',
       label: t(labels.cities),
-      path: renderPath("city"),
+      path: renderPath('city'),
     },
     {
-      id: "language",
+      id: 'language',
       label: t(labels.languages),
-      path: renderPath("language"),
+      path: renderPath('language'),
     },
     {
-      id: "screen",
+      id: 'screen',
       label: t(labels.screens),
-      path: renderPath("screen"),
+      path: renderPath('screen'),
     },
     {
-      id: "event",
+      id: 'event',
       label: t(labels.events),
-      path: renderPath("event"),
+      path: renderPath('event'),
     },
     {
-      id: "utmSource",
+      id: 'utmSource',
       label: t(labels.utmSource),
-      path: renderPath("utmSource"),
+      path: renderPath('utmSource'),
     },
     {
-      id: "utmMedium",
+      id: 'utmMedium',
       label: t(labels.utmMedium),
-      path: renderPath("utmMedium"),
+      path: renderPath('utmMedium'),
     },
     {
-      id: "utmCampaign",
+      id: 'utmCampaign',
       label: t(labels.utmCampaign),
-      path: renderPath("utmCampaign"),
+      path: renderPath('utmCampaign'),
     },
     {
-      id: "utmContent",
+      id: 'utmContent',
       label: t(labels.utmContent),
-      path: renderPath("utmContent"),
+      path: renderPath('utmContent'),
     },
     {
-      id: "utmTerm",
+      id: 'utmTerm',
       label: t(labels.utmTerm),
-      path: renderPath("utmTerm"),
+      path: renderPath('utmTerm'),
     },
     {
-      id: "hostname",
+      id: 'hostname',
       label: t(labels.hostname),
-      path: renderPath("hostname"),
+      path: renderPath('hostname'),
     },
     {
-      id: "distinctId",
+      id: 'distinctId',
       label: t(labels.distinctId),
-      path: renderPath("distinctId"),
+      path: renderPath('distinctId'),
     },
     {
-      id: "tag",
+      id: 'tag',
       label: t(labels.tags),
-      path: renderPath("tag"),
+      path: renderPath('tag'),
     },
   ];
 
   const renderChange = ({ label, count }) => {
-    const prev = data.find((d) => d.x === label)?.y;
+    const prev = data.find(d => d.x === label)?.y;
     const value = count - prev;
     const change = Math.abs(((count - prev) / prev) * 100);
 
@@ -167,7 +167,7 @@ export function CompareTables({ websiteId }: { websiteId: string }) {
         </Select>
       </Row>
       <Panel minHeight="300px">
-        <Grid columns={{ base: "1fr", lg: "1fr 1fr" }} gap="6" height="100%">
+        <Grid columns={{ base: '1fr', lg: '1fr 1fr' }} gap="6" height="100%">
           <Column gap="6">
             <Row alignItems="center" justifyContent="space-between">
               <Heading size="base">{t(labels.previous)}</Heading>
@@ -185,10 +185,7 @@ export function CompareTables({ websiteId }: { websiteId: string }) {
           <Column border="left" paddingLeft="6" gap="6">
             <Row alignItems="center" justifyContent="space-between">
               <Heading size="base"> {t(labels.current)}</Heading>
-              <DateDisplay
-                startDate={dateRange.startDate}
-                endDate={dateRange.endDate}
-              />
+              <DateDisplay startDate={dateRange.startDate} endDate={dateRange.endDate} />
             </Row>
             <MetricsTable
               websiteId={websiteId}

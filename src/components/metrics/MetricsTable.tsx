@@ -1,17 +1,13 @@
-import { Grid, Row } from "@umami/react-zen";
-import { useEffect, useMemo } from "react";
-import { IconLabel } from "@/components/common/IconLabel";
-import { LinkButton } from "@/components/common/LinkButton";
-import { LoadingPanel } from "@/components/common/LoadingPanel";
-import {
-  useMessages,
-  useNavigation,
-  useWebsiteMetricsQuery,
-} from "@/components/hooks";
-import { Maximize } from "@/components/icons";
-import { MetricLabel } from "@/components/metrics/MetricLabel";
-import { percentFilter } from "@/lib/filters";
-import { ListTable, type ListTableProps } from "./ListTable";
+import { Grid, Row } from '@umami/react-zen';
+import { useEffect, useMemo } from 'react';
+import { IconLabel } from '@/components/common/IconLabel';
+import { LinkButton } from '@/components/common/LinkButton';
+import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { useMessages, useNavigation, useWebsiteMetricsQuery } from '@/components/hooks';
+import { Maximize } from '@/components/icons';
+import { MetricLabel } from '@/components/metrics/MetricLabel';
+import { percentFilter } from '@/lib/filters';
+import { ListTable, type ListTableProps } from './ListTable';
 
 export interface MetricsTableProps extends ListTableProps {
   websiteId: string;
@@ -37,14 +33,11 @@ export function MetricsTable({
 }: MetricsTableProps) {
   const { updateParams } = useNavigation();
   const { t, labels } = useMessages();
-  const { data, isLoading, isFetching, error } = useWebsiteMetricsQuery(
-    websiteId,
-    {
-      type,
-      limit,
-      ...params,
-    },
-  );
+  const { data, isLoading, isFetching, error } = useWebsiteMetricsQuery(websiteId, {
+    type,
+    limit,
+    ...params,
+  });
 
   const filteredData = useMemo(() => {
     if (data) {
@@ -91,9 +84,7 @@ export function MetricsTable({
       minHeight="400px"
     >
       <Grid padding="2">
-        {data && (
-          <ListTable {...props} data={filteredData} renderLabel={renderLabel} />
-        )}
+        {data && <ListTable {...props} data={filteredData} renderLabel={renderLabel} />}
         {showMore && limit && (
           <Row justifyContent="center" alignItems="flex-end" paddingTop="4">
             <LinkButton href={updateParams({ view: type })} variant="quiet">

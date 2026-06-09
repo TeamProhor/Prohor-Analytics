@@ -1,7 +1,7 @@
-import styles from "./Badge.module.css";
+import styles from './Badge.module.css';
 
 export interface BadgeProps {
-  variant: "good" | "warning" | "danger" | "gray";
+  variant: 'good' | 'warning' | 'danger' | 'gray';
   children: React.ReactNode;
   dot?: boolean;
 }

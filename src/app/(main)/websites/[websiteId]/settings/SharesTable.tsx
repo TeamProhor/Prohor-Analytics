@@ -1,15 +1,9 @@
-import {
-  DataColumn,
-  DataTable,
-  type DataTableProps,
-  Row,
-} from "@umami/react-zen";
-import { CopyButton } from "@/components/common/CopyButton";
-import { DateDistance } from "@/components/common/DateDistance";
-import { ExternalLink } from "@/components/common/ExternalLink";
-import { useConfig, useMessages, useMobile } from "@/components/hooks";
-import { ShareDeleteButton } from "./ShareDeleteButton";
-import { ShareEditButton } from "./ShareEditButton";
+import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
+import { CopyButton } from '@/components/common/CopyButton';
+import { ExternalLink } from '@/components/common/ExternalLink';
+import { useConfig, useMessages, useMobile } from '@/components/hooks';
+import { ShareDeleteButton } from './ShareDeleteButton';
+import { ShareEditButton } from './ShareEditButton';
 
 export function SharesTable(props: DataTableProps) {
   const { t, labels } = useMessages();
@@ -20,11 +14,11 @@ export function SharesTable(props: DataTableProps) {
     if (cloudMode) {
       return `${process.env.cloudUrl}/share/${slug}`;
     }
-    return `${window?.location.origin}${process.env.basePath || ""}/share/${slug}`;
+    return `${window?.location.origin}${process.env.basePath || ''}/share/${slug}`;
   };
 
   return (
-    <DataTable {...props} displayMode={isMobile ? "cards" : "table"}>
+    <DataTable {...props} displayMode={isMobile ? 'cards' : 'table'}>
       <DataColumn id="name" label={t(labels.name)}>
         {({ name }: any) => name}
       </DataColumn>

@@ -8,10 +8,10 @@ import {
   Text,
   Tooltip,
   TooltipTrigger,
-} from "@umami/react-zen";
-import { type ReactNode, useState } from "react";
-import { useMessages } from "@/components/hooks";
-import { Maximize, X } from "@/components/icons";
+} from '@umami/react-zen';
+import { type ReactNode, useState } from 'react';
+import { useMessages } from '@/components/hooks';
+import { Maximize, X } from '@/components/icons';
 
 export interface PanelProps extends ColumnProps {
   title?: string;
@@ -21,12 +21,12 @@ export interface PanelProps extends ColumnProps {
 }
 
 const fullscreenStyles = {
-  position: "fixed",
-  width: "100vw",
-  height: "100vh",
+  position: 'fixed',
+  width: '100vw',
+  height: '100vh',
   top: 0,
   left: 0,
-  border: "none",
+  border: 'none',
   zIndex: 9999,
 } as any;
 
@@ -51,7 +51,7 @@ export function Panel({
   return (
     <Column
       paddingY="6"
-      paddingX={{ base: "3", md: "6" }}
+      paddingX={{ base: '3', md: '6' }}
       border
       borderRadius
       backgroundColor="surface-base"

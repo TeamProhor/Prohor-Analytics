@@ -1,16 +1,13 @@
-import { z } from "zod";
-import { ENTITY_TYPE } from "@/lib/constants";
-import { uuid } from "@/lib/crypto";
-import { fetchAccount } from "@/lib/load";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { pagingParams, searchParams } from "@/lib/schema";
-import { canCreateTeamWebsite, canCreateWebsite } from "@/permissions";
-import { createShare, createWebsite, getWebsiteCount } from "@/queries/prisma";
-import {
-  getAllUserWebsitesIncludingTeamOwner,
-  getUserWebsites,
-} from "@/queries/prisma/website";
+import { z } from 'zod';
+import { ENTITY_TYPE } from '@/lib/constants';
+import { uuid } from '@/lib/crypto';
+import { fetchAccount } from '@/lib/load';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { pagingParams, searchParams } from '@/lib/schema';
+import { canCreateTeamWebsite, canCreateWebsite } from '@/permissions';
+import { createShare, createWebsite, getWebsiteCount } from '@/queries/prisma';
+import { getAllUserWebsitesIncludingTeamOwner, getUserWebsites } from '@/queries/prisma/website';
 
 const CLOUD_WEBSITE_LIMIT = 3;
 
@@ -62,15 +59,12 @@ export async function POST(request: Request) {
       const count = await getWebsiteCount(auth.user.id);
 
       if (count >= CLOUD_WEBSITE_LIMIT) {
-        return unauthorized({ message: "Website limit reached." });
+        return unauthorized({ message: 'Website limit reached.' });
       }
     }
   }
 
-  if (
-    (teamId && !(await canCreateTeamWebsite(auth, teamId))) ||
-    !(await canCreateWebsite(auth))
-  ) {
+  if ((teamId && !(await canCreateTeamWebsite(auth, teamId))) || !(await canCreateWebsite(auth))) {
     return unauthorized();
   }
 

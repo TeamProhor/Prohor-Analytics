@@ -6,9 +6,9 @@ import {
   FormSubmitButton,
   Row,
   TextField,
-} from "@umami/react-zen";
-import { useState } from "react";
-import { useApi, useMessages, useModified } from "@/components/hooks";
+} from '@umami/react-zen';
+import { useState } from 'react';
+import { useApi, useMessages, useModified } from '@/components/hooks';
 
 export function SimpleShareCreateForm({
   createPath,
@@ -34,7 +34,7 @@ export function SimpleShareCreateForm({
         name: data.name,
       });
 
-      touch("shares");
+      touch('shares');
       onSave?.();
     } catch (e) {
       setError(e);
@@ -44,17 +44,9 @@ export function SimpleShareCreateForm({
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      error={getErrorMessage(error)}
-      defaultValues={{ name: "" }}
-    >
+    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} defaultValues={{ name: '' }}>
       <Column gap="4">
-        <FormField
-          label={t(labels.name)}
-          name="name"
-          rules={{ required: t(labels.required) }}
-        >
+        <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
           <TextField autoComplete="off" autoFocus />
         </FormField>
         <Row justifyContent="flex-end" gap="3">

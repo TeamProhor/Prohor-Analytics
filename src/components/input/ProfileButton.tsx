@@ -9,10 +9,10 @@ import {
   Popover,
   Row,
   Text,
-} from "@umami/react-zen";
-import { Fragment } from "react";
-import { useLoginQuery, useMessages, useNavigation } from "@/components/hooks";
-import { LockKeyhole, LogOut, UserCircle } from "@/components/icons";
+} from '@umami/react-zen';
+import { Fragment } from 'react';
+import { useLoginQuery, useMessages, useNavigation } from '@/components/hooks';
+import { LockKeyhole, LogOut, UserCircle } from '@/components/icons';
 
 export function ProfileButton() {
   const { t, labels } = useMessages();
@@ -21,26 +21,26 @@ export function ProfileButton() {
 
   const items = [
     {
-      id: "settings",
+      id: 'settings',
       label: t(labels.profile),
-      path: renderUrl("/settings/profile"),
+      path: renderUrl('/settings/profile'),
       icon: <UserCircle />,
     },
     user.isAdmin &&
       !process.env.cloudMode && {
-        id: "admin",
+        id: 'admin',
         label: t(labels.admin),
-        path: "/admin",
+        path: '/admin',
         icon: <LockKeyhole />,
       },
     {
-      id: "logout",
+      id: 'logout',
       label: t(labels.logout),
-      path: "/logout",
+      path: '/logout',
       icon: <LogOut />,
       separator: true,
     },
-  ].filter((n) => n);
+  ].filter(n => n);
 
   return (
     <MenuTrigger>

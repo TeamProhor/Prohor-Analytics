@@ -8,9 +8,9 @@ import {
   PasswordField,
   Select,
   TextField,
-} from "@umami/react-zen";
-import { useMessages, useUpdateQuery } from "@/components/hooks";
-import { ROLES } from "@/lib/constants";
+} from '@umami/react-zen';
+import { useMessages, useUpdateQuery } from '@/components/hooks';
+import { ROLES } from '@/lib/constants';
 
 export function UserAddForm({ onSave, onClose }) {
   const { mutateAsync, error, isPending } = useUpdateQuery(`/users`);
@@ -41,17 +41,13 @@ export function UserAddForm({ onSave, onClose }) {
           required: t(labels.required),
           minLength: {
             value: 8,
-            message: t(messages.minPasswordLength, { n: "8" }),
+            message: t(messages.minPasswordLength, { n: '8' }),
           },
         }}
       >
         <PasswordField autoComplete="new-password" data-test="input-password" />
       </FormField>
-      <FormField
-        label={t(labels.role)}
-        name="role"
-        rules={{ required: t(labels.required) }}
-      >
+      <FormField label={t(labels.role)} name="role" rules={{ required: t(labels.required) }}>
         <Select>
           <ListItem id={ROLES.viewOnly} data-test="dropdown-item-viewOnly">
             {t(labels.viewOnly)}
@@ -68,11 +64,7 @@ export function UserAddForm({ onSave, onClose }) {
         <Button isDisabled={isPending} onPress={onClose}>
           {t(labels.cancel)}
         </Button>
-        <FormSubmitButton
-          variant="primary"
-          data-test="button-submit"
-          isDisabled={false}
-        >
+        <FormSubmitButton variant="primary" data-test="button-submit" isDisabled={false}>
           {t(labels.save)}
         </FormSubmitButton>
       </FormButtons>

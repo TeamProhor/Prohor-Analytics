@@ -30,8 +30,8 @@ export const paramFilter = (data: any[]) => {
     return obj;
   }, {});
 
-  return Object.keys(map).flatMap((key) =>
-    Object.keys(map[key]).map((n) => ({
+  return Object.keys(map).flatMap(key =>
+    Object.keys(map[key]).map(n => ({
       x: `${key}=${n}`,
       p: key,
       v: n,

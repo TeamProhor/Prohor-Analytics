@@ -1,9 +1,9 @@
-import { formatInTimeZone, utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
-import { TIMEZONE_CONFIG, TIMEZONE_LEGACY } from "@/lib/constants";
-import { getTimezone } from "@/lib/date";
-import { setItem } from "@/lib/storage";
-import { setTimezone, useApp } from "@/store/app";
-import { useLocale } from "./useLocale";
+import { formatInTimeZone, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { TIMEZONE_CONFIG, TIMEZONE_LEGACY } from '@/lib/constants';
+import { getTimezone } from '@/lib/date';
+import { setItem } from '@/lib/storage';
+import { setTimezone, useApp } from '@/store/app';
+import { useLocale } from './useLocale';
 
 const selector = (state: { timezone: string }) => state.timezone;
 
@@ -19,45 +19,39 @@ export function useTimezone() {
 
   const formatTimezoneDate = (date: string, pattern: string) => {
     return formatInTimeZone(
-      /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{3})?Z$/.test(
-        date,
-      )
+      /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{3})?Z$/.test(date)
         ? date
-        : `${date.split(" ").join("T")}Z`,
+        : `${date.split(' ').join('T')}Z`,
       timezone,
       pattern,
       { locale: dateLocale },
     );
   };
 
-  const formatSeriesTimezone = (
-    data: any,
-    column: string,
-    timezone: string,
-  ) => {
-    return data.map((item) => {
+  const formatSeriesTimezone = (data: any, column: string, timezone: string) => {
+    return data.map(item => {
       const date = new Date(item[column]);
 
-      const format = new Intl.DateTimeFormat("en-US", {
+      const format = new Intl.DateTimeFormat('en-US', {
         timeZone: timezone,
         hour12: false,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
       });
 
       const parts = format.formatToParts(date);
-      const get = (type) => parts.find((p) => p.type === type)?.value;
+      const get = type => parts.find(p => p.type === type)?.value;
 
-      const year = get("year");
-      const month = get("month");
-      const day = get("day");
-      const hour = get("hour");
-      const minute = get("minute");
-      const second = get("second");
+      const year = get('year');
+      const month = get('month');
+      const day = get('day');
+      const hour = get('hour');
+      const minute = get('minute');
+      const second = get('second');
 
       return {
         ...item,

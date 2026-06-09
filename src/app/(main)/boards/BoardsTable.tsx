@@ -1,15 +1,10 @@
-import {
-  DataColumn,
-  DataTable,
-  type DataTableProps,
-  Row,
-} from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { DateDistance } from "@/components/common/DateDistance";
-import { useMessages, useNavigation } from "@/components/hooks";
-import { BoardDeleteButton } from "./BoardDeleteButton";
-import { BoardDesignButton } from "./BoardDesignButton";
-import { BoardEditButton } from "./BoardEditButton";
+import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
+import { DateDistance } from '@/components/common/DateDistance';
+import Link from '@/components/common/Link';
+import { useMessages, useNavigation } from '@/components/hooks';
+import { BoardDeleteButton } from './BoardDeleteButton';
+import { BoardDesignButton } from './BoardDesignButton';
+import { BoardEditButton } from './BoardEditButton';
 
 export function BoardsTable(props: DataTableProps) {
   const { t, labels } = useMessages();

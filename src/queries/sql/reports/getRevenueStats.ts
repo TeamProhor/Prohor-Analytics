@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
-import type { RevenuParameters } from "./getRevenue";
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
+import type { RevenuParameters } from './getRevenue';
 
 export interface RevenueStatsResult {
   sum: number;
@@ -11,11 +11,7 @@ export interface RevenueStatsResult {
 }
 
 export async function getRevenueStats(
-  ...args: [
-    websiteId: string,
-    parameters: RevenuParameters,
-    filters: QueryFilters,
-  ]
+  ...args: [websiteId: string, parameters: RevenuParameters, filters: QueryFilters]
 ) {
   return relationalQuery(...args);
 }
@@ -27,14 +23,13 @@ async function relationalQuery(
 ): Promise<RevenueStatsResult> {
   const { startDate, endDate, currency } = parameters;
   const { rawQuery, parseFilters } = prisma;
-  const { queryParams, filterQuery, cohortQuery, joinSessionQuery } =
-    parseFilters({
-      ...filters,
-      websiteId,
-      startDate,
-      endDate,
-      currency,
-    });
+  const { queryParams, filterQuery, cohortQuery, joinSessionQuery } = parseFilters({
+    ...filters,
+    websiteId,
+    startDate,
+    endDate,
+    currency,
+  });
 
   const joinQuery =
     filterQuery || cohortQuery
@@ -46,7 +41,7 @@ async function relationalQuery(
         on website_event.website_id = revenue.website_id
           and website_event.session_id = revenue.session_id
           and website_event.event_id = revenue.event_id`
-      : "";
+      : '';
 
   const total = await rawQuery(
     `
@@ -68,13 +63,10 @@ async function relationalQuery(
       ${filterQuery}
   `,
     queryParams,
-  ).then((result) => result?.[0]);
+  ).then(result => result?.[0]);
 
   total.average = total.count > 0 ? Number(total.sum) / Number(total.count) : 0;
-  total.arpu =
-    total.total_sessions > 0
-      ? Number(total.sum) / Number(total.total_sessions)
-      : 0;
+  total.arpu = total.total_sessions > 0 ? Number(total.sum) / Number(total.total_sessions) : 0;
 
   return total;
 }

@@ -387,7 +387,7 @@
     "incorrect-username-password": "Felaktigt användarnamn/lösenord.",
     "invalid-domain": "Ogiltig domän",
     "min-password-length": "Minst {n} tecken",
-    "new-version-available": "En ny version av Umami {version} är tillgänglig!",
+    "new-version-available": "En ny version av Prohor Analytics {version} är tillgänglig!",
     "no-data-available": "Ingen data tillgänglig.",
     "no-event-data": "Ingen händelsedata är tillgänglig.",
     "no-match-password": "Lösenorden matchar inte",

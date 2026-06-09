@@ -1,6 +1,6 @@
-import { EVENT_TYPE } from "@/lib/constants";
-import prisma from "@/lib/prisma";
-import type { QueryFilters } from "@/lib/types";
+import { EVENT_TYPE } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
 
 export interface AttributionParameters {
   startDate: Date;
@@ -22,11 +22,7 @@ export interface AttributionResult {
 }
 
 export async function getAttribution(
-  ...args: [
-    websiteId: string,
-    parameters: AttributionParameters,
-    filters: QueryFilters,
-  ]
+  ...args: [websiteId: string, parameters: AttributionParameters, filters: QueryFilters]
 ) {
   return relationalQuery(...args);
 }
@@ -38,16 +34,14 @@ async function relationalQuery(
 ): Promise<AttributionResult> {
   const { model, type } = parameters;
   const { rawQuery, parseFilters } = prisma;
-  const eventType =
-    type === "path" ? EVENT_TYPE.pageView : EVENT_TYPE.customEvent;
-  const column = type === "path" ? "url_path" : "event_name";
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
-    parseFilters({
-      ...filters,
-      ...parameters,
-      websiteId,
-      eventType,
-    });
+  const eventType = type === 'path' ? EVENT_TYPE.pageView : EVENT_TYPE.customEvent;
+  const column = type === 'path' ? 'url_path' : 'event_name';
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    ...parameters,
+    websiteId,
+    eventType,
+  });
 
   function getUTMQuery(utmColumn: string) {
     return `
@@ -80,7 +74,7 @@ async function relationalQuery(
         group by 1),`;
 
   function getModelQuery(model: string) {
-    return model === "first-click"
+    return model === 'first-click'
       ? `\n
     model AS (select e.session_id,
         min(we.created_at) created_at
@@ -161,7 +155,7 @@ async function relationalQuery(
     `
     ${eventQuery}
     ${getModelQuery(model)}
-    ${getUTMQuery("utm_source")}
+    ${getUTMQuery('utm_source')}
     `,
     queryParams,
   );
@@ -170,7 +164,7 @@ async function relationalQuery(
     `
     ${eventQuery}
     ${getModelQuery(model)}
-    ${getUTMQuery("utm_medium")}
+    ${getUTMQuery('utm_medium')}
     `,
     queryParams,
   );
@@ -179,7 +173,7 @@ async function relationalQuery(
     `
     ${eventQuery}
     ${getModelQuery(model)}
-    ${getUTMQuery("utm_campaign")}
+    ${getUTMQuery('utm_campaign')}
     `,
     queryParams,
   );
@@ -188,7 +182,7 @@ async function relationalQuery(
     `
     ${eventQuery}
     ${getModelQuery(model)}
-    ${getUTMQuery("utm_content")}
+    ${getUTMQuery('utm_content')}
     `,
     queryParams,
   );
@@ -197,7 +191,7 @@ async function relationalQuery(
     `
     ${eventQuery}
     ${getModelQuery(model)}
-    ${getUTMQuery("utm_term")}
+    ${getUTMQuery('utm_term')}
     `,
     queryParams,
   );
@@ -217,7 +211,7 @@ async function relationalQuery(
         ${filterQuery}
     `,
     queryParams,
-  ).then((result) => result?.[0]);
+  ).then(result => result?.[0]);
 
   return {
     referrer: referrerRes,

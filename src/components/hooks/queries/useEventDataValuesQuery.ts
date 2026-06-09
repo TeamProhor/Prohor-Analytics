@@ -1,7 +1,7 @@
-import type { ReactQueryOptions } from "@/lib/types";
-import { useApi } from "../useApi";
-import { useDateParameters } from "../useDateParameters";
-import { useFilterParameters } from "../useFilterParameters";
+import type { ReactQueryOptions } from '@/lib/types';
+import { useApi } from '../useApi';
+import { useDateParameters } from '../useDateParameters';
+import { useFilterParameters } from '../useFilterParameters';
 
 export function useEventDataValuesQuery(
   websiteId: string,
@@ -15,7 +15,7 @@ export function useEventDataValuesQuery(
 
   return useQuery<any>({
     queryKey: [
-      "websites:event-data:values",
+      'websites:event-data:values',
       {
         websiteId,
         startAt,

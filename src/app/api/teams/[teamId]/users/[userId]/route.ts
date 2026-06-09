@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { parseRequest } from "@/lib/request";
-import { badRequest, json, ok, unauthorized } from "@/lib/response";
-import { teamRoleParam } from "@/lib/schema";
-import { canDeleteTeamUser, canUpdateTeam } from "@/permissions";
-import { deleteTeamUser, getTeamUser, updateTeamUser } from "@/queries/prisma";
+import { z } from 'zod';
+import { parseRequest } from '@/lib/request';
+import { badRequest, json, ok, unauthorized } from '@/lib/response';
+import { teamRoleParam } from '@/lib/schema';
+import { canDeleteTeamUser, canUpdateTeam } from '@/permissions';
+import { deleteTeamUser, getTeamUser, updateTeamUser } from '@/queries/prisma';
 
 export async function GET(
   request: Request,
@@ -19,7 +19,7 @@ export async function GET(
 
   if (!(await canUpdateTeam(auth, teamId))) {
     return unauthorized({
-      message: "You must be the owner/manager of this team.",
+      message: 'You must be the owner/manager of this team.',
     });
   }
 
@@ -46,14 +46,14 @@ export async function POST(
 
   if (!(await canUpdateTeam(auth, teamId))) {
     return unauthorized({
-      message: "You must be the owner/manager of this team.",
+      message: 'You must be the owner/manager of this team.',
     });
   }
 
   const teamUser = await getTeamUser(teamId, userId);
 
   if (!teamUser) {
-    return badRequest({ message: "The User does not exists on this team." });
+    return badRequest({ message: 'The User does not exists on this team.' });
   }
 
   const user = await updateTeamUser(teamUser.id, body);
@@ -75,14 +75,14 @@ export async function DELETE(
 
   if (!(await canDeleteTeamUser(auth, teamId, userId))) {
     return unauthorized({
-      message: "You must be the owner/manager of this team.",
+      message: 'You must be the owner/manager of this team.',
     });
   }
 
   const teamUser = await getTeamUser(teamId, userId);
 
   if (!teamUser) {
-    return badRequest({ message: "The User does not exists on this team." });
+    return badRequest({ message: 'The User does not exists on this team.' });
   }
 
   await deleteTeamUser(teamId, userId);

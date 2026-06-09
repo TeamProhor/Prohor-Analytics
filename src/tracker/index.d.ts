@@ -3,7 +3,7 @@ export type TrackedProperties = {
    * Hostname of server
    *
    * @description extracted from `window.location.hostname`
-   * @example 'analytics.umami.is'
+   * @example 'analytics.prohor.ai'
    */
   hostname: string;
 
@@ -19,7 +19,7 @@ export type TrackedProperties = {
    * Page referrer
    *
    * @description extracted from `window.navigator.language`
-   * @example 'https://analytics.umami.is/docs/getting-started'
+   * @example 'https://analytics.prohor.ai/docs/getting-started'
    */
   referrer: string;
 
@@ -35,7 +35,7 @@ export type TrackedProperties = {
    * Page title
    *
    * @description extracted from `document.querySelector('head > title')`
-   * @example 'umami'
+   * @example 'Prohor Analytics'
    */
   title: string;
 
@@ -66,13 +66,7 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
  * - Objects have a max of 50 properties. Arrays are considered 1 property.
  */
 export interface EventData {
-  [key: string]:
-    | number
-    | string
-    | EventData
-    | number[]
-    | string[]
-    | EventData[];
+  [key: string]: number | string | boolean | Date | EventData | number[] | string[] | EventData[];
 }
 
 export type EventProperties = {
@@ -81,30 +75,30 @@ export type EventProperties = {
    */
   name: string;
   data?: EventData;
-} & WithRequired<TrackedProperties, "website">;
-export type PageViewProperties = WithRequired<TrackedProperties, "website">;
+} & WithRequired<TrackedProperties, 'website'>;
+export type PageViewProperties = WithRequired<TrackedProperties, 'website'>;
 export type CustomEventFunction = (
   props: PageViewProperties,
 ) => EventProperties | PageViewProperties;
 
-export type UmamiTracker = {
+export type ProhorTracker = {
   track: {
     /**
      * Track a page view
      *
      * @example ```
-     * umami.track();
+     * prohor.track();
      * ```
      */
     (): Promise<string>;
 
     /**
-     * Track an event with a given name
+     * Tracks an event with a given name.
      *
      * NOTE: event names will be truncated past 50 characters
      *
      * @example ```
-     * umami.track('signup-button');
+     * prohor.track('signup-button');
      * ```
      */
     (eventName: string): Promise<string>;
@@ -117,7 +111,7 @@ export type UmamiTracker = {
      * When tracking events, the default properties are included in the payload. This is equivalent to running:
      *
      * ```js
-     * umami.track(props => ({
+     * prohor.track(props => ({
      *   ...props,
      *   name: 'signup-button',
      *   data: {
@@ -128,7 +122,7 @@ export type UmamiTracker = {
      * ```
      *
      * @example ```
-     * umami.track('signup-button', { name: 'newsletter', id: 123 });
+     * prohor.track('signup-button', { name: 'newsletter', id: 123 });
      * ```
      */
     (eventName: string, obj: EventData): Promise<string>;
@@ -137,7 +131,7 @@ export type UmamiTracker = {
      * Tracks a page view with custom properties
      *
      * @example ```
-     * umami.track({ website: 'e676c9b4-11e4-4ef1-a4d7-87001773e9f2', url: '/home', title: 'Home page' });
+     * prohor.track({ website: 'e676c9b4-11e4-4ef1-a4d7-87001773e9f2', url: '/home', title: 'Home page' });
      * ```
      */
     (properties: PageViewProperties): Promise<string>;
@@ -147,13 +141,17 @@ export type UmamiTracker = {
      * If you don't specify any `name` and/or `data`, it will be treated as a page view
      *
      * @example ```
-     * umami.track((props) => ({ ...props, url: path }));
+     * prohor.track((props) => ({ ...props, url: path }));
      * ```
      */
     (eventFunction: CustomEventFunction): Promise<string>;
   };
+  identify: (data: EventData) => Promise<string>;
+  getSession: () => { cache: string; website: string };
 };
 
-export interface Window {
-  umami: UmamiTracker;
+declare global {
+  interface Window {
+    prohor: ProhorTracker;
+  }
 }

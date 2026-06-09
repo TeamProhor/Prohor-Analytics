@@ -1,9 +1,9 @@
-import { startOfMinute, subMinutes } from "date-fns";
-import { REALTIME_RANGE } from "@/lib/constants";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { canViewWebsite } from "@/permissions";
-import { getRealtimeData } from "@/queries/sql";
+import { startOfMinute, subMinutes } from 'date-fns';
+import { REALTIME_RANGE } from '@/lib/constants';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { canViewWebsite } from '@/permissions';
+import { getRealtimeData } from '@/queries/sql';
 
 export async function GET(
   request: Request,

@@ -1,21 +1,21 @@
-"use client";
-import { SessionModal } from "@/app/(main)/websites/[websiteId]/sessions/SessionModal";
-import { WebsiteControls } from "@/app/(main)/websites/[websiteId]/WebsiteControls";
-import { EmptyPlaceholder } from "@/components/common/EmptyPlaceholder";
-import { Panel } from "@/components/common/Panel";
-import { useMessages, useSubscription, useWebsite } from "@/components/hooks";
-import { Video } from "@/components/icons";
-import { getItem, setItem } from "@/lib/storage";
-import { Button, Column, Tab, TabList, TabPanel, Tabs } from "@umami/react-zen";
-import { type Key, useState } from "react";
-import { ReplayModal } from "./ReplayModal";
-import { ReplaysDataTable } from "./ReplaysDataTable";
-import { SavedReplaysDataTable } from "./SavedReplaysDataTable";
+'use client';
+import { Button, Column, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
+import { type Key, useState } from 'react';
+import { SessionModal } from '@/app/(main)/websites/[websiteId]/sessions/SessionModal';
+import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
+import { EmptyPlaceholder } from '@/components/common/EmptyPlaceholder';
+import { Panel } from '@/components/common/Panel';
+import { useMessages, useSubscription, useWebsite } from '@/components/hooks';
+import { Video } from '@/components/icons';
+import { getItem, setItem } from '@/lib/storage';
+import { ReplayModal } from './ReplayModal';
+import { ReplaysDataTable } from './ReplaysDataTable';
+import { SavedReplaysDataTable } from './SavedReplaysDataTable';
 
-const KEY_NAME = "umami.replays.tab";
+const KEY_NAME = 'prohor.replays.tab';
 
 export function ReplaysPage({ websiteId }: { websiteId: string }) {
-  const [tab, setTab] = useState(getItem(KEY_NAME) || "replays");
+  const [tab, setTab] = useState(getItem(KEY_NAME) || 'replays');
   const website = useWebsite();
   const { t, labels, messages } = useMessages();
   const { hasFeature, cloudMode } = useSubscription(website?.teamId);
@@ -25,23 +25,18 @@ export function ReplaysPage({ websiteId }: { websiteId: string }) {
     setTab(value);
   };
 
-  if (cloudMode && !hasFeature("replays")) {
+  if (cloudMode && !hasFeature('replays')) {
     return (
       <Column gap="3">
         <Panel>
           <EmptyPlaceholder
             icon={<Video />}
-            title={t(messages.upgradeRequired, { plan: "Business" })}
+            title={t(messages.upgradeRequired, { plan: 'Business' })}
             description="Watch real user sessions to see exactly how visitors interact with your site."
           >
             <Button
               variant="primary"
-              onPress={() =>
-                window.open(
-                  `${process.env.cloudUrl}/settings/billing`,
-                  "_blank",
-                )
-              }
+              onPress={() => window.open(`${process.env.cloudUrl}/settings/billing`, '_blank')}
             >
               {t(labels.upgrade)}
             </Button>

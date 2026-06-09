@@ -1,6 +1,6 @@
-import { Column, Heading, Row, Text } from "@umami/react-zen";
-import Link from "@/components/common/Link";
-import { IconLabel } from "@/components/common/IconLabel";
+import { Column, Heading, Row, Text } from '@umami/react-zen';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
 
 interface NavMenuData {
   id: string;
@@ -39,11 +39,11 @@ export function NavMenu({
           <Row
             padding
             borderRadius
-            hover={{ backgroundColor: "surface-sunken" }}
-            backgroundColor={isSelected ? "surface-sunken" : undefined}
+            hover={{ backgroundColor: 'surface-sunken' }}
+            backgroundColor={isSelected ? 'surface-sunken' : undefined}
           >
             <IconLabel icon={icon}>
-              <Text weight={isSelected ? "bold" : "normal"}>{label}</Text>
+              <Text weight={isSelected ? 'bold' : 'normal'}>{label}</Text>
             </IconLabel>
           </Row>
         </Link>
@@ -52,12 +52,7 @@ export function NavMenu({
   };
 
   return (
-    <Column
-      gap
-      overflowY="auto"
-      justifyContent="space-between"
-      position="sticky"
-    >
+    <Column gap overflowY="auto" justifyContent="space-between" position="sticky">
       {title && (
         <Row padding>
           <Heading size="lg">{title}</Heading>
@@ -67,12 +62,7 @@ export function NavMenu({
         {items?.map(({ label, items }, index) => {
           if (label) {
             return (
-              <Column
-                key={`${label}${index}`}
-                gap="2"
-                marginBottom="3"
-                minHeight="40px"
-              >
+              <Column key={`${label}${index}`} gap="2" marginBottom="3" minHeight="40px">
                 <Row padding>
                   <Text weight="bold">{label}</Text>
                 </Row>

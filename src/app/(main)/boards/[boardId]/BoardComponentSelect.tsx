@@ -7,13 +7,12 @@ import {
   Select,
   Text,
   TextField,
-} from "@umami/react-zen";
-import { useEffect, useMemo, useState } from "react";
-import { useMessages } from "@/components/hooks";
-import { LinkSelect } from "@/components/input/LinkSelect";
-import { PixelSelect } from "@/components/input/PixelSelect";
-import { WebsiteSelect } from "@/components/input/WebsiteSelect";
-import type { BoardComponentConfig } from "@/lib/types";
+} from '@umami/react-zen';
+import { useEffect, useMemo, useState } from 'react';
+import { useMessages } from '@/components/hooks';
+import { LinkSelect } from '@/components/input/LinkSelect';
+import { PixelSelect } from '@/components/input/PixelSelect';
+import { WebsiteSelect } from '@/components/input/WebsiteSelect';
 import {
   BOARD_ENTITY_TYPES,
   type BoardEntityType,
@@ -21,13 +20,14 @@ import {
   getComponentEntity,
   isBoardComponentSupported,
   isOpenBoardType,
-} from "@/lib/boards";
+} from '@/lib/boards';
+import type { BoardComponentConfig } from '@/lib/types';
 import {
   type ComponentDefinition,
   type ConfigField,
   getComponentDefinitions,
-} from "../boardComponentRegistry";
-import { BoardComponentRenderer } from "./BoardComponentRenderer";
+} from '../boardComponentRegistry';
+import { BoardComponentRenderer } from './BoardComponentRenderer';
 
 export function BoardComponentSelect({
   teamId,
@@ -48,37 +48,25 @@ export function BoardComponentSelect({
 }) {
   const { t, labels, messages } = useMessages();
   const initialEntity = getComponentEntity(initialConfig);
-  const [selectedDef, setSelectedDef] = useState<ComponentDefinition | null>(
-    null,
-  );
+  const [selectedDef, setSelectedDef] = useState<ComponentDefinition | null>(null);
   const [configValues, setConfigValues] = useState<Record<string, any>>({});
   const [selectedEntityType, setSelectedEntityType] = useState<BoardEntityType>(
     initialEntity.entityType || boardEntityType || BOARD_ENTITY_TYPES.website,
   );
-  const [selectedEntityId, setSelectedEntityId] = useState(
-    initialEntity.entityId || boardEntityId,
-  );
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [selectedEntityId, setSelectedEntityId] = useState(initialEntity.entityId || boardEntityId);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const allDefinitions = useMemo(
-    () =>
-      getComponentDefinitions().toSorted((a, b) =>
-        a.name.localeCompare(b.name),
-      ),
+    () => getComponentDefinitions().toSorted((a, b) => a.name.localeCompare(b.name)),
     [],
   );
-  const activeEntityType = isOpenBoardType(boardType)
-    ? selectedEntityType
-    : boardEntityType;
+  const activeEntityType = isOpenBoardType(boardType) ? selectedEntityType : boardEntityType;
   const isSelectedDefSupported = selectedDef
     ? isBoardComponentSupported(selectedDef.type, activeEntityType)
     : false;
 
-  const getDefaultConfigValues = (
-    def: ComponentDefinition,
-    config?: BoardComponentConfig,
-  ) => {
+  const getDefaultConfigValues = (def: ComponentDefinition, config?: BoardComponentConfig) => {
     const defaults: Record<string, any> = {};
 
     for (const field of def.configFields ?? []) {
@@ -101,9 +89,7 @@ export function BoardComponentSelect({
       return;
     }
 
-    const definition = allDefinitions.find(
-      (def) => def.type === initialConfig.type,
-    );
+    const definition = allDefinitions.find(def => def.type === initialConfig.type);
 
     if (!definition) {
       return;
@@ -116,7 +102,7 @@ export function BoardComponentSelect({
     );
     setSelectedEntityId(initialEntity.entityId || boardEntityId);
     setTitle(initialConfig.title ?? definition.name);
-    setDescription(initialConfig.description || "");
+    setDescription(initialConfig.description || '');
   }, [
     initialConfig,
     allDefinitions,
@@ -130,11 +116,11 @@ export function BoardComponentSelect({
     setSelectedDef(def);
     setConfigValues(getDefaultConfigValues(def));
     setTitle(def.name);
-    setDescription("");
+    setDescription('');
   };
 
   const handleConfigChange = (name: string, value: any) => {
-    setConfigValues((prev) => ({ ...prev, [name]: value }));
+    setConfigValues(prev => ({ ...prev, [name]: value }));
   };
 
   const needsWebsite = selectedDef?.requiresWebsite !== false;
@@ -157,12 +143,7 @@ export function BoardComponentSelect({
   };
 
   const handleAdd = () => {
-    if (
-      !selectedDef ||
-      !isSelectedDefSupported ||
-      (needsWebsite && !resolvedEntityId)
-    )
-      return;
+    if (!selectedDef || !isSelectedDefSupported || (needsWebsite && !resolvedEntityId)) return;
 
     const props: Record<string, any> = {};
 
@@ -173,11 +154,7 @@ export function BoardComponentSelect({
     Object.assign(props, configValues);
 
     for (const field of selectedDef.configFields ?? []) {
-      if (
-        field.type === "number" &&
-        props[field.name] != null &&
-        props[field.name] !== ""
-      ) {
+      if (field.type === 'number' && props[field.name] != null && props[field.name] !== '') {
         props[field.name] = Number(props[field.name]);
       }
     }
@@ -209,16 +186,12 @@ export function BoardComponentSelect({
     [selectedDef, configValues],
   );
 
-  const canSave =
-    !!selectedDef &&
-    isSelectedDefSupported &&
-    (!needsWebsite || !!resolvedEntityId);
+  const canSave = !!selectedDef && isSelectedDefSupported && (!needsWebsite || !!resolvedEntityId);
   const availableDefinitions = useMemo(
     () =>
       allDefinitions.filter(
-        (def) =>
-          isBoardComponentSupported(def.type, activeEntityType) ||
-          def.type === selectedDef?.type,
+        def =>
+          isBoardComponentSupported(def.type, activeEntityType) || def.type === selectedDef?.type,
       ),
     [activeEntityType, allDefinitions, selectedDef?.type],
   );
@@ -226,10 +199,7 @@ export function BoardComponentSelect({
   return (
     <Column gap="4">
       <Row gap="6" style={{ height: 600 }}>
-        <Column
-          gap="3"
-          style={{ width: 280, flexShrink: 0, overflowY: "auto" }}
-        >
+        <Column gap="3" style={{ width: 280, flexShrink: 0, overflowY: 'auto' }}>
           <Text weight="bold">{t(labels.properties)}</Text>
 
           {needsWebsite && isOpenType && (
@@ -238,19 +208,10 @@ export function BoardComponentSelect({
                 <Text size="sm" color="muted">
                   {t(labels.type)}
                 </Text>
-                <Select
-                  value={selectedEntityType}
-                  onChange={handleEntityTypeChange}
-                >
-                  <ListItem id={BOARD_ENTITY_TYPES.website}>
-                    {t(labels.website)}
-                  </ListItem>
-                  <ListItem id={BOARD_ENTITY_TYPES.pixel}>
-                    {t(labels.pixel)}
-                  </ListItem>
-                  <ListItem id={BOARD_ENTITY_TYPES.link}>
-                    {t(labels.link)}
-                  </ListItem>
+                <Select value={selectedEntityType} onChange={handleEntityTypeChange}>
+                  <ListItem id={BOARD_ENTITY_TYPES.website}>{t(labels.website)}</ListItem>
+                  <ListItem id={BOARD_ENTITY_TYPES.pixel}>{t(labels.pixel)}</ListItem>
+                  <ListItem id={BOARD_ENTITY_TYPES.link}>{t(labels.link)}</ListItem>
                 </Select>
               </Column>
               <Column gap="2">
@@ -298,11 +259,7 @@ export function BoardComponentSelect({
             <Text size="sm" color="muted">
               {t(labels.description)}
             </Text>
-            <TextField
-              value={description}
-              onChange={setDescription}
-              autoComplete="off"
-            />
+            <TextField value={description} onChange={setDescription} autoComplete="off" />
           </Column>
 
           {selectedDef?.configFields && selectedDef.configFields.length > 0 && (
@@ -313,60 +270,43 @@ export function BoardComponentSelect({
                     {field.label}
                   </Text>
 
-                  {field.type === "select" && (
+                  {field.type === 'select' && (
                     <Select
-                      value={String(
-                        configValues[field.name] ?? field.defaultValue ?? "",
-                      )}
-                      onChange={(value: string) =>
-                        handleConfigChange(field.name, value)
-                      }
+                      value={String(configValues[field.name] ?? field.defaultValue ?? '')}
+                      onChange={(value: string) => handleConfigChange(field.name, value)}
                       maxHeight={300}
                       popoverProps={{ style: { width: 220 } }}
                     >
-                      {(
-                        field.optionsByEntityType?.[activeEntityType] ??
-                        field.options
-                      )?.map((option) => (
-                        <ListItem key={option.value} id={option.value}>
-                          {option.label}
-                        </ListItem>
-                      ))}
+                      {(field.optionsByEntityType?.[activeEntityType] ?? field.options)?.map(
+                        option => (
+                          <ListItem key={option.value} id={option.value}>
+                            {option.label}
+                          </ListItem>
+                        ),
+                      )}
                     </Select>
                   )}
 
-                  {field.type === "text" && (
+                  {field.type === 'text' && (
                     <TextField
-                      value={String(
-                        configValues[field.name] ?? field.defaultValue ?? "",
-                      )}
-                      onChange={(value: string) =>
-                        handleConfigChange(field.name, value)
-                      }
+                      value={String(configValues[field.name] ?? field.defaultValue ?? '')}
+                      onChange={(value: string) => handleConfigChange(field.name, value)}
                     />
                   )}
 
-                  {field.type === "number" && (
+                  {field.type === 'number' && (
                     <TextField
                       type="number"
-                      value={String(
-                        configValues[field.name] ?? field.defaultValue ?? "",
-                      )}
-                      onChange={(value: string) =>
-                        handleConfigChange(field.name, value)
-                      }
+                      value={String(configValues[field.name] ?? field.defaultValue ?? '')}
+                      onChange={(value: string) => handleConfigChange(field.name, value)}
                     />
                   )}
 
-                  {field.type === "textarea" && (
+                  {field.type === 'textarea' && (
                     <TextField
                       asTextArea
-                      value={String(
-                        configValues[field.name] ?? field.defaultValue ?? "",
-                      )}
-                      onChange={(value: string) =>
-                        handleConfigChange(field.name, value)
-                      }
+                      value={String(configValues[field.name] ?? field.defaultValue ?? '')}
+                      onChange={(value: string) => handleConfigChange(field.name, value)}
                       style={{ minHeight: 200 }}
                     />
                   )}
@@ -376,25 +316,12 @@ export function BoardComponentSelect({
           )}
         </Column>
 
-        <Column
-          gap="3"
-          height="100%"
-          style={{ width: 280, flexShrink: 0, minWidth: 0 }}
-        >
+        <Column gap="3" height="100%" style={{ width: 280, flexShrink: 0, minWidth: 0 }}>
           <Text weight="bold">Components</Text>
-          <Column
-            border="left"
-            paddingLeft="4"
-            height="100%"
-            style={{ minHeight: 0 }}
-          >
+          <Column border="left" paddingLeft="4" height="100%" style={{ minHeight: 0 }}>
             {hasSelectedEntity ? (
-              <Column
-                gap="1"
-                height="100%"
-                style={{ overflowY: "auto", minHeight: 0 }}
-              >
-                {availableDefinitions.map((def) => {
+              <Column gap="1" height="100%" style={{ overflowY: 'auto', minHeight: 0 }}>
+                {availableDefinitions.map(def => {
                   const Icon = def.icon;
 
                   return (
@@ -406,23 +333,17 @@ export function BoardComponentSelect({
                         paddingY="2"
                         borderRadius
                         backgroundColor={
-                          selectedDef?.type === def.type
-                            ? "surface-sunken"
-                            : undefined
+                          selectedDef?.type === def.type ? 'surface-sunken' : undefined
                         }
-                        hover={{ backgroundColor: "surface-sunken" }}
-                        style={{ cursor: "pointer" }}
+                        hover={{ backgroundColor: 'surface-sunken' }}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => handleSelectComponent(def)}
                       >
                         <Icon size={16} />
                         <Column gap="1">
                           <Text
                             size="sm"
-                            weight={
-                              selectedDef?.type === def.type
-                                ? "bold"
-                                : undefined
-                            }
+                            weight={selectedDef?.type === def.type ? 'bold' : undefined}
                           >
                             {def.name}
                           </Text>
@@ -445,15 +366,8 @@ export function BoardComponentSelect({
 
         <Column gap="3" flexGrow={1} height="100%" style={{ minWidth: 0 }}>
           <Text weight="bold">Preview</Text>
-          <Column
-            border="left"
-            paddingLeft="4"
-            height="100%"
-            style={{ minWidth: 0 }}
-          >
-            {hasSelectedEntity &&
-            previewConfig &&
-            (!needsWebsite || resolvedEntityId) ? (
+          <Column border="left" paddingLeft="4" height="100%" style={{ minWidth: 0 }}>
+            {hasSelectedEntity && previewConfig && (!needsWebsite || resolvedEntityId) ? (
               <BoardComponentRenderer
                 config={previewConfig}
                 websiteId={resolvedEntityId}

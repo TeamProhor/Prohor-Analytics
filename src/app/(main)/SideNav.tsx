@@ -1,18 +1,3 @@
-import { AdminNav } from "@/app/(main)/admin/AdminNav";
-import { SettingsNav } from "@/app/(main)/settings/SettingsNav";
-import { WebsiteNav } from "@/app/(main)/websites/[websiteId]/WebsiteNav";
-import { IconLabel } from "@/components/common/IconLabel";
-import { useGlobalState, useMessages, useNavigation } from "@/components/hooks";
-import {
-  Globe,
-  Grid2x2,
-  LayoutDashboard,
-  LinkIcon,
-  PanelLeft,
-  PanelsLeftBottom,
-} from "@/components/icons";
-import { UserButton } from "@/components/input/UserButton";
-import { Logo } from "@/components/svg";
 import {
   Button,
   type ButtonProps,
@@ -23,47 +8,62 @@ import {
   Text,
   Tooltip,
   TooltipTrigger,
-} from "@umami/react-zen";
-import Link from "@/components/common/Link";
+} from '@umami/react-zen';
+import { AdminNav } from '@/app/(main)/admin/AdminNav';
+import { SettingsNav } from '@/app/(main)/settings/SettingsNav';
+import { WebsiteNav } from '@/app/(main)/websites/[websiteId]/WebsiteNav';
+import { IconLabel } from '@/components/common/IconLabel';
+import Link from '@/components/common/Link';
+import { useGlobalState, useMessages, useNavigation } from '@/components/hooks';
+import {
+  Globe,
+  Grid2x2,
+  LayoutDashboard,
+  LinkIcon,
+  PanelLeft,
+  PanelsLeftBottom,
+} from '@/components/icons';
+import { UserButton } from '@/components/input/UserButton';
+import { Logo } from '@/components/svg';
 
 export function SideNav(props: any) {
   const { t, labels } = useMessages();
   const { pathname, renderUrl, websiteId, teamId } = useNavigation();
-  const [isCollapsed] = useGlobalState("sidenav-collapsed", false);
+  const [isCollapsed] = useGlobalState('sidenav-collapsed', false);
 
   const links = [
     ...(!teamId
       ? [
           {
-            id: "dashboard",
+            id: 'dashboard',
             label: t(labels.dashboard),
-            path: "/dashboard",
+            path: '/dashboard',
             icon: <PanelsLeftBottom />,
           },
         ]
       : []),
     {
-      id: "boards",
+      id: 'boards',
       label: t(labels.boards),
-      path: "/boards",
+      path: '/boards',
       icon: <LayoutDashboard />,
     },
     {
-      id: "websites",
+      id: 'websites',
       label: t(labels.websites),
-      path: "/websites",
+      path: '/websites',
       icon: <Globe />,
     },
     {
-      id: "links",
+      id: 'links',
       label: t(labels.links),
-      path: "/links",
+      path: '/links',
       icon: <LinkIcon />,
     },
     {
-      id: "pixels",
+      id: 'pixels',
       label: t(labels.pixels),
-      path: "/pixels",
+      path: '/pixels',
       icon: <Grid2x2 />,
     },
   ];
@@ -79,9 +79,9 @@ export function SideNav(props: any) {
       minHeight="0"
       margin="2"
       style={{
-        width: isCollapsed ? "60px" : "240px",
-        transition: "width 0.2s ease-in-out",
-        overflow: "hidden",
+        width: isCollapsed ? '60px' : '240px',
+        transition: 'width 0.2s ease-in-out',
+        overflow: 'hidden',
       }}
     >
       <Row
@@ -90,12 +90,7 @@ export function SideNav(props: any) {
         height="60px"
         style={{ flexShrink: 0 }}
       >
-        <Row
-          paddingX="3"
-          alignItems="center"
-          justifyContent="space-between"
-          flexGrow="1"
-        >
+        <Row paddingX="3" alignItems="center" justifyContent="space-between" flexGrow="1">
           {!isCollapsed && (
             <IconLabel icon={<Logo />}>
               <Text weight="bold">Prohor Analytics</Text>
@@ -104,16 +99,12 @@ export function SideNav(props: any) {
           <PanelButton />
         </Row>
       </Row>
-      <Column
-        flexGrow="1"
-        minHeight="0"
-        style={{ overflowY: "auto", overflowX: "hidden" }}
-      >
+      <Column flexGrow="1" minHeight="0" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
         {websiteId ? (
           <WebsiteNav websiteId={websiteId} isCollapsed={isCollapsed} />
-        ) : pathname.includes("/settings") ? (
+        ) : pathname.includes('/settings') ? (
           <SettingsNav isCollapsed={isCollapsed} />
-        ) : pathname.includes("/admin") ? (
+        ) : pathname.includes('/admin') ? (
           <AdminNav />
         ) : (
           <Column gap="2">
@@ -125,17 +116,15 @@ export function SideNav(props: any) {
                     <Focusable>
                       <Row
                         alignItems="center"
-                        hover={{ backgroundColor: "surface-sunken" }}
-                        backgroundColor={
-                          isSelected ? "surface-sunken" : undefined
-                        }
+                        hover={{ backgroundColor: 'surface-sunken' }}
+                        backgroundColor={isSelected ? 'surface-sunken' : undefined}
                         borderRadius
                         minHeight="40px"
                       >
                         <IconLabel
                           icon={icon}
-                          label={isCollapsed ? "" : label}
-                          weight={isSelected ? "bold" : undefined}
+                          label={isCollapsed ? '' : label}
+                          weight={isSelected ? 'bold' : undefined}
                           padding
                         />
                       </Row>
@@ -156,10 +145,7 @@ export function SideNav(props: any) {
 }
 
 const PanelButton = (props: ButtonProps) => {
-  const [isCollapsed, setIsCollapsed] = useGlobalState(
-    "sidenav-collapsed",
-    false,
-  );
+  const [isCollapsed, setIsCollapsed] = useGlobalState('sidenav-collapsed', false);
   return (
     <Button
       onPress={() => setIsCollapsed(!isCollapsed)}

@@ -1,11 +1,7 @@
-import { ListItem, Select, type SelectProps } from "@umami/react-zen";
-import { useMemo, useState } from "react";
-import { Empty } from "@/components/common/Empty";
-import {
-  useMessages,
-  useTeamMembersQuery,
-  useUsersQuery,
-} from "@/components/hooks";
+import { ListItem, Select, type SelectProps } from '@umami/react-zen';
+import { useMemo, useState } from 'react';
+import { Empty } from '@/components/common/Empty';
+import { useMessages, useTeamMembersQuery, useUsersQuery } from '@/components/hooks';
 
 export function UserSelect({
   teamId,
@@ -16,10 +12,9 @@ export function UserSelect({
 } & SelectProps) {
   const { t, messages } = useMessages();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
-  const { data: teamMembers, isLoading: teamMembersLoading } =
-    useTeamMembersQuery(teamId);
+  const { data: teamMembers, isLoading: teamMembersLoading } = useTeamMembersQuery(teamId);
   const [username, setUsername] = useState<string>();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const listItems = useMemo(() => {
     if (!users) {
@@ -37,11 +32,11 @@ export function UserSelect({
   };
 
   const handleOpenChange = () => {
-    setSearch("");
+    setSearch('');
   };
 
   const handleChange = (id: string) => {
-    setUsername(listItems.find((item) => item.id === id)?.username);
+    setUsername(listItems.find(item => item.id === id)?.username);
     onChange(id);
   };
 
@@ -57,7 +52,7 @@ export function UserSelect({
       onOpenChange={handleOpenChange}
       listProps={{
         renderEmptyState: () => <Empty message={t(messages.noResultsFound)} />,
-        style: { maxHeight: "calc(42vh - 65px)" },
+        style: { maxHeight: 'calc(42vh - 65px)' },
       }}
     >
       {listItems.map(({ id, username }) => (

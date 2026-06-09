@@ -1,10 +1,10 @@
-import { z } from "zod";
-import { uuid } from "@/lib/crypto";
-import { getQueryFilters, parseRequest } from "@/lib/request";
-import { json, unauthorized } from "@/lib/response";
-import { pagingParams, searchParams } from "@/lib/schema";
-import { canCreateTeamWebsite, canCreateWebsite } from "@/permissions";
-import { createLink, getUserLinks } from "@/queries/prisma";
+import { z } from 'zod';
+import { uuid } from '@/lib/crypto';
+import { getQueryFilters, parseRequest } from '@/lib/request';
+import { json, unauthorized } from '@/lib/response';
+import { pagingParams, searchParams } from '@/lib/schema';
+import { canCreateTeamWebsite, canCreateWebsite } from '@/permissions';
+import { createLink, getUserLinks } from '@/queries/prisma';
 
 export async function GET(request: Request) {
   const schema = z.object({
@@ -42,10 +42,7 @@ export async function POST(request: Request) {
 
   const { id, name, url, slug, teamId } = body;
 
-  if (
-    (teamId && !(await canCreateTeamWebsite(auth, teamId))) ||
-    !(await canCreateWebsite(auth))
-  ) {
+  if ((teamId && !(await canCreateTeamWebsite(auth, teamId))) || !(await canCreateWebsite(auth))) {
     return unauthorized();
   }
 

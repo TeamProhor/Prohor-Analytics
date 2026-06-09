@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useApi } from "@/components/hooks/useApi";
-import { setConfig, useApp } from "@/store/app";
+import { useEffect } from 'react';
+import { useApi } from '@/components/hooks/useApi';
+import { setConfig, useApp } from '@/store/app';
 
 export type Config = {
   cloudMode: boolean;

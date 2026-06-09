@@ -9,13 +9,13 @@ import {
   Loading,
   Row,
   TextField,
-} from "@umami/react-zen";
-import { useEffect, useState } from "react";
-import { useConfig, useMessages, usePixelQuery } from "@/components/hooks";
-import { useUpdateQuery } from "@/components/hooks/queries/useUpdateQuery";
-import { RefreshCw } from "@/components/icons";
-import { PIXELS_URL } from "@/lib/constants";
-import { getRandomChars } from "@/lib/generate";
+} from '@umami/react-zen';
+import { useEffect, useState } from 'react';
+import { useConfig, useMessages, usePixelQuery } from '@/components/hooks';
+import { useUpdateQuery } from '@/components/hooks/queries/useUpdateQuery';
+import { RefreshCw } from '@/components/icons';
+import { PIXELS_URL } from '@/lib/constants';
+import { getRandomChars } from '@/lib/generate';
 
 const generateId = () => getRandomChars(9);
 
@@ -32,7 +32,7 @@ export function PixelEditForm({
 }) {
   const { t, labels, messages, getErrorMessage } = useMessages();
   const { mutateAsync, error, isPending, touch, toast } = useUpdateQuery(
-    pixelId ? `/pixels/${pixelId}` : "/pixels",
+    pixelId ? `/pixels/${pixelId}` : '/pixels',
     {
       id: pixelId,
       teamId,
@@ -48,7 +48,7 @@ export function PixelEditForm({
     await mutateAsync(data, {
       onSuccess: async () => {
         toast(t(messages.saved));
-        touch("pixels");
+        touch('pixels');
         touch(`pixel:${pixelId}`);
         onSave?.();
         onClose?.();
@@ -75,19 +75,11 @@ export function PixelEditForm({
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      error={getErrorMessage(error)}
-      defaultValues={{ slug, ...data }}
-    >
+    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} defaultValues={{ slug, ...data }}>
       {({ setValue }) => {
         return (
           <>
-            <FormField
-              label={t(labels.name)}
-              name="name"
-              rules={{ required: t(labels.required) }}
-            >
+            <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
               <TextField autoComplete="off" />
             </FormField>
 
@@ -96,7 +88,7 @@ export function PixelEditForm({
               rules={{
                 required: t(labels.required),
               }}
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
             >
               <input type="hidden" />
             </FormField>
@@ -109,13 +101,9 @@ export function PixelEditForm({
                   autoComplete="off"
                   isReadOnly
                   allowCopy
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                 />
-                <Button
-                  onPress={() =>
-                    setValue("slug", handleSlug(), { shouldDirty: true })
-                  }
-                >
+                <Button onPress={() => setValue('slug', handleSlug(), { shouldDirty: true })}>
                   <Icon>
                     <RefreshCw />
                   </Icon>
@@ -129,9 +117,7 @@ export function PixelEditForm({
                   {t(labels.cancel)}
                 </Button>
               )}
-              <FormSubmitButton isDisabled={false}>
-                {t(labels.save)}
-              </FormSubmitButton>
+              <FormSubmitButton isDisabled={false}>{t(labels.save)}</FormSubmitButton>
             </Row>
           </>
         );

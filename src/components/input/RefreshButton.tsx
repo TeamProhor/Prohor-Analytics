@@ -1,7 +1,7 @@
-import { Icon, LoadingButton, Tooltip, TooltipTrigger } from "@umami/react-zen";
-import { useDateRange, useMessages } from "@/components/hooks";
-import { RefreshCw } from "@/components/icons";
-import { setWebsiteDateRange } from "@/store/websites";
+import { Icon, LoadingButton, Tooltip, TooltipTrigger } from '@umami/react-zen';
+import { useDateRange, useMessages } from '@/components/hooks';
+import { RefreshCw } from '@/components/icons';
+import { setWebsiteDateRange } from '@/store/websites';
 
 export function RefreshButton({
   websiteId,

@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { CURRENT_VERSION } from "@/lib/constants";
+import { create } from 'zustand';
+import { CURRENT_VERSION } from '@/lib/constants';
 
 const initialState = {
   current: CURRENT_VERSION,

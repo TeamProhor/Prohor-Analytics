@@ -9,12 +9,12 @@ import {
   Loading,
   Select,
   useDebounce,
-} from "@umami/react-zen";
-import { endOfDay, subMonths } from "date-fns";
-import { useState } from "react";
-import { Empty } from "@/components/common/Empty";
-import { useApi, useMessages, useMobile } from "@/components/hooks";
-import { X } from "@/components/icons";
+} from '@umami/react-zen';
+import { endOfDay, subMonths } from 'date-fns';
+import { useState } from 'react';
+import { Empty } from '@/components/common/Empty';
+import { useApi, useMessages, useMobile } from '@/components/hooks';
+import { X } from '@/components/icons';
 
 export function getEventDataDateRange() {
   return {
@@ -38,17 +38,14 @@ function PropertySelect({
 }) {
   const { get, useQuery } = useApi();
   const { t, messages } = useMessages();
-  const [search, setSearch] = useState(value ?? "");
+  const [search, setSearch] = useState(value ?? '');
   const searchValue = useDebounce(search, 300);
   const { startAt, endAt } = getEventDataDateRange();
 
   const { data, isLoading } = useQuery<
     Array<{ eventName: string; propertyName: string; total: number }>
   >({
-    queryKey: [
-      "event-data:properties",
-      { websiteId, eventName, searchValue, startAt, endAt },
-    ],
+    queryKey: ['event-data:properties', { websiteId, eventName, searchValue, startAt, endAt }],
     queryFn: () =>
       get(`/websites/${websiteId}/event-data/properties`, {
         startAt,
@@ -59,15 +56,15 @@ function PropertySelect({
     enabled: !!websiteId,
   });
 
-  const properties = [...new Set(data?.map((d) => d.propertyName) ?? [])];
+  const properties = [...new Set(data?.map(d => d.propertyName) ?? [])];
 
   return (
     <ComboBox
       aria-label="PropertySelect"
       items={properties}
       inputValue={value}
-      style={{ width: "100%" }}
-      onInputChange={(v) => {
+      style={{ width: '100%' }}
+      onInputChange={v => {
         setSearch(v);
         onChange?.(v);
         onPropertyChange?.(v);
@@ -83,7 +80,7 @@ function PropertySelect({
         )
       }
     >
-      {properties.map((p) => (
+      {properties.map(p => (
         <ListItem key={p} id={p}>
           {p}
         </ListItem>
@@ -109,32 +106,27 @@ function ValueSelect({
   const { t, messages } = useMessages();
   const { startAt, endAt } = getEventDataDateRange();
 
-  const { data, isLoading } = useQuery<Array<{ value: string; total: number }>>(
-    {
-      queryKey: [
-        "event-data:values",
-        { websiteId, eventName, propertyName, startAt, endAt },
-      ],
-      queryFn: () =>
-        get(`/websites/${websiteId}/event-data/values`, {
-          startAt,
-          endAt,
-          event: eventName,
-          propertyName,
-        }),
-      enabled: !!(websiteId && eventName && propertyName),
-    },
-  );
+  const { data, isLoading } = useQuery<Array<{ value: string; total: number }>>({
+    queryKey: ['event-data:values', { websiteId, eventName, propertyName, startAt, endAt }],
+    queryFn: () =>
+      get(`/websites/${websiteId}/event-data/values`, {
+        startAt,
+        endAt,
+        event: eventName,
+        propertyName,
+      }),
+    enabled: !!(websiteId && eventName && propertyName),
+  });
 
-  const values = data?.map((d) => d.value) ?? [];
+  const values = data?.map(d => d.value) ?? [];
 
   return (
     <ComboBox
       aria-label="ValueSelect"
       items={values}
       inputValue={value}
-      style={{ width: "100%" }}
-      onInputChange={(v) => {
+      style={{ width: '100%' }}
+      onInputChange={v => {
         onChange?.(v);
       }}
       formValue="text"
@@ -148,7 +140,7 @@ function ValueSelect({
         )
       }
     >
-      {values.map((v) => (
+      {values.map(v => (
         <ListItem key={v} id={v}>
           {v}
         </ListItem>
@@ -158,7 +150,7 @@ function ValueSelect({
 }
 
 function OperatorSelect({
-  value = "eq",
+  value = 'eq',
   onChange,
 }: {
   value?: string;
@@ -194,7 +186,7 @@ export function EventDataFilterRow({
 }: EventDataFilterRowProps) {
   const { t, labels } = useMessages();
   const { isMobile } = useMobile();
-  const [propertyName, setPropertyName] = useState(initialProperty ?? "");
+  const [propertyName, setPropertyName] = useState(initialProperty ?? '');
 
   if (isMobile) {
     return (
@@ -207,20 +199,14 @@ export function EventDataFilterRow({
             <PropertySelect
               websiteId={websiteId}
               eventName={eventName}
-              onPropertyChange={(v) => setPropertyName(v)}
+              onPropertyChange={v => setPropertyName(v)}
             />
           </FormField>
-          <FormField
-            name={`steps.${stepIndex}.filters.${filterIndex}.operator`}
-          >
+          <FormField name={`steps.${stepIndex}.filters.${filterIndex}.operator`}>
             <OperatorSelect />
           </FormField>
           <FormField name={`steps.${stepIndex}.filters.${filterIndex}.value`}>
-            <ValueSelect
-              websiteId={websiteId}
-              eventName={eventName}
-              propertyName={propertyName}
-            />
+            <ValueSelect websiteId={websiteId} eventName={eventName} propertyName={propertyName} />
           </FormField>
         </Column>
         <Button onPress={onRemove}>
@@ -242,7 +228,7 @@ export function EventDataFilterRow({
           <PropertySelect
             websiteId={websiteId}
             eventName={eventName}
-            onPropertyChange={(v) => setPropertyName(v)}
+            onPropertyChange={v => setPropertyName(v)}
           />
         </FormField>
       </Column>
@@ -251,13 +237,9 @@ export function EventDataFilterRow({
           <OperatorSelect />
         </FormField>
       </Column>
-      <Column style={{ minWidth: 0, overflow: "hidden" }}>
+      <Column style={{ minWidth: 0, overflow: 'hidden' }}>
         <FormField name={`steps.${stepIndex}.filters.${filterIndex}.value`}>
-          <ValueSelect
-            websiteId={websiteId}
-            eventName={eventName}
-            propertyName={propertyName}
-          />
+          <ValueSelect websiteId={websiteId} eventName={eventName} propertyName={propertyName} />
         </FormField>
       </Column>
       <Button onPress={onRemove}>

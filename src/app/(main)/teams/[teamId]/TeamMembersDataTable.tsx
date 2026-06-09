@@ -1,6 +1,6 @@
-import { DataGrid } from "@/components/common/DataGrid";
-import { useTeamMembersQuery } from "@/components/hooks";
-import { TeamMembersTable } from "./TeamMembersTable";
+import { DataGrid } from '@/components/common/DataGrid';
+import { useTeamMembersQuery } from '@/components/hooks';
+import { TeamMembersTable } from './TeamMembersTable';
 
 export function TeamMembersDataTable({
   teamId,
@@ -13,9 +13,7 @@ export function TeamMembersDataTable({
 
   return (
     <DataGrid query={queryResult} allowSearch>
-      {({ data }) => (
-        <TeamMembersTable data={data} teamId={teamId} allowEdit={allowEdit} />
-      )}
+      {({ data }) => <TeamMembersTable data={data} teamId={teamId} allowEdit={allowEdit} />}
     </DataGrid>
   );
 }
