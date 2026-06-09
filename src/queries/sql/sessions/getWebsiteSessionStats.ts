@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getWebsiteSessionStats';
+const FUNCTION_NAME = "getWebsiteSessionStats";
 
 export interface WebsiteSessionStatsData {
   pageviews: number;

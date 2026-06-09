@@ -6,9 +6,9 @@ import {
   FormSubmitButton,
   ListItem,
   Select,
-} from '@umami/react-zen';
-import { useMessages, useUpdateQuery } from '@/components/hooks';
-import { ROLES } from '@/lib/constants';
+} from "@umami/react-zen";
+import { useMessages, useUpdateQuery } from "@/components/hooks";
+import { ROLES } from "@/lib/constants";
 
 export function TeamMemberEditForm({
   teamId,
@@ -23,7 +23,9 @@ export function TeamMemberEditForm({
   onSave?: () => void;
   onClose?: () => void;
 }) {
-  const { mutateAsync, error, isPending } = useUpdateQuery(`/teams/${teamId}/users/${userId}`);
+  const { mutateAsync, error, isPending } = useUpdateQuery(
+    `/teams/${teamId}/users/${userId}`,
+  );
   const { t, labels, getErrorMessage } = useMessages();
 
   const handleSubmit = async (data: any) => {
@@ -36,8 +38,16 @@ export function TeamMemberEditForm({
   };
 
   return (
-    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} defaultValues={{ role }}>
-      <FormField name="role" rules={{ required: t(labels.required) }} label={t(labels.role)}>
+    <Form
+      onSubmit={handleSubmit}
+      error={getErrorMessage(error)}
+      defaultValues={{ role }}
+    >
+      <FormField
+        name="role"
+        rules={{ required: t(labels.required) }}
+        label={t(labels.role)}
+      >
         <Select>
           <ListItem id={ROLES.teamManager}>{t(labels.manager)}</ListItem>
           <ListItem id={ROLES.teamMember}>{t(labels.member)}</ListItem>

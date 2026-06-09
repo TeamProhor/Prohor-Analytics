@@ -1,14 +1,18 @@
-import { hasPermission } from '@/lib/auth';
-import { PERMISSIONS } from '@/lib/constants';
-import type { Auth } from '@/lib/types';
-import { getLink, getTeamUser } from '@/queries/prisma';
+import { hasPermission } from "@/lib/auth";
+import { PERMISSIONS } from "@/lib/constants";
+import type { Auth } from "@/lib/types";
+import { getLink, getTeamUser } from "@/queries/prisma";
 
 export async function canViewLink({ user, shareToken }: Auth, linkId: string) {
   if (user?.isAdmin) {
     return true;
   }
 
-  if (shareToken?.linkId === linkId || shareToken?.websiteId === linkId || shareToken?.linkIds?.includes(linkId)) {
+  if (
+    shareToken?.linkId === linkId ||
+    shareToken?.websiteId === linkId ||
+    shareToken?.linkIds?.includes(linkId)
+  ) {
     return true;
   }
 

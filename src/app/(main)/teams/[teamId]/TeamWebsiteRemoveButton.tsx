@@ -1,10 +1,12 @@
-import { Icon, LoadingButton, Text } from '@umami/react-zen';
-import { useDeleteQuery, useMessages } from '@/components/hooks';
-import { X } from '@/components/icons';
+import { Icon, LoadingButton, Text } from "@umami/react-zen";
+import { useDeleteQuery, useMessages } from "@/components/hooks";
+import { X } from "@/components/icons";
 
 export function TeamWebsiteRemoveButton({ teamId, websiteId, onSave }) {
   const { t, labels } = useMessages();
-  const { mutateAsync } = useDeleteQuery(`/teams/${teamId}/websites/${websiteId}`);
+  const { mutateAsync } = useDeleteQuery(
+    `/teams/${teamId}/websites/${websiteId}`,
+  );
 
   const handleRemoveTeamMember = async () => {
     await mutateAsync(null, {

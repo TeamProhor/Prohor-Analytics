@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
-import { AdminLayout } from './AdminLayout';
+import type { Metadata } from "next";
+import { AdminLayout } from "./AdminLayout";
 
 export default function ({ children }) {
   if (process.env.cloudMode) {
@@ -11,7 +11,7 @@ export default function ({ children }) {
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Admin | Umami',
-    default: 'Admin | Umami',
+    template: "%s | Admin | Prohor Analytics",
+    default: "Admin | Prohor Analytics",
   },
 };

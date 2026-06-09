@@ -1,7 +1,7 @@
-import { Column, Label, Text, TextField } from '@umami/react-zen';
-import { useConfig, useMessages } from '@/components/hooks';
+import { Column, Label, Text, TextField } from "@umami/react-zen";
+import { useConfig, useMessages } from "@/components/hooks";
 
-const SCRIPT_NAME = 'script.js';
+const SCRIPT_NAME = "script.js";
 
 export function WebsiteTrackingCode({
   websiteId,
@@ -14,19 +14,22 @@ export function WebsiteTrackingCode({
   const config = useConfig();
 
   const trackerScriptName =
-    config?.trackerScriptName?.split(',')?.map((n: string) => n.trim())?.[0] || SCRIPT_NAME;
+    config?.trackerScriptName?.split(",")?.map((n: string) => n.trim())?.[0] ||
+    SCRIPT_NAME;
 
   const getUrl = (scriptName: string) => {
     if (config?.cloudMode) {
       return `${process.env.cloudUrl}/${scriptName}`;
     }
 
-    return `${hostUrl || window?.location?.origin || ''}${
-      process.env.basePath || ''
+    return `${hostUrl || window?.location?.origin || ""}${
+      process.env.basePath || ""
     }/${scriptName}`;
   };
 
-  const url = trackerScriptName?.startsWith('http') ? trackerScriptName : getUrl(trackerScriptName);
+  const url = trackerScriptName?.startsWith("http")
+    ? trackerScriptName
+    : getUrl(trackerScriptName);
 
   const code = `<script defer src="${url}" data-website-id="${websiteId}"></script>`;
 
@@ -34,7 +37,14 @@ export function WebsiteTrackingCode({
     <Column gap>
       <Label>{t(labels.trackingCode)}</Label>
       <Text color="muted">{t(messages.trackingCode)}</Text>
-      <TextField value={code} isReadOnly allowCopy asTextArea resize="none" className="code-textarea" />
+      <TextField
+        value={code}
+        isReadOnly
+        allowCopy
+        asTextArea
+        resize="none"
+        className="code-textarea"
+      />
     </Column>
   );
 }

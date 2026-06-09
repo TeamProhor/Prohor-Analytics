@@ -1,4 +1,4 @@
-import { SessionProfileModal } from '@/app/(main)/websites/[websiteId]/sessions/SessionProfileModal';
+import { SessionProfileModal } from "@/app/(main)/websites/[websiteId]/sessions/SessionProfileModal";
 
 export default async function ({
   params,

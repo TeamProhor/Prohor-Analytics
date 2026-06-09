@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
-import { App } from './App';
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { App } from "./App";
 
 export default function ({ children }) {
   return (
@@ -12,7 +12,7 @@ export default function ({ children }) {
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Umami',
-    default: 'Umami',
+    template: "%s | Umami",
+    default: "Umami",
   },
 };

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Button,
   Form,
@@ -6,9 +6,9 @@ import {
   FormField,
   FormSubmitButton,
   TextField,
-} from '@umami/react-zen';
-import { useMessages, useUpdateQuery } from '@/components/hooks';
-import { touch } from '@/components/hooks/useModified';
+} from "@umami/react-zen";
+import { useMessages, useUpdateQuery } from "@/components/hooks";
+import { touch } from "@/components/hooks/useModified";
 
 export function ReplaySaveForm({
   websiteId,
@@ -31,7 +31,7 @@ export function ReplaySaveForm({
       { isSaved: true, name: formData.name },
       {
         onSuccess: () => {
-          touch('replays');
+          touch("replays");
           onSave?.();
           onClose?.();
         },
@@ -41,7 +41,11 @@ export function ReplaySaveForm({
 
   return (
     <Form onSubmit={handleSubmit} error={getErrorMessage(error)}>
-      <FormField name="name" label={t(labels.name)} rules={{ required: t(labels.required) }}>
+      <FormField
+        name="name"
+        label={t(labels.name)}
+        rules={{ required: t(labels.required) }}
+      >
         <TextField autoFocus />
       </FormField>
       <FormButtons>

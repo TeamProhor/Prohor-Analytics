@@ -1,9 +1,9 @@
-import { Grid, Heading, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
-import { GridRow } from '@/components/common/GridRow';
-import { Panel } from '@/components/common/Panel';
-import { useMessages } from '@/components/hooks';
-import { MetricsTable } from '@/components/metrics/MetricsTable';
-import { WorldMap } from '@/components/metrics/WorldMap';
+import { Grid, Heading, Tab, TabList, TabPanel, Tabs } from "@umami/react-zen";
+import { GridRow } from "@/components/common/GridRow";
+import { Panel } from "@/components/common/Panel";
+import { useMessages } from "@/components/hooks";
+import { MetricsTable } from "@/components/metrics/MetricsTable";
+import { WorldMap } from "@/components/metrics/WorldMap";
 
 export function PixelPanels({ pixelId }: { pixelId: string }) {
   const { t, labels } = useMessages();
@@ -27,10 +27,18 @@ export function PixelPanels({ pixelId }: { pixelId: string }) {
               <Tab id="channel">{t(labels.channels)}</Tab>
             </TabList>
             <TabPanel id="referrer">
-              <MetricsTable type="referrer" title={t(labels.domain)} {...tableProps} />
+              <MetricsTable
+                type="referrer"
+                title={t(labels.domain)}
+                {...tableProps}
+              />
             </TabPanel>
             <TabPanel id="channel">
-              <MetricsTable type="channel" title={t(labels.type)} {...tableProps} />
+              <MetricsTable
+                type="channel"
+                title={t(labels.type)}
+                {...tableProps}
+              />
             </TabPanel>
           </Tabs>
         </Panel>
@@ -43,13 +51,21 @@ export function PixelPanels({ pixelId }: { pixelId: string }) {
               <Tab id="device">{t(labels.devices)}</Tab>
             </TabList>
             <TabPanel id="browser">
-              <MetricsTable type="browser" title={t(labels.browser)} {...tableProps} />
+              <MetricsTable
+                type="browser"
+                title={t(labels.browser)}
+                {...tableProps}
+              />
             </TabPanel>
             <TabPanel id="os">
               <MetricsTable type="os" title={t(labels.os)} {...tableProps} />
             </TabPanel>
             <TabPanel id="device">
-              <MetricsTable type="device" title={t(labels.device)} {...tableProps} />
+              <MetricsTable
+                type="device"
+                title={t(labels.device)}
+                {...tableProps}
+              />
             </TabPanel>
           </Tabs>
         </Panel>
@@ -67,13 +83,25 @@ export function PixelPanels({ pixelId }: { pixelId: string }) {
               <Tab id="city">{t(labels.cities)}</Tab>
             </TabList>
             <TabPanel id="country">
-              <MetricsTable type="country" title={t(labels.country)} {...tableProps} />
+              <MetricsTable
+                type="country"
+                title={t(labels.country)}
+                {...tableProps}
+              />
             </TabPanel>
             <TabPanel id="region">
-              <MetricsTable type="region" title={t(labels.region)} {...tableProps} />
+              <MetricsTable
+                type="region"
+                title={t(labels.region)}
+                {...tableProps}
+              />
             </TabPanel>
             <TabPanel id="city">
-              <MetricsTable type="city" title={t(labels.city)} {...tableProps} />
+              <MetricsTable
+                type="city"
+                title={t(labels.city)}
+                {...tableProps}
+              />
             </TabPanel>
           </Tabs>
         </Panel>

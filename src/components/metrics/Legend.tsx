@@ -1,6 +1,6 @@
-import { Row, StatusLight, Text } from '@umami/react-zen';
-import type { LegendItem } from 'chart.js/auto';
-import { colord } from 'colord';
+import { Row, StatusLight, Text } from "@umami/react-zen";
+import type { LegendItem } from "chart.js/auto";
+import { colord } from "colord";
 
 export function Legend({
   items = [],
@@ -15,7 +15,7 @@ export function Legend({
 
   return (
     <Row gap wrap="wrap" justifyContent="center">
-      {items.map(item => {
+      {items.map((item) => {
         const { text, fillStyle, hidden } = item;
         const color = colord(fillStyle);
 
@@ -24,9 +24,9 @@ export function Legend({
             <StatusLight color={color.alpha(color.alpha() + 0.2).toHex()}>
               <Text
                 size="sm"
-                color={hidden ? 'disabled' : undefined}
+                color={hidden ? "disabled" : undefined}
                 truncate={true}
-                style={{ maxWidth: '300px' }}
+                style={{ maxWidth: "300px" }}
               >
                 {text}
               </Text>

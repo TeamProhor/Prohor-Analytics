@@ -1,5 +1,5 @@
-import { OPERATORS } from '@/lib/constants';
-import { useMessages } from './useMessages';
+import { OPERATORS } from "@/lib/constants";
+import { useMessages } from "./useMessages";
 
 export function useOperatorLabels(): Record<string, string> {
   const { t, labels } = useMessages();

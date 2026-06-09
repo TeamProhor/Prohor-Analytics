@@ -1,6 +1,6 @@
-import type { Prisma } from '@/generated/prisma/client';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import type { Prisma } from "@/generated/prisma/client";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 export async function findPixel(criteria: Prisma.PixelFindUniqueArgs) {
   return prisma.client.pixel.findUnique(criteria);
@@ -14,15 +14,21 @@ export async function getPixel(pixelId: string) {
   });
 }
 
-export async function getPixels(criteria: Prisma.PixelFindManyArgs, filters: QueryFilters = {}) {
+export async function getPixels(
+  criteria: Prisma.PixelFindManyArgs,
+  filters: QueryFilters = {},
+) {
   const { search } = filters;
 
   const where: Prisma.PixelWhereInput = {
     ...criteria.where,
-    ...prisma.getSearchParameters(search, [{ name: 'contains' }, { slug: 'contains' }]),
+    ...prisma.getSearchParameters(search, [
+      { name: "contains" },
+      { slug: "contains" },
+    ]),
   };
 
-  return prisma.pagedQuery('pixel', { ...criteria, where }, filters);
+  return prisma.pagedQuery("pixel", { ...criteria, where }, filters);
 }
 
 export async function getUserPixels(userId: string, filters?: QueryFilters) {

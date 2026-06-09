@@ -1,8 +1,8 @@
-import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from "@/lib/constants";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getEventMetrics';
+const FUNCTION_NAME = "getEventMetrics";
 
 export interface EventMetricParameters {
   type: string;
@@ -17,7 +17,11 @@ export interface EventMetricData {
 }
 
 export async function getEventMetrics(
-  ...args: [websiteId: string, parameters: EventMetricParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: EventMetricParameters,
+    filters: QueryFilters,
+  ]
 ): Promise<EventMetricData[]> {
   return relationalQuery(...args);
 }
@@ -30,14 +34,15 @@ async function relationalQuery(
   const { type, limit = 500, offset = 0 } = parameters;
   const column = FILTER_COLUMNS[type] || type;
   const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } = parseFilters(
-    {
-      ...filters,
-      websiteId,
-      eventType: EVENT_TYPE.customEvent,
-    },
-    { joinSession: SESSION_COLUMNS.includes(type) },
-  );
+  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } =
+    parseFilters(
+      {
+        ...filters,
+        websiteId,
+        eventType: EVENT_TYPE.customEvent,
+      },
+      { joinSession: SESSION_COLUMNS.includes(type) },
+    );
 
   return rawQuery(
     `

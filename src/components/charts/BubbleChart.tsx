@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Chart, type ChartProps } from '@/components/charts/Chart';
-import { ChartTooltip } from '@/components/charts/ChartTooltip';
+import { useState } from "react";
+import { Chart, type ChartProps } from "@/components/charts/Chart";
+import { ChartTooltip } from "@/components/charts/ChartTooltip";
 
 export interface BubbleChartProps extends ChartProps {
-  type?: 'bubble';
+  type?: "bubble";
 }
 
-export function BubbleChart({ type = 'bubble', ...props }: BubbleChartProps) {
+export function BubbleChart({ type = "bubble", ...props }: BubbleChartProps) {
   const [tooltip, setTooltip] = useState(null);
 
   const handleTooltip = ({ tooltip }) => {

@@ -1,6 +1,6 @@
-import { uuid } from '@/lib/crypto';
-import { PRISMA, runQuery } from '@/lib/db';
-import prisma from '@/lib/prisma';
+import { uuid } from "@/lib/crypto";
+import { PRISMA, runQuery } from "@/lib/db";
+import prisma from "@/lib/prisma";
 
 export interface SaveRevenueArgs {
   websiteId: string;
@@ -19,7 +19,15 @@ export async function saveRevenue(data: SaveRevenueArgs) {
 }
 
 async function relationalQuery(data: SaveRevenueArgs) {
-  const { websiteId, sessionId, eventId, eventName, currency, revenue, createdAt } = data;
+  const {
+    websiteId,
+    sessionId,
+    eventId,
+    eventName,
+    currency,
+    revenue,
+    createdAt,
+  } = data;
 
   await prisma.client.revenue.create({
     data: {

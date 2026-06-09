@@ -1,11 +1,11 @@
-import { z } from 'zod';
-import { BOARD_TYPES, normalizeBoardType } from '@/lib/boards';
-import { uuid } from '@/lib/crypto';
-import { getQueryFilters, parseRequest } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { pagingParams, searchParams } from '@/lib/schema';
-import { canCreateTeamWebsite, canCreateWebsite } from '@/permissions';
-import { createBoard, getUserBoards } from '@/queries/prisma';
+import { z } from "zod";
+import { BOARD_TYPES, normalizeBoardType } from "@/lib/boards";
+import { uuid } from "@/lib/crypto";
+import { getQueryFilters, parseRequest } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { pagingParams, searchParams } from "@/lib/schema";
+import { canCreateTeamWebsite, canCreateWebsite } from "@/permissions";
+import { createBoard, getUserBoards } from "@/queries/prisma";
 
 export async function GET(request: Request) {
   const schema = z.object({
@@ -29,8 +29,13 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const schema = z.object({
     type: z
-      .enum([BOARD_TYPES.mixed, BOARD_TYPES.website, BOARD_TYPES.pixel, BOARD_TYPES.link])
-      .or(z.literal('open')),
+      .enum([
+        BOARD_TYPES.mixed,
+        BOARD_TYPES.website,
+        BOARD_TYPES.pixel,
+        BOARD_TYPES.link,
+      ])
+      .or(z.literal("open")),
     name: z.string().max(100),
     description: z.string().max(500).optional(),
     userId: z.uuid().nullable().optional(),
@@ -53,7 +58,10 @@ export async function POST(request: Request) {
 
   const { teamId } = body;
 
-  if ((teamId && !(await canCreateTeamWebsite(auth, teamId))) || !(await canCreateWebsite(auth))) {
+  if (
+    (teamId && !(await canCreateTeamWebsite(auth, teamId))) ||
+    !(await canCreateWebsite(auth))
+  ) {
     return unauthorized();
   }
 

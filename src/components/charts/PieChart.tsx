@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Chart, type ChartProps } from '@/components/charts/Chart';
-import { ChartTooltip } from '@/components/charts/ChartTooltip';
+import { useState } from "react";
+import { Chart, type ChartProps } from "@/components/charts/Chart";
+import { ChartTooltip } from "@/components/charts/ChartTooltip";
 
 export interface PieChartProps extends ChartProps {
-  type?: 'doughnut' | 'pie';
+  type?: "doughnut" | "pie";
 }
 
-export function PieChart({ type = 'pie', ...props }: PieChartProps) {
+export function PieChart({ type = "pie", ...props }: PieChartProps) {
   const [tooltip, setTooltip] = useState(null);
 
   const handleTooltip = ({ tooltip }) => {

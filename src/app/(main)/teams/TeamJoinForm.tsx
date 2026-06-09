@@ -5,17 +5,23 @@ import {
   FormField,
   FormSubmitButton,
   TextField,
-} from '@umami/react-zen';
-import { useMessages, useUpdateQuery } from '@/components/hooks';
+} from "@umami/react-zen";
+import { useMessages, useUpdateQuery } from "@/components/hooks";
 
-export function TeamJoinForm({ onSave, onClose }: { onSave: () => void; onClose: () => void }) {
+export function TeamJoinForm({
+  onSave,
+  onClose,
+}: {
+  onSave: () => void;
+  onClose: () => void;
+}) {
   const { t, labels, getErrorMessage } = useMessages();
-  const { mutateAsync, error, touch } = useUpdateQuery('/teams/join');
+  const { mutateAsync, error, touch } = useUpdateQuery("/teams/join");
 
   const handleSubmit = async (data: any) => {
     await mutateAsync(data, {
       onSuccess: async () => {
-        touch('teams:members');
+        touch("teams:members");
         onSave?.();
         onClose?.();
       },

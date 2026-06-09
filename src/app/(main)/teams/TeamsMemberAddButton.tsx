@@ -1,7 +1,15 @@
-import { Button, Dialog, DialogTrigger, Icon, Modal, Text, useToast } from '@umami/react-zen';
-import { useMessages, useModified } from '@/components/hooks';
-import { Plus } from '@/components/icons';
-import { TeamMemberAddForm } from './TeamMemberAddForm';
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  Icon,
+  Modal,
+  Text,
+  useToast,
+} from "@umami/react-zen";
+import { useMessages, useModified } from "@/components/hooks";
+import { Plus } from "@/components/icons";
+import { TeamMemberAddForm } from "./TeamMemberAddForm";
 
 export function TeamsMemberAddButton({
   teamId,
@@ -17,7 +25,7 @@ export function TeamsMemberAddButton({
 
   const handleSave = async () => {
     toast(t(messages.saved));
-    touch('teams:members');
+    touch("teams:members");
     onSave?.();
   };
 
@@ -31,7 +39,13 @@ export function TeamsMemberAddButton({
       </Button>
       <Modal>
         <Dialog title={t(labels.addMember)} style={{ width: 400 }}>
-          {({ close }) => <TeamMemberAddForm teamId={teamId} onSave={handleSave} onClose={close} />}
+          {({ close }) => (
+            <TeamMemberAddForm
+              teamId={teamId}
+              onSave={handleSave}
+              onClose={close}
+            />
+          )}
         </Dialog>
       </Modal>
     </DialogTrigger>

@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getEventStats';
+const FUNCTION_NAME = "getEventStats";
 
 export interface EventStatsParameters {
   limit?: number | string;
@@ -14,7 +14,11 @@ interface WebsiteEventMetric {
 }
 
 export async function getEventStats(
-  ...args: [websiteId: string, parameters: EventStatsParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: EventStatsParameters,
+    filters: QueryFilters,
+  ]
 ): Promise<WebsiteEventMetric[]> {
   return relationalQuery(...args);
 }
@@ -25,12 +29,13 @@ async function relationalQuery(
   filters: QueryFilters,
 ) {
   const { limit } = parameters;
-  const { timezone = 'utc', unit = 'day' } = filters;
+  const { timezone = "utc", unit = "day" } = filters;
   const { rawQuery, getDateSQL, parseFilters } = prisma;
-  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { filterQuery, cohortQuery, joinSessionQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   const limitQuery = limit
     ? `and event_name in (
@@ -43,13 +48,13 @@ async function relationalQuery(
     order by count(*) desc
     limit ${limit}
   )`
-    : '';
+    : "";
 
   return rawQuery(
     `
     select
       event_name x,
-      ${getDateSQL('website_event.created_at', unit, timezone)} t,
+      ${getDateSQL("website_event.created_at", unit, timezone)} t,
       count(*) y
     from website_event
     ${cohortQuery}
@@ -66,5 +71,3 @@ async function relationalQuery(
     FUNCTION_NAME,
   );
 }
-
-

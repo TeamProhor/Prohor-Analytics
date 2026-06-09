@@ -1,9 +1,9 @@
-import { DataColumn, DataTable, Row } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { TeamMemberEditButton } from '@/app/(main)/teams/[teamId]/TeamMemberEditButton';
-import { TeamMemberRemoveButton } from '@/app/(main)/teams/[teamId]/TeamMemberRemoveButton';
-import { useMessages } from '@/components/hooks';
-import { ROLES } from '@/lib/constants';
+import { DataColumn, DataTable, Row } from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { TeamMemberEditButton } from "@/app/(main)/teams/[teamId]/TeamMemberEditButton";
+import { TeamMemberRemoveButton } from "@/app/(main)/teams/[teamId]/TeamMemberRemoveButton";
+import { useMessages } from "@/components/hooks";
+import { ROLES } from "@/lib/constants";
 
 export function TeamWebsitesTable({
   teamId,
@@ -19,7 +19,9 @@ export function TeamWebsitesTable({
   return (
     <DataTable data={data}>
       <DataColumn id="name" label={t(labels.name)}>
-        {(row: any) => <Link href={`/teams/${teamId}/websites/${row.id}`}>{row.name}</Link>}
+        {(row: any) => (
+          <Link href={`/teams/${teamId}/websites/${row.id}`}>{row.name}</Link>
+        )}
       </DataColumn>
       <DataColumn id="domain" label={t(labels.domain)} />
       <DataColumn id="createdBy" label={t(labels.createdBy)}>
@@ -34,7 +36,11 @@ export function TeamWebsitesTable({
 
             return (
               <Row alignItems="center">
-                <TeamMemberEditButton teamId={teamId} userId={row?.user?.id} role={row?.role} />
+                <TeamMemberEditButton
+                  teamId={teamId}
+                  userId={row?.user?.id}
+                  role={row?.role}
+                />
                 <TeamMemberRemoveButton
                   teamId={teamId}
                   userId={row?.user?.id}

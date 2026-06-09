@@ -1,5 +1,5 @@
-import { AlertDialog, Row } from '@umami/react-zen';
-import { useDeleteQuery, useMessages, useModified } from '@/components/hooks';
+import { AlertDialog, Row } from "@umami/react-zen";
+import { useDeleteQuery, useMessages, useModified } from "@/components/hooks";
 
 export function UserDeleteForm({
   userId,
@@ -19,7 +19,7 @@ export function UserDeleteForm({
   const handleConfirm = async () => {
     await mutateAsync(null, {
       onSuccess: async () => {
-        touch('users');
+        touch("users");
         touch(`users:${userId}`);
         onSave?.();
         onClose?.();

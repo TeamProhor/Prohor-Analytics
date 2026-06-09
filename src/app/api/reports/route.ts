@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { uuid } from '@/lib/crypto';
-import { parseRequest } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { pagingParams, reportSchema, reportTypeParam } from '@/lib/schema';
-import { canUpdateWebsite, canViewWebsite } from '@/permissions';
-import { createReport, getReports } from '@/queries/prisma';
+import { z } from "zod";
+import { uuid } from "@/lib/crypto";
+import { parseRequest } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { pagingParams, reportSchema, reportTypeParam } from "@/lib/schema";
+import { canUpdateWebsite, canViewWebsite } from "@/permissions";
+import { createReport, getReports } from "@/queries/prisma";
 
 export async function GET(request: Request) {
   const schema = z.object({
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     websiteId,
     type,
     name,
-    description: description || '',
+    description: description || "",
     parameters,
   });
 

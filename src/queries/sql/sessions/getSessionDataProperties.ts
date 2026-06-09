@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getSessionDataProperties';
+const FUNCTION_NAME = "getSessionDataProperties";
 
 export async function getSessionDataProperties(
   ...args: [websiteId: string, filters: QueryFilters]
@@ -11,10 +11,11 @@ export async function getSessionDataProperties(
 
 async function relationalQuery(websiteId: string, filters: QueryFilters) {
   const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   return rawQuery(
     `

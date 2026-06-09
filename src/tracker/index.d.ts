@@ -66,7 +66,13 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
  * - Objects have a max of 50 properties. Arrays are considered 1 property.
  */
 export interface EventData {
-  [key: string]: number | string | EventData | number[] | string[] | EventData[];
+  [key: string]:
+    | number
+    | string
+    | EventData
+    | number[]
+    | string[]
+    | EventData[];
 }
 
 export type EventProperties = {
@@ -75,8 +81,8 @@ export type EventProperties = {
    */
   name: string;
   data?: EventData;
-} & WithRequired<TrackedProperties, 'website'>;
-export type PageViewProperties = WithRequired<TrackedProperties, 'website'>;
+} & WithRequired<TrackedProperties, "website">;
+export type PageViewProperties = WithRequired<TrackedProperties, "website">;
 export type CustomEventFunction = (
   props: PageViewProperties,
 ) => EventProperties | PageViewProperties;

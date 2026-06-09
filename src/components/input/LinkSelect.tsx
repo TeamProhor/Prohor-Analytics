@@ -1,8 +1,15 @@
-import { Icon, ListItem, Row, Select, type SelectProps, Text } from '@umami/react-zen';
-import { useEffect, useState } from 'react';
-import { Empty } from '@/components/common/Empty';
-import { useLinkQuery, useLinksQuery, useMessages } from '@/components/hooks';
-import { Link } from '@/components/icons';
+import {
+  Icon,
+  ListItem,
+  Row,
+  Select,
+  type SelectProps,
+  Text,
+} from "@umami/react-zen";
+import { useEffect, useState } from "react";
+import { Empty } from "@/components/common/Empty";
+import { useLinkQuery, useLinksQuery, useMessages } from "@/components/hooks";
+import { Link } from "@/components/icons";
 
 export function LinkSelect({
   linkId,
@@ -20,8 +27,11 @@ export function LinkSelect({
   const { t, labels, messages } = useMessages();
   const { data: link } = useLinkQuery(linkId);
   const [name, setName] = useState<string>(link?.name);
-  const [search, setSearch] = useState('');
-  const { data, isLoading } = useLinksQuery({ teamId }, { search, pageSize: 20 });
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useLinksQuery(
+    { teamId },
+    { search, pageSize: 20 },
+  );
   const listItems: { id: string; name: string }[] = data?.data || [];
 
   useEffect(() => {
@@ -29,17 +39,17 @@ export function LinkSelect({
   }, [link?.name]);
 
   const handleOpenChange = () => {
-    setSearch('');
+    setSearch("");
   };
 
   const handleChange = (id: string) => {
-    setName(listItems.find(item => item.id === id)?.name);
+    setName(listItems.find((item) => item.id === id)?.name);
     onChange?.(id);
   };
 
   const renderValue = () => {
     if (isCollapsed) {
-      return '';
+      return "";
     }
 
     const value = name || props.placeholder || t(labels.link);
@@ -49,7 +59,7 @@ export function LinkSelect({
         <Icon>
           <Link />
         </Icon>
-        <Text truncate color={name ? undefined : 'muted'}>
+        <Text truncate color={name ? undefined : "muted"}>
           {value}
         </Text>
       </Row>
@@ -72,16 +82,17 @@ export function LinkSelect({
         style: {
           minHeight: 40,
           gap: 0,
-          justifyContent: isCollapsed ? 'start' : undefined,
+          justifyContent: isCollapsed ? "start" : undefined,
           ...buttonProps?.style,
         },
       }}
       listProps={{
         ...listProps,
         renderEmptyState:
-          listProps?.renderEmptyState || (() => <Empty message={t(messages.noResultsFound)} />),
+          listProps?.renderEmptyState ||
+          (() => <Empty message={t(messages.noResultsFound)} />),
         style: {
-          maxHeight: 'calc(42vh - 65px)',
+          maxHeight: "calc(42vh - 65px)",
           width: 280,
           ...listProps?.style,
         },

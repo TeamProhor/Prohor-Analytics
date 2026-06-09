@@ -1,6 +1,6 @@
-import { gzipSync } from 'node:zlib';
-import { uuid } from '@/lib/crypto';
-import prisma from '@/lib/prisma';
+import { gzipSync } from "node:zlib";
+import { uuid } from "@/lib/crypto";
+import prisma from "@/lib/prisma";
 
 export interface SaveRecordingArgs {
   websiteId: string;
@@ -27,7 +27,7 @@ async function relationalQuery({
   startedAt,
   endedAt,
 }: SaveRecordingArgs) {
-  const compressed = gzipSync(Buffer.from(JSON.stringify(events), 'utf-8'));
+  const compressed = gzipSync(Buffer.from(JSON.stringify(events), "utf-8"));
 
   return prisma.client.sessionReplay.create({
     data: {
@@ -43,5 +43,3 @@ async function relationalQuery({
     },
   });
 }
-
-

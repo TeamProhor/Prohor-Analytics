@@ -1,5 +1,5 @@
-import { Column, Icon, Text } from '@umami/react-zen';
-import type { ReactNode } from 'react';
+import { Column, Icon, Text } from "@umami/react-zen";
+import type { ReactNode } from "react";
 
 export interface EmptyPlaceholderProps {
   title?: string;
@@ -8,9 +8,20 @@ export interface EmptyPlaceholderProps {
   children?: ReactNode;
 }
 
-export function EmptyPlaceholder({ title, description, icon, children }: EmptyPlaceholderProps) {
+export function EmptyPlaceholder({
+  title,
+  description,
+  icon,
+  children,
+}: EmptyPlaceholderProps) {
   return (
-    <Column alignItems="center" justifyContent="center" gap="5" height="100%" width="100%">
+    <Column
+      alignItems="center"
+      justifyContent="center"
+      gap="5"
+      height="100%"
+      width="100%"
+    >
       {icon && (
         <Icon color="muted" size="xl">
           {icon}

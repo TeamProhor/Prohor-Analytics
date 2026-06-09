@@ -1,7 +1,7 @@
-import { ConfirmationForm } from '@/components/common/ConfirmationForm';
-import { useDeleteQuery, useMessages } from '@/components/hooks';
-import { Trash } from '@/components/icons';
-import { DialogButton } from '@/components/input/DialogButton';
+import { ConfirmationForm } from "@/components/common/ConfirmationForm";
+import { useDeleteQuery, useMessages } from "@/components/hooks";
+import { Trash } from "@/components/icons";
+import { DialogButton } from "@/components/input/DialogButton";
 
 export function SegmentDeleteButton({
   segmentId,
@@ -22,7 +22,7 @@ export function SegmentDeleteButton({
   const handleConfirm = async (close: () => void) => {
     await mutateAsync(null, {
       onSuccess: () => {
-        touch('segments');
+        touch("segments");
         onSave?.();
         close();
       },
@@ -30,12 +30,17 @@ export function SegmentDeleteButton({
   };
 
   return (
-    <DialogButton icon={<Trash />} title={t(labels.confirm)} variant="quiet" width="600px">
+    <DialogButton
+      icon={<Trash />}
+      title={t(labels.confirm)}
+      variant="quiet"
+      width="600px"
+    >
       {({ close }) => (
         <ConfirmationForm
           message={t.rich(messages.confirmRemove, {
             target: name,
-            b: chunks => <b>{chunks}</b>,
+            b: (chunks) => <b>{chunks}</b>,
           })}
           isLoading={isPending}
           error={error}

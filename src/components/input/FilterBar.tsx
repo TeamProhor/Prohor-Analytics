@@ -8,17 +8,17 @@ import {
   Text,
   Tooltip,
   TooltipTrigger,
-} from '@umami/react-zen';
-import { SegmentEditForm } from '@/app/(main)/websites/[websiteId]/segments/SegmentEditForm';
+} from "@umami/react-zen";
+import { SegmentEditForm } from "@/app/(main)/websites/[websiteId]/segments/SegmentEditForm";
 import {
   useFilters,
   useFormat,
   useMessages,
   useNavigation,
   useWebsiteSegmentQuery,
-} from '@/components/hooks';
-import { Bookmark, X } from '@/components/icons';
-import { isSearchOperator } from '@/lib/params';
+} from "@/components/hooks";
+import { Bookmark, X } from "@/components/icons";
+import { isSearchOperator } from "@/lib/params";
 
 export function FilterBar({ websiteId }: { websiteId?: string }) {
   const { t, labels } = useMessages();
@@ -31,9 +31,16 @@ export function FilterBar({ websiteId }: { websiteId?: string }) {
     query: { segment, cohort },
   } = useNavigation();
   const { filters, operatorLabels } = useFilters();
-  const { data, isLoading } = useWebsiteSegmentQuery(websiteId, segment || cohort);
+  const { data, isLoading } = useWebsiteSegmentQuery(
+    websiteId,
+    segment || cohort,
+  );
   const canSaveSegment =
-    !!websiteId && filters.length > 0 && !segment && !cohort && !pathname.includes('/share');
+    !!websiteId &&
+    filters.length > 0 &&
+    !segment &&
+    !cohort &&
+    !pathname.includes("/share");
 
   const handleCloseFilter = (param: string) => {
     router.push(updateParams({ [param]: undefined }));
@@ -66,7 +73,7 @@ export function FilterBar({ websiteId }: { websiteId?: string }) {
             label={t(labels.segment)}
             value={data?.name || segment}
             operator={operatorLabels.eq}
-            onRemove={() => handleSegmentRemove('segment')}
+            onRemove={() => handleSegmentRemove("segment")}
           />
         )}
         {cohort && !isLoading && (
@@ -75,17 +82,17 @@ export function FilterBar({ websiteId }: { websiteId?: string }) {
             label={t(labels.cohort)}
             value={data?.name || cohort}
             operator={operatorLabels.eq}
-            onRemove={() => handleSegmentRemove('cohort')}
+            onRemove={() => handleSegmentRemove("cohort")}
           />
         )}
-        {filters.map(filter => {
+        {filters.map((filter) => {
           const { name, type, label, operator, value } = filter;
           const paramValue = isSearchOperator(operator)
             ? value
             : String(value)
-                .split(',')
-                .map(v => formatValue(v, type || name))
-                .join(', ');
+                .split(",")
+                .map((v) => formatValue(v, type || name))
+                .join(", ");
 
           return (
             <FilterItem
@@ -114,9 +121,18 @@ export function FilterBar({ websiteId }: { websiteId?: string }) {
             </TooltipTrigger>
           )}
           <Modal>
-            <Dialog title={t(labels.segment)} style={{ width: 800, minHeight: 300 }}>
+            <Dialog
+              title={t(labels.segment)}
+              style={{ width: 800, minHeight: 300 }}
+            >
               {({ close }) => {
-                return <SegmentEditForm websiteId={websiteId} onClose={close} filters={filters} />;
+                return (
+                  <SegmentEditForm
+                    websiteId={websiteId}
+                    onClose={close}
+                    filters={filters}
+                  />
+                );
               }}
             </Dialog>
           </Modal>
@@ -149,7 +165,7 @@ const FilterItem = ({ name, label, operator, value, onRemove }) => {
       theme="dark"
     >
       <Row alignItems="center" gap="4">
-        <Row alignItems="center" gap="2" maxWidth={'500px'}>
+        <Row alignItems="center" gap="2" maxWidth={"500px"}>
           <Text color="primary" weight="bold">
             {label}
           </Text>
@@ -157,12 +173,20 @@ const FilterItem = ({ name, label, operator, value, onRemove }) => {
           <Text
             color="primary"
             weight="bold"
-            style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
           >
             {value}
           </Text>
         </Row>
-        <Icon onClick={() => onRemove(name)} size="xs" style={{ cursor: 'pointer' }}>
+        <Icon
+          onClick={() => onRemove(name)}
+          size="xs"
+          style={{ cursor: "pointer" }}
+        >
           <X />
         </Icon>
       </Row>

@@ -14,13 +14,18 @@ import {
   Popover,
   Row,
   Select,
-} from '@umami/react-zen';
-import { endOfDay, subMonths } from 'date-fns';
-import type { Key } from 'react';
-import { Empty } from '@/components/common/Empty';
-import { FilterRecord } from '@/components/common/FilterRecord';
-import { type FieldGroup, useFields, useMessages, useMobile } from '@/components/hooks';
-import { Plus } from '@/components/icons';
+} from "@umami/react-zen";
+import { endOfDay, subMonths } from "date-fns";
+import type { Key } from "react";
+import { Empty } from "@/components/common/Empty";
+import { FilterRecord } from "@/components/common/FilterRecord";
+import {
+  type FieldGroup,
+  useFields,
+  useMessages,
+  useMobile,
+} from "@/components/hooks";
+import { Plus } from "@/components/icons";
 
 export interface FieldFiltersProps {
   websiteId?: string;
@@ -35,7 +40,7 @@ export function FieldFilters({
   websiteId,
   value,
   exclude = [],
-  match = 'all',
+  match = "all",
   onChange,
   onMatchChange,
 }: FieldFiltersProps) {
@@ -60,11 +65,17 @@ export function FieldFilters({
     );
 
   const updateFilter = (index: number, props: Record<string, any>) => {
-    onChange(value.map((filter, i) => (i === index ? { ...filter, ...props } : filter)));
+    onChange(
+      value.map((filter, i) =>
+        i === index ? { ...filter, ...props } : filter,
+      ),
+    );
   };
 
   const handleAdd = (name: Key) => {
-    onChange(value.concat({ name: name.toString(), operator: 'eq', value: '' }));
+    onChange(
+      value.concat({ name: name.toString(), operator: "eq", value: "" }),
+    );
   };
 
   const handleChange = (index: number, val: Key) => {
@@ -80,25 +91,25 @@ export function FieldFilters({
   };
 
   return (
-    <Grid columns={{ base: '1fr', md: '180px 1fr' }} overflow="hidden" gapY="6">
-      <Row display={{ base: 'flex', md: 'none' }}>
+    <Grid columns={{ base: "1fr", md: "180px 1fr" }} overflow="hidden" gapY="6">
+      <Row display={{ base: "flex", md: "none" }}>
         <MenuTrigger>
           <Button>
             <Icon>
               <Plus />
             </Icon>
           </Button>
-          <Popover placement={isMobile ? 'left' : 'bottom start'} shouldFlip>
+          <Popover placement={isMobile ? "left" : "bottom start"} shouldFlip>
             <Menu
               onAction={handleAdd}
-              style={{ maxHeight: 'calc(100vh - 2rem)', overflowY: 'auto' }}
+              style={{ maxHeight: "calc(100vh - 2rem)", overflowY: "auto" }}
             >
               {groupLabels.map(({ key: groupKey, label }) => {
                 const groupFields = groupedFields[groupKey];
                 if (!groupFields || groupFields.length === 0) return null;
                 return (
                   <MenuSection key={groupKey} title={label}>
-                    {groupFields.map(field => {
+                    {groupFields.map((field) => {
                       return (
                         <MenuItem key={field.name} id={field.name}>
                           {field.filterLabel}
@@ -113,7 +124,7 @@ export function FieldFilters({
         </MenuTrigger>
       </Row>
       <Column
-        display={{ base: 'none', md: 'flex' }}
+        display={{ base: "none", md: "flex" }}
         border="right"
         paddingRight="3"
         marginRight="6"
@@ -125,7 +136,7 @@ export function FieldFilters({
 
             return (
               <ListSection key={groupKey} title={label}>
-                {groupFields.map(field => {
+                {groupFields.map((field) => {
                   return (
                     <ListItem key={field.name} id={field.name}>
                       {field.filterLabel}
@@ -137,12 +148,16 @@ export function FieldFilters({
           })}
         </List>
       </Column>
-      <Column overflow="auto" gapY="4" style={{ contain: 'layout' }}>
+      <Column overflow="auto" gapY="4" style={{ contain: "layout" }}>
         {onMatchChange && (
           <Row alignItems="center" gap>
             <Column gap="1">
               <Label>{t(labels.match)}</Label>
-              <Select value={match} onChange={onMatchChange} style={{ width: 150 }}>
+              <Select
+                value={match}
+                onChange={onMatchChange}
+                style={{ width: 150 }}
+              >
                 <ListItem id="all">{t(labels.matchAll)}</ListItem>
                 <ListItem id="any">{t(labels.matchAny)}</ListItem>
               </Select>

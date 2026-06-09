@@ -1,11 +1,11 @@
-import { Button, Column, Heading, Row, Text } from '@umami/react-zen';
-import { useState } from 'react';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { IconLabel } from '@/components/common/IconLabel';
-import { useLinkSharesQuery, useMessages } from '@/components/hooks';
-import { Plus } from '@/components/icons';
-import { SimpleShareCreateForm } from '@/components/share/SimpleShareCreateForm';
-import { SimpleSharesTable } from '@/components/share/SimpleSharesTable';
+import { Button, Column, Heading, Row, Text } from "@umami/react-zen";
+import { useState } from "react";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { IconLabel } from "@/components/common/IconLabel";
+import { useLinkSharesQuery, useMessages } from "@/components/hooks";
+import { Plus } from "@/components/icons";
+import { SimpleShareCreateForm } from "@/components/share/SimpleShareCreateForm";
+import { SimpleSharesTable } from "@/components/share/SimpleSharesTable";
 
 export function LinkShareForm({ linkId }: { linkId: string }) {
   const { data, error, isLoading } = useLinkSharesQuery({ linkId });
@@ -14,7 +14,11 @@ export function LinkShareForm({ linkId }: { linkId: string }) {
 
   return (
     <LoadingPanel data={data} isLoading={isLoading} error={error}>
-      <LinkShareFormContent linkId={linkId} hasShares={hasShares} shares={shares} />
+      <LinkShareFormContent
+        linkId={linkId}
+        hasShares={hasShares}
+        shares={shares}
+      />
     </LoadingPanel>
   );
 }
@@ -49,9 +53,7 @@ function LinkShareFormContent({
           onCancel={() => setIsCreating(false)}
         />
       )}
-      {hasShares && (
-        <Text>{t(messages.shareUrl)}</Text>
-      )}
+      {hasShares && <Text>{t(messages.shareUrl)}</Text>}
       {!showCreateForm &&
         (hasShares ? (
           <SimpleSharesTable data={shares} />

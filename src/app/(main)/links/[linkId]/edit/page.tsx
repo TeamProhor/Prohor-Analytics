@@ -1,8 +1,12 @@
-import type { Metadata } from 'next';
-import { getLink } from '@/queries/prisma';
-import { LinkEditPage } from './LinkEditPage';
+import type { Metadata } from "next";
+import { getLink } from "@/queries/prisma";
+import { LinkEditPage } from "./LinkEditPage";
 
-export default async function ({ params }: { params: Promise<{ linkId: string }> }) {
+export default async function ({
+  params,
+}: {
+  params: Promise<{ linkId: string }>;
+}) {
   const { linkId } = await params;
   const link = await getLink(linkId);
 
@@ -14,5 +18,5 @@ export default async function ({ params }: { params: Promise<{ linkId: string }>
 }
 
 export const metadata: Metadata = {
-  title: 'Edit Link',
+  title: "Edit Link",
 };

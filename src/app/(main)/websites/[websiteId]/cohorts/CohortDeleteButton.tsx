@@ -1,7 +1,7 @@
-import { ConfirmationForm } from '@/components/common/ConfirmationForm';
-import { useDeleteQuery, useMessages } from '@/components/hooks';
-import { Trash } from '@/components/icons';
-import { DialogButton } from '@/components/input/DialogButton';
+import { ConfirmationForm } from "@/components/common/ConfirmationForm";
+import { useDeleteQuery, useMessages } from "@/components/hooks";
+import { Trash } from "@/components/icons";
+import { DialogButton } from "@/components/input/DialogButton";
 
 export function CohortDeleteButton({
   cohortId,
@@ -22,7 +22,7 @@ export function CohortDeleteButton({
   const handleConfirm = async (close: () => void) => {
     await mutateAsync(null, {
       onSuccess: () => {
-        touch('cohorts');
+        touch("cohorts");
         onSave?.();
         close();
       },
@@ -30,12 +30,17 @@ export function CohortDeleteButton({
   };
 
   return (
-    <DialogButton icon={<Trash />} variant="quiet" title={t(labels.confirm)} width="400px">
+    <DialogButton
+      icon={<Trash />}
+      variant="quiet"
+      title={t(labels.confirm)}
+      width="400px"
+    >
       {({ close }) => (
         <ConfirmationForm
           message={t.rich(messages.confirmRemove, {
             target: name,
-            b: chunks => <b>{chunks}</b>,
+            b: (chunks) => <b>{chunks}</b>,
           })}
           isLoading={isPending}
           error={error}

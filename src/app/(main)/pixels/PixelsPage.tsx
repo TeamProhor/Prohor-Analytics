@@ -1,12 +1,17 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import { PageBody } from '@/components/common/PageBody';
-import { PageHeader } from '@/components/common/PageHeader';
-import { Panel } from '@/components/common/Panel';
-import { useLoginQuery, useMessages, useNavigation, useTeamMembersQuery } from '@/components/hooks';
-import { ROLES } from '@/lib/constants';
-import { PixelAddButton } from './PixelAddButton';
-import { PixelsDataTable } from './PixelsDataTable';
+"use client";
+import { Column } from "@umami/react-zen";
+import { PageBody } from "@/components/common/PageBody";
+import { PageHeader } from "@/components/common/PageHeader";
+import { Panel } from "@/components/common/Panel";
+import {
+  useLoginQuery,
+  useMessages,
+  useNavigation,
+  useTeamMembersQuery,
+} from "@/components/hooks";
+import { ROLES } from "@/lib/constants";
+import { PixelAddButton } from "./PixelAddButton";
+import { PixelsDataTable } from "./PixelsDataTable";
 
 export function PixelsPage() {
   const { user } = useLoginQuery();
@@ -16,8 +21,9 @@ export function PixelsPage() {
 
   const showActions =
     (teamId &&
-      data?.data.filter(team => team.userId === user.id && team.role !== ROLES.teamViewOnly)
-        .length > 0) ||
+      data?.data.filter(
+        (team) => team.userId === user.id && team.role !== ROLES.teamViewOnly,
+      ).length > 0) ||
     (!teamId && user.role !== ROLES.viewOnly);
 
   return (

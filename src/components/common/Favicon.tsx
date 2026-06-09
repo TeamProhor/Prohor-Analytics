@@ -1,5 +1,5 @@
-import { useConfig } from '@/components/hooks';
-import { FAVICON_URL, GROUPED_DOMAINS } from '@/lib/constants';
+import { useConfig } from "@/components/hooks";
+import { FAVICON_URL, GROUPED_DOMAINS } from "@/lib/constants";
 
 function getHostName(url: string) {
   const match = url.match(/^(?:https?:\/\/)?(?:[^@\n]+@)?([^:/\n?=]+)/im);
@@ -18,5 +18,7 @@ export function Favicon({ domain, ...props }) {
   const domainName = GROUPED_DOMAINS[hostName]?.domain || hostName;
   const src = hostName ? url.replace(/\{\{\s*domain\s*}}/, domainName) : null;
 
-  return hostName ? <img src={src} width={16} height={16} alt="" {...props} /> : null;
+  return hostName ? (
+    <img src={src} width={16} height={16} alt="" {...props} />
+  ) : null;
 }

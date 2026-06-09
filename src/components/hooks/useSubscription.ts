@@ -1,5 +1,5 @@
-import { useApp } from '@/store/app';
-import { useConfig } from './useConfig';
+import { useApp } from "@/store/app";
+import { useConfig } from "./useConfig";
 
 export interface Subscription {
   isPro: boolean;
@@ -9,7 +9,7 @@ export interface Subscription {
 }
 
 const FEATURES = {
-  replays: 'isBusiness',
+  replays: "isBusiness",
 } as const;
 
 export type FeatureName = keyof typeof FEATURES;
@@ -25,9 +25,10 @@ export function useSubscription(teamId?: string | null) {
   const { user } = useApp();
   const config = useConfig();
 
-  const ownSubscription: Subscription = user?.subscription || defaultSubscription;
+  const ownSubscription: Subscription =
+    user?.subscription || defaultSubscription;
   const teamSubscription: Subscription | null = teamId
-    ? user?.teams?.find((t: any) => t.id === teamId)?.subscription ?? null
+    ? (user?.teams?.find((t: any) => t.id === teamId)?.subscription ?? null)
     : null;
 
   const subscription: Subscription = teamSubscription || ownSubscription;

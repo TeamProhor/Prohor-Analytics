@@ -1,8 +1,19 @@
-import { Focusable, Grid, Row, Text, Tooltip, TooltipTrigger } from '@umami/react-zen';
-import { addHours, format, startOfDay } from 'date-fns';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useLocale, useMessages, useWeeklyTrafficQuery } from '@/components/hooks';
-import { getDayOfWeekAsDate } from '@/lib/date';
+import {
+  Focusable,
+  Grid,
+  Row,
+  Text,
+  Tooltip,
+  TooltipTrigger,
+} from "@umami/react-zen";
+import { addHours, format, startOfDay } from "date-fns";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import {
+  useLocale,
+  useMessages,
+  useWeeklyTrafficQuery,
+} from "@/components/hooks";
+import { getDayOfWeekAsDate } from "@/lib/date";
 
 export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
   const { data, isLoading, error } = useWeeklyTrafficQuery(websiteId);
@@ -43,7 +54,9 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
             {daysOfWeek.map((index: number) => (
               <Row key={index} alignItems="center" justifyContent="center">
                 <Text weight="bold" align="center">
-                  {format(getDayOfWeekAsDate(index), 'EEE', { locale: dateLocale })}
+                  {format(getDayOfWeekAsDate(index), "EEE", {
+                    locale: dateLocale,
+                  })}
                 </Text>
               </Row>
             ))}
@@ -51,9 +64,13 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
               {Array(24)
                 .fill(null)
                 .map((_, i) => {
-                  const label = format(addHours(startOfDay(new Date()), i), 'haaa', {
-                    locale: dateLocale,
-                  });
+                  const label = format(
+                    addHours(startOfDay(new Date()), i),
+                    "haaa",
+                    {
+                      locale: dateLocale,
+                    },
+                  );
                   return (
                     <Row key={i} justifyContent="flex-end">
                       <Text color="muted" size="sm">
@@ -85,7 +102,7 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
                             width="16px"
                             height="16px"
                             borderRadius="full"
-                            style={{ margin: '0 auto' }}
+                            style={{ margin: "0 auto" }}
                             role="button"
                           >
                             <Row
@@ -93,13 +110,19 @@ export function WeeklyTraffic({ websiteId }: { websiteId: string }) {
                               width="16px"
                               height="16px"
                               borderRadius="full"
-                              style={{ opacity: pct, transform: `scale(${pct})` }}
+                              style={{
+                                opacity: pct,
+                                transform: `scale(${pct})`,
+                              }}
                             />
                           </Row>
                         </Focusable>
                         <Tooltip
                           placement="right"
-                          style={{ backgroundColor: 'rgba(0,0,0,0.8)', color: 'white' }}
+                          style={{
+                            backgroundColor: "rgba(0,0,0,0.8)",
+                            color: "white",
+                          }}
                         >
                           <Text size="base">{`${t(labels.visitors)}: ${count}`}</Text>
                         </Tooltip>

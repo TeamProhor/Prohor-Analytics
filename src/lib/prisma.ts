@@ -1,30 +1,35 @@
-import { PrismaPg } from '@prisma/adapter-pg';
-import { readReplicas } from '@prisma/extension-read-replicas';
-import debug from 'debug';
-import { PrismaClient } from '@/generated/prisma/client';
-import { DEFAULT_PAGE_SIZE, FILTER_COLUMNS, OPERATORS, SESSION_COLUMNS } from './constants';
-import { filtersObjectToArray } from './params';
-import type { Operator, QueryFilters, QueryOptions } from './types';
+import { PrismaPg } from "@prisma/adapter-pg";
+import { readReplicas } from "@prisma/extension-read-replicas";
+import debug from "debug";
+import { PrismaClient } from "@/generated/prisma/client";
+import {
+  DEFAULT_PAGE_SIZE,
+  FILTER_COLUMNS,
+  OPERATORS,
+  SESSION_COLUMNS,
+} from "./constants";
+import { filtersObjectToArray } from "./params";
+import type { Operator, QueryFilters, QueryOptions } from "./types";
 
-const log = debug('umami:prisma');
+const log = debug("umami:prisma");
 
-const PRISMA = 'prisma';
+const PRISMA = "prisma";
 
 const PRISMA_LOG_OPTIONS = {
   log: [
     {
-      emit: 'event' as const,
-      level: 'query' as const,
+      emit: "event" as const,
+      level: "query" as const,
     },
   ],
 };
 
 const DATE_FORMATS = {
-  minute: 'YYYY-MM-DD HH24:MI:00',
-  hour: 'YYYY-MM-DD HH24:00:00',
-  day: 'YYYY-MM-DD HH24:00:00',
-  month: 'YYYY-MM-01 HH24:00:00',
-  year: 'YYYY-01-01 HH24:00:00',
+  minute: "YYYY-MM-DD HH24:MI:00",
+  hour: "YYYY-MM-DD HH24:00:00",
+  day: "YYYY-MM-DD HH24:00:00",
+  month: "YYYY-MM-01 HH24:00:00",
+  year: "YYYY-01-01 HH24:00:00",
 };
 
 const DATE_FORMATS_UTC = {
@@ -48,7 +53,7 @@ function getCastColumnQuery(field: string, type: string): string {
 }
 
 function getDateSQL(field: string, unit: string, timezone?: string): string {
-  if (timezone && timezone !== 'utc') {
+  if (timezone && timezone !== "utc") {
     return `to_char(date_trunc('${unit}', ${field} at time zone '${timezone}'), '${DATE_FORMATS[unit]}')`;
   }
 
@@ -67,7 +72,7 @@ function getTimestampDiffSQL(field1: string, field2: string): string {
   return `floor(extract(epoch from (${field2} - ${field1})))`;
 }
 
-function getSearchSQL(column: string, param: string = 'search'): string {
+function getSearchSQL(column: string, param: string = "search"): string {
   return `and ${column} ilike {{${param}}}`;
 }
 
@@ -75,17 +80,17 @@ function mapFilter(
   column: string,
   operator: string,
   name: string,
-  type: string = '',
+  type: string = "",
   paramName?: string,
 ) {
   const param = paramName ?? name;
-  const value = `{{${param}${type ? `::${type}` : ''}}}`;
+  const value = `{{${param}${type ? `::${type}` : ""}}}`;
 
-  if (name.startsWith('cohort_')) {
-    name = name.slice('cohort_'.length);
+  if (name.startsWith("cohort_")) {
+    name = name.slice("cohort_".length);
   }
 
-  const table = SESSION_COLUMNS.includes(name) ? 'session' : 'website_event';
+  const table = SESSION_COLUMNS.includes(name) ? "session" : "website_event";
 
   switch (operator) {
     case OPERATORS.equals:
@@ -101,25 +106,35 @@ function mapFilter(
     case OPERATORS.notRegex:
       return `${table}.${column} !~* ${value}`;
     default:
-      return '';
+      return "";
   }
 }
 
-function getFilterQuery(filters: Record<string, any>, options: QueryOptions = {}): string {
+function getFilterQuery(
+  filters: Record<string, any>,
+  options: QueryOptions = {},
+): string {
   const { isCohort, cohortMatch, cohortActionName } = options;
-  const isOr = isCohort ? cohortMatch === 'any' : filters.match === 'any';
+  const isOr = isCohort ? cohortMatch === "any" : filters.match === "any";
   const orClauses: string[] = [];
   const andClauses: string[] = [];
 
   filtersObjectToArray(filters, options).forEach(
-    ({ name, column, operator, prefix = '', paramName }) => {
+    ({ name, column, operator, prefix = "", paramName }) => {
       if (isCohort) {
-        column = FILTER_COLUMNS[name.slice('cohort_'.length)];
+        column = FILTER_COLUMNS[name.slice("cohort_".length)];
       }
 
       if (column) {
-        const clause = mapFilter(`${prefix}${column}`, operator, name, '', paramName);
-        const isAlwaysAnd = name === 'eventType' || (isCohort && name === cohortActionName);
+        const clause = mapFilter(
+          `${prefix}${column}`,
+          operator,
+          name,
+          "",
+          paramName,
+        );
+        const isAlwaysAnd =
+          name === "eventType" || (isCohort && name === cohortActionName);
 
         if (isAlwaysAnd) {
           andClauses.push(`and ${clause}`);
@@ -129,7 +144,7 @@ function getFilterQuery(filters: Record<string, any>, options: QueryOptions = {}
           andClauses.push(`and ${clause}`);
         }
 
-        if (name === 'referrer') {
+        if (name === "referrer") {
           andClauses.push(
             `and (website_event.referrer_domain != regexp_replace(website_event.hostname, '^www.', '') or website_event.referrer_domain is null)`,
           );
@@ -141,23 +156,27 @@ function getFilterQuery(filters: Record<string, any>, options: QueryOptions = {}
   const parts: string[] = [];
 
   if (orClauses.length > 0) {
-    parts.push(`and (\n  ${orClauses.join('\n  or ')}\n)`);
+    parts.push(`and (\n  ${orClauses.join("\n  or ")}\n)`);
   }
 
   parts.push(...andClauses);
 
-  return parts.join('\n');
+  return parts.join("\n");
 }
 
 function getCohortQuery(filters: QueryFilters = {}) {
   if (!filters || Object.keys(filters).length === 0) {
-    return '';
+    return "";
   }
 
   const cohortMatch = (filters as any).cohort_match;
   const cohortActionName = (filters as any).cohort_actionName;
 
-  const filterQuery = getFilterQuery(filters, { isCohort: true, cohortMatch, cohortActionName });
+  const filterQuery = getFilterQuery(filters, {
+    isCohort: true,
+    cohortMatch,
+    cohortActionName,
+  });
 
   return `join
     (select distinct website_event.session_id
@@ -174,7 +193,7 @@ function getCohortQuery(filters: QueryFilters = {}) {
 
 function getExcludeBounceQuery(filters: Record<string, any>) {
   if (filters.excludeBounce !== true) {
-    return '';
+    return "";
   }
 
   return `join
@@ -202,48 +221,61 @@ function getDateQuery(filters: Record<string, any>) {
     }
   }
 
-  return '';
+  return "";
 }
 
 function getQueryParams(filters: Record<string, any>) {
   return {
     ...filters,
-    ...filtersObjectToArray(filters).reduce((obj, { name, column, operator, value, paramName }) => {
-      const resolvedColumn =
-        column || (name?.startsWith('cohort_') && FILTER_COLUMNS[name.slice('cohort_'.length)]);
+    ...filtersObjectToArray(filters).reduce(
+      (obj, { name, column, operator, value, paramName }) => {
+        const resolvedColumn =
+          column ||
+          (name?.startsWith("cohort_") &&
+            FILTER_COLUMNS[name.slice("cohort_".length)]);
 
-      if (!resolvedColumn) return obj;
+        if (!resolvedColumn) return obj;
 
-      const key = paramName ?? name;
+        const key = paramName ?? name;
 
-      if (([OPERATORS.contains, OPERATORS.doesNotContain] as Operator[]).includes(operator)) {
-        obj[key] = `%${value}%`;
-      } else if (([OPERATORS.equals, OPERATORS.notEquals] as Operator[]).includes(operator)) {
-        obj[key] = Array.isArray(value) ? value : [value];
-      } else {
-        obj[key] = value;
-      }
+        if (
+          (
+            [OPERATORS.contains, OPERATORS.doesNotContain] as Operator[]
+          ).includes(operator)
+        ) {
+          obj[key] = `%${value}%`;
+        } else if (
+          ([OPERATORS.equals, OPERATORS.notEquals] as Operator[]).includes(
+            operator,
+          )
+        ) {
+          obj[key] = Array.isArray(value) ? value : [value];
+        } else {
+          obj[key] = value;
+        }
 
-      return obj;
-    }, {}),
+        return obj;
+      },
+      {},
+    ),
   };
 }
 
 function parseFilters(filters: Record<string, any>, options?: QueryOptions) {
-  const joinSession = Object.keys(filters).find(key => {
-    const baseName = key.replace(/\d+$/, '');
-    return ['referrer', ...SESSION_COLUMNS].includes(baseName);
+  const joinSession = Object.keys(filters).find((key) => {
+    const baseName = key.replace(/\d+$/, "");
+    return ["referrer", ...SESSION_COLUMNS].includes(baseName);
   });
 
   const cohortFilters = Object.fromEntries(
-    Object.entries(filters).filter(([key]) => key.startsWith('cohort_')),
+    Object.entries(filters).filter(([key]) => key.startsWith("cohort_")),
   );
 
   return {
     joinSessionQuery:
       options?.joinSession || joinSession
         ? `inner join session on website_event.session_id = session.session_id and website_event.website_id = session.website_id`
-        : '',
+        : "",
     dateQuery: getDateQuery(filters),
     filterQuery: getFilterQuery(filters, options),
     queryParams: getQueryParams(filters),
@@ -252,11 +284,15 @@ function parseFilters(filters: Record<string, any>, options?: QueryOptions) {
   };
 }
 
-async function rawQuery(sql: string, data: Record<string, any>, name?: string): Promise<any> {
+async function rawQuery(
+  sql: string,
+  data: Record<string, any>,
+  name?: string,
+): Promise<any> {
   if (process.env.LOG_QUERY) {
-    log('QUERY:\n', sql);
-    log('PARAMETERS:\n', data);
-    log('NAME:\n', name);
+    log("QUERY:\n", sql);
+    log("PARAMETERS:\n", data);
+    log("NAME:\n", name);
   }
   const params = [];
   const schema = getSchema();
@@ -272,17 +308,27 @@ async function rawQuery(sql: string, data: Record<string, any>, name?: string): 
 
     params.push(value);
 
-    return `$${params.length}${type ?? ''}`;
+    return `$${params.length}${type ?? ""}`;
   });
 
-  if (process.env.DATABASE_REPLICA_URL && '$replica' in client) {
+  if (process.env.DATABASE_REPLICA_URL && "$replica" in client) {
     return client.$replica().$queryRawUnsafe(query, ...params);
   }
   return client.$queryRawUnsafe(query, ...params);
 }
 
-async function pagedQuery<T>(model: string, criteria: T, filters?: QueryFilters) {
-  const { page = 1, pageSize, orderBy, sortDescending = false, search } = filters || {};
+async function pagedQuery<T>(
+  model: string,
+  criteria: T,
+  filters?: QueryFilters,
+) {
+  const {
+    page = 1,
+    pageSize,
+    orderBy,
+    sortDescending = false,
+    search,
+  } = filters || {};
   const size = +pageSize || DEFAULT_PAGE_SIZE;
 
   const data = await client[model].findMany({
@@ -292,7 +338,7 @@ async function pagedQuery<T>(model: string, criteria: T, filters?: QueryFilters)
       ...(orderBy && {
         orderBy: [
           {
-            [orderBy]: sortDescending ? 'desc' : 'asc',
+            [orderBy]: sortDescending ? "desc" : "asc",
           },
         ],
       }),
@@ -313,18 +359,19 @@ async function pagedRawQuery(
   const { page = 1, pageSize, orderBy, sortDescending = false } = filters;
   const size = +pageSize || DEFAULT_PAGE_SIZE;
   const offset = +size * (+page - 1);
-  const direction = sortDescending ? 'desc' : 'asc';
+  const direction = sortDescending ? "desc" : "asc";
 
   const statements = [
     orderBy && `order by ${orderBy} ${direction}`,
     +size > 0 && `limit ${+size} offset ${offset}`,
   ]
-    .filter(n => n)
-    .join('\n');
+    .filter((n) => n)
+    .join("\n");
 
-  const count = await rawQuery(`select count(*) as num from (${query}) t`, queryParams).then(
-    res => res[0].num,
-  );
+  const count = await rawQuery(
+    `select count(*) as num from (${query}) t`,
+    queryParams,
+  ).then((res) => res[0].num);
 
   const data = await rawQuery(`${query}${statements}`, queryParams, name);
 
@@ -339,16 +386,16 @@ function getSearchParameters(query: string, filters: Record<string, any>[]) {
 
     return {
       [key]:
-        typeof value === 'string'
+        typeof value === "string"
           ? {
               [value]: query,
-              mode: 'insensitive',
+              mode: "insensitive",
             }
           : parseFilter(value),
     };
   };
 
-  const params = filters.map(filter => parseFilter(filter));
+  const params = filters.map((filter) => parseFilter(filter));
 
   return {
     AND: {
@@ -364,7 +411,7 @@ function transaction(input: any, options?: any) {
 function getSchema() {
   const connectionUrl = new URL(process.env.DATABASE_URL);
 
-  return connectionUrl.searchParams.get('schema');
+  return connectionUrl.searchParams.get("schema");
 }
 
 function getClient() {
@@ -377,30 +424,33 @@ function getClient() {
 
   const baseClient = new PrismaClient({
     adapter: baseAdapter,
-    errorFormat: 'pretty',
+    errorFormat: "pretty",
     ...(logQuery ? PRISMA_LOG_OPTIONS : {}),
   });
 
   if (logQuery) {
-    baseClient.$on('query', log);
+    baseClient.$on("query", log);
   }
 
   if (!replicaUrl) {
-    log('Prisma initialized');
+    log("Prisma initialized");
     globalThis[PRISMA] ??= baseClient;
     return baseClient;
   }
 
-  const replicaAdapter = new PrismaPg({ connectionString: replicaUrl }, { schema });
+  const replicaAdapter = new PrismaPg(
+    { connectionString: replicaUrl },
+    { schema },
+  );
 
   const replicaClient = new PrismaClient({
     adapter: replicaAdapter,
-    errorFormat: 'pretty',
+    errorFormat: "pretty",
     ...(logQuery ? PRISMA_LOG_OPTIONS : {}),
   });
 
   if (logQuery) {
-    replicaClient.$on('query', log);
+    replicaClient.$on("query", log);
   }
 
   const extended = baseClient.$extends(
@@ -409,13 +459,15 @@ function getClient() {
     }),
   );
 
-  log('Prisma initialized (with replica)');
+  log("Prisma initialized (with replica)");
   globalThis[PRISMA] ??= extended;
 
   return extended;
 }
 
-const client = (globalThis[PRISMA] || getClient()) as ReturnType<typeof getClient>;
+const client = (globalThis[PRISMA] || getClient()) as ReturnType<
+  typeof getClient
+>;
 
 export default {
   client,

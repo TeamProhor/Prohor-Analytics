@@ -1,25 +1,25 @@
-'use client';
-import { Column, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
-import { type Key, useState } from 'react';
-import { SessionModal } from '@/app/(main)/websites/[websiteId]/sessions/SessionModal';
-import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { Panel } from '@/components/common/Panel';
-import { useDateRange, useMessages } from '@/components/hooks';
-import { useEventStatsQuery } from '@/components/hooks/queries/useEventStatsQuery';
-import { EventsChart } from '@/components/metrics/EventsChart';
-import { MetricCard } from '@/components/metrics/MetricCard';
-import { MetricsBar } from '@/components/metrics/MetricsBar';
-import { MetricsTable } from '@/components/metrics/MetricsTable';
-import { formatLongNumber } from '@/lib/format';
-import { getItem, setItem } from '@/lib/storage';
-import { EventProperties } from './EventProperties';
-import { EventsDataTable } from './EventsDataTable';
+"use client";
+import { Column, Tab, TabList, TabPanel, Tabs } from "@umami/react-zen";
+import { type Key, useState } from "react";
+import { SessionModal } from "@/app/(main)/websites/[websiteId]/sessions/SessionModal";
+import { WebsiteControls } from "@/app/(main)/websites/[websiteId]/WebsiteControls";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { Panel } from "@/components/common/Panel";
+import { useDateRange, useMessages } from "@/components/hooks";
+import { useEventStatsQuery } from "@/components/hooks/queries/useEventStatsQuery";
+import { EventsChart } from "@/components/metrics/EventsChart";
+import { MetricCard } from "@/components/metrics/MetricCard";
+import { MetricsBar } from "@/components/metrics/MetricsBar";
+import { MetricsTable } from "@/components/metrics/MetricsTable";
+import { formatLongNumber } from "@/lib/format";
+import { getItem, setItem } from "@/lib/storage";
+import { EventProperties } from "./EventProperties";
+import { EventsDataTable } from "./EventsDataTable";
 
-const KEY_NAME = 'umami.events.tab';
+const KEY_NAME = "umami.events.tab";
 
 export function EventsPage({ websiteId }) {
-  const [tab, setTab] = useState(getItem(KEY_NAME) || 'chart');
+  const [tab, setTab] = useState(getItem(KEY_NAME) || "chart");
   const { isAllTime } = useDateRange();
   const { t, labels, getErrorMessage } = useMessages();
   const { data, isLoading, isFetching, error } = useEventStatsQuery({
@@ -88,7 +88,7 @@ export function EventsPage({ websiteId }) {
         </MetricsBar>
       </LoadingPanel>
       <Panel>
-        <Tabs selectedKey={tab} onSelectionChange={key => handleSelect(key)}>
+        <Tabs selectedKey={tab} onSelectionChange={(key) => handleSelect(key)}>
           <TabList>
             <Tab id="chart">{t(labels.chart)}</Tab>
             <Tab id="activity">{t(labels.activity)}</Tab>

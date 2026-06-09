@@ -1,4 +1,4 @@
-(window => {
+((window) => {
   const {
     screen: { width, height },
     navigator: { language, doNotTrack: ndnt, msDoNotTrack: msdnt },
@@ -15,46 +15,49 @@
 
   let localStorage;
   try {
-    localStorage = href.startsWith('data:') ? undefined : window.localStorage;
+    localStorage = href.startsWith("data:") ? undefined : window.localStorage;
   } catch {
     /* (DOMException) SecurityError: Access is denied for this document. */
   }
 
-  const _data = 'data-';
-  const _false = 'false';
-  const _true = 'true';
+  const _data = "data-";
+  const _false = "false";
+  const _true = "true";
   const attr = currentScript.getAttribute.bind(currentScript);
-  const config = value => attr(`${_data}${value}`);
+  const config = (value) => attr(`${_data}${value}`);
 
-  const website = config('website-id');
-  const hostUrl = config('host-url');
-  const beforeSend = config('before-send');
-  const tag = config('tag') || undefined;
-  const autoTrack = config('auto-track') !== _false;
-  const dnt = config('do-not-track') === _true;
-  const excludeSearch = config('exclude-search') === _true;
-  const excludeHash = config('exclude-hash') === _true;
-  const domain = config('domains') || '';
-  const credentials = config('fetch-credentials') || 'omit';
-  const perf = config('performance') === _true;
+  const website = config("website-id");
+  const hostUrl = config("host-url");
+  const beforeSend = config("before-send");
+  const tag = config("tag") || undefined;
+  const autoTrack = config("auto-track") !== _false;
+  const dnt = config("do-not-track") === _true;
+  const excludeSearch = config("exclude-search") === _true;
+  const excludeHash = config("exclude-hash") === _true;
+  const domain = config("domains") || "";
+  const credentials = config("fetch-credentials") || "omit";
+  const perf = config("performance") === _true;
 
-  const domains = domain.split(',').map(n => n.trim());
+  const domains = domain.split(",").map((n) => n.trim());
   const host =
-    hostUrl || '__COLLECT_API_HOST__' || currentScript.src.split('/').slice(0, -1).join('/');
-  const endpoint = `${host.replace(/\/$/, '')}__COLLECT_API_ENDPOINT__`;
+    hostUrl ||
+    "__COLLECT_API_HOST__" ||
+    currentScript.src.split("/").slice(0, -1).join("/");
+  const endpoint = `${host.replace(/\/$/, "")}__COLLECT_API_ENDPOINT__`;
   const screen = `${width}x${height}`;
-  const eventRegex = /data-umami-event-([\w-_]+)/;
-  const eventNameAttribute = `${_data}umami-event`;
+  const eventRegex = /data-(umami|prohor)-event-([\w-_]+)/;
+  const eventNameAttribute = `${_data}prohor-event`;
+  const eventNameAttributeFallback = `${_data}umami-event`;
   const delayDuration = 300;
 
   /* Helper functions */
 
-  const normalize = raw => {
+  const normalize = (raw) => {
     if (!raw) return raw;
     try {
       const u = new URL(raw, location.href);
-      if (excludeSearch) u.search = '';
-      if (excludeHash) u.hash = '';
+      if (excludeSearch) u.search = "";
+      if (excludeHash) u.hash = "";
       return u.toString();
     } catch {
       return raw;
@@ -75,7 +78,7 @@
 
   const hasDoNotTrack = () => {
     const dnt = doNotTrack || ndnt || msdnt;
-    return dnt === 1 || dnt === '1' || dnt === 'yes';
+    return dnt === 1 || dnt === "1" || dnt === "yes";
   };
 
   /* Event handlers */
@@ -83,7 +86,7 @@
   const handlePush = (_state, _title, url) => {
     if (!url) return;
 
-    if (typeof flushPerformance === 'function') {
+    if (typeof flushPerformance === "function") {
       flushPerformance();
     }
 
@@ -104,38 +107,44 @@
       };
     };
 
-    history.pushState = hook(history, 'pushState', handlePush);
-    history.replaceState = hook(history, 'replaceState', handlePush);
+    history.pushState = hook(history, "pushState", handlePush);
+    history.replaceState = hook(history, "replaceState", handlePush);
   };
 
   const handleClicks = () => {
-    const trackElement = async el => {
-      const eventName = el.getAttribute(eventNameAttribute);
+    const trackElement = async (el) => {
+      const eventName =
+        el.getAttribute(eventNameAttribute) ||
+        el.getAttribute(eventNameAttributeFallback);
       if (eventName) {
         const eventData = {};
 
-        el.getAttributeNames().forEach(name => {
+        el.getAttributeNames().forEach((name) => {
           const match = name.match(eventRegex);
-          if (match) eventData[match[1]] = el.getAttribute(name);
+          if (match) eventData[match[2]] = el.getAttribute(name);
         });
 
         return track(eventName, eventData);
       }
     };
-    const onClick = async e => {
+    const onClick = async (e) => {
       const el = e.target;
-      const parentElement = el.closest('a,button');
+      const parentElement = el.closest("a,button");
       if (!parentElement) return trackElement(el);
 
       const { href, target } = parentElement;
-      if (!parentElement.getAttribute(eventNameAttribute)) return;
+      if (
+        !parentElement.getAttribute(eventNameAttribute) &&
+        !parentElement.getAttribute(eventNameAttributeFallback)
+      )
+        return;
 
-      if (parentElement.tagName === 'BUTTON') {
+      if (parentElement.tagName === "BUTTON") {
         return trackElement(parentElement);
       }
-      if (parentElement.tagName === 'A' && href) {
+      if (parentElement.tagName === "A" && href) {
         const external =
-          target === '_blank' ||
+          target === "_blank" ||
           e.ctrlKey ||
           e.shiftKey ||
           e.metaKey ||
@@ -143,12 +152,12 @@
         if (!external) e.preventDefault();
         return trackElement(parentElement).then(() => {
           if (!external) {
-            (target === '_top' ? top.location : location).href = href;
+            (target === "_top" ? top.location : location).href = href;
           }
         });
       }
     };
-    document.addEventListener('click', onClick, true);
+    document.addEventListener("click", onClick, true);
   };
 
   /* Tracking functions */
@@ -156,16 +165,16 @@
   const trackingDisabled = () =>
     disabled ||
     !website ||
-    localStorage?.getItem('umami.disabled') ||
+    localStorage?.getItem("umami.disabled") ||
     (domain && !domains.includes(hostname)) ||
     (dnt && hasDoNotTrack());
 
-  const send = async (payload, type = 'event') => {
+  const send = async (payload, type = "event") => {
     if (trackingDisabled()) return;
 
     const callback = window[beforeSend];
 
-    if (typeof callback === 'function') {
+    if (typeof callback === "function") {
       payload = await Promise.resolve(callback(type, payload));
     }
 
@@ -174,11 +183,11 @@
     try {
       const res = await fetch(endpoint, {
         keepalive: true,
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ type, payload }),
         headers: {
-          'Content-Type': 'application/json',
-          ...(typeof cache !== 'undefined' && { 'x-umami-cache': cache }),
+          "Content-Type": "application/json",
+          ...(typeof cache !== "undefined" && { "x-umami-cache": cache }),
         },
         credentials,
       });
@@ -205,24 +214,24 @@
   };
 
   const track = (name, data) => {
-    if (typeof name === 'string') return send({ ...getPayload(), name, data });
-    if (typeof name === 'object') return send({ ...name });
-    if (typeof name === 'function') return send(name(getPayload()));
+    if (typeof name === "string") return send({ ...getPayload(), name, data });
+    if (typeof name === "object") return send({ ...name });
+    if (typeof name === "function") return send(name(getPayload()));
     return send(getPayload());
   };
 
   const identify = (id, data) => {
-    if (typeof id === 'string') {
+    if (typeof id === "string") {
       identity = id;
     }
 
-    cache = '';
+    cache = "";
     return send(
       {
         ...getPayload(),
-        data: typeof id === 'object' ? id : data,
+        data: typeof id === "object" ? id : data,
       },
-      'identify',
+      "identify",
     );
   };
 
@@ -238,7 +247,7 @@
 
     const observe = (type, callback) => {
       try {
-        const observer = new PerformanceObserver(list => {
+        const observer = new PerformanceObserver((list) => {
           list.getEntries().forEach(callback);
         });
         observer.observe({ type, buffered: true });
@@ -248,27 +257,27 @@
     };
 
     // TTFB
-    observe('navigation', entry => {
+    observe("navigation", (entry) => {
       activationStart = entry.activationStart || 0;
       metrics.ttfb = Math.max(entry.responseStart - activationStart, 0);
     });
 
     // FCP
-    observe('paint', entry => {
-      if (entry.name === 'first-contentful-paint') {
+    observe("paint", (entry) => {
+      if (entry.name === "first-contentful-paint") {
         metrics.fcp = Math.max(entry.startTime - activationStart, 0);
       }
     });
 
     // LCP
-    observe('largest-contentful-paint', entry => {
+    observe("largest-contentful-paint", (entry) => {
       metrics.lcp = Math.max(entry.startTime - activationStart, 0);
     });
 
     // CLS - session windows algorithm (gap < 1s, max 5s duration; report worst window)
     let clsSessionValue = 0;
     let clsSessionEntries = [];
-    observe('layout-shift', entry => {
+    observe("layout-shift", (entry) => {
       if (!entry.hadRecentInput) {
         const lastEntry = clsSessionEntries[clsSessionEntries.length - 1];
         const firstEntry = clsSessionEntries[0];
@@ -292,8 +301,8 @@
     // INP - group by interactionId, 98th percentile, 40ms threshold
     let interactions = {};
     try {
-      const observer = new PerformanceObserver(list => {
-        list.getEntries().forEach(entry => {
+      const observer = new PerformanceObserver((list) => {
+        list.getEntries().forEach((entry) => {
           if (entry.interactionId) {
             const existing = interactions[entry.interactionId];
             if (!existing || entry.duration > existing) {
@@ -307,12 +316,16 @@
           }
         });
       });
-      observer.observe({ type: 'event', buffered: true, durationThreshold: 40 });
+      observer.observe({
+        type: "event",
+        buffered: true,
+        durationThreshold: 40,
+      });
     } catch {
       /* not supported */
     }
 
-    const getEntriesByType = type => {
+    const getEntriesByType = (type) => {
       try {
         return window.performance?.getEntriesByType?.(type) || [];
       } catch {
@@ -324,15 +337,18 @@
       if (!isInitialLoad) return;
 
       if (metrics.ttfb === undefined) {
-        const navigation = getEntriesByType('navigation')?.[0];
+        const navigation = getEntriesByType("navigation")?.[0];
         if (navigation) {
-          metrics.ttfb = Math.max(navigation.responseStart - (navigation.activationStart || 0), 0);
+          metrics.ttfb = Math.max(
+            navigation.responseStart - (navigation.activationStart || 0),
+            0,
+          );
         }
       }
 
       if (metrics.fcp === undefined) {
-        const fcpEntry = getEntriesByType('paint')?.find(
-          entry => entry.name === 'first-contentful-paint',
+        const fcpEntry = getEntriesByType("paint")?.find(
+          (entry) => entry.name === "first-contentful-paint",
         );
         if (fcpEntry) {
           metrics.fcp = Math.max(fcpEntry.startTime - activationStart, 0);
@@ -340,7 +356,7 @@
       }
 
       if (metrics.lcp === undefined) {
-        const lcpEntries = getEntriesByType('largest-contentful-paint');
+        const lcpEntries = getEntriesByType("largest-contentful-paint");
         const lcpEntry = lcpEntries?.[lcpEntries.length - 1];
         if (lcpEntry) {
           metrics.lcp = Math.max(lcpEntry.startTime - activationStart, 0);
@@ -356,13 +372,13 @@
 
       sent = true;
       if (timeoutId) clearTimeout(timeoutId);
-      send({ ...getPayload(), ...metrics }, 'performance');
+      send({ ...getPayload(), ...metrics }, "performance");
     };
 
     flushPerformance = () => {
       sendPerformance();
       isInitialLoad = false;
-      Object.keys(metrics).forEach(k => {
+      Object.keys(metrics).forEach((k) => {
         delete metrics[k];
       });
       activationStart = 0;
@@ -376,10 +392,10 @@
     };
     timeoutId = setTimeout(sendPerformance, 10000);
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') sendPerformance();
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") sendPerformance();
     });
-    window.addEventListener('pagehide', sendPerformance);
+    window.addEventListener("pagehide", sendPerformance);
   };
 
   /* Start */
@@ -393,7 +409,7 @@
   }
 
   let currentUrl = normalize(href);
-  let currentRef = normalize(referrer.startsWith(origin) ? '' : referrer);
+  let currentRef = normalize(referrer.startsWith(origin) ? "" : referrer);
 
   let initialized = false;
   let disabled = false;
@@ -402,10 +418,10 @@
   let flushPerformance;
 
   if (autoTrack && !trackingDisabled()) {
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       init();
     } else {
-      document.addEventListener('readystatechange', init, true);
+      document.addEventListener("readystatechange", init, true);
     }
   }
 })(window);

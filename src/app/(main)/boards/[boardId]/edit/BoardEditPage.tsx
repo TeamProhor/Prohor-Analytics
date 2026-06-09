@@ -1,14 +1,14 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { BoardEditForm } from '@/app/(main)/boards/BoardEditForm';
-import { BoardShareDialog } from '@/app/(main)/boards/[boardId]/BoardShareDialog';
-import { IconLabel } from '@/components/common/IconLabel';
-import { Panel } from '@/components/common/Panel';
-import { PageBody } from '@/components/common/PageBody';
-import { PageHeader } from '@/components/common/PageHeader';
-import { useBoardQuery, useMessages, useNavigation } from '@/components/hooks';
-import { ArrowLeft, LayoutDashboard } from '@/components/icons';
+"use client";
+import { Column } from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { BoardEditForm } from "@/app/(main)/boards/BoardEditForm";
+import { BoardShareDialog } from "@/app/(main)/boards/[boardId]/BoardShareDialog";
+import { IconLabel } from "@/components/common/IconLabel";
+import { Panel } from "@/components/common/Panel";
+import { PageBody } from "@/components/common/PageBody";
+import { PageHeader } from "@/components/common/PageHeader";
+import { useBoardQuery, useMessages, useNavigation } from "@/components/hooks";
+import { ArrowLeft, LayoutDashboard } from "@/components/icons";
 
 export function BoardEditPage({ boardId }: { boardId: string }) {
   const { data: board } = useBoardQuery(boardId);
@@ -21,7 +21,7 @@ export function BoardEditPage({ boardId }: { boardId: string }) {
         margin="2"
         width="100%"
         maxWidth="800px"
-        style={{ marginInline: 'auto' }}
+        style={{ marginInline: "auto" }}
       >
         <>
           <Column marginTop="6">

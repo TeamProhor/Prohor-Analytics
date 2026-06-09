@@ -1,7 +1,7 @@
-'use client';
-import { Column, Dialog, Modal, type ModalProps } from '@umami/react-zen';
-import { SessionProfile } from '@/app/(main)/websites/[websiteId]/sessions/SessionProfile';
-import { useNavigation } from '@/components/hooks';
+"use client";
+import { Column, Dialog, Modal, type ModalProps } from "@umami/react-zen";
+import { SessionProfile } from "@/app/(main)/websites/[websiteId]/sessions/SessionProfile";
+import { useNavigation } from "@/components/hooks";
 
 export interface SessionModalProps extends ModalProps {
   websiteId: string;
@@ -14,7 +14,7 @@ export function SessionModal({ websiteId, ...props }: SessionModalProps) {
     query: { session },
     updateParams,
   } = useNavigation();
-  const isSharePage = pathname.includes('/share/');
+  const isSharePage = pathname.includes("/share/");
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) {
       router.push(updateParams({ session: undefined }));
@@ -30,11 +30,16 @@ export function SessionModal({ websiteId, ...props }: SessionModalProps) {
       isDismissable
       {...props}
     >
-      <Column height="100%" maxWidth="1320px" style={{ margin: '0 auto' }}>
+      <Column height="100%" maxWidth="1320px" style={{ margin: "0 auto" }}>
         <Dialog variant="sheet" className="rounded-lg">
           {({ close }) => (
             <Column padding="10">
-              <SessionProfile websiteId={websiteId} sessionId={session} showReplays={!isSharePage} onClose={() => close()} />
+              <SessionProfile
+                websiteId={websiteId}
+                sessionId={session}
+                showReplays={!isSharePage}
+                onClose={() => close()}
+              />
             </Column>
           )}
         </Dialog>

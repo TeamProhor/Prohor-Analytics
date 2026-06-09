@@ -1,9 +1,9 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useApi } from '@/components/hooks';
-import { removeClientAuthToken } from '@/lib/client';
-import { setUser } from '@/store/app';
+"use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useApi } from "@/components/hooks";
+import { removeClientAuthToken } from "@/lib/client";
+import { setUser } from "@/store/app";
 
 export function LogoutPage() {
   const router = useRouter();
@@ -11,9 +11,9 @@ export function LogoutPage() {
 
   useEffect(() => {
     async function logout() {
-      await post('/auth/logout');
+      await post("/auth/logout");
 
-      window.location.href = `${process.env.basePath || ''}/login`;
+      window.location.href = `${process.env.basePath || ""}/login`;
     }
 
     removeClientAuthToken();

@@ -1,7 +1,7 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import type { ReactNode } from 'react';
-import { PageBody } from '@/components/common/PageBody';
+"use client";
+import { Column } from "@umami/react-zen";
+import type { ReactNode } from "react";
+import { PageBody } from "@/components/common/PageBody";
 
 export function SettingsLayout({ children }: { children: ReactNode }) {
   return (

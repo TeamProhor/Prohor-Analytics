@@ -1,12 +1,12 @@
-'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, ZenProvider } from '@umami/react-zen';
-import { useRouter } from 'next/navigation';
-import { NextIntlClientProvider } from 'next-intl';
-import { useEffect } from 'react';
-import { ErrorBoundary } from '@/components/common/ErrorBoundary';
-import { useLocale } from '@/components/hooks';
-import 'chartjs-adapter-date-fns';
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider, ZenProvider } from "@umami/react-zen";
+import { useRouter } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { useEffect } from "react";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { useLocale } from "@/components/hooks";
+import "chartjs-adapter-date-fns";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -22,12 +22,16 @@ function MessagesProvider({ children }) {
   const { locale, messages, dir } = useLocale();
 
   useEffect(() => {
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', locale);
+    document.documentElement.setAttribute("dir", dir);
+    document.documentElement.setAttribute("lang", locale);
   }, [locale, dir]);
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages[locale]} onError={() => null}>
+    <NextIntlClientProvider
+      locale={locale}
+      messages={messages[locale]}
+      onError={() => null}
+    >
       {children}
     </NextIntlClientProvider>
   );
@@ -45,7 +49,7 @@ export function Providers({ children }) {
   }
 
   function shouldUseNativeLink(url: string) {
-    return url.startsWith('http');
+    return url.startsWith("http");
   }
 
   return (

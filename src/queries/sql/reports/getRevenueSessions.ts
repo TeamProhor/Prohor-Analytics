@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getRevenueSessions';
+const FUNCTION_NAME = "getRevenueSessions";
 
 export async function getRevenueSessions(
   ...args: [websiteId: string, currency: string, filters: QueryFilters]
@@ -9,7 +9,11 @@ export async function getRevenueSessions(
   return relationalQuery(...args);
 }
 
-async function relationalQuery(websiteId: string, currency: string, filters: QueryFilters) {
+async function relationalQuery(
+  websiteId: string,
+  currency: string,
+  filters: QueryFilters,
+) {
   const { pagedRawQuery, parseFilters } = prisma;
   const { search } = filters;
   const { filterQuery, dateQuery, cohortQuery, queryParams } = parseFilters({
@@ -24,7 +28,7 @@ async function relationalQuery(websiteId: string, currency: string, filters: Que
            or session.os ilike {{search}}
            or session.device ilike {{search}}
            or session.city ilike {{search}})`
-    : '';
+    : "";
 
   return pagedRawQuery(
     `
@@ -81,5 +85,3 @@ async function relationalQuery(websiteId: string, currency: string, filters: Que
     FUNCTION_NAME,
   );
 }
-
-

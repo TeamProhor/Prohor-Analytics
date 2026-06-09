@@ -1,8 +1,8 @@
-import type { Prisma, Website } from '@/generated/prisma/client';
-import { ROLES } from '@/lib/constants';
-import prisma from '@/lib/prisma';
-import redis from '@/lib/redis';
-import type { QueryFilters } from '@/lib/types';
+import type { Prisma, Website } from "@/generated/prisma/client";
+import { ROLES } from "@/lib/constants";
+import prisma from "@/lib/prisma";
+import redis from "@/lib/redis";
+import type { QueryFilters } from "@/lib/types";
 
 export async function findWebsite(criteria: Prisma.WebsiteFindUniqueArgs) {
   return prisma.client.website.findUnique(criteria);
@@ -22,7 +22,10 @@ export async function getWebsite(websiteId: string) {
   return attachShareIdToWebsite(website);
 }
 
-export async function getWebsites(criteria: Prisma.WebsiteFindManyArgs, filters: QueryFilters) {
+export async function getWebsites(
+  criteria: Prisma.WebsiteFindManyArgs,
+  filters: QueryFilters,
+) {
   const { search } = filters;
   const { getSearchParameters, pagedQuery } = prisma;
 
@@ -30,19 +33,22 @@ export async function getWebsites(criteria: Prisma.WebsiteFindManyArgs, filters:
     ...criteria.where,
     ...getSearchParameters(search, [
       {
-        name: 'contains',
+        name: "contains",
       },
-      { domain: 'contains' },
+      { domain: "contains" },
     ]),
     deletedAt: null,
   };
 
-  const websites = await pagedQuery('website', { ...criteria, where }, filters);
+  const websites = await pagedQuery("website", { ...criteria, where }, filters);
 
   return attachShareIdToWebsites(websites);
 }
 
-export async function getAllUserWebsitesIncludingTeamOwner(userId: string, filters?: QueryFilters) {
+export async function getAllUserWebsitesIncludingTeamOwner(
+  userId: string,
+  filters?: QueryFilters,
+) {
   return getWebsites(
     {
       where: {
@@ -63,7 +69,7 @@ export async function getAllUserWebsitesIncludingTeamOwner(userId: string, filte
       },
     },
     {
-      orderBy: 'name',
+      orderBy: "name",
       ...filters,
     },
   );
@@ -85,7 +91,7 @@ export async function getUserWebsites(userId: string, filters?: QueryFilters) {
       },
     },
     {
-      orderBy: 'name',
+      orderBy: "name",
       ...filters,
     },
   );
@@ -135,7 +141,7 @@ export async function resetWebsite(websiteId: string) {
   const cloudMode = !!process.env.CLOUD_MODE;
 
   return transaction(
-    async tx => {
+    async (tx) => {
       await tx.sessionReplaySaved.deleteMany({
         where: { websiteId },
       });
@@ -176,7 +182,7 @@ export async function resetWebsite(websiteId: string) {
     {
       timeout: 30000,
     },
-  ).then(async data => {
+  ).then(async (data) => {
     if (cloudMode) {
       await redis.client.set(`website:${websiteId}`, data);
     }
@@ -190,7 +196,7 @@ export async function deleteWebsite(websiteId: string) {
   const cloudMode = !!process.env.CLOUD_MODE;
 
   return transaction(
-    async tx => {
+    async (tx) => {
       await tx.sessionReplaySaved.deleteMany({
         where: { websiteId },
       });
@@ -247,7 +253,7 @@ export async function deleteWebsite(websiteId: string) {
     {
       timeout: 30000,
     },
-  ).then(async data => {
+  ).then(async (data) => {
     if (cloudMode) {
       await redis.client.del(`website:${websiteId}`);
     }
@@ -271,7 +277,7 @@ export async function attachShareIdToWebsite(website: Website) {
       entityId: website.id,
     },
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
     select: {
       slug: true,
@@ -292,12 +298,12 @@ export async function attachShareIdToWebsites(websites: {
   orderBy: string;
   search: string;
 }) {
-  const websiteIds = websites.data.map(website => website.id);
+  const websiteIds = websites.data.map((website) => website.id);
 
   if (websiteIds.length === 0) {
     return {
       ...websites,
-      data: websites.data.map(website => ({ ...website, shareId: null })),
+      data: websites.data.map((website) => ({ ...website, shareId: null })),
     };
   }
 
@@ -305,17 +311,19 @@ export async function attachShareIdToWebsites(websites: {
     where: {
       entityId: { in: websiteIds },
     },
-    distinct: ['entityId'],
+    distinct: ["entityId"],
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
   });
 
-  const shareByWebsiteId = new Map(shares.map(share => [share.entityId, share.slug]));
+  const shareByWebsiteId = new Map(
+    shares.map((share) => [share.entityId, share.slug]),
+  );
 
   return {
     ...websites,
-    data: websites.data.map(website => ({
+    data: websites.data.map((website) => ({
       ...website,
       shareId: shareByWebsiteId.get(website.id) ?? null,
     })),

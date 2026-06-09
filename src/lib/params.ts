@@ -1,9 +1,9 @@
-import { FILTER_COLUMNS, OPERATORS } from '@/lib/constants';
-import type { Filter, QueryFilters, QueryOptions } from '@/lib/types';
+import { FILTER_COLUMNS, OPERATORS } from "@/lib/constants";
+import type { Filter, QueryFilters, QueryOptions } from "@/lib/types";
 
 export function parseFilterValue(param: any) {
-  if (typeof param === 'string') {
-    const operatorValues = Object.values(OPERATORS).join('|');
+  if (typeof param === "string") {
+    const operatorValues = Object.values(OPERATORS).join("|");
 
     const regex = new RegExp(`^(${operatorValues})\\.(.*)$`);
 
@@ -12,8 +12,11 @@ export function parseFilterValue(param: any) {
     const resolvedOperator = operator || OPERATORS.equals;
     const resolvedValue = value ?? param;
 
-    if (resolvedOperator === OPERATORS.equals || resolvedOperator === OPERATORS.notEquals) {
-      return { operator: resolvedOperator, value: resolvedValue.split(',') };
+    if (
+      resolvedOperator === OPERATORS.equals ||
+      resolvedOperator === OPERATORS.notEquals
+    ) {
+      return { operator: resolvedOperator, value: resolvedValue.split(",") };
     }
 
     return { operator: resolvedOperator, value: resolvedValue };
@@ -39,7 +42,10 @@ export function isSearchOperator(operator: any) {
   ].includes(operator);
 }
 
-export function filtersObjectToArray(filters: QueryFilters, options: QueryOptions = {}): Filter[] {
+export function filtersObjectToArray(
+  filters: QueryFilters,
+  options: QueryOptions = {},
+): Filter[] {
   if (!filters) {
     return [];
   }
@@ -51,7 +57,7 @@ export function filtersObjectToArray(filters: QueryFilters, options: QueryOption
       return arr;
     }
 
-    const baseName = key.replace(/\d+$/, '');
+    const baseName = key.replace(/\d+$/, "");
     const paramName = key !== baseName ? key : undefined;
 
     if (filter?.name && filter?.value !== undefined) {
@@ -83,7 +89,7 @@ export function filtersArrayToObject(filters: Filter[]) {
     const key = count === 0 ? name : `${name}${count}`;
     nameCounts[name] = count + 1;
 
-    obj[key] = `${operator}.${Array.isArray(value) ? value.join(',') : value}`;
+    obj[key] = `${operator}.${Array.isArray(value) ? value.join(",") : value}`;
 
     return obj;
   }, {});

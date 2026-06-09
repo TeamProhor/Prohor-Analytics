@@ -1,8 +1,11 @@
-import { z } from 'zod';
-import { parseRequest } from '@/lib/request';
-import { badRequest, json, unauthorized } from '@/lib/response';
-import { canTransferWebsiteToTeam, canTransferWebsiteToUser } from '@/permissions';
-import { updateWebsite } from '@/queries/prisma';
+import { z } from "zod";
+import { parseRequest } from "@/lib/request";
+import { badRequest, json, unauthorized } from "@/lib/response";
+import {
+  canTransferWebsiteToTeam,
+  canTransferWebsiteToUser,
+} from "@/permissions";
+import { updateWebsite } from "@/queries/prisma";
 
 export async function POST(
   request: Request,

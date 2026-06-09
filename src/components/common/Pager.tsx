@@ -1,6 +1,6 @@
-import { Button, Icon, Row, Text } from '@umami/react-zen';
-import { useMessages } from '@/components/hooks';
-import { ChevronRight } from '@/components/icons';
+import { Button, Icon, Row, Text } from "@umami/react-zen";
+import { useMessages } from "@/components/hooks";
+import { ChevronRight } from "@/components/icons";
 
 export interface PagerProps {
   page: string | number;
@@ -33,7 +33,12 @@ export function Pager({ page, pageSize, count, onPageChange }: PagerProps) {
   }
 
   return (
-    <Row alignItems="center" justifyContent="space-between" gap="3" flexGrow={1}>
+    <Row
+      alignItems="center"
+      justifyContent="space-between"
+      gap="3"
+      flexGrow={1}
+    >
       <Text>{t(labels.numberOfRecords, { x: count.toLocaleString() })}</Text>
       <Row alignItems="center" justifyContent="flex-end" gap="3">
         <Text>
@@ -43,12 +48,20 @@ export function Pager({ page, pageSize, count, onPageChange }: PagerProps) {
           })}
         </Text>
         <Row gap="1">
-          <Button variant="outline" onPress={() => handlePageChange(-1)} isDisabled={firstPage}>
+          <Button
+            variant="outline"
+            onPress={() => handlePageChange(-1)}
+            isDisabled={firstPage}
+          >
             <Icon size="sm" rotate={180}>
               <ChevronRight />
             </Icon>
           </Button>
-          <Button variant="outline" onPress={() => handlePageChange(1)} isDisabled={lastPage}>
+          <Button
+            variant="outline"
+            onPress={() => handlePageChange(1)}
+            isDisabled={lastPage}
+          >
             <Icon size="sm">
               <ChevronRight />
             </Icon>

@@ -1,9 +1,19 @@
-import { z } from 'zod';
-import { ENTITY_TYPE } from '@/lib/constants';
-import { uuid } from '@/lib/crypto';
-import { parseRequest } from '@/lib/request';
-import { badRequest, json, ok, serverError, unauthorized } from '@/lib/response';
-import { canDeleteWebsite, canUpdateWebsite, canViewWebsite } from '@/permissions';
+import { z } from "zod";
+import { ENTITY_TYPE } from "@/lib/constants";
+import { uuid } from "@/lib/crypto";
+import { parseRequest } from "@/lib/request";
+import {
+  badRequest,
+  json,
+  ok,
+  serverError,
+  unauthorized,
+} from "@/lib/response";
+import {
+  canDeleteWebsite,
+  canUpdateWebsite,
+  canViewWebsite,
+} from "@/permissions";
 import {
   createShare,
   deleteSharesByEntityId,
@@ -11,7 +21,7 @@ import {
   getShareByEntityId,
   getWebsite,
   updateWebsite,
-} from '@/queries/prisma';
+} from "@/queries/prisma";
 
 export async function GET(
   request: Request,
@@ -46,7 +56,7 @@ export async function POST(
     replayConfig: z
       .object({
         sampleRate: z.number().min(0).max(1).optional(),
-        maskLevel: z.enum(['strict', 'moderate']).optional(),
+        maskLevel: z.enum(["strict", "moderate"]).optional(),
         maxDuration: z.number().int().positive().optional(),
         blockSelector: z.string().optional(),
       })
@@ -95,8 +105,8 @@ export async function POST(
       shareId: share?.slug ?? null,
     });
   } catch (e: any) {
-    if (e.message.toLowerCase().includes('unique constraint')) {
-      return badRequest({ message: 'That share ID is already taken.' });
+    if (e.message.toLowerCase().includes("unique constraint")) {
+      return badRequest({ message: "That share ID is already taken." });
     }
 
     return serverError(e);

@@ -1,20 +1,20 @@
-import { record } from 'rrweb';
+import { record } from "rrweb";
 
-(window => {
+((window) => {
   const { document } = window;
   const { currentScript } = document;
   if (!currentScript) return;
 
-  const _data = 'data-';
+  const _data = "data-";
   const attr = currentScript.getAttribute.bind(currentScript);
-  const config = value => attr(`${_data}${value}`);
+  const config = (value) => attr(`${_data}${value}`);
 
   const website = config(`website-id`);
   const hostUrl = config(`host-url`);
-  const sampleRate = parseFloat(config(`sample-rate`) || '0.15');
-  const maskLevel = config(`mask-level`) || 'moderate';
-  const maxDuration = parseInt(config(`max-duration`) || '300000', 10);
-  const blockSelector = config(`block-selector`) || '';
+  const sampleRate = parseFloat(config(`sample-rate`) || "0.15");
+  const maskLevel = config(`mask-level`) || "moderate";
+  const maxDuration = parseInt(config(`max-duration`) || "300000", 10);
+  const blockSelector = config(`block-selector`) || "";
 
   if (!website) return;
 
@@ -22,8 +22,10 @@ import { record } from 'rrweb';
   if (sampleRate < 1 && Math.random() > sampleRate) return;
 
   const host =
-    hostUrl || '__COLLECT_API_HOST__' || currentScript.src.split('/').slice(0, -1).join('/');
-  const endpoint = `${host.replace(/\/$/, '')}__COLLECT_REPLAY_ENDPOINT__`;
+    hostUrl ||
+    "__COLLECT_API_HOST__" ||
+    currentScript.src.split("/").slice(0, -1).join("/");
+  const endpoint = `${host.replace(/\/$/, "")}__COLLECT_REPLAY_ENDPOINT__`;
 
   const FLUSH_EVENT_COUNT = 100;
   const FLUSH_INTERVAL = 10000;
@@ -39,7 +41,7 @@ import { record } from 'rrweb';
     if (!session?.cache) return;
 
     const body = JSON.stringify({
-      type: 'record',
+      type: "record",
       payload: {
         website,
         events,
@@ -52,13 +54,13 @@ import { record } from 'rrweb';
 
     return fetch(endpoint, {
       keepalive,
-      method: 'POST',
+      method: "POST",
       body,
       headers: {
-        'Content-Type': 'application/json',
-        'x-umami-cache': session.cache,
+        "Content-Type": "application/json",
+        "x-umami-cache": session.cache,
       },
-      credentials: 'omit',
+      credentials: "omit",
     }).catch(() => {});
   };
 
@@ -84,12 +86,12 @@ import { record } from 'rrweb';
     if (stopFn) stopFn();
   };
 
-  const getMaskConfig = level => {
+  const getMaskConfig = (level) => {
     switch (level) {
-      case 'strict':
+      case "strict":
         return {
           maskAllInputs: true,
-          maskTextSelector: '*',
+          maskTextSelector: "*",
         };
       default: // moderate
         return {
@@ -149,18 +151,18 @@ import { record } from 'rrweb';
       ...(blockSelector && { blockSelector }),
     });
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') flush(true);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") flush(true);
     });
 
-    window.addEventListener('beforeunload', () => flush(true));
+    window.addEventListener("beforeunload", () => flush(true));
   };
 
-  if (document.readyState === 'complete') {
+  if (document.readyState === "complete") {
     waitForSession();
   } else {
-    document.addEventListener('readystatechange', () => {
-      if (document.readyState === 'complete') waitForSession();
+    document.addEventListener("readystatechange", () => {
+      if (document.readyState === "complete") waitForSession();
     });
   }
 })(window);

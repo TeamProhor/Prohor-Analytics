@@ -1,7 +1,7 @@
-import { Icon, Row, Text } from '@umami/react-zen';
-import { Favicon } from '@/components/common/Favicon';
-import { Grid2x2, Link } from '@/components/icons';
-import type { BoardEntityType } from '@/lib/boards';
+import { Icon, Row, Text } from "@umami/react-zen";
+import { Favicon } from "@/components/common/Favicon";
+import { Grid2x2, Link } from "@/components/icons";
+import type { BoardEntityType } from "@/lib/boards";
 
 export function BoardEntityBadge({
   type,
@@ -13,11 +13,17 @@ export function BoardEntityBadge({
   domain?: string;
 }) {
   return (
-    <Row padding borderRadius="full" backgroundColor="surface-base" border gap="2">
+    <Row
+      padding
+      borderRadius="full"
+      backgroundColor="surface-base"
+      border
+      gap="2"
+    >
       <Icon>
-        {type === 'pixel' ? (
+        {type === "pixel" ? (
           <Grid2x2 />
-        ) : type === 'link' ? (
+        ) : type === "link" ? (
           <Link />
         ) : (
           <Favicon domain={domain} />

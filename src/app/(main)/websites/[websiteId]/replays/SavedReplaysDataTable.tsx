@@ -1,6 +1,6 @@
-import { DataGrid } from '@/components/common/DataGrid';
-import { useSavedReplaysQuery } from '@/components/hooks';
-import { SavedReplaysTable } from './SavedReplaysTable';
+import { DataGrid } from "@/components/common/DataGrid";
+import { useSavedReplaysQuery } from "@/components/hooks";
+import { SavedReplaysTable } from "./SavedReplaysTable";
 
 export function SavedReplaysDataTable({ websiteId }: { websiteId: string }) {
   const queryResult = useSavedReplaysQuery(websiteId);

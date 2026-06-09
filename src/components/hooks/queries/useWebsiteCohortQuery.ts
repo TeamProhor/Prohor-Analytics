@@ -1,7 +1,7 @@
-import { keepPreviousData } from '@tanstack/react-query';
-import type { ReactQueryOptions } from '@/lib/types';
-import { useApi } from '../useApi';
-import { useModified } from '../useModified';
+import { keepPreviousData } from "@tanstack/react-query";
+import type { ReactQueryOptions } from "@/lib/types";
+import { useApi } from "../useApi";
+import { useModified } from "../useModified";
 
 export function useWebsiteCohortQuery(
   websiteId: string,
@@ -12,7 +12,7 @@ export function useWebsiteCohortQuery(
   const { modified } = useModified(`cohorts`);
 
   return useQuery({
-    queryKey: ['website:cohorts', { websiteId, cohortId, modified }],
+    queryKey: ["website:cohorts", { websiteId, cohortId, modified }],
     queryFn: () => get(`/websites/${websiteId}/segments/${cohortId}`),
     enabled: !!(websiteId && cohortId),
     placeholderData: keepPreviousData,

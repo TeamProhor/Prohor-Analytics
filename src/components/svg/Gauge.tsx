@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react';
+import type { SVGProps } from "react";
 
 const SvgGauge = (props: SVGProps<SVGSVGElement>) => (
   <svg

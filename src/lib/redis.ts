@@ -1,9 +1,9 @@
-import debug from 'debug';
-import { createClient, type RedisClientType } from 'redis';
+import debug from "debug";
+import { createClient, type RedisClientType } from "redis";
 
-const log = debug('umami:redis-client');
+const log = debug("umami:redis-client");
 
-export const DELETED = '__DELETED__';
+export const DELETED = "__DELETED__";
 export const DEFAULT_TTL = 3600;
 
 const logError = (err: unknown) => log(err);
@@ -14,7 +14,7 @@ class UmamiRedisClient {
   isConnected: boolean;
 
   constructor(url: string) {
-    const client = createClient({ url }).on('error', logError);
+    const client = createClient({ url }).on("error", logError);
 
     this.url = url;
     this.client = client as RedisClientType;
@@ -27,7 +27,7 @@ class UmamiRedisClient {
 
       await this.client.connect();
 
-      log('Redis connected');
+      log("Redis connected");
     }
   }
 
@@ -69,7 +69,11 @@ class UmamiRedisClient {
     return this.client.expire(key, seconds);
   }
 
-  async rateLimit(key: string, limit: number, seconds: number): Promise<boolean> {
+  async rateLimit(
+    key: string,
+    limit: number,
+    seconds: number,
+  ): Promise<boolean> {
     await this.connect();
 
     const res = await this.client.incr(key);
@@ -102,7 +106,7 @@ class UmamiRedisClient {
   }
 }
 
-const REDIS = 'redis';
+const REDIS = "redis";
 const enabled = !!process.env.REDIS_URL;
 
 function getClient() {
@@ -114,8 +118,8 @@ function getClient() {
     redis.isConnected = false;
   };
 
-  redis.client.on('end', resetConnectionState);
-  redis.client.on('reconnecting', resetConnectionState);
+  redis.client.on("end", resetConnectionState);
+  redis.client.on("reconnecting", resetConnectionState);
 
   redis.connect = async () => {
     if (redis.client.isReady || redis.client.isOpen) {
@@ -141,7 +145,7 @@ function getClient() {
     return connectPromise;
   };
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     globalThis[REDIS] = redis;
   }
 

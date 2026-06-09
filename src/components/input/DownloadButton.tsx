@@ -1,10 +1,10 @@
-import { Button, Icon, Text, Tooltip, TooltipTrigger } from '@umami/react-zen';
-import Papa from 'papaparse';
-import { useMessages } from '@/components/hooks';
-import { Download } from '@/components/icons';
+import { Button, Icon, Text, Tooltip, TooltipTrigger } from "@umami/react-zen";
+import Papa from "papaparse";
+import { useMessages } from "@/components/hooks";
+import { Download } from "@/components/icons";
 
 export function DownloadButton({
-  filename = 'data',
+  filename = "data",
   data,
 }: {
   filename?: string;
@@ -19,7 +19,11 @@ export function DownloadButton({
 
   return (
     <TooltipTrigger delay={0}>
-      <Button variant="quiet" onClick={handleClick} isDisabled={!data || data.length === 0}>
+      <Button
+        variant="quiet"
+        onClick={handleClick}
+        isDisabled={!data || data.length === 0}
+      >
         <Icon>
           <Download />
         </Icon>
@@ -32,10 +36,10 @@ export function DownloadButton({
 }
 
 function downloadCsv(filename: string, data: any) {
-  const blob = new Blob([data], { type: 'text/csv' });
+  const blob = new Blob([data], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
 
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   a.click();

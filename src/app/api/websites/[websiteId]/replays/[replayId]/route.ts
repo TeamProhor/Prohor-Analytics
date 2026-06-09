@@ -1,7 +1,7 @@
-import { parseRequest } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { canViewWebsite } from '@/permissions';
-import { getReplayChunks } from '@/queries/sql';
+import { parseRequest } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { canViewWebsite } from "@/permissions";
+import { getReplayChunks } from "@/queries/sql";
 
 export async function GET(
   request: Request,
@@ -22,7 +22,7 @@ export async function GET(
   const chunks = await getReplayChunks(websiteId, replayId);
 
   const allEvents = chunks
-    .flatMap(chunk => chunk.events)
+    .flatMap((chunk) => chunk.events)
     .sort((a, b) => a.timestamp - b.timestamp);
   const sessionId = chunks.length > 0 ? chunks[0].sessionId : null;
   const startedAt = chunks.length > 0 ? chunks[0].startedAt : null;

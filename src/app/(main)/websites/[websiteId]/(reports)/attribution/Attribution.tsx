@@ -1,13 +1,13 @@
-import { Column, Grid } from '@umami/react-zen';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { Panel } from '@/components/common/Panel';
-import { SectionHeader } from '@/components/common/SectionHeader';
-import { useMessages, useResultQuery } from '@/components/hooks';
-import { ListTable } from '@/components/metrics/ListTable';
-import { MetricCard } from '@/components/metrics/MetricCard';
-import { MetricsBar } from '@/components/metrics/MetricsBar';
-import { percentFilter } from '@/lib/filters';
-import { formatLongNumber } from '@/lib/format';
+import { Column, Grid } from "@umami/react-zen";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { Panel } from "@/components/common/Panel";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import { useMessages, useResultQuery } from "@/components/hooks";
+import { ListTable } from "@/components/metrics/ListTable";
+import { MetricCard } from "@/components/metrics/MetricCard";
+import { MetricsBar } from "@/components/metrics/MetricsBar";
+import { percentFilter } from "@/lib/filters";
+import { formatLongNumber } from "@/lib/format";
 
 export interface AttributionProps {
   websiteId: string;
@@ -26,7 +26,7 @@ export function Attribution({
   type,
   step,
 }: AttributionProps) {
-  const { data, error, isLoading } = useResultQuery<any>('attribution', {
+  const { data, error, isLoading } = useResultQuery<any>("attribution", {
     websiteId,
     startDate,
     endDate,
@@ -59,7 +59,13 @@ export function Attribution({
       ]
     : [];
 
-  function AttributionTable({ data = [], title }: { data: any; title: string }) {
+  function AttributionTable({
+    data = [],
+    title,
+  }: {
+    data: any;
+    title: string;
+  }) {
     const attributionData = percentFilter(
       data.map(({ name, value }) => ({
         x: name,
@@ -71,11 +77,13 @@ export function Attribution({
       <ListTable
         title={title}
         metric={t(labels.visitors)}
-        data={attributionData.map(({ x, y, z }: { x: string; y: number; z: number }) => ({
-          label: x,
-          count: y,
-          percent: z,
-        }))}
+        data={attributionData.map(
+          ({ x, y, z }: { x: string; y: number; z: number }) => ({
+            label: x,
+            count: y,
+            percent: z,
+          }),
+        )}
       />
     );
   }
@@ -87,32 +95,55 @@ export function Attribution({
           <MetricsBar>
             {metrics?.map(({ label, value, formatValue }) => {
               return (
-                <MetricCard key={label} value={value} label={label} formatValue={formatValue} />
+                <MetricCard
+                  key={label}
+                  value={value}
+                  label={label}
+                  formatValue={formatValue}
+                />
               );
             })}
           </MetricsBar>
           <SectionHeader title={t(labels.sources)} />
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap>
+          <Grid columns={{ base: "1fr", md: "1fr 1fr" }} gap>
             <Panel>
-              <AttributionTable data={data?.referrer} title={t(labels.referrer)} />
+              <AttributionTable
+                data={data?.referrer}
+                title={t(labels.referrer)}
+              />
             </Panel>
             <Panel>
-              <AttributionTable data={data?.paidAds} title={t(labels.paidAds)} />
+              <AttributionTable
+                data={data?.paidAds}
+                title={t(labels.paidAds)}
+              />
             </Panel>
           </Grid>
           <SectionHeader title="UTM" />
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap>
+          <Grid columns={{ base: "1fr", md: "1fr 1fr" }} gap>
             <Panel>
-              <AttributionTable data={data?.utm_source} title={t(labels.sources)} />
+              <AttributionTable
+                data={data?.utm_source}
+                title={t(labels.sources)}
+              />
             </Panel>
             <Panel>
-              <AttributionTable data={data?.utm_medium} title={t(labels.medium)} />
+              <AttributionTable
+                data={data?.utm_medium}
+                title={t(labels.medium)}
+              />
             </Panel>
             <Panel>
-              <AttributionTable data={data?.utm_cmapaign} title={t(labels.campaigns)} />
+              <AttributionTable
+                data={data?.utm_cmapaign}
+                title={t(labels.campaigns)}
+              />
             </Panel>
             <Panel>
-              <AttributionTable data={data?.utm_content} title={t(labels.content)} />
+              <AttributionTable
+                data={data?.utm_content}
+                title={t(labels.content)}
+              />
             </Panel>
             <Panel>
               <AttributionTable data={data?.utm_term} title={t(labels.terms)} />

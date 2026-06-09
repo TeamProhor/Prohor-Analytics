@@ -1,8 +1,8 @@
-'use client';
-import { useMobile } from '@/components/hooks';
-import { Column } from '@umami/react-zen';
-import { useEffect, useRef, useState } from 'react';
-import 'rrweb-player/dist/style.css';
+"use client";
+import { useMobile } from "@/components/hooks";
+import { Column } from "@umami/react-zen";
+import { useEffect, useRef, useState } from "react";
+import "rrweb-player/dist/style.css";
 
 export function ReplayPlayer({ events }: { events: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,11 +16,11 @@ export function ReplayPlayer({ events }: { events: any[] }) {
   useEffect(() => {
     if (!containerRef.current || !events?.length) return;
 
-    import('rrweb-player').then(mod => {
+    import("rrweb-player").then((mod) => {
       const RRWebPlayer = mod.default;
 
       if (containerRef.current) {
-        containerRef.current.innerHTML = '';
+        containerRef.current.innerHTML = "";
       }
 
       playerRef.current = new RRWebPlayer({
@@ -55,11 +55,11 @@ export function ReplayPlayer({ events }: { events: any[] }) {
         style={{
           width: playerWidth,
           minHeight: loaded ? undefined : playerHeight,
-          maxWidth: '100%',
-          overflow: 'hidden',
-          borderRadius: '8px',
-          border: '1px solid var(--base300)',
-          background: 'var(--base75)',
+          maxWidth: "100%",
+          overflow: "hidden",
+          borderRadius: "8px",
+          border: "1px solid var(--base300)",
+          background: "var(--base75)",
         }}
       />
     </Column>

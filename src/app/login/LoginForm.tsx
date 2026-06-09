@@ -8,24 +8,24 @@ import {
   Icon,
   PasswordField,
   TextField,
-} from '@umami/react-zen';
-import { useRouter } from 'next/navigation';
-import { useMessages, useUpdateQuery } from '@/components/hooks';
-import { Logo } from '@/components/svg';
-import { setClientAuthToken } from '@/lib/client';
-import { setUser } from '@/store/app';
+} from "@umami/react-zen";
+import { useRouter } from "next/navigation";
+import { useMessages, useUpdateQuery } from "@/components/hooks";
+import { Logo } from "@/components/svg";
+import { setClientAuthToken } from "@/lib/client";
+import { setUser } from "@/store/app";
 
 export function LoginForm() {
   const { t, labels, getErrorMessage } = useMessages();
   const router = useRouter();
-  const { mutateAsync, error } = useUpdateQuery('/auth/login');
+  const { mutateAsync, error } = useUpdateQuery("/auth/login");
 
   const handleSubmit = async (data: any) => {
     await mutateAsync(data, {
       onSuccess: async ({ token, user }) => {
         setClientAuthToken(token);
         setUser(user);
-        router.push('/');
+        router.push("/");
       },
     });
   };
@@ -36,7 +36,11 @@ export function LoginForm() {
         <Logo />
       </Icon>
       <Heading>umami</Heading>
-      <Form onSubmit={handleSubmit} error={getErrorMessage(error)} style={{ minWidth: 300 }}>
+      <Form
+        onSubmit={handleSubmit}
+        error={getErrorMessage(error)}
+        style={{ minWidth: 300 }}
+      >
         <FormField
           label={t(labels.username)}
           data-test="input-username"

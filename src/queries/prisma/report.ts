@@ -1,6 +1,6 @@
-import { Prisma } from '@/generated/prisma/client';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import { Prisma } from "@/generated/prisma/client";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 import ReportFindManyArgs = Prisma.ReportFindManyArgs;
 
@@ -16,34 +16,37 @@ export async function getReport(reportId: string) {
   });
 }
 
-export async function getReports(criteria: ReportFindManyArgs, filters: QueryFilters = {}) {
+export async function getReports(
+  criteria: ReportFindManyArgs,
+  filters: QueryFilters = {},
+) {
   const { search } = filters;
 
   const where: Prisma.ReportWhereInput = {
     ...criteria.where,
     ...prisma.getSearchParameters(search, [
-      { name: 'contains' },
-      { description: 'contains' },
-      { type: 'contains' },
+      { name: "contains" },
+      { description: "contains" },
+      { type: "contains" },
       {
         user: {
-          username: 'contains',
+          username: "contains",
         },
       },
       {
         website: {
-          name: 'contains',
+          name: "contains",
         },
       },
       {
         website: {
-          domain: 'contains',
+          domain: "contains",
         },
       },
     ]),
   };
 
-  return prisma.pagedQuery('report', { ...criteria, where }, filters);
+  return prisma.pagedQuery("report", { ...criteria, where }, filters);
 }
 
 export async function getUserReports(userId: string, filters?: QueryFilters) {
@@ -65,7 +68,10 @@ export async function getUserReports(userId: string, filters?: QueryFilters) {
   );
 }
 
-export async function getWebsiteReports(websiteId: string, filters: QueryFilters = {}) {
+export async function getWebsiteReports(
+  websiteId: string,
+  filters: QueryFilters = {},
+) {
   return getReports(
     {
       where: {

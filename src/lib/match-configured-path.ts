@@ -1,17 +1,17 @@
 function normalizePathname(pathname?: string) {
   if (!pathname) {
-    return '';
+    return "";
   }
 
-  return `/${pathname.replace(/^\/+/, '')}`;
+  return `/${pathname.replace(/^\/+/, "")}`;
 }
 
 function normalizeBasePath(basePath?: string) {
   if (!basePath) {
-    return '';
+    return "";
   }
 
-  return `/${basePath.replace(/^\/+|\/+$/g, '')}`;
+  return `/${basePath.replace(/^\/+|\/+$/g, "")}`;
 }
 
 export function matchesConfiguredPath(

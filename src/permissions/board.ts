@@ -1,9 +1,12 @@
-import { hasPermission } from '@/lib/auth';
-import { PERMISSIONS } from '@/lib/constants';
-import type { Auth } from '@/lib/types';
-import { getBoard, getTeamUser } from '@/queries/prisma';
+import { hasPermission } from "@/lib/auth";
+import { PERMISSIONS } from "@/lib/constants";
+import type { Auth } from "@/lib/types";
+import { getBoard, getTeamUser } from "@/queries/prisma";
 
-export async function canViewBoard({ user, shareToken }: Auth, boardId: string) {
+export async function canViewBoard(
+  { user, shareToken }: Auth,
+  boardId: string,
+) {
   if (user?.isAdmin) {
     return true;
   }

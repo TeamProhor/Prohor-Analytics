@@ -1,25 +1,19 @@
-<p align="center">
-  <img src="https://content.umami.is/website/images/umami-logo.png" alt="Umami Logo" width="100">
-</p>
-
-<h1 align="center">Umami</h1>
+<h1 align="center">Prohor Analytics</h1>
 
 <p align="center">
-  <i>Umami is a simple, fast, privacy-focused alternative to Google Analytics.</i>
+  <i>Prohor Analytics is a simple, fast, privacy-focused alternative to Google Analytics.</i>
 </p>
 
 <p align="center">
-  <a href="https://github.com/umami-software/umami/releases"><img src="https://img.shields.io/github/release/umami-software/umami.svg" alt="GitHub Release" /></a>
-  <a href="https://github.com/umami-software/umami/blob/master/LICENSE"><img src="https://img.shields.io/github/license/umami-software/umami.svg" alt="MIT License" /></a>
-  <a href="https://github.com/umami-software/umami/actions"><img src="https://img.shields.io/github/actions/workflow/status/umami-software/umami/ci.yml" alt="Build Status" /></a>
-  <a href="https://analytics.umami.is/share/LGazGOecbDtaIwDr/umami.is" style="text-decoration: none;"><img src="https://img.shields.io/badge/Try%20Demo%20Now-Click%20Here-brightgreen" alt="Umami Demo" /></a>
+  <a href="https://github.com/prohor-analytics/prohor-analytics/releases"><img src="https://img.shields.io/github/release/prohor-analytics/prohor-analytics.svg" alt="GitHub Release" /></a>
+  <a href="https://github.com/prohor-analytics/prohor-analytics/blob/master/LICENSE"><img src="https://img.shields.io/github/license/prohor-analytics/prohor-analytics.svg" alt="MIT License" /></a>
 </p>
 
 ---
 
 ## 🚀 Getting Started
 
-A detailed getting started guide can be found at [umami.is/docs](https://umami.is/docs/).
+A detailed getting started guide can be found at [prohor.ai/docs](https://prohor.ai/docs/).
 
 ---
 
@@ -33,12 +27,12 @@ A detailed getting started guide can be found at [umami.is/docs](https://umami.i
 ### Get the source code and install packages
 
 ```bash
-git clone https://github.com/umami-software/umami.git
-cd umami
+git clone https://github.com/prohor-analytics/prohor-analytics.git
+cd prohor-analytics
 pnpm install
 ```
 
-### Configure Umami
+### Configure Prohor Analytics
 
 Create an `.env` file with the following:
 
@@ -72,15 +66,15 @@ By default, this will launch the application on `http://localhost:3000`. You wil
 
 ## 🐳 Installing with Docker
 
-Umami provides Docker images as well as a Docker compose file for easy deployment.
+Prohor Analytics provides Docker images as well as a Docker compose file for easy deployment.
 
 Docker image:
 
 ```bash
-docker pull docker.umami.is/umami-software/umami:latest
+docker pull docker.prohor.ai/prohor-analytics/prohor-analytics:latest
 ```
 
-Docker compose (Runs Umami with a PostgreSQL database):
+Docker compose (Runs Prohor Analytics with a PostgreSQL database):
 
 ```bash
 docker compose up -d
@@ -110,23 +104,15 @@ docker compose up --force-recreate -d
 ## 🛟 Support
 
 <p align="center">
-  <a href="https://github.com/umami-software/umami"><img src="https://img.shields.io/badge/GitHub--blue?style=social&logo=github" alt="GitHub" /></a>
-  <a href="https://twitter.com/umami_software"><img src="https://img.shields.io/badge/Twitter--blue?style=social&logo=twitter" alt="Twitter" /></a>
-  <a href="https://linkedin.com/company/umami-software"><img src="https://img.shields.io/badge/LinkedIn--blue?style=social&logo=linkedin" alt="LinkedIn" /></a>
-  <a href="https://umami.is/discord"><img src="https://img.shields.io/badge/Discord--blue?style=social&logo=discord" alt="Discord" /></a>
+  <a href="https://github.com/prohor-analytics/prohor-analytics"><img src="https://img.shields.io/badge/GitHub--blue?style=social&logo=github" alt="GitHub" /></a>
+  <a href="https://twitter.com/prohor_analytics"><img src="https://img.shields.io/badge/Twitter--blue?style=social&logo=twitter" alt="Twitter" /></a>
 </p>
 
-[release-shield]: https://img.shields.io/github/release/umami-software/umami.svg
-[releases-url]: https://github.com/umami-software/umami/releases
-[license-shield]: https://img.shields.io/github/license/umami-software/umami.svg
-[license-url]: https://github.com/umami-software/umami/blob/master/LICENSE
-[build-shield]: https://img.shields.io/github/actions/workflow/status/umami-software/umami/ci.yml
-[build-url]: https://github.com/umami-software/umami/actions
+[release-shield]: https://img.shields.io/github/release/prohor-analytics/prohor-analytics.svg
+[releases-url]: https://github.com/prohor-analytics/prohor-analytics/releases
+[license-shield]: https://img.shields.io/github/license/prohor-analytics/prohor-analytics.svg
+[license-url]: https://github.com/prohor-analytics/prohor-analytics/blob/master/LICENSE
 [github-shield]: https://img.shields.io/badge/GitHub--blue?style=social&logo=github
-[github-url]: https://github.com/umami-software/umami
+[github-url]: https://github.com/prohor-analytics/prohor-analytics
 [twitter-shield]: https://img.shields.io/badge/Twitter--blue?style=social&logo=twitter
-[twitter-url]: https://twitter.com/umami_software
-[linkedin-shield]: https://img.shields.io/badge/LinkedIn--blue?style=social&logo=linkedin
-[linkedin-url]: https://linkedin.com/company/umami-software
-[discord-shield]: https://img.shields.io/badge/Discord--blue?style=social&logo=discord
-[discord-url]: https://discord.com/invite/4dz4zcXYrQ
+[twitter-url]: https://twitter.com/prohor_analytics

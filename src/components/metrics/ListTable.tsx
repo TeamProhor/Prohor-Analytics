@@ -1,11 +1,11 @@
-import { config, useSpring } from '@react-spring/web';
-import { Column, Grid, Row, Text } from '@umami/react-zen';
-import type { ReactNode } from 'react';
-import { FixedSizeList } from 'react-window';
-import { AnimatedDiv } from '@/components/common/AnimatedDiv';
-import { Empty } from '@/components/common/Empty';
-import { useMessages, useMobile } from '@/components/hooks';
-import { formatLongNumber } from '@/lib/format';
+import { config, useSpring } from "@react-spring/web";
+import { Column, Grid, Row, Text } from "@umami/react-zen";
+import type { ReactNode } from "react";
+import { FixedSizeList } from "react-window";
+import { AnimatedDiv } from "@/components/common/AnimatedDiv";
+import { Empty } from "@/components/common/Empty";
+import { useMessages, useMobile } from "@/components/hooks";
+import { formatLongNumber } from "@/lib/format";
 
 const ITEM_SIZE = 30;
 
@@ -50,7 +50,9 @@ export function ListTable({
     return (
       <AnimatedRow
         key={`${label}${index}`}
-        label={renderLabel ? renderLabel(row, index) : (label ?? t(labels.unknown))}
+        label={
+          renderLabel ? renderLabel(row, index) : (label ?? t(labels.unknown))
+        }
         value={count}
         percent={percent}
         animate={animate && !virtualize}
@@ -72,7 +74,7 @@ export function ListTable({
         alignItems="center"
         justifyContent="space-between"
         paddingLeft="2"
-        columns={'1fr 100px'}
+        columns={"1fr 100px"}
       >
         <Text weight="bold">{title}</Text>
         <Text weight="bold" align="center">
@@ -117,27 +119,29 @@ const AnimatedRow = ({
 
   return (
     <Grid
-      columns={showPercentage ? '1fr 50px 50px' : '1fr 100px'}
+      columns={showPercentage ? "1fr 50px 50px" : "1fr 100px"}
       paddingLeft="2"
       alignItems="center"
       borderRadius
       gap
-      hover={{ backgroundColor: 'surface-sunken' }}
+      hover={{ backgroundColor: "surface-sunken" }}
     >
       <Row alignItems="center">
-        <Text truncate={true} style={{ maxWidth: isPhone ? '200px' : '400px' }}>
+        <Text truncate={true} style={{ maxWidth: isPhone ? "200px" : "400px" }}>
           {label}
         </Text>
       </Row>
       <Row
         alignItems="center"
         height="30px"
-        justifyContent={showPercentage ? 'flex-end' : 'center'}
+        justifyContent={showPercentage ? "flex-end" : "center"}
       >
         {change}
         <Text weight="bold">
           <AnimatedDiv title={props?.y as any}>
-            {formatCount ? props.y?.to(formatCount) : props.y?.to(formatLongNumber)}
+            {formatCount
+              ? props.y?.to(formatCount)
+              : props.y?.to(formatLongNumber)}
           </AnimatedDiv>
         </Text>
       </Row>
@@ -151,7 +155,9 @@ const AnimatedRow = ({
           color="muted"
           paddingLeft="3"
         >
-          <AnimatedDiv>{props.width.to(n => `${n?.toFixed?.(0)}%`)}</AnimatedDiv>
+          <AnimatedDiv>
+            {props.width.to((n) => `${n?.toFixed?.(0)}%`)}
+          </AnimatedDiv>
         </Row>
       )}
     </Grid>

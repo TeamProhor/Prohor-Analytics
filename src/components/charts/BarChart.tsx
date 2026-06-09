@@ -1,25 +1,25 @@
-import { useTheme } from '@umami/react-zen';
-import { memo, useCallback, useMemo, useState } from 'react';
-import { Chart, type ChartProps } from '@/components/charts/Chart';
-import { ChartTooltip } from '@/components/charts/ChartTooltip';
-import { useLocale } from '@/components/hooks';
-import { renderNumberLabels } from '@/lib/charts';
-import { getThemeColors } from '@/lib/colors';
-import { DATE_FORMATS, formatDate } from '@/lib/date';
-import { formatLongCurrency, formatLongNumber } from '@/lib/format';
+import { useTheme } from "@umami/react-zen";
+import { memo, useCallback, useMemo, useState } from "react";
+import { Chart, type ChartProps } from "@/components/charts/Chart";
+import { ChartTooltip } from "@/components/charts/ChartTooltip";
+import { useLocale } from "@/components/hooks";
+import { renderNumberLabels } from "@/lib/charts";
+import { getThemeColors } from "@/lib/colors";
+import { DATE_FORMATS, formatDate } from "@/lib/date";
+import { formatLongCurrency, formatLongNumber } from "@/lib/format";
 
 const MemoChart = memo(Chart);
 
 const dateFormats = {
-  millisecond: 'T',
-  second: 'pp',
-  minute: 'p',
-  hour: 'p - PP',
-  day: 'PPPP',
-  week: 'PPPP',
-  month: 'LLLL yyyy',
-  quarter: 'qqq',
-  year: 'yyyy',
+  millisecond: "T",
+  second: "pp",
+  minute: "p",
+  hour: "p - PP",
+  day: "PPPP",
+  week: "PPPP",
+  month: "LLLL yyyy",
+  quarter: "qqq",
+  year: "yyyy",
 };
 
 export interface BarChartProps extends ChartProps {
@@ -45,8 +45,8 @@ function BarChartComponent({
   renderXLabel,
   renderYLabel,
   unit,
-  XAxisType = 'timeseries',
-  YAxisType = 'linear',
+  XAxisType = "timeseries",
+  YAxisType = "linear",
   stacked = false,
   minDate,
   maxDate,
@@ -121,7 +121,11 @@ function BarChartComponent({
       const nextTooltip = opacity
         ? {
             title: formatDate(
-              new Date(dataPoints[0].raw?.d || dataPoints[0].raw?.x || dataPoints[0].raw),
+              new Date(
+                dataPoints[0].raw?.d ||
+                  dataPoints[0].raw?.x ||
+                  dataPoints[0].raw,
+              ),
               dateFormats[unit],
               locale,
             ),
@@ -132,7 +136,7 @@ function BarChartComponent({
           }
         : null;
 
-      setTooltip(prev => {
+      setTooltip((prev) => {
         if (
           prev?.title === nextTooltip?.title &&
           prev?.color === nextTooltip?.color &&
@@ -163,4 +167,4 @@ function BarChartComponent({
 
 export const BarChart = memo(BarChartComponent);
 
-BarChart.displayName = 'BarChart';
+BarChart.displayName = "BarChart";

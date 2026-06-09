@@ -1,5 +1,5 @@
-import { getItem, removeItem, setItem } from '@/lib/storage';
-import { AUTH_TOKEN } from './constants';
+import { getItem, removeItem, setItem } from "@/lib/storage";
+import { AUTH_TOKEN } from "./constants";
 
 export function getClientAuthToken() {
   return getItem(AUTH_TOKEN);

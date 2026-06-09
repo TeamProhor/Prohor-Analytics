@@ -1,7 +1,13 @@
-import { Button, DataColumn, DataTable, type DataTableProps, Icon } from '@umami/react-zen';
-import { Play } from 'lucide-react';
-import { DateDistance } from '@/components/common/DateDistance';
-import { useMessages, useNavigation } from '@/components/hooks';
+import {
+  Button,
+  DataColumn,
+  DataTable,
+  type DataTableProps,
+  Icon,
+} from "@umami/react-zen";
+import { Play } from "lucide-react";
+import { DateDistance } from "@/components/common/DateDistance";
+import { useMessages, useNavigation } from "@/components/hooks";
 
 export function SavedReplaysTable({ ...props }: DataTableProps) {
   const { t, labels } = useMessages();

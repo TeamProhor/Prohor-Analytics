@@ -1,17 +1,19 @@
-import { z } from 'zod';
-import { isValidTimezone, normalizeTimezone } from '@/lib/date';
-import { UNIT_TYPES } from './constants';
+import { z } from "zod";
+import { isValidTimezone, normalizeTimezone } from "@/lib/date";
+import { UNIT_TYPES } from "./constants";
 
 export const timezoneParam = z
   .string()
   .refine((value: string) => isValidTimezone(value), {
-    message: 'Invalid timezone',
+    message: "Invalid timezone",
   })
   .transform((value: string) => normalizeTimezone(value));
 
-export const unitParam = z.string().refine(value => UNIT_TYPES.includes(value), {
-  message: 'Invalid unit',
-});
+export const unitParam = z
+  .string()
+  .refine((value) => UNIT_TYPES.includes(value), {
+    message: "Invalid unit",
+  });
 
 export const dateRangeParams = {
   startAt: z.coerce.number().optional(),
@@ -20,7 +22,7 @@ export const dateRangeParams = {
   endDate: z.coerce.date().optional(),
   timezone: timezoneParam.optional(),
   unit: unitParam.optional(),
-  compare: z.enum(['prev', 'yoy']).optional(),
+  compare: z.enum(["prev", "yoy"]).optional(),
 };
 
 export function withDateRange<T extends z.ZodRawShape>(shape?: T) {
@@ -36,7 +38,7 @@ export function withDateRange<T extends z.ZodRawShape>(shape?: T) {
       if (!hasTimestamps && !hasDates) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Either startAt+endAt or startDate+endDate must be provided',
+          message: "Either startAt+endAt or startDate+endDate must be provided",
         });
       }
     });
@@ -67,7 +69,7 @@ export const filterParams = {
   cohort: z.uuid().optional(),
   eventType: z.coerce.number().int().positive().optional(),
   excludeBounce: z.string().optional(),
-  match: z.enum(['all', 'any']).optional(),
+  match: z.enum(["all", "any"]).optional(),
 };
 
 export const searchParams = {
@@ -83,93 +85,96 @@ export const sortingParams = {
   orderBy: z.string().optional(),
 };
 
-export const userRoleParam = z.enum(['admin', 'user', 'view-only']);
+export const userRoleParam = z.enum(["admin", "user", "view-only"]);
 
-export const teamRoleParam = z.enum(['team-member', 'team-view-only', 'team-manager']);
+export const teamRoleParam = z.enum([
+  "team-member",
+  "team-view-only",
+  "team-manager",
+]);
 
 export const anyObjectParam = z.record(z.string(), z.any());
 
 export const urlOrPathParam = z.string().refine(
-  value => {
+  (value) => {
     try {
-      new URL(value, 'https://localhost');
+      new URL(value, "https://localhost");
       return true;
     } catch {
       return false;
     }
   },
   {
-    message: 'Invalid URL.',
+    message: "Invalid URL.",
   },
 );
 
 export const fieldsParam = z.enum([
-  'path',
-  'referrer',
-  'title',
-  'query',
-  'os',
-  'browser',
-  'device',
-  'country',
-  'region',
-  'city',
-  'tag',
-  'hostname',
-  'distinctId',
-  'language',
-  'event',
-  'utmSource',
-  'utmMedium',
-  'utmCampaign',
-  'utmContent',
-  'utmTerm',
+  "path",
+  "referrer",
+  "title",
+  "query",
+  "os",
+  "browser",
+  "device",
+  "country",
+  "region",
+  "city",
+  "tag",
+  "hostname",
+  "distinctId",
+  "language",
+  "event",
+  "utmSource",
+  "utmMedium",
+  "utmCampaign",
+  "utmContent",
+  "utmTerm",
 ]);
 
 export const reportTypeParam = z.enum([
-  'attribution',
-  'breakdown',
-  'funnel',
-  'goal',
-  'journey',
-  'performance',
-  'retention',
-  'revenue',
-  'utm',
+  "attribution",
+  "breakdown",
+  "funnel",
+  "goal",
+  "journey",
+  "performance",
+  "retention",
+  "revenue",
+  "utm",
 ]);
 
 export const operatorParam = z.enum([
-  'eq',
-  'neq',
-  's',
-  'ns',
-  'c',
-  'dnc',
-  're',
-  'nre',
-  't',
-  'f',
-  'gt',
-  'lt',
-  'gte',
-  'lte',
-  'bf',
-  'af',
+  "eq",
+  "neq",
+  "s",
+  "ns",
+  "c",
+  "dnc",
+  "re",
+  "nre",
+  "t",
+  "f",
+  "gt",
+  "lt",
+  "gte",
+  "lte",
+  "bf",
+  "af",
 ]);
 
 export const goalReportSchema = z.object({
-  type: z.literal('goal'),
-  parameters: z
-    .object({
-      startDate: z.coerce.date(),
-      endDate: z.coerce.date(),
-      type: z.string(),
-      value: z.string(),
-    }),
+  type: z.literal("goal"),
+  parameters: z.object({
+    startDate: z.coerce.date(),
+    endDate: z.coerce.date(),
+    type: z.string(),
+    value: z.string(),
+  }),
 });
 
 export const funnelReportSchema = z.object({
-  type: z.literal('funnel'),
+  type: z.literal("funnel"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
@@ -177,13 +182,13 @@ export const funnelReportSchema = z.object({
     steps: z
       .array(
         z.object({
-          type: z.enum(['path', 'event']),
+          type: z.enum(["path", "event"]),
           value: z.string(),
           filters: z
             .array(
               z.object({
                 property: z.string().min(1),
-                operator: z.enum(['eq', 'neq', 'c', 'dnc']),
+                operator: z.enum(["eq", "neq", "c", "dnc"]),
                 value: z.string(),
               }),
             )
@@ -196,7 +201,7 @@ export const funnelReportSchema = z.object({
 });
 
 export const journeyReportSchema = z.object({
-  type: z.literal('journey'),
+  type: z.literal("journey"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
@@ -208,7 +213,7 @@ export const journeyReportSchema = z.object({
 });
 
 export const retentionReportSchema = z.object({
-  type: z.literal('retention'),
+  type: z.literal("retention"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
@@ -217,7 +222,7 @@ export const retentionReportSchema = z.object({
 });
 
 export const utmReportSchema = z.object({
-  type: z.literal('utm'),
+  type: z.literal("utm"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
@@ -225,42 +230,42 @@ export const utmReportSchema = z.object({
 });
 
 export const performanceReportSchema = z.object({
-  type: z.literal('performance'),
+  type: z.literal("performance"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
     unit: unitParam.optional(),
     timezone: timezoneParam.optional(),
-    metric: z.enum(['lcp', 'inp', 'cls', 'fcp', 'ttfb']).optional(),
+    metric: z.enum(["lcp", "inp", "cls", "fcp", "ttfb"]).optional(),
   }),
 });
 
 export const revenueReportSchema = z.object({
-  type: z.literal('revenue'),
+  type: z.literal("revenue"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
     unit: unitParam.optional(),
     timezone: timezoneParam.optional(),
     currency: z.string(),
-    compare: z.enum(['prev', 'yoy']).optional(),
+    compare: z.enum(["prev", "yoy"]).optional(),
   }),
 });
 
 export const attributionReportSchema = z.object({
-  type: z.literal('attribution'),
+  type: z.literal("attribution"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
-    model: z.enum(['first-click', 'last-click']),
-    type: z.enum(['path', 'event']),
+    model: z.enum(["first-click", "last-click"]),
+    type: z.enum(["path", "event"]),
     step: z.string(),
     currency: z.string().optional(),
   }),
 });
 
 export const breakdownReportSchema = z.object({
-  type: z.literal('breakdown'),
+  type: z.literal("breakdown"),
   parameters: z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
@@ -276,7 +281,7 @@ export const reportBaseSchema = z.object({
   parameters: anyObjectParam,
 });
 
-export const reportTypeSchema = z.discriminatedUnion('type', [
+export const reportTypeSchema = z.discriminatedUnion("type", [
   goalReportSchema,
   funnelReportSchema,
   journeyReportSchema,
@@ -298,7 +303,7 @@ export const reportResultSchema = z.intersection(
   reportTypeSchema,
 );
 
-export const segmentTypeParam = z.enum(['segment', 'cohort']);
+export const segmentTypeParam = z.enum(["segment", "cohort"]);
 
 export const segmentParamSchema = z.object({
   filters: z
@@ -310,7 +315,7 @@ export const segmentParamSchema = z.object({
       }),
     )
     .optional(),
-  match: z.enum(['all', 'any']).optional(),
+  match: z.enum(["all", "any"]).optional(),
   dateRange: z.string().optional(),
   action: z
     .object({

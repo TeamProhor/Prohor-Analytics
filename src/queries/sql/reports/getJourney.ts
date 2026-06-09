@@ -1,5 +1,5 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 export interface JourneyParameters {
   startDate: Date;
@@ -21,7 +21,11 @@ export interface JourneyResult {
 }
 
 export async function getJourney(
-  ...args: [websiteId: string, parameters: JourneyParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: JourneyParameters,
+    filters: QueryFilters,
+  ]
 ) {
   return relationalQuery(...args);
 }
@@ -33,17 +37,15 @@ async function relationalQuery(
 ): Promise<JourneyResult[]> {
   const { startDate, endDate, steps, startStep, endStep } = parameters;
   const { rawQuery, parseFilters } = prisma;
-  const { sequenceQuery, startStepQuery, endStepQuery, params } = getJourneyQuery(
-    steps,
-    startStep,
-    endStep,
-  );
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
-    ...filters,
-    websiteId,
-    startDate,
-    endDate,
-  });
+  const { sequenceQuery, startStepQuery, endStepQuery, params } =
+    getJourneyQuery(steps, startStep, endStep);
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+      startDate,
+      endDate,
+    });
 
   function getJourneyQuery(
     steps: number,
@@ -56,17 +58,17 @@ async function relationalQuery(
     params: Record<string, string>;
   } {
     const params: { startStep?: string; endStep?: string } = {};
-    let sequenceQuery = '';
-    let startStepQuery = '';
-    let endStepQuery = '';
+    let sequenceQuery = "";
+    let startStepQuery = "";
+    let endStepQuery = "";
 
     // create sequence query
-    let selectQuery = '';
-    let maxQuery = '';
-    let groupByQuery = '';
+    let selectQuery = "";
+    let maxQuery = "";
+    let groupByQuery = "";
 
     for (let i = 1; i <= steps; i++) {
-      const endQuery = i < steps ? ',' : '';
+      const endQuery = i < steps ? "," : "";
       selectQuery += `s.e${i},`;
       maxQuery += `\nmax(CASE WHEN event_number = ${i} THEN "event" ELSE NULL END) AS e${i}${endQuery}`;
       groupByQuery += `s.e${i}${endQuery} `;
@@ -92,7 +94,7 @@ async function relationalQuery(
     // create end Step params query
     if (endStep) {
       for (let i = 1; i < steps; i++) {
-        const startQuery = i === 1 ? 'and (' : '\nor ';
+        const startQuery = i === 1 ? "and (" : "\nor ";
         endStepQuery += `${startQuery}(e${i} = {{endStep}} and e${i + 1} is null) `;
       }
       endStepQuery += `\nor (e${steps} = {{endStep}}))`;
@@ -137,8 +139,6 @@ async function relationalQuery(
     },
   ).then(parseResult);
 }
-
-
 
 function combineSequentialDuplicates(array: any) {
   if (array.length === 0) return array;

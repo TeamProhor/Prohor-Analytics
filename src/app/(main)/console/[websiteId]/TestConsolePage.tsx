@@ -1,38 +1,38 @@
-'use client';
-import { Button, Column, Grid, Heading } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import Script from 'next/script';
-import { WebsiteChart } from '@/app/(main)/websites/[websiteId]/WebsiteChart';
-import { PageBody } from '@/components/common/PageBody';
-import { PageHeader } from '@/components/common/PageHeader';
-import { Panel } from '@/components/common/Panel';
-import { useWebsiteQuery } from '@/components/hooks';
-import { EventsChart } from '@/components/metrics/EventsChart';
+"use client";
+import { Button, Column, Grid, Heading } from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import Script from "next/script";
+import { WebsiteChart } from "@/app/(main)/websites/[websiteId]/WebsiteChart";
+import { PageBody } from "@/components/common/PageBody";
+import { PageHeader } from "@/components/common/PageHeader";
+import { Panel } from "@/components/common/Panel";
+import { useWebsiteQuery } from "@/components/hooks";
+import { EventsChart } from "@/components/metrics/EventsChart";
 
 export function TestConsolePage({ websiteId }: { websiteId: string }) {
   const { data } = useWebsiteQuery(websiteId);
 
   function handleRunScript() {
-    window.umami.track(props => ({
+    window.umami.track((props) => ({
       ...props,
-      url: '/page-view',
-      referrer: 'https://www.google.com',
+      url: "/page-view",
+      referrer: "https://www.google.com",
     }));
-    window.umami.track('track-event-no-data');
-    window.umami.track('track-event-with-data', {
-      test: 'test-data',
+    window.umami.track("track-event-no-data");
+    window.umami.track("track-event-with-data", {
+      test: "test-data",
       boolean: true,
-      booleanError: 'true',
+      booleanError: "true",
       time: new Date(),
       user: `user${Math.round(Math.random() * 10)}`,
       number: 1,
       number2: Math.random() * 100,
       time2: new Date().toISOString(),
       nested: {
-        test: 'test-data',
+        test: "test-data",
         number: 1,
         object: {
-          test: 'test-data',
+          test: "test-data",
         },
       },
       array: [1, 2, 3],
@@ -40,41 +40,41 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
   }
 
   function handleRunRevenue() {
-    window.umami.track(props => ({
+    window.umami.track((props) => ({
       ...props,
-      url: '/checkout-cart',
-      referrer: 'https://www.google.com',
+      url: "/checkout-cart",
+      referrer: "https://www.google.com",
     }));
-    window.umami.track('checkout-cart', {
+    window.umami.track("checkout-cart", {
       revenue: parseFloat((Math.random() * 1000).toFixed(2)),
-      currency: 'USD',
+      currency: "USD",
     });
-    window.umami.track('affiliate-link', {
+    window.umami.track("affiliate-link", {
       revenue: parseFloat((Math.random() * 1000).toFixed(2)),
-      currency: 'USD',
+      currency: "USD",
     });
-    window.umami.track('promotion-link', {
+    window.umami.track("promotion-link", {
       revenue: parseFloat((Math.random() * 1000).toFixed(2)),
-      currency: 'USD',
+      currency: "USD",
     });
-    window.umami.track('checkout-cart', {
+    window.umami.track("checkout-cart", {
       revenue: parseFloat((Math.random() * 1000).toFixed(2)),
-      currency: 'EUR',
+      currency: "EUR",
     });
-    window.umami.track('promotion-link', {
+    window.umami.track("promotion-link", {
       revenue: parseFloat((Math.random() * 1000).toFixed(2)),
-      currency: 'EUR',
+      currency: "EUR",
     });
-    window.umami.track('affiliate-link', {
+    window.umami.track("affiliate-link", {
       item1: {
-        productIdentity: 'ABC424',
+        productIdentity: "ABC424",
         revenue: parseFloat((Math.random() * 10000).toFixed(2)),
-        currency: 'JPY',
+        currency: "JPY",
       },
       item2: {
-        productIdentity: 'ZYW684',
+        productIdentity: "ZYW684",
         revenue: parseFloat((Math.random() * 10000).toFixed(2)),
-        currency: 'JPY',
+        currency: "JPY",
       },
     });
   }
@@ -82,18 +82,18 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
   function handleRunIdentify() {
     window.umami.identify({
       userId: 123,
-      name: 'brian',
+      name: "brian",
       number: Math.random() * 100,
-      test: 'test-data',
+      test: "test-data",
       boolean: true,
-      booleanError: 'true',
+      booleanError: "true",
       time: new Date(),
       time2: new Date().toISOString(),
       nested: {
-        test: 'test-data',
+        test: "test-data",
         number: 1,
         object: {
-          test: 'test-data',
+          test: "test-data",
         },
       },
       array: [1, 2, 3],
@@ -113,14 +113,14 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
         <Script
           async
           data-website-id={websiteId}
-          src={`${process.env.basePath || ''}/script.js`}
+          src={`${process.env.basePath || ""}/script.js`}
           data-cache="true"
           data-performance="true"
         />
         <Script
           async
           data-website-id={websiteId}
-          src={`${process.env.basePath || ''}/recorder.js`}
+          src={`${process.env.basePath || ""}/recorder.js`}
         />
         <Panel>
           <Grid columns="1fr 1fr 1fr" gap>
@@ -133,7 +133,10 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
                 <Link href={`/console/${websiteId}?page=2 `}>page two</Link>
               </div>
               <div>
-                <a href="https://www.google.com" data-umami-event="external-link-direct">
+                <a
+                  href="https://www.google.com"
+                  data-umami-event="external-link-direct"
+                >
                   external link (direct)
                 </a>
               </div>
@@ -150,7 +153,11 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
             </Column>
             <Column gap>
               <Heading>Click events</Heading>
-              <Button id="send-event-button" data-umami-event="button-click" variant="primary">
+              <Button
+                id="send-event-button"
+                data-umami-event="button-click"
+                variant="primary"
+              >
                 Send event
               </Button>
               <Button
@@ -165,7 +172,9 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
               <Button
                 id="generate-revenue-button"
                 data-umami-event="checkout-cart"
-                data-umami-event-revenue={(Math.random() * 10000).toFixed(2).toString()}
+                data-umami-event-revenue={(Math.random() * 10000)
+                  .toFixed(2)
+                  .toString()}
                 data-umami-event-currency="USD"
                 variant="primary"
               >
@@ -174,7 +183,7 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
               <Button
                 id="button-with-div-button"
                 data-umami-event="button-click"
-                data-umami-event-name={'bob'}
+                data-umami-event-name={"bob"}
                 data-umami-event-id="123"
                 variant="primary"
               >
@@ -189,13 +198,25 @@ export function TestConsolePage({ websiteId }: { websiteId: string }) {
             </Column>
             <Column gap>
               <Heading>Javascript events</Heading>
-              <Button id="manual-button" variant="primary" onClick={handleRunScript}>
+              <Button
+                id="manual-button"
+                variant="primary"
+                onClick={handleRunScript}
+              >
                 Run script
               </Button>
-              <Button id="manual-button" variant="primary" onClick={handleRunIdentify}>
+              <Button
+                id="manual-button"
+                variant="primary"
+                onClick={handleRunIdentify}
+              >
                 Run identify
               </Button>
-              <Button id="manual-button" variant="primary" onClick={handleRunRevenue}>
+              <Button
+                id="manual-button"
+                variant="primary"
+                onClick={handleRunRevenue}
+              >
                 Revenue script
               </Button>
             </Column>

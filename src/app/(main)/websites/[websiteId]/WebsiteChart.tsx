@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useDateRange, useTimezone } from '@/components/hooks';
-import { useWebsitePageviewsQuery } from '@/components/hooks/queries/useWebsitePageviewsQuery';
-import { PageviewsChart } from '@/components/metrics/PageviewsChart';
+import { useMemo } from "react";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { useDateRange, useTimezone } from "@/components/hooks";
+import { useWebsitePageviewsQuery } from "@/components/hooks/queries/useWebsitePageviewsQuery";
+import { PageviewsChart } from "@/components/metrics/PageviewsChart";
 
 export function WebsiteChart({
   websiteId,
@@ -46,7 +46,12 @@ export function WebsiteChart({
   }, [data, startDate, endDate, unit]);
 
   return (
-    <LoadingPanel data={data} isFetching={isFetching} isLoading={isLoading} error={error}>
+    <LoadingPanel
+      data={data}
+      isFetching={isFetching}
+      isLoading={isLoading}
+      error={error}
+    >
       <PageviewsChart
         key={value}
         data={chartData}

@@ -1,8 +1,8 @@
-import { useApi } from '../useApi';
-import { useDateParameters } from '../useDateParameters';
-import { useFilterParameters } from '../useFilterParameters';
-import { useModified } from '../useModified';
-import { usePagedQuery } from '../usePagedQuery';
+import { useApi } from "../useApi";
+import { useDateParameters } from "../useDateParameters";
+import { useFilterParameters } from "../useFilterParameters";
+import { useModified } from "../useModified";
+import { usePagedQuery } from "../usePagedQuery";
 
 export function useRevenueSessionsQuery(
   websiteId: string,
@@ -16,10 +16,20 @@ export function useRevenueSessionsQuery(
 
   return usePagedQuery({
     queryKey: [
-      'revenue-sessions',
-      { websiteId, currency, modified, startAt, endAt, unit, timezone, ...params, ...filters },
+      "revenue-sessions",
+      {
+        websiteId,
+        currency,
+        modified,
+        startAt,
+        endAt,
+        unit,
+        timezone,
+        ...params,
+        ...filters,
+      },
     ],
-    queryFn: pageParams => {
+    queryFn: (pageParams) => {
       return get(`/websites/${websiteId}/revenue/sessions`, {
         currency,
         startAt,

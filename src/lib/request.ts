@@ -1,13 +1,18 @@
-import { startOfMonth, subMonths } from 'date-fns';
-import { z } from 'zod';
-import { checkAuth } from '@/lib/auth';
-import { DEFAULT_PAGE_SIZE, FILTER_COLUMNS, OPERATORS } from '@/lib/constants';
-import { getAllowedUnits, getMinimumUnit, maxDate, parseDateRange } from '@/lib/date';
-import { fetchAccount, fetchWebsite } from '@/lib/load';
-import { filtersArrayToObject } from '@/lib/params';
-import { badRequest, unauthorized } from '@/lib/response';
-import type { QueryFilters } from '@/lib/types';
-import { getWebsiteSegment } from '@/queries/prisma';
+import { startOfMonth, subMonths } from "date-fns";
+import { z } from "zod";
+import { checkAuth } from "@/lib/auth";
+import { DEFAULT_PAGE_SIZE, FILTER_COLUMNS, OPERATORS } from "@/lib/constants";
+import {
+  getAllowedUnits,
+  getMinimumUnit,
+  maxDate,
+  parseDateRange,
+} from "@/lib/date";
+import { fetchAccount, fetchWebsite } from "@/lib/load";
+import { filtersArrayToObject } from "@/lib/params";
+import { badRequest, unauthorized } from "@/lib/response";
+import type { QueryFilters } from "@/lib/types";
+import { getWebsiteSegment } from "@/queries/prisma";
 
 export async function parseRequest(
   request: Request,
@@ -21,7 +26,7 @@ export async function parseRequest(
   let auth = null;
 
   if (schema) {
-    const isGet = request.method === 'GET';
+    const isGet = request.method === "GET";
     const rawQuery = query;
     const result = schema.safeParse(isGet ? query : body);
 
@@ -80,7 +85,7 @@ export function getRequestFilters(query: Record<string, any>) {
   const result: Record<string, any> = {};
 
   for (const key of Object.keys(query)) {
-    const baseName = key.replace(/\d+$/, '');
+    const baseName = key.replace(/\d+$/, "");
     if (baseName in FILTER_COLUMNS) {
       result[key] = query[key];
     }
@@ -89,7 +94,10 @@ export function getRequestFilters(query: Record<string, any>) {
   return result;
 }
 
-export async function setWebsiteDate(websiteId: string, data: Record<string, any>) {
+export async function setWebsiteDate(
+  websiteId: string,
+  data: Record<string, any>,
+) {
   const website = await fetchWebsite(websiteId);
   const cloudMode = !!process.env.CLOUD_MODE;
 
@@ -97,7 +105,10 @@ export async function setWebsiteDate(websiteId: string, data: Record<string, any
     const account = await fetchAccount(website.userId);
 
     if (!account?.hasSubscription) {
-      data.startDate = maxDate(data.startDate, startOfMonth(subMonths(new Date(), 6)));
+      data.startDate = maxDate(
+        data.startDate,
+        startOfMonth(subMonths(new Date(), 6)),
+      );
     }
   }
 
@@ -169,7 +180,9 @@ export async function getQueryFilters(
     ...filters,
     match,
     page: params?.page,
-    pageSize: params?.pageSize ? params?.pageSize || DEFAULT_PAGE_SIZE : undefined,
+    pageSize: params?.pageSize
+      ? params?.pageSize || DEFAULT_PAGE_SIZE
+      : undefined,
     orderBy: params?.orderBy,
     sortDescending: params?.sortDescending,
     search: params?.search,

@@ -1,5 +1,5 @@
-import { Box, ToggleGroup, ToggleGroupItem } from '@umami/react-zen';
-import { useState } from 'react';
+import { Box, ToggleGroup, ToggleGroupItem } from "@umami/react-zen";
+import { useState } from "react";
 
 export interface FilterButtonsProps {
   items: { id: string; label: string }[];
@@ -19,7 +19,7 @@ export function FilterButtons({ items, value, onChange }: FilterButtonsProps) {
     <Box>
       <ToggleGroup
         value={[selected]}
-        onChange={e => handleChange(e[0])}
+        onChange={(e) => handleChange(e[0])}
         disallowEmptySelection={true}
       >
         {items.map(({ id, label }) => (

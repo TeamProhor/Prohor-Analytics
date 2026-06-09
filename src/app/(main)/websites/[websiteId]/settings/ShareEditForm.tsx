@@ -11,10 +11,15 @@ import {
   Row,
   Text,
   TextField,
-} from '@umami/react-zen';
-import { useEffect, useState } from 'react';
-import { useApi, useConfig, useMessages, useModified } from '@/components/hooks';
-import { SHARE_NAV_ITEMS } from './constants';
+} from "@umami/react-zen";
+import { useEffect, useState } from "react";
+import {
+  useApi,
+  useConfig,
+  useMessages,
+  useModified,
+} from "@/components/hooks";
+import { SHARE_NAV_ITEMS } from "./constants";
 
 export function ShareEditForm({
   shareId,
@@ -31,7 +36,7 @@ export function ShareEditForm({
   const { cloudMode } = useConfig();
   const { get, post } = useApi();
   const { touch } = useModified();
-  const { modified } = useModified('shares');
+  const { modified } = useModified("shares");
   const [share, setShare] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(!!shareId);
   const [isPending, setIsPending] = useState(false);
@@ -40,7 +45,7 @@ export function ShareEditForm({
   const isEditing = !!shareId;
 
   const getUrl = (slug: string) => {
-    return `${cloudMode ? process.env.cloudUrl : window?.location.origin}${process.env.basePath || ''}/share/${slug}`;
+    return `${cloudMode ? process.env.cloudUrl : window?.location.origin}${process.env.basePath || ""}/share/${slug}`;
   };
 
   useEffect(() => {
@@ -60,8 +65,8 @@ export function ShareEditForm({
 
   const handleSubmit = async (data: any) => {
     const parameters: Record<string, boolean> = {};
-    SHARE_NAV_ITEMS.forEach(section => {
-      section.items.forEach(item => {
+    SHARE_NAV_ITEMS.forEach((section) => {
+      section.items.forEach((item) => {
         parameters[item.id] = data[item.id] ?? false;
       });
     });
@@ -82,7 +87,7 @@ export function ShareEditForm({
           parameters,
         });
       }
-      touch('shares');
+      touch("shares");
       onSave?.();
       onClose?.();
     } catch (e) {
@@ -96,27 +101,33 @@ export function ShareEditForm({
     return <Loading placement="absolute" />;
   }
 
-  const url = isEditing ? getUrl(share?.slug || '') : null;
+  const url = isEditing ? getUrl(share?.slug || "") : null;
 
   // Build default values from share parameters
   const defaultValues: Record<string, any> = {
-    name: share?.name || '',
+    name: share?.name || "",
   };
-  SHARE_NAV_ITEMS.forEach(section => {
-    section.items.forEach(item => {
-      const defaultSelected = item.id === 'overview' || item.id === 'events';
+  SHARE_NAV_ITEMS.forEach((section) => {
+    section.items.forEach((item) => {
+      const defaultSelected = item.id === "overview" || item.id === "events";
       defaultValues[item.id] = share?.parameters?.[item.id] ?? defaultSelected;
     });
   });
 
   // Get all item ids for validation
-  const allItemIds = SHARE_NAV_ITEMS.flatMap(section => section.items.map(item => item.id));
+  const allItemIds = SHARE_NAV_ITEMS.flatMap((section) =>
+    section.items.map((item) => item.id),
+  );
 
   return (
-    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} defaultValues={defaultValues}>
+    <Form
+      onSubmit={handleSubmit}
+      error={getErrorMessage(error)}
+      defaultValues={defaultValues}
+    >
       {({ watch }) => {
         const values = watch();
-        const hasSelection = allItemIds.some(id => values[id]);
+        const hasSelection = allItemIds.some((id) => values[id]);
 
         return (
           <Column gap="6">
@@ -126,15 +137,21 @@ export function ShareEditForm({
                 <TextField value={url} isReadOnly allowCopy />
               </Column>
             )}
-            <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
+            <FormField
+              label={t(labels.name)}
+              name="name"
+              rules={{ required: t(labels.required) }}
+            >
               <TextField autoComplete="off" autoFocus={!isEditing} />
             </FormField>
             <Grid columns="repeat(auto-fit, minmax(150px, 1fr))" gap="3">
-              {SHARE_NAV_ITEMS.map(section => (
+              {SHARE_NAV_ITEMS.map((section) => (
                 <Column key={section.section} gap="3">
-                  <Text weight="bold">{t((labels as any)[section.section])}</Text>
+                  <Text weight="bold">
+                    {t((labels as any)[section.section])}
+                  </Text>
                   <Column gap="1">
-                    {section.items.map(item => (
+                    {section.items.map((item) => (
                       <FormField key={item.id} name={item.id}>
                         <Checkbox>{t((labels as any)[item.label])}</Checkbox>
                       </FormField>

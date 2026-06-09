@@ -1,13 +1,15 @@
-import { useMemo } from 'react';
-import { useLocale } from '@/components/hooks/useLocale';
-import { useNavigation } from '@/components/hooks/useNavigation';
-import { DATE_RANGE_CONFIG, DEFAULT_DATE_RANGE_VALUE } from '@/lib/constants';
-import { getCompareDate, getOffsetDateRange, parseDateRange } from '@/lib/date';
-import { getItem } from '@/lib/storage';
+import { useMemo } from "react";
+import { useLocale } from "@/components/hooks/useLocale";
+import { useNavigation } from "@/components/hooks/useNavigation";
+import { DATE_RANGE_CONFIG, DEFAULT_DATE_RANGE_VALUE } from "@/lib/constants";
+import { getCompareDate, getOffsetDateRange, parseDateRange } from "@/lib/date";
+import { getItem } from "@/lib/storage";
 
-export function useDateRange(options: { ignoreOffset?: boolean; timezone?: string } = {}) {
+export function useDateRange(
+  options: { ignoreOffset?: boolean; timezone?: string } = {},
+) {
   const {
-    query: { date = '', unit = '', offset = 0, compare = 'prev' },
+    query: { date = "", unit = "", offset = 0, compare = "prev" },
   } = useNavigation();
   const { locale } = useLocale();
   const dateRange = useMemo(() => {
@@ -23,7 +25,11 @@ export function useDateRange(options: { ignoreOffset?: boolean; timezone?: strin
       : dateRangeObject;
   }, [date, unit, offset, options]);
 
-  const dateCompare = getCompareDate(compare, dateRange.startDate, dateRange.endDate);
+  const dateCompare = getCompareDate(
+    compare,
+    dateRange.startDate,
+    dateRange.endDate,
+  );
 
   return {
     date,
@@ -31,7 +37,7 @@ export function useDateRange(options: { ignoreOffset?: boolean; timezone?: strin
     offset,
     compare,
     isAllTime: date.endsWith(`:all`),
-    isCustomRange: date.startsWith('range:'),
+    isCustomRange: date.startsWith("range:"),
     dateRange,
     dateCompare,
   };

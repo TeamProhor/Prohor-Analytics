@@ -1,9 +1,9 @@
-import { isBefore, startOfMinute, subMinutes } from 'date-fns';
-import { useMemo, useRef } from 'react';
-import { useTimezone } from '@/components/hooks';
-import { DEFAULT_ANIMATION_DURATION, REALTIME_RANGE } from '@/lib/constants';
-import type { RealtimeData } from '@/lib/types';
-import { PageviewsChart } from './PageviewsChart';
+import { isBefore, startOfMinute, subMinutes } from "date-fns";
+import { useMemo, useRef } from "react";
+import { useTimezone } from "@/components/hooks";
+import { DEFAULT_ANIMATION_DURATION, REALTIME_RANGE } from "@/lib/constants";
+import type { RealtimeData } from "@/lib/types";
+import { PageviewsChart } from "./PageviewsChart";
 
 export interface RealtimeChartProps {
   data: RealtimeData;
@@ -24,8 +24,8 @@ export function RealtimeChart({ data, unit, ...props }: RealtimeChartProps) {
     }
 
     return {
-      pageviews: formatSeriesTimezone(data.series.views, 'x', timezone),
-      sessions: formatSeriesTimezone(data.series.visitors, 'x', timezone),
+      pageviews: formatSeriesTimezone(data.series.views, "x", timezone),
+      sessions: formatSeriesTimezone(data.series.visitors, "x", timezone),
     };
   }, [data, startDate, endDate, unit]);
 

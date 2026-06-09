@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getSessionReplays';
+const FUNCTION_NAME = "getSessionReplays";
 
 export function getSessionReplays(
   ...args: [websiteId: string, filters: QueryFilters, sessionId?: string]
@@ -9,7 +9,11 @@ export function getSessionReplays(
   return relationalQuery(...args);
 }
 
-async function relationalQuery(websiteId: string, filters: QueryFilters, sessionId?: string) {
+async function relationalQuery(
+  websiteId: string,
+  filters: QueryFilters,
+  sessionId?: string,
+) {
   const { pagedRawQuery, parseFilters } = prisma;
   const { search } = filters;
   const { filterQuery, cohortQuery, queryParams } = parseFilters({
@@ -29,9 +33,11 @@ async function relationalQuery(websiteId: string, filters: QueryFilters, session
         on website_event.website_id = sr.website_id
           and website_event.session_id = sr.session_id
           and website_event.visit_id = sr.visit_id`
-      : '';
+      : "";
 
-  const sessionFilter = sessionId ? 'and sr.session_id = {{sessionId::uuid}}' : '';
+  const sessionFilter = sessionId
+    ? "and sr.session_id = {{sessionId::uuid}}"
+    : "";
 
   const searchQuery = search
     ? `and (session.distinct_id ilike {{search}}
@@ -39,7 +45,7 @@ async function relationalQuery(websiteId: string, filters: QueryFilters, session
            or session.browser ilike {{search}}
            or session.os ilike {{search}}
            or session.device ilike {{search}})`
-    : '';
+    : "";
 
   return pagedRawQuery(
     `
@@ -81,5 +87,3 @@ async function relationalQuery(websiteId: string, filters: QueryFilters, session
     FUNCTION_NAME,
   );
 }
-
-

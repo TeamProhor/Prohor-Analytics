@@ -1,8 +1,12 @@
-import { EVENT_COLUMNS, FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import {
+  EVENT_COLUMNS,
+  FILTER_COLUMNS,
+  SESSION_COLUMNS,
+} from "@/lib/constants";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getPageviewMetrics';
+const FUNCTION_NAME = "getPageviewMetrics";
 
 export interface PageviewMetricsParameters {
   type: string;
@@ -16,7 +20,11 @@ export interface PageviewMetricsData {
 }
 
 export async function getPageviewMetrics(
-  ...args: [websiteId: string, parameters: PageviewMetricsParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: PageviewMetricsParameters,
+    filters: QueryFilters,
+  ]
 ) {
   return relationalQuery(...args);
 }
@@ -29,25 +37,30 @@ async function relationalQuery(
   const { type, limit = 500, offset = 0 } = parameters;
   let column = FILTER_COLUMNS[type] || type;
   const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, excludeBounceQuery, queryParams } =
-    parseFilters(
-      {
-        ...filters,
-        websiteId,
-      },
-      { joinSession: SESSION_COLUMNS.includes(type) },
-    );
+  const {
+    filterQuery,
+    joinSessionQuery,
+    cohortQuery,
+    excludeBounceQuery,
+    queryParams,
+  } = parseFilters(
+    {
+      ...filters,
+      websiteId,
+    },
+    { joinSession: SESSION_COLUMNS.includes(type) },
+  );
 
-  let entryExitQuery = '';
-  let excludeDomain = '';
+  let entryExitQuery = "";
+  let excludeDomain = "";
 
-  if (column === 'referrer_domain') {
+  if (column === "referrer_domain") {
     excludeDomain = `and website_event.referrer_domain != regexp_replace(website_event.hostname, '^www.', '')
       and website_event.referrer_domain != ''`;
   }
 
-  if (type === 'entry' || type === 'exit') {
-    const order = type === 'entry' ? 'asc' : 'desc';
+  if (type === "entry" || type === "exit") {
+    const order = type === "entry" ? "asc" : "desc";
     column = `x.${column}`;
 
     entryExitQuery = `
@@ -89,5 +102,3 @@ async function relationalQuery(
     FUNCTION_NAME,
   );
 }
-
-

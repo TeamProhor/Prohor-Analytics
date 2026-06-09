@@ -1,13 +1,20 @@
-import { Icon, ListItem, Row, Select, type SelectProps, Text } from '@umami/react-zen';
-import { useEffect, useState } from 'react';
-import { Empty } from '@/components/common/Empty';
+import {
+  Icon,
+  ListItem,
+  Row,
+  Select,
+  type SelectProps,
+  Text,
+} from "@umami/react-zen";
+import { useEffect, useState } from "react";
+import { Empty } from "@/components/common/Empty";
 import {
   useLoginQuery,
   useMessages,
   useUserWebsitesQuery,
   useWebsiteQuery,
-} from '@/components/hooks';
-import { Globe } from '@/components/icons';
+} from "@/components/hooks";
+import { Globe } from "@/components/icons";
 
 export function WebsiteSelect({
   websiteId,
@@ -27,7 +34,7 @@ export function WebsiteSelect({
   const { t, labels, messages } = useMessages();
   const { data: website } = useWebsiteQuery(websiteId);
   const [name, setName] = useState<string>(website?.name);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const { user } = useLoginQuery();
   const { data, isLoading } = useUserWebsitesQuery(
     { userId: user?.id, teamId },
@@ -44,17 +51,17 @@ export function WebsiteSelect({
   };
 
   const handleOpenChange = () => {
-    setSearch('');
+    setSearch("");
   };
 
   const handleChange = (id: string) => {
-    setName(listItems.find(item => item.id === id)?.name);
+    setName(listItems.find((item) => item.id === id)?.name);
     onChange(id);
   };
 
   const renderValue = () => {
     if (isCollapsed) {
-      return '';
+      return "";
     }
 
     const value = name || props.placeholder || t(labels.selectWebsite);
@@ -64,7 +71,7 @@ export function WebsiteSelect({
         <Icon>
           <Globe />
         </Icon>
-        <Text truncate color={name ? undefined : 'muted'}>
+        <Text truncate color={name ? undefined : "muted"}>
           {value}
         </Text>
       </Row>
@@ -87,16 +94,17 @@ export function WebsiteSelect({
         style: {
           minHeight: 40,
           gap: 0,
-          justifyContent: isCollapsed ? 'start' : undefined,
+          justifyContent: isCollapsed ? "start" : undefined,
           ...buttonProps?.style,
         },
       }}
       listProps={{
         ...listProps,
         renderEmptyState:
-          listProps?.renderEmptyState || (() => <Empty message={t(messages.noResultsFound)} />),
+          listProps?.renderEmptyState ||
+          (() => <Empty message={t(messages.noResultsFound)} />),
         style: {
-          maxHeight: 'calc(42vh - 65px)',
+          maxHeight: "calc(42vh - 65px)",
           width: 280,
           ...listProps?.style,
         },

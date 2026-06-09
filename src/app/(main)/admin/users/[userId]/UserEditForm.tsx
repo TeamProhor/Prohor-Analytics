@@ -7,22 +7,35 @@ import {
   PasswordField,
   Select,
   TextField,
-} from '@umami/react-zen';
-import { useLoginQuery, useMessages, useUpdateQuery, useUser } from '@/components/hooks';
-import { ROLES } from '@/lib/constants';
+} from "@umami/react-zen";
+import {
+  useLoginQuery,
+  useMessages,
+  useUpdateQuery,
+  useUser,
+} from "@/components/hooks";
+import { ROLES } from "@/lib/constants";
 
-export function UserEditForm({ userId, onSave }: { userId: string; onSave?: () => void }) {
+export function UserEditForm({
+  userId,
+  onSave,
+}: {
+  userId: string;
+  onSave?: () => void;
+}) {
   const { t, labels, messages, getErrorMessage } = useMessages();
   const user = useUser();
   const { user: login } = useLoginQuery();
 
-  const { mutateAsync, error, toast, touch } = useUpdateQuery(`/users/${userId}`);
+  const { mutateAsync, error, toast, touch } = useUpdateQuery(
+    `/users/${userId}`,
+  );
 
   const handleSubmit = async (data: any) => {
     await mutateAsync(data, {
       onSuccess: async () => {
         toast(t(messages.saved));
-        touch('users');
+        touch("users");
         touch(`user:${user.id}`);
         onSave?.();
       },
@@ -38,14 +51,21 @@ export function UserEditForm({ userId, onSave }: { userId: string; onSave?: () =
         name="password"
         label={t(labels.password)}
         rules={{
-          minLength: { value: 8, message: t(messages.minPasswordLength, { n: '8' }) },
+          minLength: {
+            value: 8,
+            message: t(messages.minPasswordLength, { n: "8" }),
+          },
         }}
       >
         <PasswordField autoComplete="new-password" data-test="input-password" />
       </FormField>
 
       {user.id !== login.id && (
-        <FormField name="role" label={t(labels.role)} rules={{ required: t(labels.required) }}>
+        <FormField
+          name="role"
+          label={t(labels.role)}
+          rules={{ required: t(labels.required) }}
+        >
           <Select defaultValue={user.role}>
             <ListItem id={ROLES.viewOnly} data-test="dropdown-item-viewOnly">
               {t(labels.viewOnly)}

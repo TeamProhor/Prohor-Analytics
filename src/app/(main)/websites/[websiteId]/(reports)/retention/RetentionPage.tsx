@@ -1,9 +1,9 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import { endOfMonth, startOfMonth } from 'date-fns';
-import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
-import { useDateRange } from '@/components/hooks';
-import { Retention } from './Retention';
+"use client";
+import { Column } from "@umami/react-zen";
+import { endOfMonth, startOfMonth } from "date-fns";
+import { WebsiteControls } from "@/app/(main)/websites/[websiteId]/WebsiteControls";
+import { useDateRange } from "@/components/hooks";
+import { Retention } from "./Retention";
 
 export function RetentionPage({ websiteId }: { websiteId: string }) {
   const {
@@ -15,8 +15,16 @@ export function RetentionPage({ websiteId }: { websiteId: string }) {
 
   return (
     <Column gap>
-      <WebsiteControls websiteId={websiteId} allowDateFilter={false} allowMonthFilter />
-      <Retention websiteId={websiteId} startDate={monthStartDate} endDate={monthEndDate} />
+      <WebsiteControls
+        websiteId={websiteId}
+        allowDateFilter={false}
+        allowMonthFilter
+      />
+      <Retention
+        websiteId={websiteId}
+        startDate={monthStartDate}
+        endDate={monthEndDate}
+      />
     </Column>
   );
 }

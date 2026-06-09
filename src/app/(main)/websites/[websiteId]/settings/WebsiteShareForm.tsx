@@ -1,10 +1,10 @@
-import { Column, Heading, Row, Text } from '@umami/react-zen';
-import { Plus } from 'lucide-react';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useMessages, useWebsiteSharesQuery } from '@/components/hooks';
-import { DialogButton } from '@/components/input/DialogButton';
-import { ShareEditForm } from './ShareEditForm';
-import { SharesTable } from './SharesTable';
+import { Column, Heading, Row, Text } from "@umami/react-zen";
+import { Plus } from "lucide-react";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { useMessages, useWebsiteSharesQuery } from "@/components/hooks";
+import { DialogButton } from "@/components/input/DialogButton";
+import { ShareEditForm } from "./ShareEditForm";
+import { SharesTable } from "./SharesTable";
 
 export interface WebsiteShareFormProps {
   websiteId: string;
@@ -29,7 +29,9 @@ export function WebsiteShareForm({ websiteId }: WebsiteShareFormProps) {
             variant="primary"
             width="600px"
           >
-            {({ close }) => <ShareEditForm websiteId={websiteId} onClose={close} />}
+            {({ close }) => (
+              <ShareEditForm websiteId={websiteId} onClose={close} />
+            )}
           </DialogButton>
         </Row>
         {hasShares ? (

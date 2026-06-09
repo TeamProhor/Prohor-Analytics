@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { decrypt, encrypt } from '@/lib/crypto';
+import jwt from "jsonwebtoken";
+import { decrypt, encrypt } from "@/lib/crypto";
 
 export function createToken(payload: any, secret: any, options?: any) {
   return jwt.sign(payload, secret, options);
@@ -27,7 +27,7 @@ export function parseSecureToken(token: string, secret: any) {
 
 export async function parseAuthToken(req: Request, secret: string) {
   try {
-    const token = req.headers.get('authorization')?.split(' ')?.[1];
+    const token = req.headers.get("authorization")?.split(" ")?.[1];
 
     return parseSecureToken(token as string, secret);
   } catch {

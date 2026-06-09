@@ -1,8 +1,15 @@
-import { Column, Focusable, Row, Text, Tooltip, TooltipTrigger } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { IconLabel } from '@/components/common/IconLabel';
-import { useMessages, useNavigation } from '@/components/hooks';
-import { ArrowLeft, Settings2, UserCircle, Users } from '@/components/icons';
+import {
+  Column,
+  Focusable,
+  Row,
+  Text,
+  Tooltip,
+  TooltipTrigger,
+} from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { IconLabel } from "@/components/common/IconLabel";
+import { useMessages, useNavigation } from "@/components/hooks";
+import { ArrowLeft, Settings2, UserCircle, Users } from "@/components/icons";
 
 export function SettingsNav({
   isCollapsed,
@@ -19,9 +26,9 @@ export function SettingsNav({
       label: t(labels.application),
       items: [
         {
-          id: 'preferences',
+          id: "preferences",
           label: t(labels.preferences),
-          path: renderUrl('/settings/preferences'),
+          path: renderUrl("/settings/preferences"),
           icon: <Settings2 />,
         },
       ],
@@ -30,15 +37,15 @@ export function SettingsNav({
       label: t(labels.account),
       items: [
         {
-          id: 'profile',
+          id: "profile",
           label: t(labels.profile),
-          path: renderUrl('/settings/profile'),
+          path: renderUrl("/settings/profile"),
           icon: <UserCircle />,
         },
         {
-          id: 'teams',
+          id: "teams",
           label: t(labels.teams),
-          path: renderUrl('/settings/teams'),
+          path: renderUrl("/settings/teams"),
           icon: <Users />,
         },
       ],
@@ -46,21 +53,29 @@ export function SettingsNav({
   ];
 
   const selectedKey = items
-    .flatMap(e => e.items)
-    .find(({ path }) => path && pathname.includes(path.split('?')[0]))?.id;
+    .flatMap((e) => e.items)
+    .find(({ path }) => path && pathname.includes(path.split("?")[0]))?.id;
 
   return (
     <Column gap="2">
-      <Link href={renderUrl('/websites', false)} role="button" onClick={onItemClick}>
+      <Link
+        href={renderUrl("/websites", false)}
+        role="button"
+        onClick={onItemClick}
+      >
         <TooltipTrigger isDisabled={!isCollapsed} delay={0}>
           <Focusable>
             <Row
               alignItems="center"
-              hover={{ backgroundColor: 'surface-sunken' }}
+              hover={{ backgroundColor: "surface-sunken" }}
               borderRadius
               minHeight="40px"
             >
-              <IconLabel icon={<ArrowLeft />} label={isCollapsed ? '' : t(labels.back)} padding />
+              <IconLabel
+                icon={<ArrowLeft />}
+                label={isCollapsed ? "" : t(labels.back)}
+                padding
+              />
             </Row>
           </Focusable>
           <Tooltip placement="right">{t(labels.back)}</Tooltip>
@@ -81,15 +96,17 @@ export function SettingsNav({
                   <Focusable>
                     <Row
                       alignItems="center"
-                      hover={{ backgroundColor: 'surface-sunken' }}
-                      backgroundColor={isSelected ? 'surface-sunken' : undefined}
+                      hover={{ backgroundColor: "surface-sunken" }}
+                      backgroundColor={
+                        isSelected ? "surface-sunken" : undefined
+                      }
                       borderRadius
                       minHeight="40px"
                     >
                       <IconLabel
                         icon={icon}
-                        label={isCollapsed ? '' : label}
-                        weight={isSelected ? 'bold' : undefined}
+                        label={isCollapsed ? "" : label}
+                        weight={isSelected ? "bold" : undefined}
                         padding
                       />
                     </Row>

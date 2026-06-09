@@ -1,12 +1,16 @@
-import type { Metadata } from 'next';
-import { JourneysPage } from './JourneysPage';
+import type { Metadata } from "next";
+import { JourneysPage } from "./JourneysPage";
 
-export default async function ({ params }: { params: Promise<{ websiteId: string }> }) {
+export default async function ({
+  params,
+}: {
+  params: Promise<{ websiteId: string }>;
+}) {
   const { websiteId } = await params;
 
   return <JourneysPage websiteId={websiteId} />;
 }
 
 export const metadata: Metadata = {
-  title: 'Journeys',
+  title: "Journeys",
 };

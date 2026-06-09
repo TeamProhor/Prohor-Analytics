@@ -1,7 +1,7 @@
-import type { UseQueryOptions } from '@tanstack/react-query';
-import { useDateParameters } from '@/components/hooks/useDateParameters';
-import { useApi } from '../useApi';
-import { useFilterParameters } from '../useFilterParameters';
+import type { UseQueryOptions } from "@tanstack/react-query";
+import { useDateParameters } from "@/components/hooks/useDateParameters";
+import { useApi } from "../useApi";
+import { useFilterParameters } from "../useFilterParameters";
 
 export interface WebsiteStatsData {
   pageviews: number;
@@ -27,8 +27,17 @@ export function useWebsiteStatsQuery(
   const filters = useFilterParameters();
 
   return useQuery<WebsiteStatsData>({
-    queryKey: ['websites:stats', { websiteId, compare, startAt, endAt, ...filters }],
-    queryFn: () => get(`/websites/${websiteId}/stats`, { compare, startAt, endAt, ...filters }),
+    queryKey: [
+      "websites:stats",
+      { websiteId, compare, startAt, endAt, ...filters },
+    ],
+    queryFn: () =>
+      get(`/websites/${websiteId}/stats`, {
+        compare,
+        startAt,
+        endAt,
+        ...filters,
+      }),
     enabled: !!websiteId,
     ...options,
   });

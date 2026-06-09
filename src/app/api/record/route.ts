@@ -1,14 +1,14 @@
-import { isbot } from 'isbot';
-import { serializeError } from 'serialize-error';
-import { z } from 'zod';
-import { secret } from '@/lib/crypto';
-import { getClientInfo, hasBlockedIp } from '@/lib/detect';
-import { parseToken } from '@/lib/jwt';
-import { fetchAccount, fetchTeam } from '@/lib/load';
-import { parseRequest } from '@/lib/request';
-import { badRequest, forbidden, json, serverError } from '@/lib/response';
-import { getWebsite } from '@/queries/prisma';
-import { saveRecording } from '@/queries/sql';
+import { isbot } from "isbot";
+import { serializeError } from "serialize-error";
+import { z } from "zod";
+import { secret } from "@/lib/crypto";
+import { getClientInfo, hasBlockedIp } from "@/lib/detect";
+import { parseToken } from "@/lib/jwt";
+import { fetchAccount, fetchTeam } from "@/lib/load";
+import { parseRequest } from "@/lib/request";
+import { badRequest, forbidden, json, serverError } from "@/lib/response";
+import { getWebsite } from "@/queries/prisma";
+import { saveRecording } from "@/queries/sql";
 
 interface Cache {
   sessionId: string;
@@ -16,7 +16,7 @@ interface Cache {
 }
 
 const schema = z.object({
-  type: z.literal('record'),
+  type: z.literal("record"),
   payload: z.object({
     website: z.uuid(),
     events: z.array(z.any()).max(200),
@@ -26,7 +26,9 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const { body, error } = await parseRequest(request, schema, { skipAuth: true });
+    const { body, error } = await parseRequest(request, schema, {
+      skipAuth: true,
+    });
 
     if (error) {
       return error();
@@ -39,16 +41,16 @@ export async function POST(request: Request) {
     }
 
     // Parse cache token to get session info
-    const cacheHeader = request.headers.get('x-umami-cache');
+    const cacheHeader = request.headers.get("x-umami-cache");
 
     if (!cacheHeader) {
-      return badRequest({ message: 'Missing session token.' });
+      return badRequest({ message: "Missing session token." });
     }
 
     const cache = (await parseToken(cacheHeader, secret())) as Cache | null;
 
     if (!cache?.sessionId || !cache?.visitId) {
-      return badRequest({ message: 'Invalid session token.' });
+      return badRequest({ message: "Invalid session token." });
     }
 
     const { sessionId, visitId } = cache;
@@ -57,11 +59,11 @@ export async function POST(request: Request) {
     const website = await getWebsite(websiteId);
 
     if (!website) {
-      return badRequest({ message: 'Website not found.' });
+      return badRequest({ message: "Website not found." });
     }
 
     if (!website.replayEnabled) {
-      return json({ ok: false, reason: 'replay_disabled' });
+      return json({ ok: false, reason: "replay_disabled" });
     }
 
     if (process.env.CLOUD_MODE) {
@@ -72,7 +74,7 @@ export async function POST(request: Request) {
           : null;
 
       if (!account?.isBusiness && !account?.isNoBilling) {
-        return forbidden({ message: 'Business subscription required.' });
+        return forbidden({ message: "Business subscription required." });
       }
     }
 
@@ -80,7 +82,7 @@ export async function POST(request: Request) {
     const { ip, userAgent } = await getClientInfo(request, {});
 
     if (!process.env.DISABLE_BOT_CHECK && isbot(userAgent)) {
-      return json({ beep: 'boop' });
+      return json({ beep: "boop" });
     }
 
     if (hasBlockedIp(ip)) {
@@ -93,8 +95,12 @@ export async function POST(request: Request) {
       .filter((t: number) => Number.isFinite(t) && t > 0);
 
     const fallbackMs = (timestamp || Math.floor(Date.now() / 1000)) * 1000;
-    const minTimestamp = eventTimestamps.length ? Math.min(...eventTimestamps) : fallbackMs;
-    const maxTimestamp = eventTimestamps.length ? Math.max(...eventTimestamps) : fallbackMs;
+    const minTimestamp = eventTimestamps.length
+      ? Math.min(...eventTimestamps)
+      : fallbackMs;
+    const maxTimestamp = eventTimestamps.length
+      ? Math.max(...eventTimestamps)
+      : fallbackMs;
 
     const startedAt = new Date(minTimestamp);
     const endedAt = new Date(maxTimestamp);

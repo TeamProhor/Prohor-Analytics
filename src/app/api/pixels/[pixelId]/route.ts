@@ -1,10 +1,19 @@
-import { z } from 'zod';
-import { parseRequest } from '@/lib/request';
-import { badRequest, json, ok, serverError, unauthorized } from '@/lib/response';
-import { canDeletePixel, canUpdatePixel, canViewPixel } from '@/permissions';
-import { deletePixel, getPixel, updatePixel } from '@/queries/prisma';
+import { z } from "zod";
+import { parseRequest } from "@/lib/request";
+import {
+  badRequest,
+  json,
+  ok,
+  serverError,
+  unauthorized,
+} from "@/lib/response";
+import { canDeletePixel, canUpdatePixel, canViewPixel } from "@/permissions";
+import { deletePixel, getPixel, updatePixel } from "@/queries/prisma";
 
-export async function GET(request: Request, { params }: { params: Promise<{ pixelId: string }> }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ pixelId: string }> },
+) {
   const { auth, error } = await parseRequest(request);
 
   if (error) {
@@ -22,7 +31,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ pixe
   return json(pixel);
 }
 
-export async function POST(request: Request, { params }: { params: Promise<{ pixelId: string }> }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ pixelId: string }> },
+) {
   const schema = z.object({
     name: z.string().optional(),
     slug: z.string().min(8).optional(),
@@ -46,8 +58,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ pix
 
     return Response.json(pixel);
   } catch (e: any) {
-    if (e.message.toLowerCase().includes('unique constraint') && e.message.includes('slug')) {
-      return badRequest({ message: 'That slug is already taken.' });
+    if (
+      e.message.toLowerCase().includes("unique constraint") &&
+      e.message.includes("slug")
+    ) {
+      return badRequest({ message: "That slug is already taken." });
     }
 
     return serverError(e);

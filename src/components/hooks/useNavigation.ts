@@ -1,6 +1,6 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
-import { buildPath } from '@/lib/url';
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { buildPath } from "@/lib/url";
 
 export function useNavigation() {
   const router = useRouter();
@@ -11,7 +11,9 @@ export function useNavigation() {
   const [, linkId] = pathname.match(/\/links\/([a-f0-9-]+)/) || [];
   const [, pixelId] = pathname.match(/\/pixels\/([a-f0-9-]+)/) || [];
   const [, boardId] = pathname.match(/\/boards\/([a-f0-9-]+)/) || [];
-  const [queryParams, setQueryParams] = useState(Object.fromEntries(searchParams));
+  const [queryParams, setQueryParams] = useState(
+    Object.fromEntries(searchParams),
+  );
 
   const updateParams = useCallback(
     (params?: Record<string, string | number>) => {

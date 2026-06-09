@@ -15,7 +15,9 @@ export function buildPath(path: string, params: object = {}): string {
   return queryString ? `${path}?${queryString}` : path;
 }
 
-export function safeDecodeURI(s: string | undefined | null): string | undefined | null {
+export function safeDecodeURI(
+  s: string | undefined | null,
+): string | undefined | null {
   if (s === undefined || s === null) {
     return s;
   }
@@ -27,7 +29,9 @@ export function safeDecodeURI(s: string | undefined | null): string | undefined 
   }
 }
 
-export function safeDecodeURIComponent(s: string | undefined | null): string | undefined | null {
+export function safeDecodeURIComponent(
+  s: string | undefined | null,
+): string | undefined | null {
   if (s === undefined || s === null) {
     return s;
   }

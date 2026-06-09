@@ -1,8 +1,8 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
-import { useDateRange } from '@/components/hooks';
-import { Performance } from './Performance';
+"use client";
+import { Column } from "@umami/react-zen";
+import { WebsiteControls } from "@/app/(main)/websites/[websiteId]/WebsiteControls";
+import { useDateRange } from "@/components/hooks";
+import { Performance } from "./Performance";
 
 export function PerformancePage({ websiteId }: { websiteId: string }) {
   const {
@@ -12,7 +12,12 @@ export function PerformancePage({ websiteId }: { websiteId: string }) {
   return (
     <Column gap>
       <WebsiteControls websiteId={websiteId} />
-      <Performance websiteId={websiteId} startDate={startDate} endDate={endDate} unit={unit} />
+      <Performance
+        websiteId={websiteId}
+        startDate={startDate}
+        endDate={endDate}
+        unit={unit}
+      />
     </Column>
   );
 }

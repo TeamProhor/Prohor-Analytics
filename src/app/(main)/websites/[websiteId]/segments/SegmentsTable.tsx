@@ -1,9 +1,14 @@
-import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { SegmentDeleteButton } from '@/app/(main)/websites/[websiteId]/segments/SegmentDeleteButton';
-import { SegmentEditButton } from '@/app/(main)/websites/[websiteId]/segments/SegmentEditButton';
-import { DateDistance } from '@/components/common/DateDistance';
-import { useMessages, useNavigation } from '@/components/hooks';
+import {
+  DataColumn,
+  DataTable,
+  type DataTableProps,
+  Row,
+} from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { SegmentDeleteButton } from "@/app/(main)/websites/[websiteId]/segments/SegmentDeleteButton";
+import { SegmentEditButton } from "@/app/(main)/websites/[websiteId]/segments/SegmentEditButton";
+import { DateDistance } from "@/components/common/DateDistance";
+import { useMessages, useNavigation } from "@/components/hooks";
 
 export function SegmentsTable(props: DataTableProps) {
   const { t, labels } = useMessages();
@@ -13,7 +18,9 @@ export function SegmentsTable(props: DataTableProps) {
     <DataTable {...props}>
       <DataColumn id="name" label={t(labels.name)}>
         {(row: any) => (
-          <Link href={renderUrl(`/websites/${websiteId}?segment=${row.id}`, false)}>
+          <Link
+            href={renderUrl(`/websites/${websiteId}?segment=${row.id}`, false)}
+          >
             {row.name}
           </Link>
         )}
@@ -28,7 +35,11 @@ export function SegmentsTable(props: DataTableProps) {
           return (
             <Row>
               <SegmentEditButton segmentId={id} websiteId={websiteId} />
-              <SegmentDeleteButton segmentId={id} websiteId={websiteId} name={name} />
+              <SegmentDeleteButton
+                segmentId={id}
+                websiteId={websiteId}
+                name={name}
+              />
             </Row>
           );
         }}

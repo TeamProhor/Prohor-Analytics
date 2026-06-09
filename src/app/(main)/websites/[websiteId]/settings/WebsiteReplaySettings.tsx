@@ -9,13 +9,18 @@ import {
   Switch,
   Text,
   TextField,
-} from '@umami/react-zen';
-import { useState } from 'react';
-import { EmptyPlaceholder } from '@/components/common/EmptyPlaceholder';
-import { useMessages, useSubscription, useUpdateQuery, useWebsite } from '@/components/hooks';
-import { Video } from '@/components/icons';
+} from "@umami/react-zen";
+import { useState } from "react";
+import { EmptyPlaceholder } from "@/components/common/EmptyPlaceholder";
+import {
+  useMessages,
+  useSubscription,
+  useUpdateQuery,
+  useWebsite,
+} from "@/components/hooks";
+import { Video } from "@/components/icons";
 
-const RECORDER_NAME = 'recorder.js';
+const RECORDER_NAME = "recorder.js";
 
 interface ReplayConfig {
   sampleRate?: number;
@@ -28,19 +33,25 @@ export function WebsiteReplaySettings({ websiteId }: { websiteId: string }) {
   const website = useWebsite();
   const { t, labels, messages } = useMessages();
   const { hasFeature, cloudMode } = useSubscription(website?.teamId);
-  const { mutateAsync, touch, toast, isPending } = useUpdateQuery(`/websites/${websiteId}`);
+  const { mutateAsync, touch, toast, isPending } = useUpdateQuery(
+    `/websites/${websiteId}`,
+  );
   const [enabled, setEnabled] = useState(website?.replayEnabled ?? false);
 
   const config = (website?.replayConfig as ReplayConfig) || {};
 
   const [sampleRate, setSampleRate] = useState(config.sampleRate ?? 0.15);
-  const [maskLevel, setMaskLevel] = useState(config.maskLevel ?? 'moderate');
-  const [maxDuration, setMaxDuration] = useState(String(config.maxDuration ?? 300000));
-  const [blockSelector, setBlockSelector] = useState(config.blockSelector ?? '');
+  const [maskLevel, setMaskLevel] = useState(config.maskLevel ?? "moderate");
+  const [maxDuration, setMaxDuration] = useState(
+    String(config.maxDuration ?? 300000),
+  );
+  const [blockSelector, setBlockSelector] = useState(
+    config.blockSelector ?? "",
+  );
 
   const recorderUrl = cloudMode
     ? `${process.env.cloudUrl}/${RECORDER_NAME}`
-    : `${window?.location?.origin || ''}${process.env.basePath || ''}/${RECORDER_NAME}`;
+    : `${window?.location?.origin || ""}${process.env.basePath || ""}/${RECORDER_NAME}`;
 
   let recorderAttrs = `data-website-id="${websiteId}" data-sample-rate="${sampleRate}" data-mask-level="${maskLevel}" data-max-duration="${parseInt(maxDuration, 10) || 300000}"`;
   if (blockSelector) recorderAttrs += ` data-block-selector="${blockSelector}"`;
@@ -58,7 +69,7 @@ export function WebsiteReplaySettings({ websiteId }: { websiteId: string }) {
         {
           onSuccess: async () => {
             toast(t(messages.saved));
-            touch('websites');
+            touch("websites");
             touch(`website:${websiteId}`);
           },
         },
@@ -82,25 +93,27 @@ export function WebsiteReplaySettings({ websiteId }: { websiteId: string }) {
       {
         onSuccess: async () => {
           toast(t(messages.saved));
-          touch('websites');
+          touch("websites");
           touch(`website:${websiteId}`);
         },
       },
     );
   };
 
-  if (cloudMode && !hasFeature('replays')) {
+  if (cloudMode && !hasFeature("replays")) {
     return (
       <Column gap="4">
         <Label>{t(labels.replays)}</Label>
         <EmptyPlaceholder
           icon={<Video />}
-          title={t(messages.upgradeRequired, { plan: 'Business' })}
+          title={t(messages.upgradeRequired, { plan: "Business" })}
           description="Watch real user sessions to see exactly how visitors interact with your site."
         >
           <Button
             variant="primary"
-            onPress={() => window.open(`${process.env.cloudUrl}/settings/billing`, '_blank')}
+            onPress={() =>
+              window.open(`${process.env.cloudUrl}/settings/billing`, "_blank")
+            }
           >
             {t(labels.upgrade)}
           </Button>
@@ -112,35 +125,54 @@ export function WebsiteReplaySettings({ websiteId }: { websiteId: string }) {
   return (
     <Column gap="4">
       <Label>{t(labels.replays)}</Label>
-      <Switch isSelected={enabled} onChange={handleToggle} isDisabled={isPending}>
+      <Switch
+        isSelected={enabled}
+        onChange={handleToggle}
+        isDisabled={isPending}
+      >
         {t(labels.replayEnabled)}
       </Switch>
       {enabled && (
         <>
           <Label>{t(labels.replayCode)}</Label>
           <Text color="muted">{t(messages.trackingCode)}</Text>
-          <TextField value={recorderCode} isReadOnly allowCopy asTextArea resize="none" className="code-textarea" />
+          <TextField
+            value={recorderCode}
+            isReadOnly
+            allowCopy
+            asTextArea
+            resize="none"
+            className="code-textarea"
+          />
           <Slider
             label={t(labels.sampleRate)}
             minValue={0.05}
             maxValue={1}
             step={0.05}
             value={sampleRate}
-            onChange={v => setSampleRate(Array.isArray(v) ? v[0] : v)}
+            onChange={(v) => setSampleRate(Array.isArray(v) ? v[0] : v)}
             showValue
-            formatOptions={{ style: 'percent', maximumFractionDigits: 0 }}
-            style={{ maxWidth: '360px' }}
+            formatOptions={{ style: "percent", maximumFractionDigits: 0 }}
+            style={{ maxWidth: "360px" }}
           />
           <Column gap="1">
             <Label>{t(labels.maskLevel)}</Label>
-            <Select value={maskLevel} onChange={setMaskLevel} style={{ maxWidth: '360px' }}>
+            <Select
+              value={maskLevel}
+              onChange={setMaskLevel}
+              style={{ maxWidth: "360px" }}
+            >
               <ListItem id="strict">strict</ListItem>
               <ListItem id="moderate">moderate</ListItem>
             </Select>
           </Column>
           <Column gap="1">
             <Label>{t(labels.maxDuration)}</Label>
-            <Select value={maxDuration} onChange={setMaxDuration} style={{ maxWidth: '360px' }}>
+            <Select
+              value={maxDuration}
+              onChange={setMaxDuration}
+              style={{ maxWidth: "360px" }}
+            >
               <ListItem id="300000">5 minutes</ListItem>
               <ListItem id="600000">10 minutes</ListItem>
               <ListItem id="900000">15 minutes</ListItem>
@@ -152,7 +184,11 @@ export function WebsiteReplaySettings({ websiteId }: { websiteId: string }) {
             <TextField value={blockSelector} onChange={setBlockSelector} />
           </Column>
           <Row>
-            <Button variant="primary" onPress={handleSave} isDisabled={isPending}>
+            <Button
+              variant="primary"
+              onPress={handleSave}
+              isDisabled={isPending}
+            >
               {t(labels.save)}
             </Button>
           </Row>

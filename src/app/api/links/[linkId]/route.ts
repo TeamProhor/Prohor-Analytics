@@ -1,10 +1,19 @@
-import { z } from 'zod';
-import { parseRequest } from '@/lib/request';
-import { badRequest, json, ok, serverError, unauthorized } from '@/lib/response';
-import { canDeleteLink, canUpdateLink, canViewLink } from '@/permissions';
-import { deleteLink, getLink, updateLink } from '@/queries/prisma';
+import { z } from "zod";
+import { parseRequest } from "@/lib/request";
+import {
+  badRequest,
+  json,
+  ok,
+  serverError,
+  unauthorized,
+} from "@/lib/response";
+import { canDeleteLink, canUpdateLink, canViewLink } from "@/permissions";
+import { deleteLink, getLink, updateLink } from "@/queries/prisma";
 
-export async function GET(request: Request, { params }: { params: Promise<{ linkId: string }> }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ linkId: string }> },
+) {
   const { auth, error } = await parseRequest(request);
 
   if (error) {
@@ -22,7 +31,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ link
   return json(website);
 }
 
-export async function POST(request: Request, { params }: { params: Promise<{ linkId: string }> }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ linkId: string }> },
+) {
   const schema = z.object({
     name: z.string().optional(),
     url: z.string().optional(),
@@ -47,8 +59,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ lin
 
     return Response.json(result);
   } catch (e: any) {
-    if (e.message.toLowerCase().includes('unique constraint') && e.message.includes('slug')) {
-      return badRequest({ message: 'That slug is already taken.' });
+    if (
+      e.message.toLowerCase().includes("unique constraint") &&
+      e.message.includes("slug")
+    ) {
+      return badRequest({ message: "That slug is already taken." });
     }
 
     return serverError(e);

@@ -5,8 +5,8 @@ import {
   FormField,
   FormSubmitButton,
   TextField,
-} from '@umami/react-zen';
-import { useMessages } from '@/components/hooks';
+} from "@umami/react-zen";
+import { useMessages } from "@/components/hooks";
 
 export function TypeConfirmationForm({
   confirmationValue,
@@ -19,7 +19,7 @@ export function TypeConfirmationForm({
 }: {
   confirmationValue: string;
   buttonLabel?: string;
-  buttonVariant?: 'primary' | 'outline' | 'quiet' | 'danger' | 'zero';
+  buttonVariant?: "primary" | "outline" | "quiet" | "danger" | "zero";
   isLoading?: boolean;
   error?: string | Error;
   onConfirm?: () => void;
@@ -40,7 +40,7 @@ export function TypeConfirmationForm({
       <FormField
         label={t(labels.confirm)}
         name="confirm"
-        rules={{ validate: value => value === confirmationValue }}
+        rules={{ validate: (value) => value === confirmationValue }}
       >
         <TextField autoComplete="off" />
       </FormField>

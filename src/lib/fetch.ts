@@ -1,4 +1,4 @@
-import { buildPath } from '@/lib/url';
+import { buildPath } from "@/lib/url";
 
 export interface ErrorResponse {
   error: {
@@ -23,14 +23,14 @@ export async function request(
 ): Promise<FetchResponse> {
   return fetch(url, {
     method,
-    cache: 'no-cache',
+    cache: "no-cache",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       ...headers,
     },
     body,
-  }).then(async res => {
+  }).then(async (res) => {
     const data = await res.json();
 
     return {
@@ -41,18 +41,34 @@ export async function request(
   });
 }
 
-export async function httpGet(path: string, params: object = {}, headers: object = {}) {
-  return request('GET', buildPath(path, params), undefined, headers);
+export async function httpGet(
+  path: string,
+  params: object = {},
+  headers: object = {},
+) {
+  return request("GET", buildPath(path, params), undefined, headers);
 }
 
-export async function httpDelete(path: string, params: object = {}, headers: object = {}) {
-  return request('DELETE', buildPath(path, params), undefined, headers);
+export async function httpDelete(
+  path: string,
+  params: object = {},
+  headers: object = {},
+) {
+  return request("DELETE", buildPath(path, params), undefined, headers);
 }
 
-export async function httpPost(path: string, params: object = {}, headers: object = {}) {
-  return request('POST', path, JSON.stringify(params), headers);
+export async function httpPost(
+  path: string,
+  params: object = {},
+  headers: object = {},
+) {
+  return request("POST", path, JSON.stringify(params), headers);
 }
 
-export async function httpPut(path: string, params: object = {}, headers: object = {}) {
-  return request('PUT', path, JSON.stringify(params), headers);
+export async function httpPut(
+  path: string,
+  params: object = {},
+  headers: object = {},
+) {
+  return request("PUT", path, JSON.stringify(params), headers);
 }

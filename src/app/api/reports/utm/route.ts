@@ -1,9 +1,9 @@
-import { UTM_PARAMS } from '@/lib/constants';
-import { getQueryFilters, parseRequest, setWebsiteDate } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { reportResultSchema } from '@/lib/schema';
-import { canViewWebsite } from '@/permissions';
-import { getUTM, type UTMParameters } from '@/queries/sql';
+import { UTM_PARAMS } from "@/lib/constants";
+import { getQueryFilters, parseRequest, setWebsiteDate } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { reportResultSchema } from "@/lib/schema";
+import { canViewWebsite } from "@/permissions";
+import { getUTM, type UTMParameters } from "@/queries/sql";
 
 export async function POST(request: Request) {
   const { auth, body, error } = await parseRequest(request, reportResultSchema);
@@ -30,7 +30,11 @@ export async function POST(request: Request) {
   };
 
   for (const key of UTM_PARAMS) {
-    data[key] = await getUTM(websiteId, { column: key, ...parameters } as UTMParameters, filters);
+    data[key] = await getUTM(
+      websiteId,
+      { column: key, ...parameters } as UTMParameters,
+      filters,
+    );
   }
 
   return json(data);

@@ -1,9 +1,13 @@
-import { Icon, Row } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { DataGrid } from '@/components/common/DataGrid';
-import { useLoginQuery, useNavigation, useUserWebsitesQuery } from '@/components/hooks';
-import { Favicon } from '@/components/common/Favicon';
-import { WebsitesTable } from './WebsitesTable';
+import { Icon, Row } from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { DataGrid } from "@/components/common/DataGrid";
+import {
+  useLoginQuery,
+  useNavigation,
+  useUserWebsitesQuery,
+} from "@/components/hooks";
+import { Favicon } from "@/components/common/Favicon";
+import { WebsitesTable } from "./WebsitesTable";
 
 export function WebsitesDataTable({
   userId,
@@ -19,7 +23,10 @@ export function WebsitesDataTable({
   showActions?: boolean;
 }) {
   const { user } = useLoginQuery();
-  const queryResult = useUserWebsitesQuery({ userId: userId || user?.id, teamId });
+  const queryResult = useUserWebsitesQuery({
+    userId: userId || user?.id,
+    teamId,
+  });
   const { renderUrl } = useNavigation();
 
   const renderLink = (row: any) => (

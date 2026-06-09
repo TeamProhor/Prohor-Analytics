@@ -1,8 +1,8 @@
-import type { ReactQueryOptions } from '@/lib/types';
-import { useApi } from '../useApi';
-import { useDateParameters } from '../useDateParameters';
-import { useFilterParameters } from '../useFilterParameters';
-import { usePagedQuery } from '../usePagedQuery';
+import type { ReactQueryOptions } from "@/lib/types";
+import { useApi } from "../useApi";
+import { useDateParameters } from "../useDateParameters";
+import { useFilterParameters } from "../useFilterParameters";
+import { usePagedQuery } from "../usePagedQuery";
 
 const EVENT_TYPES = {
   views: 1,
@@ -20,10 +20,10 @@ export function useWebsiteEventsQuery(
 
   return usePagedQuery({
     queryKey: [
-      'websites:events',
+      "websites:events",
       { websiteId, startAt, endAt, unit, timezone, ...filters, ...params },
     ],
-    queryFn: pageParams =>
+    queryFn: (pageParams) =>
       get(`/websites/${websiteId}/events`, {
         startAt,
         endAt,

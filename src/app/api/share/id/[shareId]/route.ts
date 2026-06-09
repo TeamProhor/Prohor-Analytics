@@ -1,11 +1,14 @@
-import z from 'zod';
-import { parseRequest } from '@/lib/request';
-import { json, notFound, ok, unauthorized } from '@/lib/response';
-import { anyObjectParam } from '@/lib/schema';
-import { canDeleteEntity, canUpdateEntity, canViewEntity } from '@/permissions';
-import { deleteShare, getShare, updateShare } from '@/queries/prisma';
+import z from "zod";
+import { parseRequest } from "@/lib/request";
+import { json, notFound, ok, unauthorized } from "@/lib/response";
+import { anyObjectParam } from "@/lib/schema";
+import { canDeleteEntity, canUpdateEntity, canViewEntity } from "@/permissions";
+import { deleteShare, getShare, updateShare } from "@/queries/prisma";
 
-export async function GET(request: Request, { params }: { params: Promise<{ shareId: string }> }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ shareId: string }> },
+) {
   const { auth, error } = await parseRequest(request);
 
   if (error) {
@@ -23,7 +26,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ shar
   return json(share);
 }
 
-export async function POST(request: Request, { params }: { params: Promise<{ shareId: string }> }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ shareId: string }> },
+) {
   const schema = z.object({
     name: z.string().max(200),
     slug: z.string().max(100),

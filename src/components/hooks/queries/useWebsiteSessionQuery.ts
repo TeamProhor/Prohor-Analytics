@@ -1,10 +1,13 @@
-import { useApi } from '../useApi';
+import { useApi } from "../useApi";
 
-export function useWebsiteSessionQuery(websiteId: string, sessionId: string | undefined) {
+export function useWebsiteSessionQuery(
+  websiteId: string,
+  sessionId: string | undefined,
+) {
   const { get, useQuery } = useApi();
 
   return useQuery({
-    queryKey: ['session', { websiteId, sessionId }],
+    queryKey: ["session", { websiteId, sessionId }],
     queryFn: () => {
       return get(`/websites/${websiteId}/sessions/${sessionId}`);
     },

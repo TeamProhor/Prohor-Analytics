@@ -1,10 +1,10 @@
-import { Icon, LoadingButton, Tooltip, TooltipTrigger } from '@umami/react-zen';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { useApi, useMessages } from '@/components/hooks';
-import { useDateParameters } from '@/components/hooks/useDateParameters';
-import { useFilterParameters } from '@/components/hooks/useFilterParameters';
-import { Download } from '@/components/icons';
+import { Icon, LoadingButton, Tooltip, TooltipTrigger } from "@umami/react-zen";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useApi, useMessages } from "@/components/hooks";
+import { useDateParameters } from "@/components/hooks/useDateParameters";
+import { useFilterParameters } from "@/components/hooks/useFilterParameters";
+import { Download } from "@/components/icons";
 
 export function ExportButton({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();
@@ -21,7 +21,7 @@ export function ExportButton({ websiteId }: { websiteId: string }) {
       ...date,
       ...filters,
       ...searchParams,
-      format: 'json',
+      format: "json",
     });
 
     await loadZip(zip);
@@ -53,12 +53,12 @@ async function loadZip(zip: string) {
     bytes[i] = binary.charCodeAt(i);
   }
 
-  const blob = new Blob([bytes], { type: 'application/zip' });
+  const blob = new Blob([bytes], { type: "application/zip" });
   const url = URL.createObjectURL(blob);
 
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
-  a.download = 'download.zip';
+  a.download = "download.zip";
   a.click();
   URL.revokeObjectURL(url);
 }

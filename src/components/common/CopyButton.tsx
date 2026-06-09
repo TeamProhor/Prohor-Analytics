@@ -1,10 +1,10 @@
-import { Button, Icon } from '@umami/react-zen';
-import { useEffect, useRef, useState } from 'react';
-import { Check, Copy } from '@/components/icons';
+import { Button, Icon } from "@umami/react-zen";
+import { useEffect, useRef, useState } from "react";
+import { Check, Copy } from "@/components/icons";
 
 export function CopyButton({
   value,
-  label = 'Copy',
+  label = "Copy",
 }: {
   value: string;
   label?: string;
@@ -38,7 +38,12 @@ export function CopyButton({
   };
 
   return (
-    <Button variant="quiet" onPress={handleCopy} title={label} aria-label={label}>
+    <Button
+      variant="quiet"
+      onPress={handleCopy}
+      title={label}
+      aria-label={label}
+    >
       <Icon size="sm">{copied ? <Check /> : <Copy />}</Icon>
     </Button>
   );

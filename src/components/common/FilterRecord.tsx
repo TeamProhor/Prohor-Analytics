@@ -8,13 +8,17 @@ import {
   Loading,
   Select,
   TextField,
-} from '@umami/react-zen';
-import { useState } from 'react';
-import { Empty } from '@/components/common/Empty';
-import { MultiSelect } from '@/components/common/MultiSelect';
-import { useFilters, useFormat, useWebsiteValuesQuery } from '@/components/hooks';
-import { X } from '@/components/icons';
-import { isSearchOperator } from '@/lib/params';
+} from "@umami/react-zen";
+import { useState } from "react";
+import { Empty } from "@/components/common/Empty";
+import { MultiSelect } from "@/components/common/MultiSelect";
+import {
+  useFilters,
+  useFormat,
+  useWebsiteValuesQuery,
+} from "@/components/hooks";
+import { X } from "@/components/icons";
+import { isSearchOperator } from "@/lib/params";
 
 export interface FilterRecordProps {
   websiteId?: string;
@@ -42,9 +46,13 @@ export function FilterRecord({
   onChange,
 }: FilterRecordProps) {
   const { fields, operators } = useFilters();
-  const initValues = Array.isArray(value) ? value : value ? value.split(',') : [];
+  const initValues = Array.isArray(value)
+    ? value
+    : value
+      ? value.split(",")
+      : [];
   const [selected, setSelected] = useState<string[]>(initValues);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const { formatValue } = useFormat();
   const { data, isLoading } = useWebsiteValuesQuery({
     websiteId,
@@ -71,17 +79,17 @@ export function FilterRecord({
 
   const handleMultiSelectValue = (values: string[]) => {
     setSelected(values);
-    onChange?.(name, values.join(','));
+    onChange?.(name, values.join(","));
   };
 
   return (
     <Column>
-      <Label>{fields.find(f => f.name === name)?.label}</Label>
+      <Label>{fields.find((f) => f.name === name)?.label}</Label>
       <Grid columns="1fr auto" gap>
-        <Grid columns={{ base: '1fr', md: '200px 1fr' }} gap>
+        <Grid columns={{ base: "1fr", md: "200px 1fr" }} gap>
           <Select value={operator} onChange={handleSelectOperator}>
             {operators
-              .filter(({ type }) => type === 'string')
+              .filter(({ type }) => type === "string")
               .map(({ name, label }: any) => (
                 <ListItem key={name} id={name}>
                   {label}
@@ -90,8 +98,8 @@ export function FilterRecord({
           </Select>
           {isSearch && (
             <TextField
-              value={selected[0] || ''}
-              defaultValue={selected[0] || ''}
+              value={selected[0] || ""}
+              defaultValue={selected[0] || ""}
               onChange={handleSelectValue}
             />
           )}
@@ -101,10 +109,14 @@ export function FilterRecord({
               onChange={handleMultiSelectValue}
               searchValue={search}
               onSearch={handleSearch}
-              renderValue={values =>
-                values.length > 0 ? values.map(v => formatValue(v, type)).join(', ') : undefined
+              renderValue={(values) =>
+                values.length > 0
+                  ? values.map((v) => formatValue(v, type)).join(", ")
+                  : undefined
               }
-              renderEmptyState={() => (isLoading ? <Loading icon="dots" /> : <Empty />)}
+              renderEmptyState={() =>
+                isLoading ? <Loading icon="dots" /> : <Empty />
+              }
               allowSearch
             >
               {items.map(({ value }) => (

@@ -11,15 +11,20 @@ import {
   Row,
   SubmenuTrigger,
   Text,
-} from '@umami/react-zen';
-import { ArrowRight } from 'lucide-react';
-import type { Key } from 'react';
-import { IconLabel } from '@/components/common/IconLabel';
-import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
-import { ChevronRight, User, Users } from '@/components/icons';
-import { Switch } from '@/components/svg';
-import { LAST_TEAM_CONFIG } from '@/lib/constants';
-import { removeItem } from '@/lib/storage';
+} from "@umami/react-zen";
+import { ArrowRight } from "lucide-react";
+import type { Key } from "react";
+import { IconLabel } from "@/components/common/IconLabel";
+import {
+  useLoginQuery,
+  useMessages,
+  useMobile,
+  useNavigation,
+} from "@/components/hooks";
+import { ChevronRight, User, Users } from "@/components/icons";
+import { Switch } from "@/components/svg";
+import { LAST_TEAM_CONFIG } from "@/lib/constants";
+import { removeItem } from "@/lib/storage";
 
 export interface TeamsButtonProps {
   showText?: boolean;
@@ -32,7 +37,7 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
   const { teamId, router } = useNavigation();
   const { isMobile } = useMobile();
   const team = user?.teams?.find(({ id }) => id === teamId);
-  const selectedKeys = new Set([teamId || 'user']);
+  const selectedKeys = new Set([teamId || "user"]);
   const label = teamId ? team?.name : user.username;
   const cloudMode = !!process.env.cloudMode;
 
@@ -41,12 +46,12 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
   };
 
   const handleAction = async (key: Key) => {
-    if (key === 'user') {
+    if (key === "user") {
       removeItem(LAST_TEAM_CONFIG);
       if (cloudMode) {
-        window.location.href = '/';
+        window.location.href = "/";
       } else {
-        router.push('/');
+        router.push("/");
       }
     }
   };
@@ -64,7 +69,12 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
           shadow="sm"
           minHeight="40px"
           role="button"
-          style={{ cursor: 'pointer', textWrap: 'nowrap', overflow: 'hidden', outline: 'none' }}
+          style={{
+            cursor: "pointer",
+            textWrap: "nowrap",
+            overflow: "hidden",
+            outline: "none",
+          }}
         >
           <Row alignItems="center" position="relative" gap maxHeight="40px">
             <Icon>{teamId ? <Users /> : <User />}</Icon>
@@ -84,9 +94,13 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
               <MenuItem id="teams" showChecked={false} showSubMenuIcon>
                 <IconLabel icon={<Switch />} label={t(labels.switchAccount)} />
               </MenuItem>
-              <Popover placement={isMobile ? 'bottom start' : 'right top'}>
+              <Popover placement={isMobile ? "bottom start" : "right top"}>
                 <Column minWidth="300px">
-                  <Menu selectionMode="single" selectedKeys={selectedKeys} onAction={handleAction}>
+                  <Menu
+                    selectionMode="single"
+                    selectedKeys={selectedKeys}
+                    onAction={handleAction}
+                  >
                     <MenuSection title={t(labels.myAccount)}>
                       <MenuItem id="user">
                         <IconLabel icon={<User />} label={user.username} />
@@ -95,7 +109,11 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
                     <MenuSeparator />
                     <MenuSection title={t(labels.teams)}>
                       {user?.teams?.map(({ id, name }) => (
-                        <MenuItem key={id} id={id} href={getUrl(`/teams/${id}`)}>
+                        <MenuItem
+                          key={id}
+                          id={id}
+                          href={getUrl(`/teams/${id}`)}
+                        >
                           <IconLabel icon={<Users />}>
                             <Text wrap="nowrap">{name}</Text>
                           </IconLabel>
@@ -103,8 +121,12 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
                       ))}
                       {user?.teams?.length === 0 && (
                         <MenuItem id="manage-teams">
-                          <a href="/settings/teams" style={{ width: '100%' }}>
-                            <Row alignItems="center" justifyContent="space-between" gap>
+                          <a href="/settings/teams" style={{ width: "100%" }}>
+                            <Row
+                              alignItems="center"
+                              justifyContent="space-between"
+                              gap
+                            >
                               <Text align="center">Manage teams</Text>
                               <Icon>
                                 <ArrowRight />

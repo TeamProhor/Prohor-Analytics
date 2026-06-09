@@ -1,14 +1,16 @@
-import { z } from 'zod';
-import * as send from '@/app/api/send/route';
-import { parseRequest } from '@/lib/request';
-import { json, serverError } from '@/lib/response';
-import { anyObjectParam } from '@/lib/schema';
+import { z } from "zod";
+import * as send from "@/app/api/send/route";
+import { parseRequest } from "@/lib/request";
+import { json, serverError } from "@/lib/response";
+import { anyObjectParam } from "@/lib/schema";
 
 const schema = z.array(anyObjectParam);
 
 export async function POST(request: Request) {
   try {
-    const { body, error } = await parseRequest(request, schema, { skipAuth: true });
+    const { body, error } = await parseRequest(request, schema, {
+      skipAuth: true,
+    });
 
     if (error) {
       return error();
@@ -24,11 +26,11 @@ export async function POST(request: Request) {
 
       // Copy headers we received, ensure JSON content type, and avoid conflicting content-length
       const headers = new Headers(request.headers);
-      headers.set('content-type', 'application/json');
-      headers.delete('content-length');
+      headers.set("content-type", "application/json");
+      headers.delete("content-length");
 
       const newRequest = new Request(request.url, {
-        method: 'POST',
+        method: "POST",
         headers,
         body: JSON.stringify(data),
       });

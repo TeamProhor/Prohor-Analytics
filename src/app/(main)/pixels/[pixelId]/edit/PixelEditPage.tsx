@@ -1,19 +1,24 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { PixelEditForm } from '@/app/(main)/pixels/PixelEditForm';
-import { PixelProvider } from '@/app/(main)/pixels/PixelProvider';
-import { PixelShareForm } from '@/app/(main)/pixels/[pixelId]/PixelShareForm';
-import { Panel } from '@/components/common/Panel';
-import { IconLabel } from '@/components/common/IconLabel';
-import { PageHeader } from '@/components/common/PageHeader';
-import { useMessages, useNavigation, usePixel } from '@/components/hooks';
-import { ArrowLeft, Grid2x2 } from '@/components/icons';
+"use client";
+import { Column } from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { PixelEditForm } from "@/app/(main)/pixels/PixelEditForm";
+import { PixelProvider } from "@/app/(main)/pixels/PixelProvider";
+import { PixelShareForm } from "@/app/(main)/pixels/[pixelId]/PixelShareForm";
+import { Panel } from "@/components/common/Panel";
+import { IconLabel } from "@/components/common/IconLabel";
+import { PageHeader } from "@/components/common/PageHeader";
+import { useMessages, useNavigation, usePixel } from "@/components/hooks";
+import { ArrowLeft, Grid2x2 } from "@/components/icons";
 
 export function PixelEditPage({ pixelId }: { pixelId: string }) {
   return (
     <PixelProvider pixelId={pixelId}>
-      <Column margin="2" width="100%" maxWidth="800px" style={{ marginInline: 'auto' }}>
+      <Column
+        margin="2"
+        width="100%"
+        maxWidth="800px"
+        style={{ marginInline: "auto" }}
+      >
         <PixelEditHeader />
         <Column gap="6">
           <Panel>

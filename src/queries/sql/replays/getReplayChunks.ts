@@ -1,7 +1,7 @@
-import { gunzipSync } from 'node:zlib';
-import prisma from '@/lib/prisma';
+import { gunzipSync } from "node:zlib";
+import prisma from "@/lib/prisma";
 
-const FUNCTION_NAME = 'getReplayChunks';
+const FUNCTION_NAME = "getReplayChunks";
 
 export interface ReplayChunk {
   sessionId: string;
@@ -13,11 +13,17 @@ export interface ReplayChunk {
   endedAt: Date;
 }
 
-export async function getReplayChunks(websiteId: string, visitId: string): Promise<ReplayChunk[]> {
+export async function getReplayChunks(
+  websiteId: string,
+  visitId: string,
+): Promise<ReplayChunk[]> {
   return relationalQuery(websiteId, visitId);
 }
 
-async function relationalQuery(websiteId: string, visitId: string): Promise<ReplayChunk[]> {
+async function relationalQuery(
+  websiteId: string,
+  visitId: string,
+): Promise<ReplayChunk[]> {
   const { rawQuery } = prisma;
 
   const chunks: {
@@ -47,8 +53,8 @@ async function relationalQuery(websiteId: string, visitId: string): Promise<Repl
     FUNCTION_NAME,
   );
 
-  return chunks.map(chunk => ({
+  return chunks.map((chunk) => ({
     ...chunk,
-    events: JSON.parse(gunzipSync(Buffer.from(chunk.events)).toString('utf-8')),
+    events: JSON.parse(gunzipSync(Buffer.from(chunk.events)).toString("utf-8")),
   }));
 }

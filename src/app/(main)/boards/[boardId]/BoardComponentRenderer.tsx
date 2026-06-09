@@ -1,7 +1,7 @@
-import { Column, Text } from '@umami/react-zen';
-import { memo } from 'react';
-import type { BoardComponentConfig } from '@/lib/types';
-import { getComponentDefinition } from '../boardComponentRegistry';
+import { Column, Text } from "@umami/react-zen";
+import { memo } from "react";
+import type { BoardComponentConfig } from "@/lib/types";
+import { getComponentDefinition } from "../boardComponentRegistry";
 
 function BoardComponentRendererComponent({
   config,
@@ -16,18 +16,29 @@ function BoardComponentRendererComponent({
 
   if (!definition) {
     return (
-      <Column alignItems="center" justifyContent="center" width="100%" height="100%">
+      <Column
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
         <Text color="muted">Unknown component: {config.type}</Text>
       </Column>
     );
   }
 
   const Component =
-    (entityType && definition.componentByEntityType?.[entityType]) || definition.component;
+    (entityType && definition.componentByEntityType?.[entityType]) ||
+    definition.component;
 
   if (!websiteId && definition.requiresWebsite !== false) {
     return (
-      <Column alignItems="center" justifyContent="center" width="100%" height="100%">
+      <Column
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
         <Text color="muted">Select a website</Text>
       </Column>
     );
@@ -44,4 +55,4 @@ export const BoardComponentRenderer = memo(
     prevProps.config === nextProps.config,
 );
 
-BoardComponentRenderer.displayName = 'BoardComponentRenderer';
+BoardComponentRenderer.displayName = "BoardComponentRenderer";

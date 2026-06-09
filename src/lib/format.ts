@@ -1,4 +1,4 @@
-import { DEFAULT_CURRENCY } from './constants';
+import { DEFAULT_CURRENCY } from "./constants";
 
 export function parseTime(val: number) {
   const days = ~~(val / 86400);
@@ -18,22 +18,22 @@ export function parseTime(val: number) {
 
 export function formatTime(val: number) {
   const { hours, minutes, seconds } = parseTime(val);
-  const h = hours > 0 ? `${hours}:` : '';
-  const m = hours > 0 ? minutes.toString().padStart(2, '0') : minutes;
-  const s = seconds.toString().padStart(2, '0');
+  const h = hours > 0 ? `${hours}:` : "";
+  const m = hours > 0 ? minutes.toString().padStart(2, "0") : minutes;
+  const s = seconds.toString().padStart(2, "0");
 
   return `${h}${m}:${s}`;
 }
 
-export function formatShortTime(val: number, formats = ['m', 's'], space = '') {
+export function formatShortTime(val: number, formats = ["m", "s"], space = "") {
   const { days, hours, minutes, seconds, ms } = parseTime(val);
-  let t = '';
+  let t = "";
 
-  if (days > 0 && formats.indexOf('d') !== -1) t += `${days}d${space}`;
-  if (hours > 0 && formats.indexOf('h') !== -1) t += `${hours}h${space}`;
-  if (minutes > 0 && formats.indexOf('m') !== -1) t += `${minutes}m${space}`;
-  if (seconds > 0 && formats.indexOf('s') !== -1) t += `${seconds}s${space}`;
-  if (ms > 0 && formats.indexOf('ms') !== -1) t += `${ms}ms`;
+  if (days > 0 && formats.indexOf("d") !== -1) t += `${days}d${space}`;
+  if (hours > 0 && formats.indexOf("h") !== -1) t += `${hours}h${space}`;
+  if (minutes > 0 && formats.indexOf("m") !== -1) t += `${minutes}m${space}`;
+  if (seconds > 0 && formats.indexOf("s") !== -1) t += `${seconds}s${space}`;
+  if (ms > 0 && formats.indexOf("ms") !== -1) t += `${ms}ms`;
 
   if (!t) {
     return `0${formats[formats.length - 1]}`;
@@ -70,13 +70,13 @@ export function formatLongNumber(value: number) {
 
 export function stringToColor(str: string) {
   if (!str) {
-    return '#ffffff';
+    return "#ffffff";
   }
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
-  let color = '#';
+  let color = "#";
   for (let i = 0; i < 3; i++) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
@@ -84,18 +84,22 @@ export function stringToColor(str: string) {
   return color;
 }
 
-export function formatCurrency(value: number, currency: string, locale = 'en-US') {
+export function formatCurrency(
+  value: number,
+  currency: string,
+  locale = "en-US",
+) {
   let formattedValue: Intl.NumberFormat;
 
   try {
     formattedValue = new Intl.NumberFormat(locale, {
-      style: 'currency',
+      style: "currency",
       currency: currency,
     });
   } catch {
     // Fallback to default currency format if an error occurs
     formattedValue = new Intl.NumberFormat(locale, {
-      style: 'currency',
+      style: "currency",
       currency: DEFAULT_CURRENCY,
     });
   }
@@ -103,7 +107,11 @@ export function formatCurrency(value: number, currency: string, locale = 'en-US'
   return formattedValue.format(value);
 }
 
-export function formatLongCurrency(value: number, currency: string, locale = 'en-US') {
+export function formatLongCurrency(
+  value: number,
+  currency: string,
+  locale = "en-US",
+) {
   const n = Number(value);
 
   if (n >= 1000000000) {

@@ -1,24 +1,24 @@
-import 'dotenv/config';
-import createNextIntlPlugin from 'next-intl/plugin';
-import pkg from './package.json' with { type: 'json' };
+import "dotenv/config";
+import createNextIntlPlugin from "next-intl/plugin";
+import pkg from "./package.json" with { type: "json" };
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-const TRACKER_SCRIPT = '/script.js';
+const TRACKER_SCRIPT = "/script.js";
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
-const basePath = process.env.BASE_PATH || '';
-const collectApiEndpoint = process.env.COLLECT_API_ENDPOINT || '';
-const corsMaxAge = process.env.CORS_MAX_AGE || '';
-const defaultCurrency = process.env.DEFAULT_CURRENCY || '';
-const defaultLocale = process.env.DEFAULT_LOCALE || '';
-const forceSSL = process.env.FORCE_SSL || '';
-const frameAncestors = process.env.ALLOWED_FRAME_URLS || '';
-const trackerScriptName = process.env.TRACKER_SCRIPT_NAME || '';
-const trackerScriptURL = process.env.TRACKER_SCRIPT_URL || '';
-const selfTrack = process.env.UMAMI_SELF_TRACK || '';
-const selfRecord = process.env.UMAMI_SELF_RECORD || '';
+const basePath = process.env.BASE_PATH || "";
+const collectApiEndpoint = process.env.COLLECT_API_ENDPOINT || "";
+const corsMaxAge = process.env.CORS_MAX_AGE || "";
+const defaultCurrency = process.env.DEFAULT_CURRENCY || "";
+const defaultLocale = process.env.DEFAULT_LOCALE || "";
+const forceSSL = process.env.FORCE_SSL || "";
+const frameAncestors = process.env.ALLOWED_FRAME_URLS || "";
+const trackerScriptName = process.env.TRACKER_SCRIPT_NAME || "";
+const trackerScriptURL = process.env.TRACKER_SCRIPT_URL || "";
+const selfTrack = process.env.UMAMI_SELF_TRACK || "";
+const selfRecord = process.env.UMAMI_SELF_RECORD || "";
 
 const contentSecurityPolicy = `
   default-src 'self';
@@ -31,63 +31,63 @@ const contentSecurityPolicy = `
 
 const defaultHeaders = [
   {
-    key: 'X-DNS-Prefetch-Control',
-    value: 'on',
+    key: "X-DNS-Prefetch-Control",
+    value: "on",
   },
   {
-    key: 'Content-Security-Policy',
-    value: contentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+    key: "Content-Security-Policy",
+    value: contentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
   },
 ];
 
 if (forceSSL) {
   defaultHeaders.push({
-    key: 'Strict-Transport-Security',
-    value: 'max-age=63072000; includeSubDomains; preload',
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
   });
 }
 
 const trackerHeaders = [
   {
-    key: 'Access-Control-Allow-Origin',
-    value: '*',
+    key: "Access-Control-Allow-Origin",
+    value: "*",
   },
   {
-    key: 'Cache-Control',
-    value: 'public, max-age=86400, must-revalidate',
+    key: "Cache-Control",
+    value: "public, max-age=86400, must-revalidate",
   },
 ];
 
 const apiHeaders = [
   {
-    key: 'Access-Control-Allow-Origin',
-    value: '*',
+    key: "Access-Control-Allow-Origin",
+    value: "*",
   },
   {
-    key: 'Access-Control-Allow-Headers',
-    value: '*',
+    key: "Access-Control-Allow-Headers",
+    value: "*",
   },
   {
-    key: 'Access-Control-Allow-Methods',
-    value: 'GET, DELETE, POST, PUT',
+    key: "Access-Control-Allow-Methods",
+    value: "GET, DELETE, POST, PUT",
   },
   {
-    key: 'Access-Control-Max-Age',
-    value: corsMaxAge || '86400',
+    key: "Access-Control-Max-Age",
+    value: corsMaxAge || "86400",
   },
   {
-    key: 'Cache-Control',
-    value: 'no-cache',
+    key: "Cache-Control",
+    value: "no-cache",
   },
 ];
 
 const headers = [
   {
-    source: '/api/:path*',
+    source: "/api/:path*",
     headers: apiHeaders,
   },
   {
-    source: '/:path*',
+    source: "/:path*",
     headers: defaultHeaders,
   },
 ];
@@ -116,50 +116,50 @@ if (collectApiEndpoint) {
 
   rewrites.push({
     source: collectApiEndpoint,
-    destination: '/api/send',
+    destination: "/api/send",
   });
 }
 
 const redirects = [
   {
-    source: '/teams/:id/dashboard/edit',
-    destination: '/dashboard/edit',
+    source: "/teams/:id/dashboard/edit",
+    destination: "/dashboard/edit",
     permanent: false,
   },
   {
-    source: '/teams/:id/dashboard',
-    destination: '/dashboard',
+    source: "/teams/:id/dashboard",
+    destination: "/dashboard",
     permanent: false,
   },
   {
-    source: '/settings',
-    destination: '/settings/preferences',
+    source: "/settings",
+    destination: "/settings/preferences",
     permanent: false,
   },
   {
-    source: '/teams/:id',
-    destination: '/teams/:id/websites',
+    source: "/teams/:id",
+    destination: "/teams/:id/websites",
     permanent: false,
   },
   {
-    source: '/teams/:id/settings',
-    destination: '/teams/:id/settings/preferences',
+    source: "/teams/:id/settings",
+    destination: "/teams/:id/settings/preferences",
     permanent: false,
   },
   {
-    source: '/admin',
-    destination: '/admin/users',
+    source: "/admin",
+    destination: "/admin/users",
     permanent: false,
   },
 ];
 
 // Adding rewrites + headers for all alternative tracker script names.
 if (trackerScriptName) {
-  const names = trackerScriptName?.split(',').map(name => name.trim());
+  const names = trackerScriptName?.split(",").map((name) => name.trim());
 
   if (names) {
-    names.forEach(name => {
-      const normalizedSource = `/${name.replace(/^\/+/, '')}`;
+    names.forEach((name) => {
+      const normalizedSource = `/${name.replace(/^\/+/, "")}`;
 
       rewrites.push({
         source: normalizedSource,
@@ -197,8 +197,8 @@ export default withNextIntl({
     return [
       ...rewrites,
       {
-        source: '/teams/:teamId/:path*',
-        destination: '/:path*',
+        source: "/teams/:teamId/:path*",
+        destination: "/:path*",
       },
     ];
   },
@@ -206,4 +206,3 @@ export default withNextIntl({
     return [...redirects];
   },
 });
-

@@ -1,12 +1,16 @@
-import type { Metadata } from 'next';
-import { AttributionPage } from './AttributionPage';
+import type { Metadata } from "next";
+import { AttributionPage } from "./AttributionPage";
 
-export default async function ({ params }: { params: Promise<{ websiteId: string }> }) {
+export default async function ({
+  params,
+}: {
+  params: Promise<{ websiteId: string }>;
+}) {
   const { websiteId } = await params;
 
   return <AttributionPage websiteId={websiteId} />;
 }
 
 export const metadata: Metadata = {
-  title: 'Attribution',
+  title: "Attribution",
 };

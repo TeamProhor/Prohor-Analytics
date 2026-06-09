@@ -1,6 +1,14 @@
-import { Button, Column, Icon, List, MenuTrigger, Popover, SearchField } from '@umami/react-zen';
-import type { ReactNode } from 'react';
-import { ChevronRight } from '@/components/icons';
+import {
+  Button,
+  Column,
+  Icon,
+  List,
+  MenuTrigger,
+  Popover,
+  SearchField,
+} from "@umami/react-zen";
+import type { ReactNode } from "react";
+import { ChevronRight } from "@/components/icons";
 
 interface MultiSelectProps {
   value?: string[];
@@ -19,7 +27,7 @@ export function MultiSelect({
   onChange,
   searchValue,
   onSearch,
-  placeholder = 'Select an item',
+  placeholder = "Select an item",
   allowSearch,
   renderEmptyState,
   renderValue,
@@ -28,7 +36,7 @@ export function MultiSelect({
   const displayValue = renderValue
     ? renderValue(value)
     : value.length > 0
-      ? value.join(', ')
+      ? value.join(", ")
       : null;
 
   return (
@@ -36,16 +44,27 @@ export function MultiSelect({
       <Button
         variant="outline"
         className="w-full justify-between"
-        style={{ maxWidth: '100%', overflow: 'hidden' }}
+        style={{ maxWidth: "100%", overflow: "hidden" }}
       >
-        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <span
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           {displayValue ?? placeholder}
         </span>
         <Icon rotate={90} size="sm" aria-hidden="true">
           <ChevronRight />
         </Icon>
       </Button>
-      <Popover style={{ minWidth: 'var(--trigger-width)', maxWidth: 'var(--trigger-width)' }}>
+      <Popover
+        style={{
+          minWidth: "var(--trigger-width)",
+          maxWidth: "var(--trigger-width)",
+        }}
+      >
         <Column
           gap="2"
           padding="2"
@@ -54,7 +73,9 @@ export function MultiSelect({
           shadow="lg"
           className="bg-surface-overlay"
         >
-          {allowSearch && <SearchField value={searchValue} onSearch={onSearch} autoFocus />}
+          {allowSearch && (
+            <SearchField value={searchValue} onSearch={onSearch} autoFocus />
+          )}
           <List
             selectionMode="multiple"
             value={value}

@@ -1,12 +1,24 @@
-'use client';
-import { Loading, useToast } from '@umami/react-zen';
-import { createContext, type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { v4 as uuid } from 'uuid';
-import { useApi, useMessages, useModified, useNavigation } from '@/components/hooks';
-import { BOARD_TYPES, getBoardType } from '@/lib/boards';
-import { useBoardQuery } from '@/components/hooks/queries/useBoardQuery';
-import type { Board, BoardParameters } from '@/lib/types';
-import { getComponentDefinition } from './boardComponentRegistry';
+"use client";
+import { Loading, useToast } from "@umami/react-zen";
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { v4 as uuid } from "uuid";
+import {
+  useApi,
+  useMessages,
+  useModified,
+  useNavigation,
+} from "@/components/hooks";
+import { BOARD_TYPES, getBoardType } from "@/lib/boards";
+import { useBoardQuery } from "@/components/hooks/queries/useBoardQuery";
+import type { Board, BoardParameters } from "@/lib/types";
+import { getComponentDefinition } from "./boardComponentRegistry";
 
 export type LayoutGetter = () => Partial<BoardParameters> | null;
 
@@ -23,24 +35,29 @@ export const BoardContext = createContext<BoardContextValue>(null);
 
 const createDefaultBoard = (): Partial<Board> => ({
   type: BOARD_TYPES.mixed,
-  name: '',
-  description: '',
+  name: "",
+  description: "",
   parameters: {
     rows: [{ id: uuid(), columns: [{ id: uuid(), component: null }] }],
   },
 });
 
-function sanitizeBoardParameters(parameters?: BoardParameters): BoardParameters | undefined {
+function sanitizeBoardParameters(
+  parameters?: BoardParameters,
+): BoardParameters | undefined {
   if (!parameters?.rows) {
     return parameters;
   }
 
   return {
     ...parameters,
-    rows: parameters.rows.map(row => ({
+    rows: parameters.rows.map((row) => ({
       ...row,
-      columns: row.columns.map(column => {
-        if (column.component && !getComponentDefinition(column.component.type)) {
+      columns: row.columns.map((column) => {
+        if (
+          column.component &&
+          !getComponentDefinition(column.component.type)
+        ) {
           return {
             ...column,
             component: null,
@@ -69,7 +86,9 @@ export function BoardProvider({
   const { t, labels, messages } = useMessages();
   const { router, renderUrl, teamId } = useNavigation();
 
-  const [board, setBoard] = useState<Partial<Board>>(data ?? createDefaultBoard());
+  const [board, setBoard] = useState<Partial<Board>>(
+    data ?? createDefaultBoard(),
+  );
   const boardRef = useRef<Partial<Board>>(data ?? createDefaultBoard());
   const layoutGetterRef = useRef<LayoutGetter | null>(null);
 
@@ -95,17 +114,17 @@ export function BoardProvider({
       if (boardData.id) {
         return post(`/boards/${boardData.id}`, boardData);
       }
-      return post('/boards', {
+      return post("/boards", {
         ...boardData,
         type: boardData.type || BOARD_TYPES.mixed,
-        slug: '',
+        slug: "",
         teamId,
       });
     },
   });
 
   const updateBoard = useCallback((data: Partial<Board>) => {
-    setBoard(current => {
+    setBoard((current) => {
       const nextBoard = { ...current, ...data };
       boardRef.current = nextBoard;
 
@@ -120,7 +139,9 @@ export function BoardProvider({
     // Get current layout sizes from BoardEditBody if registered
     const layoutData = layoutGetterRef.current?.();
     const parameters = sanitizeBoardParameters(
-      layoutData ? { ...currentBoard.parameters, ...layoutData } : currentBoard.parameters,
+      layoutData
+        ? { ...currentBoard.parameters, ...layoutData }
+        : currentBoard.parameters,
     );
 
     const result = await mutateAsync({
@@ -130,7 +151,7 @@ export function BoardProvider({
     });
 
     toast(t(messages.saved));
-    touch('boards');
+    touch("boards");
 
     if (currentBoard.id) {
       touch(`board:${currentBoard.id}`);
@@ -139,7 +160,16 @@ export function BoardProvider({
     }
 
     return result;
-  }, [mutateAsync, toast, t, labels.untitled, messages.saved, touch, router, renderUrl]);
+  }, [
+    mutateAsync,
+    toast,
+    t,
+    labels.untitled,
+    messages.saved,
+    touch,
+    router,
+    renderUrl,
+  ]);
 
   if (boardId && isFetching && isLoading) {
     return <Loading placement="absolute" />;
@@ -147,7 +177,14 @@ export function BoardProvider({
 
   return (
     <BoardContext.Provider
-      value={{ board, editing, updateBoard, saveBoard, isPending, registerLayoutGetter }}
+      value={{
+        board,
+        editing,
+        updateBoard,
+        saveBoard,
+        isPending,
+        registerLayoutGetter,
+      }}
     >
       {children}
     </BoardContext.Provider>

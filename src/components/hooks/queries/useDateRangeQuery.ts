@@ -1,16 +1,19 @@
-import type { ReactQueryOptions } from '@/lib/types';
-import { useApi } from '../useApi';
+import type { ReactQueryOptions } from "@/lib/types";
+import { useApi } from "../useApi";
 
 type DateRange = {
   startDate?: string;
   endDate?: string;
 };
 
-export function useDateRangeQuery(websiteId: string, options?: ReactQueryOptions) {
+export function useDateRangeQuery(
+  websiteId: string,
+  options?: ReactQueryOptions,
+) {
   const { get, useQuery } = useApi();
 
   const { data } = useQuery<DateRange>({
-    queryKey: ['date-range', websiteId],
+    queryKey: ["date-range", websiteId],
     queryFn: () => get(`/websites/${websiteId}/daterange`),
     enabled: !!websiteId,
     ...options,

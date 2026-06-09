@@ -1,12 +1,12 @@
-import { produce } from 'immer';
-import { create } from 'zustand';
-import type { DateRange } from '@/lib/types';
+import { produce } from "immer";
+import { create } from "zustand";
+import type { DateRange } from "@/lib/types";
 
 const store = create(() => ({}));
 
 export function setWebsiteDateRange(websiteId: string, dateRange: DateRange) {
   store.setState(
-    produce(state => {
+    produce((state) => {
       if (!state[websiteId]) {
         state[websiteId] = {};
       }
@@ -20,7 +20,7 @@ export function setWebsiteDateRange(websiteId: string, dateRange: DateRange) {
 
 export function setWebsiteDateCompare(websiteId: string, dateCompare: string) {
   store.setState(
-    produce(state => {
+    produce((state) => {
       if (!state[websiteId]) {
         state[websiteId] = {};
       }

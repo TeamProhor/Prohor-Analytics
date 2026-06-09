@@ -1,10 +1,16 @@
-import { Empty } from '@/components/common/Empty';
-import { useMessages, useWebsiteValuesQuery } from '@/components/hooks';
-import { ComboBox, type ComboBoxProps, ListItem, Loading, useDebounce } from '@umami/react-zen';
-import { endOfDay, subMonths } from 'date-fns';
-import { type SetStateAction, useMemo, useState } from 'react';
+import { Empty } from "@/components/common/Empty";
+import { useMessages, useWebsiteValuesQuery } from "@/components/hooks";
+import {
+  ComboBox,
+  type ComboBoxProps,
+  ListItem,
+  Loading,
+  useDebounce,
+} from "@umami/react-zen";
+import { endOfDay, subMonths } from "date-fns";
+import { type SetStateAction, useMemo, useState } from "react";
 
-export interface LookupFieldProps extends Omit<ComboBoxProps, 'onChange'> {
+export interface LookupFieldProps extends Omit<ComboBoxProps, "onChange"> {
   websiteId: string;
   type: string;
   value: string;
@@ -48,7 +54,7 @@ export function LookupField({
       {...props}
       items={items}
       inputValue={value}
-      onInputChange={value => {
+      onInputChange={(value) => {
         handleSearch(value);
         onChange?.(value);
         onValueChange?.(value);
@@ -64,7 +70,7 @@ export function LookupField({
         )
       }
     >
-      {items.map(item => (
+      {items.map((item) => (
         <ListItem key={item} id={item}>
           {item}
         </ListItem>

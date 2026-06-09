@@ -1,7 +1,7 @@
-import { Column, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
-import { useMessages } from '@/components/hooks';
-import { UserEditForm } from './UserEditForm';
-import { UserWebsites } from './UserWebsites';
+import { Column, Tab, TabList, TabPanel, Tabs } from "@umami/react-zen";
+import { useMessages } from "@/components/hooks";
+import { UserEditForm } from "./UserEditForm";
+import { UserWebsites } from "./UserWebsites";
 
 export function UserSettings({ userId }: { userId: string }) {
   const { t, labels } = useMessages();

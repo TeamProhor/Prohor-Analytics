@@ -1,5 +1,5 @@
-import { NavMenu } from '@/components/common/NavMenu';
-import { useMessages, useNavigation } from '@/components/hooks';
+import { NavMenu } from "@/components/common/NavMenu";
+import { useMessages, useNavigation } from "@/components/hooks";
 import {
   AppWindow,
   Cpu,
@@ -25,8 +25,8 @@ import {
   Tag,
   Target,
   Type,
-} from '@/components/icons';
-import { Lightning } from '@/components/svg';
+} from "@/components/icons";
+import { Lightning } from "@/components/svg";
 
 export function WebsiteExpandedMenu({
   excludedIds = [],
@@ -41,40 +41,41 @@ export function WebsiteExpandedMenu({
     query: { view },
   } = useNavigation();
 
-  const filterExcluded = (item: { id: string }) => !excludedIds.includes(item.id);
+  const filterExcluded = (item: { id: string }) =>
+    !excludedIds.includes(item.id);
 
   const items = [
     {
-      label: 'URL',
+      label: "URL",
       items: [
         {
-          id: 'path',
+          id: "path",
           label: t(labels.path),
-          path: updateParams({ view: 'path' }),
+          path: updateParams({ view: "path" }),
           icon: <SquareSlash />,
         },
         {
-          id: 'entry',
+          id: "entry",
           label: t(labels.entry),
-          path: updateParams({ view: 'entry' }),
+          path: updateParams({ view: "entry" }),
           icon: <LogIn />,
         },
         {
-          id: 'exit',
+          id: "exit",
           label: t(labels.exit),
-          path: updateParams({ view: 'exit' }),
+          path: updateParams({ view: "exit" }),
           icon: <LogOut />,
         },
         {
-          id: 'title',
+          id: "title",
           label: t(labels.title),
-          path: updateParams({ view: 'title' }),
+          path: updateParams({ view: "title" }),
           icon: <Type />,
         },
         {
-          id: 'query',
+          id: "query",
           label: t(labels.query),
-          path: updateParams({ view: 'query' }),
+          path: updateParams({ view: "query" }),
           icon: <Search />,
         },
       ].filter(filterExcluded),
@@ -83,21 +84,21 @@ export function WebsiteExpandedMenu({
       label: t(labels.sources),
       items: [
         {
-          id: 'referrer',
+          id: "referrer",
           label: t(labels.referrer),
-          path: updateParams({ view: 'referrer' }),
+          path: updateParams({ view: "referrer" }),
           icon: <Share2 />,
         },
         {
-          id: 'channel',
+          id: "channel",
           label: t(labels.channel),
-          path: updateParams({ view: 'channel' }),
+          path: updateParams({ view: "channel" }),
           icon: <Megaphone />,
         },
         {
-          id: 'domain',
+          id: "domain",
           label: t(labels.domain),
-          path: updateParams({ view: 'domain' }),
+          path: updateParams({ view: "domain" }),
           icon: <Globe />,
         },
       ].filter(filterExcluded),
@@ -106,21 +107,21 @@ export function WebsiteExpandedMenu({
       label: t(labels.location),
       items: [
         {
-          id: 'country',
+          id: "country",
           label: t(labels.country),
-          path: updateParams({ view: 'country' }),
+          path: updateParams({ view: "country" }),
           icon: <Earth />,
         },
         {
-          id: 'region',
+          id: "region",
           label: t(labels.region),
-          path: updateParams({ view: 'region' }),
+          path: updateParams({ view: "region" }),
           icon: <MapPin />,
         },
         {
-          id: 'city',
+          id: "city",
           label: t(labels.city),
-          path: updateParams({ view: 'city' }),
+          path: updateParams({ view: "city" }),
           icon: <Landmark />,
         },
       ].filter(filterExcluded),
@@ -129,33 +130,33 @@ export function WebsiteExpandedMenu({
       label: t(labels.environment),
       items: [
         {
-          id: 'browser',
+          id: "browser",
           label: t(labels.browser),
-          path: updateParams({ view: 'browser' }),
+          path: updateParams({ view: "browser" }),
           icon: <AppWindow />,
         },
         {
-          id: 'os',
+          id: "os",
           label: t(labels.os),
-          path: updateParams({ view: 'os' }),
+          path: updateParams({ view: "os" }),
           icon: <Cpu />,
         },
         {
-          id: 'device',
+          id: "device",
           label: t(labels.device),
-          path: updateParams({ view: 'device' }),
+          path: updateParams({ view: "device" }),
           icon: <Laptop />,
         },
         {
-          id: 'language',
+          id: "language",
           label: t(labels.language),
-          path: updateParams({ view: 'language' }),
+          path: updateParams({ view: "language" }),
           icon: <Languages />,
         },
         {
-          id: 'screen',
+          id: "screen",
           label: t(labels.screen),
-          path: updateParams({ view: 'screen' }),
+          path: updateParams({ view: "screen" }),
           icon: <Monitor />,
         },
       ].filter(filterExcluded),
@@ -164,33 +165,33 @@ export function WebsiteExpandedMenu({
       label: t(labels.utm),
       items: [
         {
-          id: 'utmSource',
+          id: "utmSource",
           label: t(labels.source),
-          path: updateParams({ view: 'utmSource' }),
+          path: updateParams({ view: "utmSource" }),
           icon: <Link2 />,
         },
         {
-          id: 'utmMedium',
+          id: "utmMedium",
           label: t(labels.medium),
-          path: updateParams({ view: 'utmMedium' }),
+          path: updateParams({ view: "utmMedium" }),
           icon: <Send />,
         },
         {
-          id: 'utmCampaign',
+          id: "utmCampaign",
           label: t(labels.campaign),
-          path: updateParams({ view: 'utmCampaign' }),
+          path: updateParams({ view: "utmCampaign" }),
           icon: <Target />,
         },
         {
-          id: 'utmContent',
+          id: "utmContent",
           label: t(labels.content),
-          path: updateParams({ view: 'utmContent' }),
+          path: updateParams({ view: "utmContent" }),
           icon: <Layers />,
         },
         {
-          id: 'utmTerm',
+          id: "utmTerm",
           label: t(labels.term),
-          path: updateParams({ view: 'utmTerm' }),
+          path: updateParams({ view: "utmTerm" }),
           icon: <KeyRound />,
         },
       ].filter(filterExcluded),
@@ -199,27 +200,27 @@ export function WebsiteExpandedMenu({
       label: t(labels.other),
       items: [
         {
-          id: 'event',
+          id: "event",
           label: t(labels.event),
-          path: updateParams({ view: 'event' }),
+          path: updateParams({ view: "event" }),
           icon: <Lightning />,
         },
         {
-          id: 'hostname',
+          id: "hostname",
           label: t(labels.hostname),
-          path: updateParams({ view: 'hostname' }),
+          path: updateParams({ view: "hostname" }),
           icon: <Network />,
         },
         {
-          id: 'distinctId',
+          id: "distinctId",
           label: t(labels.distinctId),
-          path: updateParams({ view: 'distinctId' }),
+          path: updateParams({ view: "distinctId" }),
           icon: <Fingerprint />,
         },
         {
-          id: 'tag',
+          id: "tag",
           label: t(labels.tag),
-          path: updateParams({ view: 'tag' }),
+          path: updateParams({ view: "tag" }),
           icon: <Tag />,
         },
       ].filter(filterExcluded),

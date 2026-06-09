@@ -1,6 +1,6 @@
-import type { Prisma } from '@/generated/prisma/client';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import type { Prisma } from "@/generated/prisma/client";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 async function findSegment(criteria: Prisma.SegmentFindUniqueArgs) {
   return prisma.client.segment.findUnique(criteria);
@@ -14,7 +14,10 @@ export async function getSegment(segmentId: string) {
   });
 }
 
-export async function getSegments(criteria: Prisma.SegmentFindManyArgs, filters: QueryFilters) {
+export async function getSegments(
+  criteria: Prisma.SegmentFindManyArgs,
+  filters: QueryFilters,
+) {
   const { search } = filters;
   const { getSearchParameters, pagedQuery } = prisma;
 
@@ -22,12 +25,12 @@ export async function getSegments(criteria: Prisma.SegmentFindManyArgs, filters:
     ...criteria.where,
     ...getSearchParameters(search, [
       {
-        name: 'contains',
+        name: "contains",
       },
     ]),
   };
 
-  return pagedQuery('segment', { ...criteria, where }, filters);
+  return pagedQuery("segment", { ...criteria, where }, filters);
 }
 
 export async function getWebsiteSegment(websiteId: string, segmentId: string) {
@@ -36,7 +39,11 @@ export async function getWebsiteSegment(websiteId: string, segmentId: string) {
   });
 }
 
-export async function getWebsiteSegments(websiteId: string, type: string, filters?: QueryFilters) {
+export async function getWebsiteSegments(
+  websiteId: string,
+  type: string,
+  filters?: QueryFilters,
+) {
   return getSegments(
     {
       where: {
@@ -52,7 +59,10 @@ export async function createSegment(data: Prisma.SegmentUncheckedCreateInput) {
   return prisma.client.segment.create({ data });
 }
 
-export async function updateSegment(SegmentId: string, data: Prisma.SegmentUpdateInput) {
+export async function updateSegment(
+  SegmentId: string,
+  data: Prisma.SegmentUpdateInput,
+) {
   return prisma.client.segment.update({ where: { id: SegmentId }, data });
 }
 

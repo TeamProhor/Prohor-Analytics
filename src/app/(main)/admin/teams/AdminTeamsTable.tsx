@@ -1,11 +1,20 @@
-import { DataColumn, DataTable, Dialog, Icon, MenuItem, Modal, Row, Text } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { useState } from 'react';
-import { DateDistance } from '@/components/common/DateDistance';
-import { useMessages } from '@/components/hooks';
-import { Edit, Trash } from '@/components/icons';
-import { MenuButton } from '@/components/input/MenuButton';
-import { TeamDeleteForm } from '../../teams/[teamId]/TeamDeleteForm';
+import {
+  DataColumn,
+  DataTable,
+  Dialog,
+  Icon,
+  MenuItem,
+  Modal,
+  Row,
+  Text,
+} from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { useState } from "react";
+import { DateDistance } from "@/components/common/DateDistance";
+import { useMessages } from "@/components/hooks";
+import { Edit, Trash } from "@/components/icons";
+import { MenuButton } from "@/components/input/MenuButton";
+import { TeamDeleteForm } from "../../teams/[teamId]/TeamDeleteForm";
 
 export function AdminTeamsTable({
   data = [],
@@ -22,7 +31,9 @@ export function AdminTeamsTable({
     <>
       <DataTable data={data} {...props}>
         <DataColumn id="name" label={t(labels.name)} width="1fr">
-          {(row: any) => <Link href={`/admin/teams/${row.id}`}>{row.name}</Link>}
+          {(row: any) => (
+            <Link href={`/admin/teams/${row.id}`}>{row.name}</Link>
+          )}
         </DataColumn>
         <DataColumn id="websites" label={t(labels.members)} width="140px">
           {(row: any) => row?._count?.members}
@@ -36,7 +47,9 @@ export function AdminTeamsTable({
 
             return (
               <Text title={name} truncate>
-                <Link href={`/admin/users/${row?.members?.[0]?.user?.id}`}>{name}</Link>
+                <Link href={`/admin/users/${row?.members?.[0]?.user?.id}`}>
+                  {name}
+                </Link>
               </Text>
             );
           }}
@@ -51,7 +64,10 @@ export function AdminTeamsTable({
 
               return (
                 <MenuButton>
-                  <MenuItem href={`/admin/teams/${id}`} data-test="link-button-edit">
+                  <MenuItem
+                    href={`/admin/teams/${id}`}
+                    data-test="link-button-edit"
+                  >
                     <Row alignItems="center" gap>
                       <Icon>
                         <Edit />
@@ -79,7 +95,10 @@ export function AdminTeamsTable({
       </DataTable>
       <Modal isOpen={!!deleteTeam}>
         <Dialog style={{ width: 400 }}>
-          <TeamDeleteForm teamId={deleteTeam} onClose={() => setDeleteTeam(null)} />
+          <TeamDeleteForm
+            teamId={deleteTeam}
+            onClose={() => setDeleteTeam(null)}
+          />
         </Dialog>
       </Modal>
     </>

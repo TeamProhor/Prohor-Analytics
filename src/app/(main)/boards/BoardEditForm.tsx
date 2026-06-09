@@ -9,11 +9,16 @@ import {
   Row,
   Select,
   TextField,
-} from '@umami/react-zen';
-import { useBoardQuery, useMessages, useNavigation, useUpdateQuery } from '@/components/hooks';
-import { LinkSelect } from '@/components/input/LinkSelect';
-import { PixelSelect } from '@/components/input/PixelSelect';
-import { WebsiteSelect } from '@/components/input/WebsiteSelect';
+} from "@umami/react-zen";
+import {
+  useBoardQuery,
+  useMessages,
+  useNavigation,
+  useUpdateQuery,
+} from "@/components/hooks";
+import { LinkSelect } from "@/components/input/LinkSelect";
+import { PixelSelect } from "@/components/input/PixelSelect";
+import { WebsiteSelect } from "@/components/input/WebsiteSelect";
 import {
   BOARD_TYPES,
   type BoardType,
@@ -21,8 +26,8 @@ import {
   getBoardType,
   requiresBoardEntity,
   setBoardEntity,
-} from '@/lib/boards';
-import type { Board } from '@/lib/types';
+} from "@/lib/boards";
+import type { Board } from "@/lib/types";
 
 interface BoardFormValues {
   name: string;
@@ -36,10 +41,10 @@ function getDefaultValues(board?: Partial<Board>): BoardFormValues {
   const { entityId } = getBoardEntity(board);
 
   return {
-    name: board?.name ?? '',
-    description: board?.description ?? '',
+    name: board?.name ?? "",
+    description: board?.description ?? "",
     type: boardType,
-    entityId: entityId ?? '',
+    entityId: entityId ?? "",
   };
 }
 
@@ -57,9 +62,9 @@ export function BoardEditForm({
   const { t, labels, messages, getErrorMessage } = useMessages();
   const { teamId: navigationTeamId } = useNavigation();
   const resolvedTeamId = teamId ?? navigationTeamId;
-  const { data: board, isLoading } = useBoardQuery(boardId || '');
+  const { data: board, isLoading } = useBoardQuery(boardId || "");
   const { mutateAsync, error, isPending, touch, toast } = useUpdateQuery(
-    boardId ? `/boards/${boardId}` : '/boards',
+    boardId ? `/boards/${boardId}` : "/boards",
     {
       id: boardId,
       teamId: resolvedTeamId,
@@ -72,11 +77,15 @@ export function BoardEditForm({
       name: data.name,
       description: data.description,
       type: data.type,
-      parameters: setBoardEntity(board?.parameters, data.type, data.entityId || undefined),
+      parameters: setBoardEntity(
+        board?.parameters,
+        data.type,
+        data.entityId || undefined,
+      ),
     });
 
     toast(t(messages.saved));
-    touch('boards');
+    touch("boards");
     touch(`board:${result.id}`);
     await onSave?.(result);
     onClose?.();
@@ -87,10 +96,14 @@ export function BoardEditForm({
   }
 
   return (
-    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} values={values}>
+    <Form
+      onSubmit={handleSubmit}
+      error={getErrorMessage(error)}
+      values={values}
+    >
       {({ watch, setValue }) => {
-        const type = watch('type') as BoardType;
-        const entityId = watch('entityId') as string;
+        const type = watch("type") as BoardType;
+        const entityId = watch("entityId") as string;
         const entityLabel =
           type === BOARD_TYPES.pixel
             ? t(labels.pixel)
@@ -99,18 +112,26 @@ export function BoardEditForm({
               : t(labels.website);
 
         const handleTypeChange = (value: string) => {
-          setValue('type', value as BoardType, { shouldDirty: true });
-          setValue('entityId', '', { shouldDirty: true });
+          setValue("type", value as BoardType, { shouldDirty: true });
+          setValue("entityId", "", { shouldDirty: true });
         };
 
         const handleEntityChange = (value: string) => {
-          setValue('entityId', value, { shouldDirty: true });
+          setValue("entityId", value, { shouldDirty: true });
         };
 
         return (
           <>
-            <FormField name="name" label={t(labels.name)} rules={{ required: t(labels.required) }}>
-              <TextField autoComplete="off" autoFocus={!boardId} placeholder={t(labels.untitled)} />
+            <FormField
+              name="name"
+              label={t(labels.name)}
+              rules={{ required: t(labels.required) }}
+            >
+              <TextField
+                autoComplete="off"
+                autoFocus={!boardId}
+                placeholder={t(labels.untitled)}
+              />
             </FormField>
             <FormField name="description" label={t(labels.description)}>
               <TextField
@@ -128,7 +149,9 @@ export function BoardEditForm({
               <Box width="100%" maxWidth="360px">
                 <Select value={type} onChange={handleTypeChange}>
                   <ListItem id={BOARD_TYPES.mixed}>{t(labels.open)}</ListItem>
-                  <ListItem id={BOARD_TYPES.website}>{t(labels.website)}</ListItem>
+                  <ListItem id={BOARD_TYPES.website}>
+                    {t(labels.website)}
+                  </ListItem>
                   <ListItem id={BOARD_TYPES.pixel}>{t(labels.pixel)}</ListItem>
                   <ListItem id={BOARD_TYPES.link}>{t(labels.link)}</ListItem>
                 </Select>
@@ -171,7 +194,9 @@ export function BoardEditForm({
                   {t(labels.cancel)}
                 </Button>
               )}
-              <FormSubmitButton isDisabled={isPending}>{t(labels.save)}</FormSubmitButton>
+              <FormSubmitButton isDisabled={isPending}>
+                {t(labels.save)}
+              </FormSubmitButton>
             </Row>
           </>
         );

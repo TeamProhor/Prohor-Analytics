@@ -1,7 +1,7 @@
-import type { ReactQueryOptions } from '@/lib/types';
-import { useApi } from '../useApi';
-import { useModified } from '../useModified';
-import { usePagedQuery } from '../usePagedQuery';
+import type { ReactQueryOptions } from "@/lib/types";
+import { useApi } from "../useApi";
+import { useModified } from "../useModified";
+import { usePagedQuery } from "../usePagedQuery";
 
 export function useReportsQuery(
   { websiteId, type }: { websiteId: string; type?: string },
@@ -11,8 +11,8 @@ export function useReportsQuery(
   const { get } = useApi();
 
   return usePagedQuery({
-    queryKey: ['reports', { websiteId, type, modified }],
-    queryFn: async () => get('/reports', { websiteId, type }),
+    queryKey: ["reports", { websiteId, type, modified }],
+    queryFn: async () => get("/reports", { websiteId, type }),
     enabled: !!websiteId && !!type,
     ...options,
   });

@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
-import { SettingsLayout } from './SettingsLayout';
+import type { Metadata } from "next";
+import { SettingsLayout } from "./SettingsLayout";
 
 export default function ({ children }) {
   if (process.env.cloudMode) {
@@ -11,7 +11,7 @@ export default function ({ children }) {
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Settings | Umami',
-    default: 'Settings | Umami',
+    template: "%s | Settings | Umami",
+    default: "Settings | Umami",
   },
 };

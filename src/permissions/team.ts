@@ -1,7 +1,7 @@
-import { hasPermission } from '@/lib/auth';
-import { PERMISSIONS } from '@/lib/constants';
-import type { Auth } from '@/lib/types';
-import { getTeamUser } from '@/queries/prisma';
+import { hasPermission } from "@/lib/auth";
+import { PERMISSIONS } from "@/lib/constants";
+import type { Auth } from "@/lib/types";
+import { getTeamUser } from "@/queries/prisma";
 
 export async function canViewTeam({ user }: Auth, teamId: string) {
   if (!user) {
@@ -55,7 +55,11 @@ export async function canDeleteTeam({ user }: Auth, teamId: string) {
   return teamUser && hasPermission(teamUser.role, PERMISSIONS.teamDelete);
 }
 
-export async function canDeleteTeamUser({ user }: Auth, teamId: string, removeUserId: string) {
+export async function canDeleteTeamUser(
+  { user }: Auth,
+  teamId: string,
+  removeUserId: string,
+) {
   if (!user) {
     return false;
   }

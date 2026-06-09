@@ -1,10 +1,15 @@
-import { EVENT_COLUMNS, FILTER_COLUMNS, SEGMENT_TYPES, SESSION_COLUMNS } from '@/lib/constants';
-import { getQueryFilters, parseRequest } from '@/lib/request';
-import { badRequest, json, unauthorized } from '@/lib/response';
-import { fieldsParam, searchParams, withDateRange } from '@/lib/schema';
-import { canViewWebsite } from '@/permissions';
-import { getWebsiteSegments } from '@/queries/prisma';
-import { getValues } from '@/queries/sql';
+import {
+  EVENT_COLUMNS,
+  FILTER_COLUMNS,
+  SEGMENT_TYPES,
+  SESSION_COLUMNS,
+} from "@/lib/constants";
+import { getQueryFilters, parseRequest } from "@/lib/request";
+import { badRequest, json, unauthorized } from "@/lib/response";
+import { fieldsParam, searchParams, withDateRange } from "@/lib/schema";
+import { canViewWebsite } from "@/permissions";
+import { getWebsiteSegments } from "@/queries/prisma";
+import { getValues } from "@/queries/sql";
 
 export async function GET(
   request: Request,
@@ -29,20 +34,26 @@ export async function GET(
 
   const { type } = query;
 
-  if (!SESSION_COLUMNS.includes(type) && !EVENT_COLUMNS.includes(type) && !SEGMENT_TYPES[type]) {
+  if (
+    !SESSION_COLUMNS.includes(type) &&
+    !EVENT_COLUMNS.includes(type) &&
+    !SEGMENT_TYPES[type]
+  ) {
     return badRequest();
   }
 
   let values: any[];
 
   if (SEGMENT_TYPES[type]) {
-    values = (await getWebsiteSegments(websiteId, type))?.data?.map(segment => ({
-      value: segment.name,
-    }));
+    values = (await getWebsiteSegments(websiteId, type))?.data?.map(
+      (segment) => ({
+        value: segment.name,
+      }),
+    );
   } else {
     const filters = await getQueryFilters(query, websiteId);
     values = await getValues(websiteId, FILTER_COLUMNS[type], filters);
   }
 
-  return json(values.filter(n => n).sort());
+  return json(values.filter((n) => n).sort());
 }

@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { BoardsPage } from './BoardsPage';
+import type { Metadata } from "next";
+import { BoardsPage } from "./BoardsPage";
 
 export default function () {
   return <BoardsPage />;
 }
 
 export const metadata: Metadata = {
-  title: 'Boards',
+  title: "Boards",
 };

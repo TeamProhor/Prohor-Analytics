@@ -1,10 +1,15 @@
-import { DataColumn, DataTable, type DataTableProps, Row } from '@umami/react-zen';
-import Link from '@/components/common/Link';
-import { DateDistance } from '@/components/common/DateDistance';
-import { ExternalLink } from '@/components/common/ExternalLink';
-import { useMessages, useNavigation, useSlug } from '@/components/hooks';
-import { LinkDeleteButton } from './LinkDeleteButton';
-import { LinkEditButton } from './LinkEditButton';
+import {
+  DataColumn,
+  DataTable,
+  type DataTableProps,
+  Row,
+} from "@umami/react-zen";
+import Link from "@/components/common/Link";
+import { DateDistance } from "@/components/common/DateDistance";
+import { ExternalLink } from "@/components/common/ExternalLink";
+import { useMessages, useNavigation, useSlug } from "@/components/hooks";
+import { LinkDeleteButton } from "./LinkDeleteButton";
+import { LinkEditButton } from "./LinkEditButton";
 
 export interface LinksTableProps extends DataTableProps {
   showActions?: boolean;
@@ -13,7 +18,7 @@ export interface LinksTableProps extends DataTableProps {
 export function LinksTable({ showActions, ...props }: LinksTableProps) {
   const { t, labels } = useMessages();
   const { websiteId, renderUrl } = useNavigation();
-  const { getSlugUrl } = useSlug('link');
+  const { getSlugUrl } = useSlug("link");
 
   return (
     <DataTable {...props}>
@@ -42,7 +47,11 @@ export function LinksTable({ showActions, ...props }: LinksTableProps) {
             return (
               <Row>
                 <LinkEditButton linkId={id} />
-                <LinkDeleteButton linkId={id} websiteId={websiteId} name={name} />
+                <LinkDeleteButton
+                  linkId={id}
+                  websiteId={websiteId}
+                  name={name}
+                />
               </Row>
             );
           }}

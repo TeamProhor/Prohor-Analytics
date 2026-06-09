@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getEventDataStats';
+const FUNCTION_NAME = "getEventDataStats";
 
 export async function getEventDataStats(
   ...args: [websiteId: string, filters: QueryFilters]
@@ -10,15 +10,16 @@ export async function getEventDataStats(
   properties: number;
   records: number;
 }> {
-  return relationalQuery(...args).then(results => results?.[0]);
+  return relationalQuery(...args).then((results) => results?.[0]);
 }
 
 async function relationalQuery(websiteId: string, filters: QueryFilters) {
   const { rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   return rawQuery(
     `

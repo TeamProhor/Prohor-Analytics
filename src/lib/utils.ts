@@ -13,7 +13,7 @@ export function hook(
 }
 
 export function sleep(ms: number | undefined) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function shuffleArray(a) {

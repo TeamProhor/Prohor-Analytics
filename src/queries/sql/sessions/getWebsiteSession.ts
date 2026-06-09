@@ -1,8 +1,10 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
-const FUNCTION_NAME = 'getWebsiteSession';
+const FUNCTION_NAME = "getWebsiteSession";
 
-export async function getWebsiteSession(...args: [websiteId: string, sessionId: string]) {
+export async function getWebsiteSession(
+  ...args: [websiteId: string, sessionId: string]
+) {
   return relationalQuery(...args);
 }
 
@@ -27,7 +29,7 @@ async function relationalQuery(websiteId: string, sessionId: string) {
       count(distinct visit_id) as visits,
       sum(views) as views,
       sum(events) as events,
-      sum(${getTimestampDiffSQL('min_time', 'max_time')}) as "totaltime" 
+      sum(${getTimestampDiffSQL("min_time", "max_time")}) as "totaltime" 
     from (select
           session.session_id as id,
           session.distinct_id,
@@ -54,5 +56,5 @@ async function relationalQuery(websiteId: string, sessionId: string) {
     `,
     { websiteId, sessionId },
     FUNCTION_NAME,
-  ).then(result => result?.[0]);
+  ).then((result) => result?.[0]);
 }

@@ -1,6 +1,6 @@
-import type { Prisma } from '@/generated/prisma/client';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import type { Prisma } from "@/generated/prisma/client";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 export async function findLink(criteria: Prisma.LinkFindUniqueArgs) {
   return prisma.client.link.findUnique(criteria);
@@ -14,20 +14,23 @@ export async function getLink(linkId: string) {
   });
 }
 
-export async function getLinks(criteria: Prisma.LinkFindManyArgs, filters: QueryFilters = {}) {
+export async function getLinks(
+  criteria: Prisma.LinkFindManyArgs,
+  filters: QueryFilters = {},
+) {
   const { search } = filters;
   const { getSearchParameters, pagedQuery } = prisma;
 
   const where: Prisma.LinkWhereInput = {
     ...criteria.where,
     ...getSearchParameters(search, [
-      { name: 'contains' },
-      { url: 'contains' },
-      { slug: 'contains' },
+      { name: "contains" },
+      { url: "contains" },
+      { slug: "contains" },
     ]),
   };
 
-  return pagedQuery('link', { ...criteria, where }, filters);
+  return pagedQuery("link", { ...criteria, where }, filters);
 }
 
 export async function getUserLinks(userId: string, filters?: QueryFilters) {

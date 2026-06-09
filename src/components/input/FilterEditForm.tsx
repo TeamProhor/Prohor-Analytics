@@ -1,8 +1,21 @@
-import { Button, Column, Row, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
-import { useState } from 'react';
-import { useFilters, useMessages, useMobile, useNavigation } from '@/components/hooks';
-import { FieldFilters } from '@/components/input/FieldFilters';
-import { SegmentFilters } from '@/components/input/SegmentFilters';
+import {
+  Button,
+  Column,
+  Row,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+} from "@umami/react-zen";
+import { useState } from "react";
+import {
+  useFilters,
+  useMessages,
+  useMobile,
+  useNavigation,
+} from "@/components/hooks";
+import { FieldFilters } from "@/components/input/FieldFilters";
+import { SegmentFilters } from "@/components/input/SegmentFilters";
 
 export interface FilterEditFormProps {
   websiteId?: string;
@@ -15,7 +28,11 @@ export interface FilterEditFormProps {
   onClose?: () => void;
 }
 
-export function FilterEditForm({ websiteId, onChange, onClose }: FilterEditFormProps) {
+export function FilterEditForm({
+  websiteId,
+  onChange,
+  onClose,
+}: FilterEditFormProps) {
   const {
     query: { segment, cohort, match },
     pathname,
@@ -25,55 +42,57 @@ export function FilterEditForm({ websiteId, onChange, onClose }: FilterEditFormP
   const [currentFilters, setCurrentFilters] = useState(filters);
   const [currentSegment, setCurrentSegment] = useState(segment);
   const [currentCohort, setCurrentCohort] = useState(cohort);
-  const [currentMatch, setCurrentMatch] = useState<string>(match || 'all');
+  const [currentMatch, setCurrentMatch] = useState<string>(match || "all");
   const { isMobile } = useMobile();
-  const isPixelLink = !websiteId || pathname.includes('/pixels') || pathname.includes('/links');
-  const excludeEvent = !pathname.endsWith('/events') && !pathname.endsWith('/replays');
-  const isPerformance = pathname.includes('/performance');
+  const isPixelLink =
+    !websiteId || pathname.includes("/pixels") || pathname.includes("/links");
+  const excludeEvent =
+    !pathname.endsWith("/events") && !pathname.endsWith("/replays");
+  const isPerformance = pathname.includes("/performance");
 
   const excludedFields = isPixelLink
-    ? ['path', 'title', 'hostname', 'distinctId', 'tag', 'event']
+    ? ["path", "title", "hostname", "distinctId", "tag", "event"]
     : isPerformance
       ? [
-          'referrer',
-          'query',
-          'event',
-          'tag',
-          'distinctId',
-          'utmSource',
-          'utmMedium',
-          'utmCampaign',
-          'utmContent',
-          'utmTerm',
+          "referrer",
+          "query",
+          "event",
+          "tag",
+          "distinctId",
+          "utmSource",
+          "utmMedium",
+          "utmCampaign",
+          "utmContent",
+          "utmTerm",
         ]
       : excludeEvent
-        ? ['event']
+        ? ["event"]
         : [];
 
   const handleReset = () => {
     setCurrentFilters([]);
     setCurrentSegment(undefined);
     setCurrentCohort(undefined);
-    setCurrentMatch('all');
+    setCurrentMatch("all");
   };
 
   const handleSave = () => {
     onChange?.({
-      filters: currentFilters.filter(f => f.value),
+      filters: currentFilters.filter((f) => f.value),
       segment: currentSegment,
       cohort: currentCohort,
-      match: currentMatch !== 'all' ? currentMatch : undefined,
+      match: currentMatch !== "all" ? currentMatch : undefined,
     });
     onClose?.();
   };
 
   const handleSegmentChange = (id: string, type: string) => {
-    setCurrentSegment(type === 'segment' ? id : undefined);
-    setCurrentCohort(type === 'cohort' ? id : undefined);
+    setCurrentSegment(type === "segment" ? id : undefined);
+    setCurrentCohort(type === "cohort" ? id : undefined);
   };
 
   return (
-    <Column width={isMobile ? 'auto' : '800px'} gap="6">
+    <Column width={isMobile ? "auto" : "800px"} gap="6">
       <Column minHeight="500px">
         <Tabs>
           <TabList>
@@ -112,9 +131,19 @@ export function FilterEditForm({ websiteId, onChange, onClose }: FilterEditFormP
           </TabPanel>
         </Tabs>
       </Column>
-      <Row alignItems="center" justifyContent="space-between" gap style={isMobile ? { paddingBottom: '16px' } : undefined}>
+      <Row
+        alignItems="center"
+        justifyContent="space-between"
+        gap
+        style={isMobile ? { paddingBottom: "16px" } : undefined}
+      >
         <Button onPress={handleReset}>{t(labels.reset)}</Button>
-        <Row alignItems="center" justifyContent="flex-end" gridColumn="span 2" gap>
+        <Row
+          alignItems="center"
+          justifyContent="flex-end"
+          gridColumn="span 2"
+          gap
+        >
           <Button onPress={onClose}>{t(labels.cancel)}</Button>
           <Button variant="primary" onPress={handleSave}>
             {t(labels.apply)}

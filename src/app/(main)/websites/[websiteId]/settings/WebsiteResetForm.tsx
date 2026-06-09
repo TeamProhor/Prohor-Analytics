@@ -1,7 +1,7 @@
-import { TypeConfirmationForm } from '@/components/common/TypeConfirmationForm';
-import { useMessages, useUpdateQuery } from '@/components/hooks';
+import { TypeConfirmationForm } from "@/components/common/TypeConfirmationForm";
+import { useMessages, useUpdateQuery } from "@/components/hooks";
 
-const CONFIRM_VALUE = 'RESET';
+const CONFIRM_VALUE = "RESET";
 
 export function WebsiteResetForm({
   websiteId,
@@ -13,7 +13,9 @@ export function WebsiteResetForm({
   onClose?: () => void;
 }) {
   const { t, labels } = useMessages();
-  const { mutateAsync, isPending, error } = useUpdateQuery(`/websites/${websiteId}/reset`);
+  const { mutateAsync, isPending, error } = useUpdateQuery(
+    `/websites/${websiteId}/reset`,
+  );
 
   const handleConfirm = async () => {
     await mutateAsync(null, {

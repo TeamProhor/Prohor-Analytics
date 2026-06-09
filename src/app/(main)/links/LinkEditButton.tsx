@@ -1,8 +1,8 @@
-import { Icon } from '@umami/react-zen';
-import { LinkButton } from '@/components/common/LinkButton';
-import { useNavigation } from '@/components/hooks';
-import { useMessages } from '@/components/hooks';
-import { Edit } from '@/components/icons';
+import { Icon } from "@umami/react-zen";
+import { LinkButton } from "@/components/common/LinkButton";
+import { useNavigation } from "@/components/hooks";
+import { useMessages } from "@/components/hooks";
+import { Edit } from "@/components/icons";
 
 export function LinkEditButton({ linkId }: { linkId: string }) {
   const { t, labels } = useMessages();

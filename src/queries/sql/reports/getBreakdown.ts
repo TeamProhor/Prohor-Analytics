@@ -1,6 +1,6 @@
-import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from "@/lib/constants";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 export interface BreakdownParameters {
   startDate: Date;
@@ -14,7 +14,11 @@ export interface BreakdownData {
 }
 
 export async function getBreakdown(
-  ...args: [websiteId: string, parameters: BreakdownParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: BreakdownParameters,
+    filters: QueryFilters,
+  ]
 ) {
   return relationalQuery(...args);
 }
@@ -26,18 +30,21 @@ async function relationalQuery(
 ): Promise<BreakdownData[]> {
   const { getTimestampDiffSQL, parseFilters, rawQuery } = prisma;
   const { startDate, endDate, fields } = parameters;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters(
-    {
-      ...filters,
-      websiteId,
-      startDate,
-      endDate,
-      eventType: EVENT_TYPE.pageView,
-    },
-    {
-      joinSession: !!fields.find((name: string) => SESSION_COLUMNS.includes(name)),
-    },
-  );
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
+    parseFilters(
+      {
+        ...filters,
+        websiteId,
+        startDate,
+        endDate,
+        eventType: EVENT_TYPE.pageView,
+      },
+      {
+        joinSession: !!fields.find((name: string) =>
+          SESSION_COLUMNS.includes(name),
+        ),
+      },
+    );
 
   return rawQuery(
     `
@@ -46,7 +53,7 @@ async function relationalQuery(
       count(distinct t.session_id) as "visitors",
       count(distinct t.visit_id) as "visits",
       sum(case when t.c = 1 then 1 else 0 end) as "bounces",
-      sum(${getTimestampDiffSQL('t.min_time', 't.max_time')}) as "totaltime",
+      sum(${getTimestampDiffSQL("t.min_time", "t.max_time")}) as "totaltime",
       ${parseFieldsByName(fields)}
     from (
       select
@@ -73,8 +80,6 @@ async function relationalQuery(
   );
 }
 
-
-
 function parseFieldsByName(fields: string[]) {
-  return `${fields.map(name => `"${name}"`).join(',')}`;
+  return `${fields.map((name) => `"${name}"`).join(",")}`;
 }

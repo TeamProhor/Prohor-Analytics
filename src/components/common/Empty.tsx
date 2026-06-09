@@ -1,5 +1,5 @@
-import { Row } from '@umami/react-zen';
-import { useMessages } from '@/components/hooks';
+import { Row } from "@umami/react-zen";
+import { useMessages } from "@/components/hooks";
 
 export interface EmptyProps {
   message?: string;

@@ -1,7 +1,7 @@
-import type { ReactQueryOptions } from '@/lib/types';
-import { useApi } from '../useApi';
-import { useDateParameters } from '../useDateParameters';
-import { useFilterParameters } from '../useFilterParameters';
+import type { ReactQueryOptions } from "@/lib/types";
+import { useApi } from "../useApi";
+import { useDateParameters } from "../useDateParameters";
+import { useFilterParameters } from "../useFilterParameters";
 
 export function useWebsiteEventsSeriesQuery(
   websiteId: string,
@@ -14,7 +14,7 @@ export function useWebsiteEventsSeriesQuery(
 
   return useQuery({
     queryKey: [
-      'websites:events:series',
+      "websites:events:series",
       { websiteId, startAt, endAt, unit, timezone, ...filters, ...params },
     ],
     queryFn: () =>

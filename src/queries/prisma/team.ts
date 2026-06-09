@@ -1,12 +1,14 @@
-import { Prisma, type Team } from '@/generated/prisma/client';
-import { ROLES } from '@/lib/constants';
-import { uuid } from '@/lib/crypto';
-import prisma from '@/lib/prisma';
-import type { PageResult, QueryFilters } from '@/lib/types';
+import { Prisma, type Team } from "@/generated/prisma/client";
+import { ROLES } from "@/lib/constants";
+import { uuid } from "@/lib/crypto";
+import prisma from "@/lib/prisma";
+import type { PageResult, QueryFilters } from "@/lib/types";
 
 import TeamFindManyArgs = Prisma.TeamFindManyArgs;
 
-export async function findTeam(criteria: Prisma.TeamFindUniqueArgs): Promise<Team> {
+export async function findTeam(
+  criteria: Prisma.TeamFindUniqueArgs,
+): Promise<Team> {
   return prisma.client.team.findUnique(criteria);
 }
 
@@ -33,11 +35,11 @@ export async function getTeams(
 
   const where: Prisma.TeamWhereInput = {
     ...criteria.where,
-    ...getSearchParameters(search, [{ name: 'contains' }]),
+    ...getSearchParameters(search, [{ name: "contains" }]),
   };
 
   return prisma.pagedQuery<TeamFindManyArgs>(
-    'team',
+    "team",
     {
       ...criteria,
       where,
@@ -107,7 +109,10 @@ export async function getTeamOwner(teamId: string) {
   });
 }
 
-export async function createTeam(data: Prisma.TeamCreateInput, userId: string): Promise<any> {
+export async function createTeam(
+  data: Prisma.TeamCreateInput,
+  userId: string,
+): Promise<any> {
   const { id } = data;
   const { client, transaction } = prisma;
 
@@ -126,7 +131,10 @@ export async function createTeam(data: Prisma.TeamCreateInput, userId: string): 
   ]);
 }
 
-export async function updateTeam(teamId: string, data: Prisma.TeamUpdateInput): Promise<Team> {
+export async function updateTeam(
+  teamId: string,
+  data: Prisma.TeamUpdateInput,
+): Promise<Team> {
   const { client } = prisma;
 
   return client.team.update({

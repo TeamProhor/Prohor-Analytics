@@ -1,10 +1,17 @@
-import { Button, Calendar, Column, Row, ToggleGroup, ToggleGroupItem } from '@umami/react-zen';
-import { endOfDay, isAfter, isBefore, isSameDay, startOfDay } from 'date-fns';
-import { useState } from 'react';
-import { useMessages } from '@/components/hooks';
+import {
+  Button,
+  Calendar,
+  Column,
+  Row,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@umami/react-zen";
+import { endOfDay, isAfter, isBefore, isSameDay, startOfDay } from "date-fns";
+import { useState } from "react";
+import { useMessages } from "@/components/hooks";
 
-const FILTER_DAY = 'filter-day';
-const FILTER_RANGE = 'filter-range';
+const FILTER_DAY = "filter-day";
+const FILTER_RANGE = "filter-range";
 
 export function DatePickerForm({
   startDate: defaultStartDate,
@@ -28,26 +35,43 @@ export function DatePickerForm({
 
   const handleSave = () => {
     if (selected.includes(FILTER_DAY)) {
-      onChange(`range:${startOfDay(date).getTime()}:${endOfDay(date).getTime()}`);
+      onChange(
+        `range:${startOfDay(date).getTime()}:${endOfDay(date).getTime()}`,
+      );
     } else {
-      onChange(`range:${startOfDay(startDate).getTime()}:${endOfDay(endDate).getTime()}`);
+      onChange(
+        `range:${startOfDay(startDate).getTime()}:${endOfDay(endDate).getTime()}`,
+      );
     }
   };
 
   return (
     <Column gap>
       <Row justifyContent="center">
-        <ToggleGroup disallowEmptySelection value={selected} onChange={setSelected}>
-          <ToggleGroupItem id={FILTER_DAY}>{t(labels.singleDay)}</ToggleGroupItem>
-          <ToggleGroupItem id={FILTER_RANGE}>{t(labels.dateRange)}</ToggleGroupItem>
+        <ToggleGroup
+          disallowEmptySelection
+          value={selected}
+          onChange={setSelected}
+        >
+          <ToggleGroupItem id={FILTER_DAY}>
+            {t(labels.singleDay)}
+          </ToggleGroupItem>
+          <ToggleGroupItem id={FILTER_RANGE}>
+            {t(labels.dateRange)}
+          </ToggleGroupItem>
         </ToggleGroup>
       </Row>
       <Column>
         {selected.includes(FILTER_DAY) && (
-          <Calendar value={date} minValue={minDate} maxValue={maxDate} onChange={setDate} />
+          <Calendar
+            value={date}
+            minValue={minDate}
+            maxValue={maxDate}
+            onChange={setDate}
+          />
         )}
         {selected.includes(FILTER_RANGE) && (
-          <Row gap wrap="wrap" style={{ margin: '0 auto' }}>
+          <Row gap wrap="wrap" style={{ margin: "0 auto" }}>
             <Calendar
               value={startDate}
               minValue={minDate}

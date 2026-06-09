@@ -1,7 +1,7 @@
-import type { BoardEntityType } from './boards';
+import type { BoardEntityType } from "./boards";
 
 export const BOARD_COMPONENT_COMPATIBILITY_MATRIX = {
-  EventsChart: ['website'],
+  EventsChart: ["website"],
 } as const satisfies Partial<Record<string, readonly BoardEntityType[]>>;
 
 export function getSupportedBoardComponentEntityTypes(componentType: string) {
@@ -12,7 +12,8 @@ export function isBoardComponentSupportedByEntityType(
   componentType: string,
   entityType?: BoardEntityType,
 ) {
-  const supportedEntityTypes = getSupportedBoardComponentEntityTypes(componentType);
+  const supportedEntityTypes =
+    getSupportedBoardComponentEntityTypes(componentType);
 
   if (!entityType || !supportedEntityTypes) {
     return true;

@@ -1,8 +1,8 @@
-import { FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import { FILTER_COLUMNS, SESSION_COLUMNS } from "@/lib/constants";
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getSessionExpandedMetrics';
+const FUNCTION_NAME = "getSessionExpandedMetrics";
 
 export interface SessionExpandedMetricsParameters {
   type: string;
@@ -20,7 +20,11 @@ export interface SessionExpandedMetricsData {
 }
 
 export async function getSessionExpandedMetrics(
-  ...args: [websiteId: string, parameters: SessionExpandedMetricsParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: SessionExpandedMetricsParameters,
+    filters: QueryFilters,
+  ]
 ): Promise<SessionExpandedMetricsData[]> {
   return relationalQuery(...args);
 }
@@ -33,19 +37,24 @@ async function relationalQuery(
   const { type, limit = 500, offset = 0 } = parameters;
   let column = FILTER_COLUMNS[type] || type;
   const { parseFilters, rawQuery, getTimestampDiffSQL } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, excludeBounceQuery, queryParams } =
-    parseFilters(
-      {
-        ...filters,
-        websiteId,
-      },
-      {
-        joinSession: SESSION_COLUMNS.includes(type),
-      },
-    );
-  const includeCountry = column === 'city' || column === 'region';
+  const {
+    filterQuery,
+    joinSessionQuery,
+    cohortQuery,
+    excludeBounceQuery,
+    queryParams,
+  } = parseFilters(
+    {
+      ...filters,
+      websiteId,
+    },
+    {
+      joinSession: SESSION_COLUMNS.includes(type),
+    },
+  );
+  const includeCountry = column === "city" || column === "region";
 
-  if (type === 'language') {
+  if (type === "language") {
     column = `lower(left(${type}, 2))`;
   }
 
@@ -53,16 +62,16 @@ async function relationalQuery(
     `
     select
       name,
-      ${includeCountry ? 'country,' : ''}
+      ${includeCountry ? "country," : ""}
       sum(t.c) as "pageviews",
       count(distinct t.session_id) as "visitors",
       count(distinct t.visit_id) as "visits",
       sum(case when t.c = 1 then 1 else 0 end) as "bounces",
-      sum(${getTimestampDiffSQL('t.min_time', 't.max_time')}) as "totaltime"
+      sum(${getTimestampDiffSQL("t.min_time", "t.max_time")}) as "totaltime"
     from (
       select
         ${column} as "name",
-        ${includeCountry ? 'country,' : ''}
+        ${includeCountry ? "country," : ""}
         website_event.session_id,
         website_event.visit_id,
         count(*) as "c",
@@ -77,11 +86,11 @@ async function relationalQuery(
         and website_event.event_type NOT IN (2, 5)
         ${filterQuery}
       group by name, website_event.session_id, website_event.visit_id
-      ${includeCountry ? ', country' : ''}
+      ${includeCountry ? ", country" : ""}
     ) as t
     where name != ''
     group by name 
-    ${includeCountry ? ', country' : ''}
+    ${includeCountry ? ", country" : ""}
     order by visitors desc, visits desc
     limit ${limit}
     offset ${offset}
@@ -90,5 +99,3 @@ async function relationalQuery(
     FUNCTION_NAME,
   );
 }
-
-

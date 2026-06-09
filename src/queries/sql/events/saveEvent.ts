@@ -1,8 +1,12 @@
-import { EVENT_NAME_LENGTH, PAGE_TITLE_LENGTH, URL_LENGTH } from '@/lib/constants';
-import { uuid } from '@/lib/crypto';
-import prisma from '@/lib/prisma';
-import { saveEventData } from './saveEventData';
-import { saveRevenue } from './saveRevenue';
+import {
+  EVENT_NAME_LENGTH,
+  PAGE_TITLE_LENGTH,
+  URL_LENGTH,
+} from "@/lib/constants";
+import { uuid } from "@/lib/crypto";
+import prisma from "@/lib/prisma";
+import { saveEventData } from "./saveEventData";
+import { saveRevenue } from "./saveRevenue";
 
 export interface SaveEventArgs {
   websiteId: string;
@@ -160,5 +164,3 @@ async function relationalQuery({
     }
   }
 }
-
-

@@ -7,9 +7,14 @@ import {
   MenuSeparator,
   MenuTrigger,
   Popover,
-} from '@umami/react-zen';
-import type { Key } from 'react';
-import { useConfig, useLoginQuery, useMessages, useNavigation } from '@/components/hooks';
+} from "@umami/react-zen";
+import type { Key } from "react";
+import {
+  useConfig,
+  useLoginQuery,
+  useMessages,
+  useNavigation,
+} from "@/components/hooks";
 import {
   BookText,
   ExternalLink,
@@ -18,8 +23,8 @@ import {
   LogOut,
   Settings,
   UserCircle,
-} from '@/components/icons';
-import { DOCS_URL } from '@/lib/constants';
+} from "@/components/icons";
+import { DOCS_URL } from "@/lib/constants";
 
 export function SettingsButton() {
   const { t, labels } = useMessages();
@@ -31,8 +36,8 @@ export function SettingsButton() {
     const url = id.toString();
 
     if (cloudMode) {
-      if (url === '/docs') {
-        window.open(DOCS_URL, '_blank');
+      if (url === "/docs") {
+        window.open(DOCS_URL, "_blank");
       } else {
         window.location.href = url;
       }
@@ -52,18 +57,34 @@ export function SettingsButton() {
         <Menu autoFocus="last" onAction={handleAction}>
           <MenuSection title={user.username}>
             <MenuSeparator />
-            <MenuItem id="/settings" icon={<Settings />} label={t(labels.settings)} />
+            <MenuItem
+              id="/settings"
+              icon={<Settings />}
+              label={t(labels.settings)}
+            />
             {!cloudMode && user.isAdmin && (
-              <MenuItem id="/admin" icon={<LockKeyhole />} label={t(labels.admin)} />
+              <MenuItem
+                id="/admin"
+                icon={<LockKeyhole />}
+                label={t(labels.admin)}
+              />
             )}
             {cloudMode && (
               <>
-                <MenuItem id="/docs" icon={<BookText />} label={t(labels.documentation)}>
+                <MenuItem
+                  id="/docs"
+                  icon={<BookText />}
+                  label={t(labels.documentation)}
+                >
                   <Icon color="muted">
                     <ExternalLink />
                   </Icon>
                 </MenuItem>
-                <MenuItem id="/settings/support" icon={<LifeBuoy />} label={t(labels.support)} />
+                <MenuItem
+                  id="/settings/support"
+                  icon={<LifeBuoy />}
+                  label={t(labels.support)}
+                />
               </>
             )}
             <MenuSeparator />

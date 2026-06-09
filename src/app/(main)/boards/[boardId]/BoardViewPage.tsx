@@ -1,10 +1,10 @@
-'use client';
-import { Column } from '@umami/react-zen';
-import { BoardProvider } from '@/app/(main)/boards/BoardProvider';
-import { PageBody } from '@/components/common/PageBody';
-import { BoardControls } from './BoardControls';
-import { BoardViewBody } from './BoardViewBody';
-import { BoardViewHeader } from './BoardViewHeader';
+"use client";
+import { Column } from "@umami/react-zen";
+import { BoardProvider } from "@/app/(main)/boards/BoardProvider";
+import { PageBody } from "@/components/common/PageBody";
+import { BoardControls } from "./BoardControls";
+import { BoardViewBody } from "./BoardViewBody";
+import { BoardViewHeader } from "./BoardViewHeader";
 
 export function BoardViewPage({
   boardId,
@@ -21,7 +21,10 @@ export function BoardViewPage({
     <BoardProvider boardId={boardId}>
       <PageBody>
         <Column>
-          <BoardViewHeader showActions={showActions} showEntityBadge={showEntityBadges} />
+          <BoardViewHeader
+            showActions={showActions}
+            showEntityBadge={showEntityBadges}
+          />
           {showControls && <BoardControls />}
           <BoardViewBody showEntityBadges={showEntityBadges} />
         </Column>

@@ -1,10 +1,17 @@
-import { Icon, type IconProps, Row, type RowProps, Text, type TextProps } from '@umami/react-zen';
-import type { ReactNode } from 'react';
+import {
+  Icon,
+  type IconProps,
+  Row,
+  type RowProps,
+  Text,
+  type TextProps,
+} from "@umami/react-zen";
+import type { ReactNode } from "react";
 
 interface IconLabelProps extends RowProps {
   icon: ReactNode;
   label?: ReactNode;
-  weight?: TextProps['weight'];
+  weight?: TextProps["weight"];
   iconProps?: Partial<IconProps>;
   labelProps?: Partial<TextProps>;
 }

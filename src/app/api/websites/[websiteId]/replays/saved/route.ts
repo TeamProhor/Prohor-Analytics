@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { parseRequest } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { pagingParams, searchParams } from '@/lib/schema';
-import { canViewWebsite } from '@/permissions';
-import { getSavedReplays } from '@/queries/prisma/sessionReplay';
+import { z } from "zod";
+import { parseRequest } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { pagingParams, searchParams } from "@/lib/schema";
+import { canViewWebsite } from "@/permissions";
+import { getSavedReplays } from "@/queries/prisma/sessionReplay";
 
 export async function GET(
   request: Request,

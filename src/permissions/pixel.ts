@@ -1,14 +1,21 @@
-import { hasPermission } from '@/lib/auth';
-import { PERMISSIONS } from '@/lib/constants';
-import type { Auth } from '@/lib/types';
-import { getPixel, getTeamUser } from '@/queries/prisma';
+import { hasPermission } from "@/lib/auth";
+import { PERMISSIONS } from "@/lib/constants";
+import type { Auth } from "@/lib/types";
+import { getPixel, getTeamUser } from "@/queries/prisma";
 
-export async function canViewPixel({ user, shareToken }: Auth, pixelId: string) {
+export async function canViewPixel(
+  { user, shareToken }: Auth,
+  pixelId: string,
+) {
   if (user?.isAdmin) {
     return true;
   }
 
-  if (shareToken?.pixelId === pixelId || shareToken?.websiteId === pixelId || shareToken?.pixelIds?.includes(pixelId)) {
+  if (
+    shareToken?.pixelId === pixelId ||
+    shareToken?.websiteId === pixelId ||
+    shareToken?.pixelIds?.includes(pixelId)
+  ) {
     return true;
   }
 

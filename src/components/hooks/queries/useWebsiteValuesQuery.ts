@@ -1,7 +1,7 @@
-import { useCountryNames } from '@/components/hooks/useCountryNames';
-import { useRegionNames } from '@/components/hooks/useRegionNames';
-import { useApi } from '../useApi';
-import { useLocale } from '../useLocale';
+import { useCountryNames } from "@/components/hooks/useCountryNames";
+import { useRegionNames } from "@/components/hooks/useRegionNames";
+import { useApi } from "../useApi";
+import { useLocale } from "../useLocale";
 
 export function useWebsiteValuesQuery({
   websiteId,
@@ -40,7 +40,7 @@ export function useWebsiteValuesQuery({
               return arr;
             }, [])
             .slice(0, 5)
-            .join(',') || value
+            .join(",") || value
         );
       }
 
@@ -49,7 +49,10 @@ export function useWebsiteValuesQuery({
   };
 
   return useQuery({
-    queryKey: ['websites:values', { websiteId, type, startDate, endDate, search }],
+    queryKey: [
+      "websites:values",
+      { websiteId, type, startDate, endDate, search },
+    ],
     queryFn: () =>
       get(`/websites/${websiteId}/values`, {
         type,

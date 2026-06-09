@@ -1,5 +1,5 @@
-import { Heading, Icon, Row, type RowProps, Text } from '@umami/react-zen';
-import type { ReactNode } from 'react';
+import { Heading, Icon, Row, type RowProps, Text } from "@umami/react-zen";
+import type { ReactNode } from "react";
 
 export function SectionHeader({
   title,
@@ -16,7 +16,12 @@ export function SectionHeader({
   children?: ReactNode;
 } & RowProps) {
   return (
-    <Row {...props} justifyContent="space-between" alignItems="center" height="60px">
+    <Row
+      {...props}
+      justifyContent="space-between"
+      alignItems="center"
+      height="60px"
+    >
       <Row gap="3" alignItems="center">
         {icon && <Icon size="md">{icon}</Icon>}
         {title && <Heading size="lg">{title}</Heading>}

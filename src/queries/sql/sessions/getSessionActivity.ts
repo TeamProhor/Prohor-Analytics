@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
-const FUNCTION_NAME = 'getSessionActivity';
+const FUNCTION_NAME = "getSessionActivity";
 
 export async function getSessionActivity(
   ...args: [websiteId: string, sessionId: string, filters: QueryFilters]
@@ -9,7 +9,11 @@ export async function getSessionActivity(
   return relationalQuery(...args);
 }
 
-async function relationalQuery(websiteId: string, sessionId: string, filters: QueryFilters) {
+async function relationalQuery(
+  websiteId: string,
+  sessionId: string,
+  filters: QueryFilters,
+) {
   const { rawQuery } = prisma;
   const { startDate, endDate } = filters;
 
@@ -40,5 +44,3 @@ async function relationalQuery(websiteId: string, sessionId: string, filters: Qu
     FUNCTION_NAME,
   );
 }
-
-

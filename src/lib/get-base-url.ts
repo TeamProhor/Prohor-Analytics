@@ -1,35 +1,39 @@
-import { HOMEPAGE_URL } from './constants';
+import { HOMEPAGE_URL } from "./constants";
 
-type HeaderStore = Pick<Headers, 'get'>;
+type HeaderStore = Pick<Headers, "get">;
 
 function getFirstHeaderValue(value?: string | null) {
-  return value?.split(',')[0]?.trim();
+  return value?.split(",")[0]?.trim();
 }
 
 function getDefaultProtocol(host?: string) {
   if (!host) {
-    return 'https';
+    return "https";
   }
 
-  if (host.startsWith('localhost') || host.startsWith('127.0.0.1') || host.startsWith('[::1]')) {
-    return 'http';
+  if (
+    host.startsWith("localhost") ||
+    host.startsWith("127.0.0.1") ||
+    host.startsWith("[::1]")
+  ) {
+    return "http";
   }
 
-  return 'https';
+  return "https";
 }
 
 export function getBaseUrl(headers?: HeaderStore) {
   const host =
-    getFirstHeaderValue(headers?.get('x-forwarded-host')) ||
-    getFirstHeaderValue(headers?.get('host'));
+    getFirstHeaderValue(headers?.get("x-forwarded-host")) ||
+    getFirstHeaderValue(headers?.get("host"));
 
   if (!host) {
     return new URL(HOMEPAGE_URL);
   }
 
   const protocol =
-    getFirstHeaderValue(headers?.get('x-forwarded-proto')) ||
-    getFirstHeaderValue(headers?.get('x-forwarded-protocol')) ||
+    getFirstHeaderValue(headers?.get("x-forwarded-proto")) ||
+    getFirstHeaderValue(headers?.get("x-forwarded-protocol")) ||
     getDefaultProtocol(host);
 
   try {

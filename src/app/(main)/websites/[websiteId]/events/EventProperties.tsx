@@ -1,21 +1,22 @@
-import { Column, Grid, ListItem, Select } from '@umami/react-zen';
-import { useMemo, useState } from 'react';
-import { PieChart } from '@/components/charts/PieChart';
-import { LoadingPanel } from '@/components/common/LoadingPanel';
+import { Column, Grid, ListItem, Select } from "@umami/react-zen";
+import { useMemo, useState } from "react";
+import { PieChart } from "@/components/charts/PieChart";
+import { LoadingPanel } from "@/components/common/LoadingPanel";
 import {
   useEventDataPropertiesQuery,
   useEventDataValuesQuery,
   useMessages,
-} from '@/components/hooks';
-import { ListTable } from '@/components/metrics/ListTable';
-import { CHART_COLORS } from '@/lib/constants';
+} from "@/components/hooks";
+import { ListTable } from "@/components/metrics/ListTable";
+import { CHART_COLORS } from "@/lib/constants";
 
 export function EventProperties({ websiteId }: { websiteId: string }) {
-  const [propertyName, setPropertyName] = useState('');
-  const [eventName, setEventName] = useState('');
+  const [propertyName, setPropertyName] = useState("");
+  const [eventName, setEventName] = useState("");
 
   const { t, labels } = useMessages();
-  const { data, isLoading, isFetching, error } = useEventDataPropertiesQuery(websiteId);
+  const { data, isLoading, isFetching, error } =
+    useEventDataPropertiesQuery(websiteId);
 
   const events: string[] = data
     ? data.reduce((arr: string | any[], e: { eventName: any }) => {
@@ -23,7 +24,7 @@ export function EventProperties({ websiteId }: { websiteId: string }) {
       }, [])
     : [];
   const properties: string[] = eventName
-    ? data?.filter(e => e.eventName === eventName).map(e => e.propertyName)
+    ? data?.filter((e) => e.eventName === eventName).map((e) => e.propertyName)
     : [];
 
   return (
@@ -36,14 +37,18 @@ export function EventProperties({ websiteId }: { websiteId: string }) {
     >
       <Column gap="6">
         {data && (
-          <Grid columns="repeat(auto-fill, minmax(300px, 1fr))" marginBottom="3" gap>
+          <Grid
+            columns="repeat(auto-fill, minmax(300px, 1fr))"
+            marginBottom="3"
+            gap
+          >
             <Select
               label={t(labels.event)}
               value={eventName}
               onChange={setEventName}
               placeholder=""
             >
-              {events?.map(p => (
+              {events?.map((p) => (
                 <ListItem key={p} id={p}>
                   {p}
                 </ListItem>
@@ -56,7 +61,7 @@ export function EventProperties({ websiteId }: { websiteId: string }) {
               isDisabled={!eventName}
               placeholder=""
             >
-              {properties?.map(p => (
+              {properties?.map((p) => (
                 <ListItem key={p} id={p}>
                   {p}
                 </ListItem>
@@ -65,7 +70,11 @@ export function EventProperties({ websiteId }: { websiteId: string }) {
           </Grid>
         )}
         {eventName && propertyName && (
-          <EventValues websiteId={websiteId} eventName={eventName} propertyName={propertyName} />
+          <EventValues
+            websiteId={websiteId}
+            eventName={eventName}
+            propertyName={propertyName}
+          />
         )}
       </Column>
     </LoadingPanel>

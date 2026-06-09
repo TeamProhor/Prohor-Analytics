@@ -1,7 +1,7 @@
-import { ConfirmationForm } from '@/components/common/ConfirmationForm';
-import { useDeleteQuery, useMessages, useModified } from '@/components/hooks';
-import { Trash } from '@/components/icons';
-import { DialogButton } from '@/components/input/DialogButton';
+import { ConfirmationForm } from "@/components/common/ConfirmationForm";
+import { useDeleteQuery, useMessages, useModified } from "@/components/hooks";
+import { Trash } from "@/components/icons";
+import { DialogButton } from "@/components/input/DialogButton";
 
 export function PixelDeleteButton({
   pixelId,
@@ -13,13 +13,15 @@ export function PixelDeleteButton({
   onSave?: () => void;
 }) {
   const { t, labels, messages, getErrorMessage } = useMessages();
-  const { mutateAsync, isPending, error } = useDeleteQuery(`/pixels/${pixelId}`);
+  const { mutateAsync, isPending, error } = useDeleteQuery(
+    `/pixels/${pixelId}`,
+  );
   const { touch } = useModified();
 
   const handleConfirm = async (close: () => void) => {
     await mutateAsync(null, {
       onSuccess: () => {
-        touch('pixels');
+        touch("pixels");
         onSave?.();
         close();
       },
@@ -27,12 +29,17 @@ export function PixelDeleteButton({
   };
 
   return (
-    <DialogButton icon={<Trash />} variant="quiet" title={t(labels.confirm)} width="400px">
+    <DialogButton
+      icon={<Trash />}
+      variant="quiet"
+      title={t(labels.confirm)}
+      width="400px"
+    >
       {({ close }) => (
         <ConfirmationForm
           message={t.rich(messages.confirmRemove, {
             target: name,
-            b: chunks => <b>{chunks}</b>,
+            b: (chunks) => <b>{chunks}</b>,
           })}
           isLoading={isPending}
           error={getErrorMessage(error)}

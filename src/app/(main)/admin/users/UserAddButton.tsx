@@ -1,7 +1,15 @@
-import { Button, Dialog, DialogTrigger, Icon, Modal, Text, useToast } from '@umami/react-zen';
-import { useMessages, useModified } from '@/components/hooks';
-import { Plus } from '@/components/icons';
-import { UserAddForm } from './UserAddForm';
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  Icon,
+  Modal,
+  Text,
+  useToast,
+} from "@umami/react-zen";
+import { useMessages, useModified } from "@/components/hooks";
+import { Plus } from "@/components/icons";
+import { UserAddForm } from "./UserAddForm";
 
 export function UserAddButton({ onSave }: { onSave?: () => void }) {
   const { t, labels, messages } = useMessages();
@@ -10,7 +18,7 @@ export function UserAddButton({ onSave }: { onSave?: () => void }) {
 
   const handleSave = () => {
     toast(t(messages.saved));
-    touch('users');
+    touch("users");
     onSave?.();
   };
 

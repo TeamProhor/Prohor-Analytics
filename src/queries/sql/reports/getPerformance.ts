@@ -1,5 +1,5 @@
-import prisma from '@/lib/prisma';
-import type { QueryFilters } from '@/lib/types';
+import prisma from "@/lib/prisma";
+import type { QueryFilters } from "@/lib/types";
 
 export interface PerformanceParameters {
   startDate: Date;
@@ -22,7 +22,11 @@ export interface PerformanceResult {
 }
 
 export async function getPerformance(
-  ...args: [websiteId: string, parameters: PerformanceParameters, filters: QueryFilters]
+  ...args: [
+    websiteId: string,
+    parameters: PerformanceParameters,
+    filters: QueryFilters,
+  ]
 ) {
   return relationalQuery(...args);
 }
@@ -32,17 +36,24 @@ async function relationalQuery(
   parameters: PerformanceParameters,
   filters: QueryFilters,
 ): Promise<PerformanceResult> {
-  const { startDate, endDate, unit = 'day', timezone = 'utc', metric = 'lcp' } = parameters;
+  const {
+    startDate,
+    endDate,
+    unit = "day",
+    timezone = "utc",
+    metric = "lcp",
+  } = parameters;
   const { getDateSQL, rawQuery, parseFilters } = prisma;
-  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
-    ...filters,
-    websiteId,
-  });
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } =
+    parseFilters({
+      ...filters,
+      websiteId,
+    });
 
   const chart = await rawQuery(
     `
     select
-      ${getDateSQL('created_at', unit, timezone)} t,
+      ${getDateSQL("created_at", unit, timezone)} t,
       percentile_cont(0.5) within group (order by ${metric}) as p50,
       percentile_cont(0.75) within group (order by ${metric}) as p75,
       percentile_cont(0.95) within group (order by ${metric}) as p95
@@ -87,7 +98,7 @@ async function relationalQuery(
       ${filterQuery}
     `,
     { ...queryParams, startDate, endDate },
-  ).then(result => result?.[0]);
+  ).then((result) => result?.[0]);
 
   const summary = {
     lcp: {

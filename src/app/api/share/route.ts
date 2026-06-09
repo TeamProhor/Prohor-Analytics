@@ -1,11 +1,11 @@
-import z from 'zod';
-import { uuid } from '@/lib/crypto';
-import { getRandomChars } from '@/lib/generate';
-import { parseRequest } from '@/lib/request';
-import { json, unauthorized } from '@/lib/response';
-import { anyObjectParam } from '@/lib/schema';
-import { canUpdateEntity } from '@/permissions';
-import { createShare } from '@/queries/prisma';
+import z from "zod";
+import { uuid } from "@/lib/crypto";
+import { getRandomChars } from "@/lib/generate";
+import { parseRequest } from "@/lib/request";
+import { json, unauthorized } from "@/lib/response";
+import { anyObjectParam } from "@/lib/schema";
+import { canUpdateEntity } from "@/permissions";
+import { createShare } from "@/queries/prisma";
 
 export async function POST(request: Request) {
   const schema = z.object({

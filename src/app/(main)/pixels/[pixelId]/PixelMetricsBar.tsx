@@ -1,9 +1,9 @@
-import { LoadingPanel } from '@/components/common/LoadingPanel';
-import { useDateRange, useMessages } from '@/components/hooks';
-import { useWebsiteStatsQuery } from '@/components/hooks/queries/useWebsiteStatsQuery';
-import { MetricCard } from '@/components/metrics/MetricCard';
-import { MetricsBar } from '@/components/metrics/MetricsBar';
-import { formatLongNumber } from '@/lib/format';
+import { LoadingPanel } from "@/components/common/LoadingPanel";
+import { useDateRange, useMessages } from "@/components/hooks";
+import { useWebsiteStatsQuery } from "@/components/hooks/queries/useWebsiteStatsQuery";
+import { MetricCard } from "@/components/metrics/MetricCard";
+import { MetricsBar } from "@/components/metrics/MetricsBar";
+import { formatLongNumber } from "@/lib/format";
 
 export function PixelMetricsBar({
   pixelId,
@@ -14,7 +14,9 @@ export function PixelMetricsBar({
 }) {
   const { isAllTime } = useDateRange();
   const { t, labels } = useMessages();
-  const { data, isLoading, isFetching, error } = useWebsiteStatsQuery({ websiteId: pixelId });
+  const { data, isLoading, isFetching, error } = useWebsiteStatsQuery({
+    websiteId: pixelId,
+  });
 
   const { pageviews, visitors, visits, comparison } = data || {};
 
@@ -50,20 +52,22 @@ export function PixelMetricsBar({
       minHeight="136px"
     >
       <MetricsBar>
-        {metrics?.map(({ label, value, prev, change, formatValue, reverseColors }: any) => {
-          return (
-            <MetricCard
-              key={label}
-              value={value}
-              previousValue={prev}
-              label={label}
-              change={change}
-              formatValue={formatValue}
-              reverseColors={reverseColors}
-              showChange={!isAllTime}
-            />
-          );
-        })}
+        {metrics?.map(
+          ({ label, value, prev, change, formatValue, reverseColors }: any) => {
+            return (
+              <MetricCard
+                key={label}
+                value={value}
+                previousValue={prev}
+                label={label}
+                change={change}
+                formatValue={formatValue}
+                reverseColors={reverseColors}
+                showChange={!isAllTime}
+              />
+            );
+          },
+        )}
       </MetricsBar>
     </LoadingPanel>
   );
