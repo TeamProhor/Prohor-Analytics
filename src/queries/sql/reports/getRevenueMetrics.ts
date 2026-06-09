@@ -7,6 +7,7 @@ import {
   VIDEO_DOMAINS,
 } from '@/lib/constants';
 import prisma from '@/lib/prisma';
+import { toPostgresLikeClause } from '@/lib/sql';
 import type { QueryFilters } from '@/lib/types';
 import type { RevenuParameters } from './getRevenue';
 

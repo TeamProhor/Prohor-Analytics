@@ -23,8 +23,10 @@ export function FilterLink({ type, value, label, externalUrl, icon }: FilterLink
     <Row
       alignItems="center"
       gap
-      fontWeight={active && selected ? 'bold' : undefined}
-      color={active && !selected ? 'muted' : undefined}
+      {...({
+        fontWeight: active && selected ? 'bold' : undefined,
+        color: active && !selected ? 'muted' : undefined,
+      } as any)}
       onMouseOver={() => setShowLink(true)}
       onMouseOut={() => setShowLink(false)}
     >

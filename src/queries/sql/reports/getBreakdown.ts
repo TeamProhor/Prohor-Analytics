@@ -1,5 +1,6 @@
 import { EVENT_TYPE, SESSION_COLUMNS } from '@/lib/constants';
 import prisma from '@/lib/prisma';
+import { parseFields } from '@/lib/sql';
 import type { QueryFilters } from '@/lib/types';
 
 export interface BreakdownParameters {

@@ -7,6 +7,7 @@ import {
   VIDEO_DOMAINS,
 } from '@/lib/constants';
 import prisma from '@/lib/prisma';
+import { toPostgresPositionClause } from '@/lib/sql';
 import type { QueryFilters } from '@/lib/types';
 
 const FUNCTION_NAME = 'getChannelExpandedMetrics';

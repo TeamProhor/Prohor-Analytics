@@ -2,7 +2,7 @@ export const PRISMA = 'prisma';
 export const POSTGRESQL = 'postgresql';
 
 // Fixes issue with converting bigint values
-BigInt.prototype.toJSON = function () {
+(BigInt.prototype as any).toJSON = function () {
   return Number(this);
 };
 

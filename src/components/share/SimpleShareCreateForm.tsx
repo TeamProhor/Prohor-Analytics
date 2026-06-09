@@ -44,7 +44,7 @@ export function SimpleShareCreateForm({
   };
 
   return (
-    <Form onSubmit={handleSubmit} error={getErrorMessage(error)} defaultValues={{ name: '' }}>
+    <Form onSubmit={handleSubmit} error={getErrorMessage(error as any)} defaultValues={{ name: '' }}>
       <Column gap="4">
         <FormField label={t(labels.name)} name="name" rules={{ required: t(labels.required) }}>
           <TextField autoComplete="off" autoFocus />

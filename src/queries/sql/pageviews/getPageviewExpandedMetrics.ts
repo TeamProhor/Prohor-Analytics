@@ -1,5 +1,6 @@
 import { FILTER_COLUMNS, GROUPED_DOMAINS, SESSION_COLUMNS } from '@/lib/constants';
 import prisma from '@/lib/prisma';
+import { toPostgresLikeClause } from '@/lib/sql';
 import type { QueryFilters } from '@/lib/types';
 
 const FUNCTION_NAME = 'getPageviewExpandedMetrics';
@@ -141,8 +142,4 @@ export function toPostgresGroupedReferrer(
     "  ELSE 'Other'",
     'END',
   ].join('\n');
-}
-
-function toPostgresLikeClause(column: string, arr: string[]) {
-  return arr.map(val => `${column} ilike '%${val.replace(/'/g, "''")}%'`).join(' OR\n  ');
 }

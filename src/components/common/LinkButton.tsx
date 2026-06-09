@@ -11,6 +11,7 @@ export interface LinkButtonProps extends ButtonProps {
   prefetch?: boolean;
   asAnchor?: boolean;
   children?: ReactNode;
+  title?: string;
 }
 
 export function LinkButton({

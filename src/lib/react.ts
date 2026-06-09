@@ -10,7 +10,7 @@ import {
 
 export function getFragmentChildren(children: ReactNode) {
   return (children as ReactElement)?.type === Fragment
-    ? (children as ReactElement).props.children
+    ? (children as any).props.children
     : children;
 }
 
