@@ -1,0 +1,48 @@
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
+
+export interface PerformanceStatsResult {
+  lcp: number;
+  inp: number;
+  cls: number;
+  fcp: number;
+  ttfb: number;
+  count: number;
+}
+
+export async function getPerformanceStats(...args: [websiteId: string, filters: QueryFilters]) {
+  return relationalQuery(...args);
+}
+
+async function relationalQuery(
+  websiteId: string,
+  filters: QueryFilters,
+): Promise<PerformanceStatsResult> {
+  const { rawQuery, parseFilters } = prisma;
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters({
+    ...filters,
+    websiteId,
+  });
+
+  const result = await rawQuery(
+    `
+    select
+      percentile_cont(0.75) within group (order by lcp) as lcp,
+      percentile_cont(0.75) within group (order by inp) as inp,
+      percentile_cont(0.75) within group (order by cls) as cls,
+      percentile_cont(0.75) within group (order by fcp) as fcp,
+      percentile_cont(0.75) within group (order by ttfb) as ttfb,
+      count(*) as count
+    from website_event
+    ${cohortQuery}
+    ${joinSessionQuery}
+    where website_event.website_id = {{websiteId::uuid}}
+      and website_event.event_type = 5
+      and website_event.created_at between {{startDate}} and {{endDate}}
+      ${filterQuery}
+    `,
+    queryParams,
+  );
+
+  return result?.[0] || { lcp: 0, inp: 0, cls: 0, fcp: 0, ttfb: 0, count: 0 };
+}

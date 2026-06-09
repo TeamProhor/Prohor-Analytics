@@ -1,0 +1,72 @@
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
+import type { RevenuParameters } from './getRevenue';
+
+export interface RevenueStatsResult {
+  sum: number;
+  count: number;
+  average: number;
+  unique_count: number;
+  arpu: number;
+}
+
+export async function getRevenueStats(
+  ...args: [websiteId: string, parameters: RevenuParameters, filters: QueryFilters]
+) {
+  return relationalQuery(...args);
+}
+
+async function relationalQuery(
+  websiteId: string,
+  parameters: RevenuParameters,
+  filters: QueryFilters,
+): Promise<RevenueStatsResult> {
+  const { startDate, endDate, currency } = parameters;
+  const { rawQuery, parseFilters } = prisma;
+  const { queryParams, filterQuery, cohortQuery, joinSessionQuery } = parseFilters({
+    ...filters,
+    websiteId,
+    startDate,
+    endDate,
+    currency,
+  });
+
+  const joinQuery =
+    filterQuery || cohortQuery
+      ? `join (select *
+               from website_event
+               where website_id = {{websiteId::uuid}}
+                  and created_at between {{startDate}} and {{endDate}}
+                  and event_type = 2) website_event
+        on website_event.website_id = revenue.website_id
+          and website_event.session_id = revenue.session_id
+          and website_event.event_id = revenue.event_id`
+      : '';
+
+  const total = await rawQuery(
+    `
+    select
+      sum(revenue.revenue) as sum,
+      count(distinct revenue.event_id) as count,
+      count(distinct revenue.session_id) as unique_count,
+      (select count(distinct session_id)
+       from website_event
+       where website_id = {{websiteId::uuid}}
+         and created_at between {{startDate}} and {{endDate}}) as total_sessions
+    from revenue
+    ${joinQuery}
+    ${cohortQuery}
+    ${joinSessionQuery}
+    where revenue.website_id = {{websiteId::uuid}}
+      and revenue.created_at between {{startDate}} and {{endDate}}
+      and upper(revenue.currency) = {{currency}}
+      ${filterQuery}
+  `,
+    queryParams,
+  ).then(result => result?.[0]);
+
+  total.average = total.count > 0 ? Number(total.sum) / Number(total.count) : 0;
+  total.arpu = total.total_sessions > 0 ? Number(total.sum) / Number(total.total_sessions) : 0;
+
+  return total;
+}

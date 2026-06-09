@@ -1,0 +1,80 @@
+import { EVENT_TYPE, FILTER_COLUMNS, SESSION_COLUMNS } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import type { QueryFilters } from '@/lib/types';
+
+export interface BreakdownParameters {
+  startDate: Date;
+  endDate: Date;
+  fields: string[];
+}
+
+export interface BreakdownData {
+  x: string;
+  y: number;
+}
+
+export async function getBreakdown(
+  ...args: [websiteId: string, parameters: BreakdownParameters, filters: QueryFilters]
+) {
+  return relationalQuery(...args);
+}
+
+async function relationalQuery(
+  websiteId: string,
+  parameters: BreakdownParameters,
+  filters: QueryFilters,
+): Promise<BreakdownData[]> {
+  const { getTimestampDiffSQL, parseFilters, rawQuery } = prisma;
+  const { startDate, endDate, fields } = parameters;
+  const { filterQuery, joinSessionQuery, cohortQuery, queryParams } = parseFilters(
+    {
+      ...filters,
+      websiteId,
+      startDate,
+      endDate,
+      eventType: EVENT_TYPE.pageView,
+    },
+    {
+      joinSession: !!fields.find((name: string) => SESSION_COLUMNS.includes(name)),
+    },
+  );
+
+  return rawQuery(
+    `
+    select
+      sum(t.c) as "views",
+      count(distinct t.session_id) as "visitors",
+      count(distinct t.visit_id) as "visits",
+      sum(case when t.c = 1 then 1 else 0 end) as "bounces",
+      sum(${getTimestampDiffSQL('t.min_time', 't.max_time')}) as "totaltime",
+      ${parseFieldsByName(fields)}
+    from (
+      select
+        ${parseFields(fields)},
+        website_event.session_id,
+        website_event.visit_id,
+        count(*) as "c",
+        min(website_event.created_at) as "min_time",
+        max(website_event.created_at) as "max_time"
+      from website_event
+      ${cohortQuery}  
+      ${joinSessionQuery}
+      where website_event.website_id = {{websiteId::uuid}}
+        and website_event.created_at between {{startDate}} and {{endDate}}
+        ${filterQuery}
+      group by ${parseFieldsByName(fields)}, 
+        website_event.session_id, website_event.visit_id
+    ) as t
+    group by ${parseFieldsByName(fields)}
+    order by 2 desc, 1 desc
+    limit 500
+    `,
+    queryParams,
+  );
+}
+
+
+
+function parseFieldsByName(fields: string[]) {
+  return `${fields.map(name => `"${name}"`).join(',')}`;
+}
