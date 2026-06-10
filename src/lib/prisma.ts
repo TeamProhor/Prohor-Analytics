@@ -376,8 +376,9 @@ function getClient() {
   const replicaUrl = process.env.DATABASE_REPLICA_URL;
   const logQuery = process.env.LOG_QUERY;
   const schema = getSchema();
+  const poolSize = process.env.DATABASE_POOL_SIZE ? parseInt(process.env.DATABASE_POOL_SIZE, 10) : 5;
 
-  const baseAdapter = new PrismaPg({ connectionString: url }, { schema });
+  const baseAdapter = new PrismaPg({ connectionString: url, max: poolSize }, { schema });
 
   const baseClient = new PrismaClient({
     adapter: baseAdapter,
@@ -395,7 +396,7 @@ function getClient() {
     return baseClient;
   }
 
-  const replicaAdapter = new PrismaPg({ connectionString: replicaUrl }, { schema });
+  const replicaAdapter = new PrismaPg({ connectionString: replicaUrl, max: poolSize }, { schema });
 
   const replicaClient = new PrismaClient({
     adapter: replicaAdapter,
