@@ -1,6 +1,6 @@
 import { Button, Dialog, Grid, Icon, MenuTrigger, Popover, Text } from '@umami/react-zen';
-import { Globe } from '@/components/icons';
 import { useLocale } from '@/components/hooks';
+import { Globe } from '@/components/icons';
 import { languages } from '@/lib/lang';
 
 export function LanguageButton() {

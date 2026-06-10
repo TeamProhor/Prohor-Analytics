@@ -12,10 +12,25 @@ import {
 import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { useMessages, useNavigation, useShare } from '@/components/hooks';
-import { AlignRight, Clock, Eye, Sidebar, FileText, Tag, User } from '@/components/icons';
+import {
+  AlignRight,
+  Clock,
+  Eye,
+  FileText,
+  Funnel,
+  Gauge,
+  Lightning,
+  Magnet,
+  Money,
+  Network,
+  Path,
+  Sidebar,
+  Tag,
+  Target,
+  User,
+} from '@/components/icons';
 import { LanguageButton } from '@/components/input/LanguageButton';
 import { PreferencesButton } from '@/components/input/PreferencesButton';
-import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
 import { buildPath } from '@/lib/url';
 import { ShareBranding } from './ShareBranding';
 

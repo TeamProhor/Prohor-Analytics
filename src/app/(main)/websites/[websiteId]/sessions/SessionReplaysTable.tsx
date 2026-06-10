@@ -1,7 +1,7 @@
 import { Button, DataColumn, DataTable, type DataTableProps, Icon } from '@umami/react-zen';
-import { Play } from '@/components/icons';
 import { DateDistance } from '@/components/common/DateDistance';
 import { useMessages } from '@/components/hooks';
+import { Play } from '@/components/icons';
 
 function formatDuration(ms: number) {
   const seconds = Math.floor(ms / 1000);

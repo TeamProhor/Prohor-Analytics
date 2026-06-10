@@ -4,14 +4,7 @@ import { LinkMetricsBar } from '@/app/(main)/links/[linkId]/LinkMetricsBar';
 import { PixelMetricsBar } from '@/app/(main)/pixels/[pixelId]/PixelMetricsBar';
 import { WebsiteChart } from '@/app/(main)/websites/[websiteId]/WebsiteChart';
 import { WebsiteMetricsBar } from '@/app/(main)/websites/[websiteId]/WebsiteMetricsBar';
-import {
-  Calendar,
-  ChartBar,
-  ChartPie,
-  FileText,
-  Globe,
-  Browser,
-} from '@/components/icons';
+import { Browser, Calendar, ChartBar, ChartPie, FileText, Globe } from '@/components/icons';
 import { EventsChart } from '@/components/metrics/EventsChart';
 import { MetricsTable } from '@/components/metrics/MetricsTable';
 import { WeeklyTraffic } from '@/components/metrics/WeeklyTraffic';

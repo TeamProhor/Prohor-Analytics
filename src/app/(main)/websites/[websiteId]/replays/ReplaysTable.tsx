@@ -1,10 +1,10 @@
 import { Button, DataColumn, DataTable, type DataTableProps, Icon } from '@umami/react-zen';
-import { Play } from '@/components/icons';
 import { Avatar } from '@/components/common/Avatar';
 import { DateDistance } from '@/components/common/DateDistance';
 import Link from '@/components/common/Link';
 import { TypeIcon } from '@/components/common/TypeIcon';
 import { useFormat, useMessages, useNavigation } from '@/components/hooks';
+import { Play } from '@/components/icons';
 
 function formatDuration(ms: number) {
   const seconds = Math.floor(ms / 1000);

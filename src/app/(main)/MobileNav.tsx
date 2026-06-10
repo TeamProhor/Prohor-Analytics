@@ -3,10 +3,9 @@ import { WebsiteNav } from '@/app/(main)/websites/[websiteId]/WebsiteNav';
 import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { Globe, SquaresFour, Columns, Link as LinkIcon } from '@/components/icons';
+import { ChartBar, Columns, Globe, Link as LinkIcon, SquaresFour } from '@/components/icons';
 import { MobileMenuButton } from '@/components/input/MobileMenuButton';
 import { UserButton } from '@/components/input/UserButton';
-import { Logo } from '@/components/svg';
 import { AdminNav } from './admin/AdminNav';
 import { SettingsNav } from './settings/SettingsNav';
 
@@ -77,7 +76,7 @@ export function MobileNav() {
         }}
       </MobileMenuButton>
       <Row alignItems="center" justifyContent="center" flexGrow={1}>
-        <IconLabel icon={<Logo />} style={{ width: 'auto' }}>
+        <IconLabel icon={<ChartBar />} style={{ width: 'auto' }}>
           <Text weight="bold">Prohor Analytics</Text>
         </IconLabel>
       </Row>

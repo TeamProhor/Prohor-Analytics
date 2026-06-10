@@ -1,6 +1,5 @@
 'use client';
 import { Button, Column, Dialog, DialogTrigger, Icon, Popover, Row, Text } from '@umami/react-zen';
-import { Bookmark, X } from '@/components/icons';
 import { useState } from 'react';
 import { SessionInfo } from '@/app/(main)/websites/[websiteId]/sessions/SessionInfo';
 import { Avatar } from '@/components/common/Avatar';
@@ -13,6 +12,7 @@ import {
   useWebsiteSessionQuery,
 } from '@/components/hooks';
 import { touch } from '@/components/hooks/useModified';
+import { Bookmark, X } from '@/components/icons';
 import { ReplayPlayer } from './ReplayPlayer';
 import { ReplaySaveForm } from './ReplaySaveForm';
 

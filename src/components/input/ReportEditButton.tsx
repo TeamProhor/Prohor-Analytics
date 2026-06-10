@@ -13,7 +13,7 @@ import {
 import { type ReactNode, useState } from 'react';
 import { useMessages } from '@/components/hooks';
 import { useDeleteQuery } from '@/components/hooks/queries/useDeleteQuery';
-import { Pencil, DotsThree, Trash } from '@/components/icons';
+import { DotsThree, Pencil, Trash } from '@/components/icons';
 import { DialogButton } from './DialogButton';
 
 export function ReportEditButton({

@@ -3,7 +3,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useBoard, useMessages, useNavigation } from '@/components/hooks';
-import { Pencil, Columns } from '@/components/icons';
+import { Columns, Pencil } from '@/components/icons';
 import { getBoardEntity } from '@/lib/boards';
 import { BoardEntityBadge } from '../BoardEntityBadge';
 import { useBoardEntityBadgeProps } from '../useBoardEntityBadgeProps';

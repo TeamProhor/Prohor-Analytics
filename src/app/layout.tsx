@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Hind_Siliguri } from 'next/font/google';
+import { Hind_Siliguri, Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import { getBaseUrl } from '@/lib/get-base-url';
@@ -30,10 +30,7 @@ export default function ({ children }) {
   }
 
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${hindSiliguri.variable} ${inter.className}`}
-    >
+    <html lang="en" className={`${inter.variable} ${hindSiliguri.variable} ${inter.className}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

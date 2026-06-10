@@ -16,15 +16,15 @@ import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { useGlobalState, useMessages, useNavigation } from '@/components/hooks';
 import {
-  Globe,
-  SquaresFour,
+  ChartBar,
   Columns,
+  Globe,
   Link as LinkIcon,
   Sidebar,
   SidebarSimple,
+  SquaresFour,
 } from '@/components/icons';
 import { UserButton } from '@/components/input/UserButton';
-import { Logo } from '@/components/svg';
 
 export function SideNav(props: any) {
   const { t, labels } = useMessages();
@@ -92,7 +92,7 @@ export function SideNav(props: any) {
       >
         <Row paddingX="3" alignItems="center" justifyContent="space-between" flexGrow="1">
           {!isCollapsed && (
-            <IconLabel icon={<Logo />}>
+            <IconLabel icon={<ChartBar />}>
               <Text weight="bold">Prohor Analytics</Text>
             </IconLabel>
           )}

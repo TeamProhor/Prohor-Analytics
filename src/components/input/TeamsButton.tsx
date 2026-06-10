@@ -11,10 +11,10 @@ import {
   Row,
   Text,
 } from '@umami/react-zen';
-import { ArrowRight, CaretRight, User, Users } from '@/components/icons';
 import type { Key } from 'react';
 import { IconLabel } from '@/components/common/IconLabel';
 import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
+import { ArrowRight, CaretRight, User, Users } from '@/components/icons';
 import { LAST_TEAM_CONFIG } from '@/lib/constants';
 import { removeItem } from '@/lib/storage';
 

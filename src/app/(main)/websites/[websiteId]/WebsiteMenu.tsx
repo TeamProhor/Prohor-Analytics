@@ -10,7 +10,7 @@ import {
 } from '@umami/react-zen';
 import { Fragment } from 'react';
 import { useMessages, useNavigation } from '@/components/hooks';
-import { Pencil, DotsThree, ShareNetwork } from '@/components/icons';
+import { DotsThree, Pencil, ShareNetwork } from '@/components/icons';
 
 export function WebsiteMenu({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();

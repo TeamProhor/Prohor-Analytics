@@ -3,7 +3,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useLink, useMessages, useNavigation, useSlug } from '@/components/hooks';
-import { Pencil, ArrowSquareOut, Link } from '@/components/icons';
+import { ArrowSquareOut, Link, Pencil } from '@/components/icons';
 
 export function LinkHeader({ showActions = true }: { showActions?: boolean }) {
   const link = useLink();

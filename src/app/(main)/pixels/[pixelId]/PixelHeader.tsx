@@ -3,7 +3,7 @@ import { IconLabel } from '@/components/common/IconLabel';
 import { LinkButton } from '@/components/common/LinkButton';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useMessages, useNavigation, usePixel, useSlug } from '@/components/hooks';
-import { Pencil, ArrowSquareOut, SquaresFour } from '@/components/icons';
+import { ArrowSquareOut, Pencil, SquaresFour } from '@/components/icons';
 
 export function PixelHeader({ showActions = true }: { showActions?: boolean }) {
   const pixel = usePixel();

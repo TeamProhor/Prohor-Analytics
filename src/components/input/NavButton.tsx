@@ -12,11 +12,10 @@ import {
   SubmenuTrigger,
   Text,
 } from '@umami/react-zen';
-import { ArrowRight, CaretRight, User, Users } from '@/components/icons';
 import type { Key } from 'react';
 import { IconLabel } from '@/components/common/IconLabel';
 import { useLoginQuery, useMessages, useMobile, useNavigation } from '@/components/hooks';
-import { Switch } from '@/components/svg';
+import { ArrowRight, ArrowsLeftRight, CaretRight, User, Users } from '@/components/icons';
 import { LAST_TEAM_CONFIG } from '@/lib/constants';
 import { removeItem } from '@/lib/storage';
 
@@ -86,7 +85,7 @@ export function NavButton({ showText = true }: TeamsButtonProps) {
           <List autoFocus="last">
             <SubmenuTrigger>
               <MenuItem id="teams" showChecked={false} showSubMenuIcon>
-                <IconLabel icon={<Switch />} label={t(labels.switchAccount)} />
+                <IconLabel icon={<ArrowsLeftRight />} label={t(labels.switchAccount)} />
               </MenuItem>
               <Popover placement={isMobile ? 'bottom start' : 'right top'}>
                 <Column minWidth="300px">

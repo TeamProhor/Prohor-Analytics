@@ -16,9 +16,8 @@ import { IconLabel } from '@/components/common/IconLabel';
 import Link from '@/components/common/Link';
 import { TypeIcon } from '@/components/common/TypeIcon';
 import { useFormat, useMessages, useNavigation } from '@/components/hooks';
-import { Eye, FileText } from '@/components/icons';
+import { Eye, FileText, Lightning } from '@/components/icons';
 import { EventData } from '@/components/metrics/EventData';
-import { Lightning } from '@/components/svg';
 
 export function EventsTable(props: DataTableProps) {
   const { t, labels } = useMessages();

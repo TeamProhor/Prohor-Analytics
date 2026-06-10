@@ -11,7 +11,7 @@ import {
 } from '@umami/react-zen';
 import { useRouter } from 'next/navigation';
 import { useMessages, useUpdateQuery } from '@/components/hooks';
-import { Logo } from '@/components/svg';
+import { ChartBar } from '@/components/icons';
 import { setClientAuthToken } from '@/lib/client';
 import { setUser } from '@/store/app';
 
@@ -33,7 +33,7 @@ export function LoginForm() {
   return (
     <Column justifyContent="center" alignItems="center" gap="6">
       <Icon size="lg">
-        <Logo />
+        <ChartBar />
       </Icon>
       <Heading>Prohor Analytics</Heading>
       <Form onSubmit={handleSubmit} error={getErrorMessage(error)} style={{ minWidth: 300 }}>

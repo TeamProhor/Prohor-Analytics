@@ -4,12 +4,19 @@ import {
   Clock,
   Eye,
   FileText,
+  Funnel,
+  Gauge,
+  Lightning,
+  Magnet,
+  Money,
+  Network,
+  Path,
   Tag,
+  Target,
   User,
   UserPlus,
   Video,
 } from '@/components/icons';
-import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
 import { useMessages } from './useMessages';
 import { useNavigation } from './useNavigation';
 

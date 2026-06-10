@@ -16,14 +16,14 @@ import {
 } from '@umami/react-zen';
 import { useConfig, useLocale, useLoginQuery, useMessages, useMobile } from '@/components/hooks';
 import {
-  BookOpen,
   ArrowSquareOut,
+  BookOpen,
+  Gear,
   Globe,
   Lifebuoy,
   Lock,
-  SignOut,
   Moon,
-  Gear,
+  SignOut,
   Sun,
   SunDim,
   UserCircle,

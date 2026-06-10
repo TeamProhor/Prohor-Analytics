@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { DateDistance } from '@/components/common/DateDistance';
 import { TypeIcon } from '@/components/common/TypeIcon';
 import { useFormat, useLocale, useMessages, useRegionNames } from '@/components/hooks';
-import { Calendar, Key, Bank, MapPin } from '@/components/icons';
+import { Bank, Calendar, Key, MapPin } from '@/components/icons';
 
 export function SessionInfo({ data }) {
   const { locale } = useLocale();

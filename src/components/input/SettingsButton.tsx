@@ -11,12 +11,12 @@ import {
 import type { Key } from 'react';
 import { useConfig, useLoginQuery, useMessages, useNavigation } from '@/components/hooks';
 import {
-  BookOpen,
   ArrowSquareOut,
+  BookOpen,
+  Gear,
   Lifebuoy,
   Lock,
   SignOut,
-  Gear,
   UserCircle,
 } from '@/components/icons';
 import { DOCS_URL } from '@/lib/constants';
